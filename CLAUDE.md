@@ -154,10 +154,110 @@ name, role, photo, bio: PortableText, type: 'Studio' | 'Designer' | 'Partner'
 - [ ] Pagina /team
 - [ ] Pagina /contatti
 
-## MCP Servers
+## MCP Servers — Figma Design System Rules
 
-### Figma MCP server rules
-- The Figma MCP server provides an assets endpoint which can serve image and SVG assets
-- IMPORTANTE: se il Figma MCP server restituisce una URL localhost per immagini o SVG, usala direttamente
-- IMPORTANTE: NON importare/aggiungere nuovi pacchetti di icone — tutti gli asset vengono dal payload Figma
-- IMPORTANTE: NON usare o creare placeholder se è disponibile una sorgente localhost
+> Generato con `figma-create-design-system-rules`. Seguire per ogni implementazione Figma.
+
+### 1. Token e Design System
+
+**Design tokens — definiti in `src/app/globals.css` (Tailwind v4 `@theme inline`)**
+```css
+--color-palatinate: #2D2A6E  /* navbar, brand */
+--color-maya: #4A90D9        /* link text */
+--color-sky: #87CEEB         /* chips, stati */
+--color-slate: #6B7280       /* bottoni, icone */
+--color-gray-lightest/lighter/light/dark/darker
+--font-sans: var(--font-inter)
+```
+- IMPORTANTE: non usare mai hex hardcodati — usa sempre i token Tailwind (`text-palatinate`, `bg-maya`, ecc.)
+- IMPORTANTE: non aggiungere nuovi token senza aggiornare `globals.css`
+
+**Tipografia — Inter (caricato in `src/app/layout.tsx`)**
+| Classe Tailwind | Size | Weight | Uso |
+|---|---|---|---|
+| `text-5xl font-bold` | 48px | Bold | Heading 1 |
+| `text-4xl font-semibold` | 36px | SemiBold | Heading 2 |
+| `text-3xl font-semibold` | 28px | SemiBold | Heading 3 |
+| `text-2xl font-semibold` | 22px | SemiBold | Heading 4 |
+| `text-lg font-semibold` | 18px | SemiBold | Heading 5 |
+| `text-base` | 17px | Regular | Body |
+| `text-sm` | 15px | Regular | Body 1 |
+| `text-xs` | 13px | Regular | Body 2, Caption |
+
+### 2. Struttura componenti
+
+```
+src/
+  components/
+    ui/          → Button, Chip (e nuovi componenti base)
+    layout/      → Navbar, Footer (condivisi su tutte le pagine)
+    sections/    → sezioni specifiche di pagina (ProjectGrid, HeroSlider, ecc.)
+  lib/
+    utils/cn.ts  → helper classNames (clsx + tailwind-merge)
+```
+
+- IMPORTANTE: usare sempre i componenti esistenti in `src/components/ui/` prima di crearne di nuovi
+- Ogni nuovo componente va in TypeScript con props tipizzate
+- Usare sempre `cn()` da `@/lib/utils/cn` per classi condizionali
+- Tutti i componenti accettano un prop `className` per composizione
+
+**Pattern componente:**
+```tsx
+import { cn } from "@/lib/utils/cn";
+interface Props { className?: string; variant?: "a" | "b" }
+export default function MyComponent({ className, variant = "a" }: Props) {
+  return <div className={cn("base-classes", variant === "b" && "variant-classes", className)} />
+}
+```
+
+### 3. Styling
+
+- Framework: **Tailwind CSS v4** (via `@tailwindcss/postcss`)
+- NO stili inline salvo valori dinamici (`style={{ width: value }}`)
+- NO CSS modules — solo classi Tailwind
+- Responsività: mobile-first (`sm:`, `md:`, `lg:`, `xl:`)
+- Breakpoint principale: 375px (mobile), 768px (tablet), 1440px (desktop)
+- Transizioni standard: `transition-all duration-200 ease-out`
+
+### 4. Asset handling
+
+- IMPORTANTE: se Figma MCP restituisce URL `localhost` per immagini/SVG → usarla direttamente
+- IMPORTANTE: NON installare nuovi pacchetti di icone
+- IMPORTANTE: NON creare placeholder se è disponibile una sorgente localhost
+- Asset statici → `public/assets/`
+- Immagini Sanity → `@sanity/image-url` builder
+
+### 5. Flusso obbligatorio Figma → Codice
+
+Per ogni componente o pagina, seguire questo ordine **senza saltare passi**:
+
+```
+1. get_design_context(nodeId)   → struttura, layout, colori, spacing
+2. get_screenshot(nodeId)       → riferimento visivo (tenere aperto per validazione)
+3. Se risposta troppo grande:
+   → get_metadata(nodeId) per la mappa
+   → get_design_context sui child node per sezione
+4. Download asset localhost se presenti
+5. Implementa in Next.js + Tailwind seguendo le convention di questo file
+6. npx tsc --noEmit → deve passare senza errori
+7. Valida visivamente 1:1 contro screenshot prima di dichiarare completo
+```
+
+**Regole di implementazione:**
+- L'output Figma MCP (React + Tailwind) è un punto di partenza, NON il codice finale
+- Tradurre le utility Tailwind nell'approccio di questo progetto
+- Riusare componenti esistenti da `src/components/` invece di duplicare
+- Rispettare il sistema di routing Next.js App Router esistente
+- Data fetching: server components con `revalidate = 60` per contenuti Sanity
+
+### 6. Import conventions
+
+```ts
+// Path alias @/ = src/
+import { cn } from "@/lib/utils/cn";
+import Button from "@/components/ui/Button";
+import { sanityClient } from "@/lib/sanity/client";
+import type { Project } from "@/lib/sanity/types";
+```
+- Usare sempre `@/` (no import relativi oltre il parent)
+- Ordine import: React → librerie → componenti interni → tipi
