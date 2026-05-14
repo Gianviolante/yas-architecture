@@ -21,6 +21,8 @@ Sito portfolio per uno studio di architettura italiano (Brindisi). Il cliente de
 - Sanity Project ID: `ubvv2ot0`
 - Sanity Dataset: `production`
 - Sanity Studio (locale): http://localhost:3000/admin
+- **Sito produzione**: https://yas-architecture.vercel.app
+- Sanity Studio (produzione): https://yas-architecture.vercel.app/admin
 
 ## Design Figma
 - URL: https://www.figma.com/design/14KsSlrZX8GLjAKeT8oa9S/YAS-Architecture
@@ -130,7 +132,7 @@ name, role, photo, bio: PortableText, type: 'Studio' | 'Designer' | 'Partner'
 - [x] GitHub repo creato: https://github.com/Gianviolante/yas-architecture
 - [x] Next.js 14 inizializzato
 - [x] Sanity setup — projectId `ubvv2ot0`, schema completo, Studio su /admin
-- [ ] Vercel collegato
+- [x] Vercel deploy — https://yas-architecture.vercel.app
 - [ ] Navbar + Footer
 - [ ] Pagina /progetti
 - [ ] Pagina /progetti/[slug]
