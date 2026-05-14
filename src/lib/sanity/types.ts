@@ -21,7 +21,9 @@ export interface Project {
   heroImage?: SanityImage;
   gallery?: SanityImage[];
   coverImage?: SanityImage;
+  coverImageUrl?: string;
   teamMembers?: TeamMember[];
+  subtitle?: string;
 }
 
 export interface TeamMember {

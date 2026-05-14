@@ -1,5 +1,9 @@
-// Figma node: 261:7025
-// TODO: form contatti → API route /api/contact
+import ContattiClient from "@/components/sections/ContattiClient";
+
+export const metadata = {
+  title: "Contatti — YAS Architecture",
+};
+
 export default function ContattiPage() {
-  return <div>Contatti — WIP</div>;
+  return <ContattiClient />;
 }

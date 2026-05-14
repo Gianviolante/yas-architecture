@@ -147,12 +147,12 @@ name, role, photo, bio: PortableText, type: 'Studio' | 'Designer' | 'Partner'
 - [x] Next.js 14 inizializzato
 - [x] Sanity setup — projectId `ubvv2ot0`, schema completo, Studio su /admin
 - [x] Vercel deploy — https://yas-architecture.vercel.app
-- [ ] Navbar + Footer
-- [ ] Pagina /progetti
-- [ ] Pagina /progetti/[slug]
-- [ ] Pagina /studio
-- [ ] Pagina /team
-- [ ] Pagina /contatti
+- [x] Navbar + Footer
+- [x] Pagina /progetti
+- [x] Pagina /progetti/[slug]
+- [x] Pagina /studio
+- [x] Pagina /team
+- [x] Pagina /contatti
 
 ## MCP Servers — Figma Design System Rules
 

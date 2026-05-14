@@ -1,5 +1,16 @@
-// Figma node: 261:6580 (griglia) | 261:6704 (indice/tabella)
-// TODO: fetch progetti da Sanity, filtri client-side, toggle griglia/indice
-export default function ProgettiPage() {
-  return <div>Progetti — WIP</div>;
+import { sanityClient } from "@/lib/sanity/client";
+import { allProjectsQuery } from "@/lib/sanity/queries";
+import type { Project } from "@/lib/sanity/types";
+import ProgettiClient from "@/components/sections/ProgettiClient";
+
+export const revalidate = 60;
+
+export const metadata = {
+  title: "Progetti — YAS Architecture",
+};
+
+export default async function ProgettiPage() {
+  const projects: Project[] = await sanityClient.fetch(allProjectsQuery);
+
+  return <ProgettiClient projects={projects} />;
 }
