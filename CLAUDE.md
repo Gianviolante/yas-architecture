@@ -18,6 +18,9 @@ Sito portfolio per uno studio di architettura italiano (Brindisi). Il cliente de
 - GitHub: https://github.com/Gianviolante/yas-architecture
 - Working directory: `/Users/utente/CLAUDE/yas-architecture`
 - Branch: `main`
+- Sanity Project ID: `ubvv2ot0`
+- Sanity Dataset: `production`
+- Sanity Studio (locale): http://localhost:3000/admin
 
 ## Design Figma
 - URL: https://www.figma.com/design/14KsSlrZX8GLjAKeT8oa9S/YAS-Architecture
@@ -126,7 +129,7 @@ name, role, photo, bio: PortableText, type: 'Studio' | 'Designer' | 'Partner'
 - [x] Stack definito
 - [x] GitHub repo creato: https://github.com/Gianviolante/yas-architecture
 - [x] Next.js 14 inizializzato
-- [ ] Sanity setup e schema
+- [x] Sanity setup — projectId `ubvv2ot0`, schema completo, Studio su /admin
 - [ ] Vercel collegato
 - [ ] Navbar + Footer
 - [ ] Pagina /progetti
