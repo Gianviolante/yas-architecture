@@ -4,7 +4,6 @@ import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 
-// text-[12px] leading-[1.2] = Inter Regular 12px / 120% line-height as per Figma spec
 const txt = "text-[12px] leading-[1.2] text-black font-normal";
 
 export default function Footer() {
@@ -13,20 +12,23 @@ export default function Footer() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // TODO: wire newsletter to API
     setSent(true);
   };
 
   return (
     <footer className="border-t border-gray-light">
-      {/* Main footer */}
-      <div className="max-w-[1440px] mx-auto px-[29px] py-10 flex flex-col lg:flex-row gap-10 lg:gap-0 justify-between">
-        {/* Left block — Info + links */}
-        <div className="flex flex-col sm:flex-row gap-8 lg:w-[60%]">
-          {/* Company info */}
-          <div className={`${txt} space-y-0 min-w-[180px]`}>
-            <p className="mb-[17px]">YAS Architecture srl</p>
-            <div className="space-y-0 leading-[1.2]">
+      <div className="max-w-[1440px] mx-auto px-[29px] py-10 flex justify-between gap-8">
+
+        {/* ── Left block — Info (≈681px) ────────────────────────────── */}
+        <div className="flex flex-col flex-1 min-w-0">
+
+          {/* Title */}
+          <p className={`${txt} mb-[17px]`}>YAS Architecture srl</p>
+
+          {/* 3 columns — grow to fill space */}
+          <div className="flex flex-1">
+            {/* Col 1 — Company address */}
+            <div className={`${txt} w-[232px] shrink-0 space-y-0`}>
               <p>Via Dè Gracchi, 47</p>
               <p>72100 Brindisi (BR) Italia</p>
               <p>T +39 351 531 7762</p>
@@ -37,88 +39,119 @@ export default function Footer() {
               <p>P.I./C.F./Iscr. Reg. Imp. 01250700789</p>
               <p>Bari REA PN 87998</p>
             </div>
+
+            {/* Col 2 — Contatti */}
+            <div className={`${txt} w-[232px] shrink-0`}>
+              <p>Contatti</p>
+              <p>informazioni generali</p>
+              <a href="mailto:info@yas-arch.com" className="block hover:underline">info@yas-arch.com</a>
+              <p>informazioni commerciali</p>
+              <a href="mailto:sales@yas-arch.org" className="block hover:underline">sales@yas-arch.org</a>
+            </div>
+
+            {/* Col 3 — Studio links */}
+            <div className={`${txt}`}>
+              <Link href="/studio" className="block hover:underline">Studio</Link>
+              <Link href="/team" className="block hover:underline">Team</Link>
+              <Link href="/progetti" className="block hover:underline">Progetti</Link>
+              <Link href="/eventi" className="block hover:underline">Eventi</Link>
+              <Link href="/press" className="block hover:underline">Press</Link>
+              <p>&nbsp;</p>
+              <button className={`${txt} hover:underline`}>Partners↓</button>
+            </div>
           </div>
 
-          {/* Contatti column */}
-          <div className={`${txt} min-w-[160px]`}>
-            <p className="mb-[17px]">&nbsp;</p>
-            <p>Contatti</p>
-            <p>informazioni generali</p>
-            <a href="mailto:info@yas-arch.com" className="block hover:underline">info@yas-arch.com</a>
-            <p>informazioni commerciali</p>
-            <a href="mailto:sales@yas-arch.org" className="block hover:underline">sales@yas-arch.org</a>
-          </div>
+          {/* Bottom row — same 3-column alignment */}
+          <div className="flex items-end mt-10">
+            {/* Col 1 — Privacy */}
+            <div className={`${txt} w-[232px] shrink-0`}>
+              <p>Privacy Policy</p>
+              <p>Coockie Solution</p>
+              <p>Coockie Settings</p>
+            </div>
 
-          {/* Studio links column */}
-          <div className={`${txt} min-w-[120px]`}>
-            <p className="mb-[17px]">&nbsp;</p>
-            <Link href="/studio" className="block hover:underline">Studio</Link>
-            <Link href="/team" className="block hover:underline">Team</Link>
-            <Link href="/progetti" className="block hover:underline">Progetti</Link>
-            <Link href="/eventi" className="block hover:underline">Eventi</Link>
-            <Link href="/press" className="block hover:underline">Press</Link>
-            <p>&nbsp;</p>
-            <button className={`${txt} flex items-center gap-0.5 hover:underline`}>
-              Partners↓
-            </button>
+            {/* Col 2 — Seguici su + social icons */}
+            <div className="w-[232px] shrink-0">
+              <p className={`${txt} mb-[7px]`}>Seguici su</p>
+              <div className="flex items-center gap-[12px]">
+                <SocialIcon href="https://facebook.com" label="Facebook" icon="/assets/icon-facebook-v.svg" />
+                <SocialIcon href="https://instagram.com" label="Instagram" icon="/assets/icon-instagram-v.svg" />
+                <SocialIcon href="https://linkedin.com" label="LinkedIn" icon="/assets/icon-linkedin-1.svg" />
+              </div>
+            </div>
+
+            {/* Col 3 — Google Maps */}
+            <div>
+              <a
+                href="https://maps.google.com/?q=Via+De+Gracchi+47+Brindisi"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-[12px] leading-[22px] text-[#333] border-2 border-[#333] px-[24px] py-[10px] rounded-[100px] hover:bg-[#333] hover:text-white transition-colors duration-200 whitespace-nowrap"
+              >
+                Google Maps
+              </a>
+            </div>
           </div>
         </div>
 
-        {/* Right block — Newsletter */}
-        <div className="lg:w-[35%]">
+        {/* ── Right block — Newsletter (490px) ─────────────────────── */}
+        <div className="w-[490px] shrink-0">
           <p className={`${txt} mb-[17px]`}>Iscriviti alla nostra newsletter</p>
 
           {sent ? (
             <p className={`${txt} text-black/50`}>Grazie per l&apos;iscrizione!</p>
           ) : (
             <form onSubmit={handleSubmit}>
-              {/* Form grid — table-like borders as per Figma */}
-              <div className="border-t border-black">
-                <div className="flex">
-                  <div className="flex-1 border-r border-black py-[14px] px-1">
-                    <input
-                      type="text"
-                      placeholder="Nome"
-                      value={form.nome}
-                      onChange={(e) => setForm({ ...form, nome: e.target.value })}
-                      className={`${txt} w-full bg-transparent outline-none placeholder:text-black`}
-                    />
-                  </div>
-                  <div className="flex-1 py-[14px] px-1">
-                    <input
-                      type="text"
-                      placeholder="Cognome"
-                      value={form.cognome}
-                      onChange={(e) => setForm({ ...form, cognome: e.target.value })}
-                      className={`${txt} w-full bg-transparent outline-none placeholder:text-black`}
-                    />
-                  </div>
-                </div>
-              </div>
-              <div className="border-t border-b border-black">
-                <div className="flex">
-                  <div className="flex-[3] border-r border-black py-[14px] px-1">
-                    <input
-                      type="email"
-                      placeholder="e-mail*"
-                      required
-                      value={form.email}
-                      onChange={(e) => setForm({ ...form, email: e.target.value })}
-                      className={`${txt} w-full bg-transparent outline-none placeholder:text-black`}
-                    />
-                  </div>
-                  <div className="flex-[2] py-[14px] px-1">
-                    <input
-                      type="text"
-                      placeholder="Paese"
-                      value={form.paese}
-                      onChange={(e) => setForm({ ...form, paese: e.target.value })}
-                      className={`${txt} w-full bg-transparent outline-none placeholder:text-black`}
-                    />
-                  </div>
-                </div>
+              {/* Row 1: Nome (40%) | Cognome (60%) */}
+              <div className="border-t border-black flex">
+                <label className="flex-[196] border-r border-black py-[14px] px-1 cursor-text">
+                  <input
+                    type="text"
+                    placeholder="Nome"
+                    value={form.nome}
+                    onChange={(e) => setForm({ ...form, nome: e.target.value })}
+                    autoComplete="given-name"
+                    className={`${txt} w-full bg-transparent outline-none placeholder:text-black`}
+                  />
+                </label>
+                <label className="flex-[294] py-[14px] px-1 cursor-text">
+                  <input
+                    type="text"
+                    placeholder="Cognome"
+                    value={form.cognome}
+                    onChange={(e) => setForm({ ...form, cognome: e.target.value })}
+                    autoComplete="family-name"
+                    className={`${txt} w-full bg-transparent outline-none placeholder:text-black`}
+                  />
+                </label>
               </div>
 
+              {/* Row 2: e-mail (60%) | Paese (40%) */}
+              <div className="border-t border-b border-black flex">
+                <label className="flex-[294] border-r border-black py-[14px] px-1 cursor-text">
+                  <input
+                    type="email"
+                    placeholder="e-mail*"
+                    required
+                    value={form.email}
+                    onChange={(e) => setForm({ ...form, email: e.target.value })}
+                    autoComplete="email"
+                    className={`${txt} w-full bg-transparent outline-none placeholder:text-black`}
+                  />
+                </label>
+                <label className="flex-[196] py-[14px] px-1 cursor-text">
+                  <input
+                    type="text"
+                    placeholder="Paese"
+                    value={form.paese}
+                    onChange={(e) => setForm({ ...form, paese: e.target.value })}
+                    autoComplete="country-name"
+                    className={`${txt} w-full bg-transparent outline-none placeholder:text-black`}
+                  />
+                </label>
+              </div>
+
+              {/* Privacy + submit */}
               <div className="mt-4">
                 <p className={`${txt} w-[263px] mb-3`}>
                   Cliccando su &ldquo;Invia&rdquo; dichiaro di aver letto e accettato l&apos;informativa Privacy
@@ -126,9 +159,7 @@ export default function Footer() {
                 <div className="flex items-center gap-[11px] mb-3">
                   <label className="flex items-center gap-[11px] cursor-pointer">
                     <input
-                      type="radio"
-                      name="privacy"
-                      value="acconsento"
+                      type="radio" name="newsletter-privacy" value="acconsento"
                       onChange={(e) => setForm({ ...form, privacy: e.target.value })}
                       className="size-[13px] accent-black"
                     />
@@ -136,9 +167,7 @@ export default function Footer() {
                   </label>
                   <label className="flex items-center gap-[11px] cursor-pointer ml-6">
                     <input
-                      type="radio"
-                      name="privacy"
-                      value="non-acconsento"
+                      type="radio" name="newsletter-privacy" value="non-acconsento"
                       onChange={(e) => setForm({ ...form, privacy: e.target.value })}
                       className="size-[13px] accent-black"
                     />
@@ -158,48 +187,6 @@ export default function Footer() {
           )}
         </div>
       </div>
-
-      {/* Bottom bar */}
-      <div className="max-w-[1440px] mx-auto px-[29px] pb-8 flex flex-col sm:flex-row items-start sm:items-end justify-between gap-6">
-        {/* Privacy / Cookie — vertical stack as per Figma */}
-        <div className={`${txt} space-y-0`}>
-          <p>Privacy Policy</p>
-          <p>Coockie Solution</p>
-          <p>Coockie Settings</p>
-        </div>
-
-        {/* Seguici su + social + Google Maps */}
-        <div className="flex items-center gap-8">
-          <div className="flex items-center gap-3">
-            <span className={txt}>Seguici su</span>
-            {/* Social icons — circle border SVG + icon */}
-            <SocialIcon
-              href="https://facebook.com"
-              label="Facebook"
-              icon="/assets/icon-facebook-v.svg"
-            />
-            <SocialIcon
-              href="https://instagram.com"
-              label="Instagram"
-              icon="/assets/icon-instagram-v.svg"
-            />
-            <SocialIcon
-              href="https://linkedin.com"
-              label="LinkedIn"
-              icon="/assets/icon-linkedin-1.svg"
-            />
-          </div>
-
-          <a
-            href="https://maps.google.com/?q=Via+De+Gracchi+47+Brindisi"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-[12px] leading-[22px] text-[#333] border-2 border-[#333] px-[24px] py-[10px] rounded-[100px] hover:bg-[#333] hover:text-white transition-colors duration-200 whitespace-nowrap"
-          >
-            Google Maps
-          </a>
-        </div>
-      </div>
     </footer>
   );
 }
@@ -213,9 +200,7 @@ function SocialIcon({ href, label, icon }: { href: string; label: string; icon: 
       aria-label={label}
       className="relative size-[35px] flex items-center justify-center shrink-0"
     >
-      {/* Circle border from Figma SVG */}
       <Image src="/assets/social-circle.svg" alt="" fill className="absolute inset-0" />
-      {/* Icon */}
       <span className="relative z-10 size-[18px] flex items-center justify-center">
         <Image src={icon} alt={label} width={16} height={16} className="object-contain" />
       </span>
