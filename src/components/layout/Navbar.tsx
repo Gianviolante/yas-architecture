@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import Image from "next/image";
 import { cn } from "@/lib/utils/cn";
 
 const navLinks = [
@@ -40,29 +41,34 @@ export default function Navbar() {
     return () => { document.body.style.overflow = ""; };
   }, [menuOpen]);
 
+  const isActive = (href: string) =>
+    href === "/progetti"
+      ? pathname === "/progetti" || pathname.startsWith("/progetti/")
+      : pathname === href || pathname.startsWith(href);
+
   return (
     <>
       <header
         className={cn(
           "fixed top-0 left-0 right-0 z-50 h-[53px] transition-all duration-200 ease-out",
           scrolled || menuOpen
-            ? "bg-white/95 backdrop-blur-sm border-b border-gray-light"
+            ? "bg-white drop-shadow-[0px_0px_4px_rgba(0,0,0,0.2)]"
             : "bg-transparent"
         )}
       >
-        <nav className="max-w-[1440px] mx-auto px-8 h-full flex items-center justify-between">
+        <nav className="max-w-[1440px] mx-auto px-[29px] h-full flex items-center justify-between gap-[430px_0]">
           {/* Desktop left nav */}
-          <div className="hidden md:flex items-center gap-8">
+          <div className="hidden md:flex items-center gap-[10px]">
             {navLinks.map(({ href, label }) => (
               <Link
                 key={href}
                 href={href}
                 className={cn(
-                  "text-sm tracking-wide transition-all duration-200 ease-out relative pb-px",
+                  "text-[14px] leading-normal transition-colors duration-200 relative pb-px",
                   "after:absolute after:bottom-0 after:left-0 after:right-0 after:h-px after:transition-all after:duration-200",
-                  pathname === href || (href !== "/" && pathname.startsWith(href))
-                    ? "text-black after:bg-black"
-                    : "text-black/70 hover:text-black after:bg-transparent hover:after:bg-black/30"
+                  isActive(href)
+                    ? "text-[#1a1a1a] after:bg-[#1a1a1a]"
+                    : "text-[#1a1a1a] after:bg-transparent hover:after:bg-[#1a1a1a]/30"
                 )}
               >
                 {label}
@@ -72,56 +78,54 @@ export default function Navbar() {
 
           {/* Mobile hamburger */}
           <button
-            className="md:hidden p-2 -ml-2"
+            className="md:hidden p-2 -ml-2 text-xl leading-none"
             onClick={() => setMenuOpen((v) => !v)}
             aria-label="Menu"
           >
-            {menuOpen ? (
-              <span className="text-xl leading-none">✕</span>
-            ) : (
-              <span className="text-xl leading-none">☰</span>
-            )}
+            {menuOpen ? "✕" : "☰"}
           </button>
 
           {/* Logo — center absolute */}
           <Link
             href="/"
-            className="absolute left-1/2 -translate-x-1/2 flex items-center gap-2.5 whitespace-nowrap"
+            className="absolute left-1/2 -translate-x-1/2"
+            aria-label="YAS Architecture — Home"
           >
-            <span className="w-5 h-5 rounded-full border border-black/70 inline-block shrink-0" />
-            <span className="flex flex-col leading-none">
-              <span className="text-sm font-semibold tracking-[0.22em] uppercase">YAS</span>
-              <span className="text-[9px] font-normal tracking-[0.28em] uppercase text-black/60">ARCHITECTURE</span>
-            </span>
+            <Image
+              src="/assets/logo-yas.svg"
+              alt="YAS Architecture"
+              width={102}
+              height={31}
+              priority
+            />
           </Link>
 
           {/* Desktop right nav */}
-          <div className="hidden md:flex items-center gap-5 text-sm">
+          <div className="hidden md:flex items-center gap-[15px]">
             <Link
               href="/contatti"
               className={cn(
-                "text-sm px-4 py-1 rounded-full border transition-colors duration-200",
+                "text-[11.82px] leading-normal px-[17.727px] py-[7.386px] rounded-[100px] transition-colors duration-200 whitespace-nowrap",
                 pathname === "/contatti"
-                  ? "border-black text-black"
-                  : "border-black/30 text-black/70 hover:border-black hover:text-black"
+                  ? "bg-[#333] text-white"
+                  : "bg-[#e9ebed] text-[#333] hover:bg-[#d9dadb]"
               )}
             >
               Contatti
             </Link>
-            <span className="text-gray-light">|</span>
-            <button className="text-black/70 hover:text-black transition-colors duration-200 text-xs tracking-widest uppercase">
+            <button className="text-[11.82px] leading-normal px-[17.727px] py-[7.386px] rounded-[100px] bg-[#e9ebed] text-[#333] hover:bg-[#d9dadb] transition-colors duration-200">
               IT
             </button>
-            <button className="text-black/70 hover:text-black transition-colors duration-200" aria-label="Cerca">
-              <SearchIcon />
+            <button aria-label="Cerca" className="relative size-[24px] shrink-0">
+              <Image src="/assets/icon-search.svg" alt="Cerca" fill />
             </button>
           </div>
 
           {/* Mobile right controls */}
-          <div className="md:hidden flex items-center gap-3 text-sm">
-            <button className="text-black/70 hover:text-black text-xs tracking-widest uppercase">IT</button>
-            <button className="text-black/70 hover:text-black" aria-label="Cerca">
-              <SearchIcon />
+          <div className="md:hidden flex items-center gap-2">
+            <button className="text-[11px] px-3 py-1 rounded-full bg-[#e9ebed] text-[#333]">IT</button>
+            <button aria-label="Cerca" className="relative size-6 shrink-0">
+              <Image src="/assets/icon-search.svg" alt="Cerca" fill />
             </button>
           </div>
         </nav>
@@ -138,30 +142,22 @@ export default function Navbar() {
           {/* Progetti accordion */}
           <div className="border-b border-gray-light">
             <button
-              className="w-full flex items-center justify-between px-6 py-5 text-base font-medium"
+              className="w-full flex items-center justify-between px-6 py-5 text-[14px] font-medium"
               onClick={() => setProgettiOpen((v) => !v)}
             >
               <span>Progetti</span>
-              <span className="text-xl leading-none text-gray-dark">
-                {progettiOpen ? "−" : "+"}
-              </span>
+              <span className="text-xl leading-none text-black/40">{progettiOpen ? "−" : "+"}</span>
             </button>
             {progettiOpen && (
               <div className="pb-4">
                 {progettiSubLinks.map(({ href, label }) => (
-                  <Link
-                    key={label}
-                    href={href}
-                    className="block px-10 py-2 text-sm text-gray-dark hover:text-black"
-                  >
+                  <Link key={label} href={href} className="block px-10 py-2 text-[12px] text-black/50 hover:text-black">
                     {label}
                   </Link>
                 ))}
               </div>
             )}
           </div>
-
-          {/* Other links */}
           {[
             { href: "/studio", label: "Studio" },
             { href: "/team", label: "Team" },
@@ -171,23 +167,14 @@ export default function Navbar() {
             <Link
               key={href}
               href={href}
-              className="flex items-center justify-between border-b border-gray-light px-6 py-5 text-base font-medium hover:bg-gray-lightest"
+              className="flex items-center justify-between border-b border-gray-light px-6 py-5 text-[14px] font-medium hover:bg-gray-lightest"
             >
               {label}
-              <span className="text-xl leading-none text-gray-dark">+</span>
+              <span className="text-xl leading-none text-black/40">+</span>
             </Link>
           ))}
         </nav>
       </div>
     </>
-  );
-}
-
-function SearchIcon() {
-  return (
-    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5">
-      <circle cx="7" cy="7" r="5" />
-      <line x1="11" y1="11" x2="14.5" y2="14.5" />
-    </svg>
   );
 }
