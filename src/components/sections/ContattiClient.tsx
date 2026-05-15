@@ -151,7 +151,7 @@ export default function ContattiClient() {
                     value={form.messaggio}
                     onChange={set("messaggio")}
                     rows={4}
-                    className="w-full bg-transparent text-[12px] leading-[1.2] text-black outline-none placeholder:text-black/40 resize-none"
+                    className="w-full bg-transparent text-[12px] leading-[1.2] text-black outline-none placeholder:text-black resize-none"
                   />
                 </label>
               </div>
@@ -218,7 +218,7 @@ function Field({
   borderRight?: boolean;
 }) {
   return (
-    <label className={`h-[90px] px-1 flex flex-col justify-center cursor-text${borderRight ? " border-r border-black" : ""}`}>
+    <label className={`h-[90px] px-1 py-3 flex flex-col justify-start cursor-text${borderRight ? " border-r border-black" : ""}`}>
       <input
         type={type}
         placeholder={label}
@@ -226,7 +226,7 @@ function Field({
         onChange={onChange}
         required={required}
         autoComplete={autoComplete}
-        className="w-full bg-transparent text-[12px] leading-[1.2] text-black outline-none placeholder:text-black/40"
+        className="w-full bg-transparent text-[12px] leading-[1.2] text-black outline-none placeholder:text-black"
       />
     </label>
   );
