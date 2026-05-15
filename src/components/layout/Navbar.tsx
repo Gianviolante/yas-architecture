@@ -64,11 +64,10 @@ export default function Navbar() {
                 key={href}
                 href={href}
                 className={cn(
-                  "text-[14px] leading-normal transition-colors duration-200 relative pb-px",
-                  "after:absolute after:bottom-0 after:left-0 after:right-0 after:h-px after:transition-all after:duration-200",
+                  "text-[14px] leading-normal transition-colors duration-200",
                   isActive(href)
-                    ? "text-[#1a1a1a] after:bg-[#1a1a1a]"
-                    : "text-[#1a1a1a] after:bg-transparent hover:after:bg-[#1a1a1a]/30"
+                    ? "text-[#d9d9d9] cursor-default pointer-events-none"
+                    : "text-[#1a1a1a] hover:text-[#d9d9d9]"
                 )}
               >
                 {label}
