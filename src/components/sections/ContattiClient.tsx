@@ -141,7 +141,7 @@ export default function ContattiClient() {
 
               {/* Row 5: Messaggio full width */}
               <div className="border-b border-black">
-                <div className="px-1 py-3">
+                <label className="px-1 py-3 block cursor-text">
                   <textarea
                     placeholder="Messaggio*"
                     required
@@ -150,7 +150,7 @@ export default function ContattiClient() {
                     rows={4}
                     className="w-full bg-transparent text-[12px] leading-[1.2] text-black outline-none placeholder:text-black resize-none"
                   />
-                </div>
+                </label>
               </div>
 
               {/* Privacy + submit */}
@@ -210,7 +210,7 @@ function Field({
   tall?: boolean;
 }) {
   return (
-    <div className={`px-1 py-3 ${tall ? "min-h-[115px]" : "min-h-[90px]"} ${borderRight ? "border-r border-black" : ""} flex flex-col justify-start`}>
+    <label className={`px-1 py-3 ${tall ? "min-h-[115px]" : "min-h-[90px]"} ${borderRight ? "border-r border-black" : ""} flex flex-col justify-start cursor-text`}>
       <input
         type={type}
         placeholder={label}
@@ -219,6 +219,6 @@ function Field({
         required={required}
         className="w-full bg-transparent text-[12px] leading-[1.2] text-black outline-none placeholder:text-black"
       />
-    </div>
+    </label>
   );
 }
