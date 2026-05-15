@@ -2,6 +2,13 @@
 
 import { useState } from "react";
 
+const SOCIAL = [
+  { label: "Fb", href: "https://facebook.com" },
+  { label: "Ig", href: "https://instagram.com" },
+  { label: "Be", href: "https://behance.net" },
+  { label: "Pi", href: "https://pinterest.com" },
+];
+
 export default function ContattiClient() {
   const [form, setForm] = useState({
     nome: "", cognome: "", indirizzo: "", stato: "",
@@ -10,8 +17,9 @@ export default function ContattiClient() {
   });
   const [status, setStatus] = useState<"idle" | "sending" | "sent" | "error">("idle");
 
-  const set = (k: keyof typeof form) => (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) =>
-    setForm((f) => ({ ...f, [k]: e.target.value }));
+  const set = (k: keyof typeof form) =>
+    (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) =>
+      setForm((f) => ({ ...f, [k]: e.target.value }));
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -30,148 +38,155 @@ export default function ContattiClient() {
 
   return (
     <div className="pt-[53px]">
-      {/* Hero CTA section */}
-      <div className="max-w-[1440px] mx-auto px-8 pt-16 pb-12">
-        <div className="space-y-10">
-          <div>
-            <p className="text-xs text-black/40 uppercase tracking-widest mb-2">Get in touch</p>
-            <a
-              href="mailto:info@yas-arch.com"
-              className="text-3xl font-semibold hover:text-black/60 transition-colors"
-            >
-              info@yas-arch.com
-            </a>
-          </div>
+      {/* ── Hero section ───────────────────────────────────────────── */}
+      <div className="max-w-[1440px] mx-auto px-[32px] pt-16 pb-12 space-y-14">
+        {/* Get in touch */}
+        <div>
+          <p className="text-[16px] leading-[1.2] text-black mb-2">Get in touch</p>
+          <a
+            href="mailto:info@yas-arch.com"
+            className="text-[36px] leading-[1.2] text-black hover:opacity-60 transition-opacity"
+          >
+            info@yas-arch.com
+          </a>
+        </div>
 
-          <div>
-            <p className="text-xs text-black/40 uppercase tracking-widest mb-2">Have a new project</p>
-            <a
-              href="#form"
-              className="text-3xl font-semibold underline underline-offset-4 hover:text-black/60 transition-colors"
-            >
-              Start a project
-            </a>
-          </div>
+        {/* Have a new project */}
+        <div>
+          <p className="text-[16px] leading-[1.2] text-black mb-2">Have a new project</p>
+          <a
+            href="#form"
+            className="text-[36px] leading-[1.2] text-black underline decoration-solid underline-offset-4 hover:opacity-60 transition-opacity"
+          >
+            Start a project
+          </a>
+        </div>
 
-          {/* Social links */}
-          <div className="flex items-center gap-6 text-sm text-black/50">
-            {[
-              { label: "Fb", href: "https://facebook.com" },
-              { label: "Ig", href: "https://instagram.com" },
-              { label: "Be", href: "https://behance.net" },
-              { label: "Pi", href: "https://pinterest.com" },
-            ].map(({ label, href }) => (
-              <a
-                key={label}
-                href={href}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="hover:text-black transition-colors"
-              >
-                {label}
-              </a>
-            ))}
-          </div>
+        {/* Social links — plain text at 24px */}
+        <div className="flex items-center gap-[50px]">
+          {SOCIAL.map(({ label, href }) => (
+            <a
+              key={label}
+              href={href}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-[24px] leading-[1.2] text-black hover:opacity-50 transition-opacity"
+            >
+              {label}
+            </a>
+          ))}
         </div>
       </div>
 
-      {/* Divider */}
-      <div className="border-t border-gray-light" />
+      {/* ── Shadow divider ─────────────────────────────────────────── */}
+      <div className="w-full h-[75px] bg-white shadow-[0px_6px_8px_0px_rgba(0,0,0,0.1)]" />
 
-      {/* Form section */}
-      <div id="form" className="max-w-[1440px] mx-auto px-8 pt-12 pb-16 grid grid-cols-1 md:grid-cols-3 gap-16">
-        {/* Left: contacts info */}
-        <div className="space-y-8 text-sm">
-          <p className="text-base font-medium">Richiedi informazioni</p>
+      {/* ── Form section ───────────────────────────────────────────── */}
+      <div id="form" className="max-w-[1440px] mx-auto px-[32px] pt-10 pb-20">
+        <p className="text-[16px] leading-[1.2] text-black mb-10">Richiedi informazioni</p>
 
-          <div className="space-y-1">
-            <p className="text-xs text-black/40 uppercase tracking-widest">Office</p>
-            <p>Via Dè Gracchi, 47</p>
-            <p>72100 Brindisi (BR) Italia</p>
+        <div className="grid grid-cols-[1fr_2.5fr] gap-16">
+          {/* Left — contact info */}
+          <div className="space-y-8">
+            <div>
+              <p className="text-[12px] leading-normal text-black mb-1">Office</p>
+              <p className="text-[16px] leading-[1.2] text-black">Via Dè Gracchi, 47</p>
+              <p className="text-[16px] leading-[1.2] text-black">72100 Brindisi (BR) Italia</p>
+            </div>
+            <div>
+              <p className="text-[12px] leading-normal text-black mb-1">Careers</p>
+              <a href="mailto:hr@yas-arch.com" className="text-[16px] leading-[1.2] text-black hover:opacity-60 transition-opacity">
+                hr@yas-arch.com
+              </a>
+            </div>
+            <div>
+              <p className="text-[12px] leading-normal text-black mb-1">PR&amp;Collaborations</p>
+              <a href="mailto:public@yas-arch.com" className="text-[16px] leading-[1.2] text-black hover:opacity-60 transition-opacity">
+                public@yas-arch.com
+              </a>
+            </div>
           </div>
 
-          <div className="space-y-1">
-            <p className="text-xs text-black/40 uppercase tracking-widest">Careers</p>
-            <a href="mailto:hr@yas-arch.com" className="hover:text-black/60 transition-colors">
-              hr@yas-arch.com
-            </a>
-          </div>
-
-          <div className="space-y-1">
-            <p className="text-xs text-black/40 uppercase tracking-widest">PR&Collaborations</p>
-            <a href="mailto:public@yas-arch.com" className="hover:text-black/60 transition-colors">
-              public@yas-arch.com
-            </a>
-          </div>
-        </div>
-
-        {/* Right: form */}
-        <div className="md:col-span-2">
+          {/* Right — form */}
           {status === "sent" ? (
-            <div className="py-16 text-center">
-              <p className="text-base font-medium mb-2">Messaggio inviato!</p>
-              <p className="text-sm text-black/50">Ti risponderemo al più presto.</p>
+            <div className="py-20">
+              <p className="text-[16px] text-black mb-1">Messaggio inviato!</p>
+              <p className="text-[12px] text-black/50">Ti risponderemo al più presto.</p>
             </div>
           ) : (
-            <form onSubmit={handleSubmit} className="space-y-4">
-              <div className="grid grid-cols-2 gap-4">
-                <FormField label="Nome" value={form.nome} onChange={set("nome")} />
-                <FormField label="Cognome" value={form.cognome} onChange={set("cognome")} />
-              </div>
-              <div className="grid grid-cols-2 gap-4">
-                <FormField label="Indirizzo*" value={form.indirizzo} onChange={set("indirizzo")} required />
-                <FormField label="Stato" value={form.stato} onChange={set("stato")} />
-              </div>
-              <div className="grid grid-cols-2 gap-4">
-                <FormField label="Città*" value={form.citta} onChange={set("citta")} required />
-                <FormField label="Cap" value={form.cap} onChange={set("cap")} />
-              </div>
-              <div className="grid grid-cols-2 gap-4">
-                <FormField label="e-mail*" value={form.email} onChange={set("email")} type="email" required />
-                <FormField label="Telefono" value={form.telefono} onChange={set("telefono")} type="tel" />
+            <form onSubmit={handleSubmit}>
+              {/* Row 1: Nome (40%) | Cognome (60%) */}
+              <div className="grid grid-cols-[2fr_3fr] border-t border-black">
+                <Field label="Nome" value={form.nome} onChange={set("nome")} borderRight />
+                <Field label="Cognome" value={form.cognome} onChange={set("cognome")} />
               </div>
 
-              {/* Messaggio */}
-              <div className="relative">
-                <textarea
-                  placeholder="Messaggio*"
-                  required
-                  value={form.messaggio}
-                  onChange={set("messaggio")}
-                  rows={4}
-                  className="w-full border-b border-gray-light bg-transparent text-sm py-3 outline-none focus:border-black transition-colors placeholder:text-black/30 resize-none"
-                />
+              {/* Row 2: Indirizzo (60%) | Stato (40%) */}
+              <div className="grid grid-cols-[3fr_2fr] border-t border-b border-black">
+                <Field label="Indirizzo*" value={form.indirizzo} onChange={set("indirizzo")} required borderRight tall />
+                <Field label="Stato" value={form.stato} onChange={set("stato")} tall />
               </div>
 
-              {/* Privacy */}
-              <div className="pt-2 space-y-3">
-                <p className="text-xs text-black/50">
-                  Cliccando su &ldquo;Invia&rdquo; dichiaro di aver letto e accettato l&apos;informativa Privacy
-                </p>
-                <div className="flex items-center gap-6 text-sm">
-                  <label className="flex items-center gap-2 cursor-pointer">
-                    <input type="radio" name="privacy" value="acconsento" onChange={set("privacy")} className="accent-black" required />
-                    Acconsento
-                  </label>
-                  <label className="flex items-center gap-2 cursor-pointer">
-                    <input type="radio" name="privacy" value="non-acconsento" onChange={set("privacy")} className="accent-black" />
-                    Non acconsento
-                  </label>
+              {/* Row 3: Città (60%) | Cap (40%) */}
+              <div className="grid grid-cols-[3fr_2fr] border-b border-black">
+                <Field label="Città*" value={form.citta} onChange={set("citta")} required borderRight tall />
+                <Field label="Cap" value={form.cap} onChange={set("cap")} tall />
+              </div>
+
+              {/* Row 4: e-mail (60%) | Telefono (40%) */}
+              <div className="grid grid-cols-[3fr_2fr] border-b border-black">
+                <Field label="e-mail*" value={form.email} onChange={set("email")} type="email" required borderRight tall />
+                <Field label="Telefono" value={form.telefono} onChange={set("telefono")} type="tel" tall />
+              </div>
+
+              {/* Row 5: Messaggio full width */}
+              <div className="border-b border-black">
+                <div className="px-1 py-3">
+                  <textarea
+                    placeholder="Messaggio*"
+                    required
+                    value={form.messaggio}
+                    onChange={set("messaggio")}
+                    rows={4}
+                    className="w-full bg-transparent text-[12px] leading-[1.2] text-black outline-none placeholder:text-black resize-none"
+                  />
                 </div>
               </div>
 
-              {status === "error" && (
-                <p className="text-xs text-red-500">Errore nell&apos;invio. Riprova o scrivi a info@yas-arch.com</p>
-              )}
+              {/* Privacy + submit */}
+              <div className="mt-6 space-y-4">
+                <p className="text-[12px] leading-[1.2] text-black max-w-xl">
+                  Cliccando su &ldquo;Invia&rdquo; dichiaro di aver letto e accettato l&apos;informativa Privacy
+                </p>
+                <div className="flex items-center gap-6">
+                  <label className="flex items-center gap-[11px] cursor-pointer">
+                    <input type="radio" name="privacy" value="acconsento"
+                      onChange={set("privacy")} required className="size-[13px] accent-black" />
+                    <span className="text-[12px] leading-[1.2] text-black">Acconsento</span>
+                  </label>
+                  <label className="flex items-center gap-[11px] cursor-pointer">
+                    <input type="radio" name="privacy" value="non-acconsento"
+                      onChange={set("privacy")} className="size-[13px] accent-black" />
+                    <span className="text-[12px] leading-[1.2] text-black">Non acconsento</span>
+                  </label>
+                </div>
 
-              <div className="pt-2">
-                <button
-                  type="submit"
-                  disabled={status === "sending"}
-                  className="text-sm px-8 py-2 rounded-full border border-black/30 hover:border-black hover:bg-black hover:text-white transition-all duration-200 disabled:opacity-40"
-                >
-                  {status === "sending" ? "Invio..." : "Invia"}
-                </button>
+                {status === "error" && (
+                  <p className="text-[12px] text-red-600">
+                    Errore nell&apos;invio. Riprova o scrivi a info@yas-arch.com
+                  </p>
+                )}
+
+                {/* Invia — left aligned, filled gray pill */}
+                <div>
+                  <button
+                    type="submit"
+                    disabled={status === "sending"}
+                    className="text-[16px] leading-[22px] text-[#333] px-[24px] py-[10px] rounded-[100px] bg-[#e9ebed] hover:bg-[#d9dadb] transition-colors duration-200 disabled:opacity-40"
+                  >
+                    {status === "sending" ? "Invio…" : "Invia"}
+                  </button>
+                </div>
               </div>
             </form>
           )}
@@ -181,24 +196,28 @@ export default function ContattiClient() {
   );
 }
 
-function FormField({
+/* ── Field component ─────────────────────────────────────────────── */
+function Field({
   label, value, onChange, type = "text", required = false,
+  borderRight = false, tall = false,
 }: {
   label: string;
   value: string;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   type?: string;
   required?: boolean;
+  borderRight?: boolean;
+  tall?: boolean;
 }) {
   return (
-    <div className="relative border-b border-gray-light focus-within:border-black transition-colors">
+    <div className={`px-1 py-3 ${tall ? "min-h-[115px]" : "min-h-[90px]"} ${borderRight ? "border-r border-black" : ""} flex flex-col justify-start`}>
       <input
         type={type}
         placeholder={label}
         value={value}
         onChange={onChange}
         required={required}
-        className="w-full bg-transparent text-sm py-3 outline-none placeholder:text-black/30"
+        className="w-full bg-transparent text-[12px] leading-[1.2] text-black outline-none placeholder:text-black"
       />
     </div>
   );
