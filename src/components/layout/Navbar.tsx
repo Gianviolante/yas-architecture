@@ -51,12 +51,12 @@ export default function Navbar() {
       <header
         className={cn(
           "fixed top-0 left-0 right-0 z-50 h-[53px] transition-all duration-200 ease-out",
-          scrolled || menuOpen
+          scrolled || menuOpen || pathname !== "/"
             ? "bg-white drop-shadow-[0px_0px_4px_rgba(0,0,0,0.2)]"
             : "bg-transparent"
         )}
       >
-        <nav className="max-w-[1440px] mx-auto px-[29px] h-full flex items-center justify-between gap-[430px_0]">
+        <nav className="max-w-[1440px] mx-auto page-px h-full flex items-center justify-between gap-[430px_0]">
           {/* Desktop left nav */}
           <div className="hidden md:flex items-center gap-[10px]">
             {navLinks.map(({ href, label }) => (

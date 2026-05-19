@@ -1,8 +1,8 @@
 // GROQ queries per Sanity
 
 export const allProjectsQuery = `
-  *[_type == "project"] | order(year desc) {
-    _id, title, slug, location, year, area, typology, status,
+  *[_type == "project"] | order(featured desc, year desc) {
+    _id, title, slug, location, year, area, typology, status, featured,
     coverImage, "coverImageUrl": coverImage.asset->url
   }
 `;
@@ -10,7 +10,9 @@ export const allProjectsQuery = `
 export const projectBySlugQuery = `
   *[_type == "project" && slug.current == $slug][0] {
     _id, title, slug, location, year, area, typology, status,
-    description, heroImage, gallery, teamMembers[]->{ name, role }
+    description, heroImage,
+    gallery[]{ ..., caption },
+    teamMembers[]->{ name, role }
   }
 `;
 
@@ -24,6 +26,28 @@ export const allPartnersQuery = `
   *[_type == "partner"] { _id, name, address, website }
 `;
 
+export const allEventsQuery = `
+  *[_type == "event"] | order(date desc) {
+    _id, title, slug, type, date,
+    coverImage, "coverImageUrl": coverImage.asset->url
+  }
+`;
+
+export const eventBySlugQuery = `
+  *[_type == "event" && slug.current == $slug][0] {
+    _id, title, slug, type, date,
+    location, area, timeline, typology,
+    coverImage, "coverImageUrl": coverImage.asset->url,
+    description, body,
+    gallery[]{ ..., "url": asset->url }
+  }
+`;
+
 export const studioQuery = `
-  *[_type == "studio"][0] { description, images }
+  *[_type == "studio"][0] {
+    description, spaziDescription, crescitaDescription, teamDescription, progettiDescription,
+    heroImage, teamPortrait, mainImage,
+    spaziImages[]{ ..., caption },
+    crescitaImages[]{ ... }
+  }
 `;

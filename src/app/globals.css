@@ -1,5 +1,6 @@
 @import "tailwindcss";
 
+
 @theme inline {
   --font-sans: var(--font-inter);
 
@@ -31,4 +32,35 @@ html {
 body {
   background: #ffffff;
   color: #171717;
+}
+
+@layer utilities {
+  .no-scrollbar::-webkit-scrollbar { display: none; }
+
+  /* Padding orizzontale universale — si allinea a max-w-[1440px] mx-auto px-[32px]
+     a qualsiasi larghezza del viewport, inclusi i MacBook > 1440px */
+  .page-px {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+  @media (min-width: 768px) {
+    .page-px {
+      /* max(32px, (50vw - 688px)) replica esattamente (viewport - 1440) / 2 + 32px
+         — identico al margine auto di max-w-[1440px] mx-auto + px-[32px] */
+      padding-left:  max(2rem, calc(50vw - 688px));
+      padding-right: max(2rem, calc(50vw - 688px));
+    }
+  }
+}
+
+@layer base {
+  ::selection {
+    background-color: #171717;
+    color: #ffffff;
+  }
+
+  ::-moz-selection {
+    background-color: #171717;
+    color: #ffffff;
+  }
 }

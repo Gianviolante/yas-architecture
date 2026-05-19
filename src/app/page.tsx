@@ -3,6 +3,7 @@ import Link from "next/link";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import HomeSlider from "@/components/sections/HomeSlider";
+import HomeProjectsCarousel from "@/components/sections/HomeProjectsCarousel";
 import { sanityClient } from "@/lib/sanity/client";
 import { allProjectsQuery } from "@/lib/sanity/queries";
 import type { Project } from "@/lib/sanity/types";
@@ -23,7 +24,6 @@ const NAV_LINKS = [
 
 export default async function HomePage() {
   const projects: Project[] = await sanityClient.fetch(allProjectsQuery).catch(() => []);
-  const featured = projects.slice(0, 2);
 
   return (
     <>
@@ -136,63 +136,7 @@ export default async function HomePage() {
           </div>
 
           {/* ── 5. PROJECT BLOCK ─────────────────────────────────────── */}
-          <section className="relative">
-            <div className="w-full h-[48px] bg-white shadow-[0px_6px_8px_0px_rgba(0,0,0,0.1)]" />
-            <div className="px-[32px] pt-8 pb-16">
-              <p className="text-[16px] leading-normal text-black text-center mb-6">Progetti</p>
-              <p className="text-[24px] font-medium leading-[1.2] text-[#282828] mb-10">
-                It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.
-                The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using
-                &lsquo;Content here, content here&rsquo;, making it look like readable English. Many desktop publishing packages and web page editors now use…
-              </p>
-
-              <div className="grid grid-cols-2 gap-[14px] mb-10">
-                {featured.length > 0 ? (
-                  featured.map((p) => (
-                    <Link key={p._id} href={`/progetti/${p.slug.current}`} className="group">
-                      <div className="relative h-[550px] overflow-hidden mb-4">
-                        {p.coverImageUrl ? (
-                          <Image src={p.coverImageUrl} alt={p.title} fill className="object-cover transition-transform duration-500 group-hover:scale-[1.03]" />
-                        ) : (
-                          <div className="w-full h-full bg-[#d9d9d9]" />
-                        )}
-                      </div>
-                      <p className="text-[17.5px] leading-[1.5] text-[#282828] mb-2">
-                        {p.title}{p.location ? `, ${p.location}` : ""}
-                      </p>
-                      <span className="inline-flex items-center border-2 border-[#333] rounded-[100px] px-[24px] py-[10px] text-[12px] text-[#333] leading-[22px]">
-                        {p.typology ?? "Residenziale"}
-                      </span>
-                    </Link>
-                  ))
-                ) : (
-                  [
-                    { img: "/assets/home-project-1.jpg", label: "Marina One Residence, Marina Way – SG" },
-                    { img: "/assets/home-project-2.jpg", label: "Marina One Residence, Marina Way – SG" },
-                  ].map(({ img, label }, i) => (
-                    <div key={i}>
-                      <div className="relative h-[550px] overflow-hidden mb-4">
-                        <Image src={img} alt="" fill className="object-cover" />
-                      </div>
-                      <p className="text-[17.5px] leading-[1.5] text-[#282828] mb-2">{label}</p>
-                      <span className="inline-flex items-center border-2 border-[#333] rounded-[100px] px-[24px] py-[10px] text-[12px] text-[#333] leading-[22px]">
-                        Residential
-                      </span>
-                    </div>
-                  ))
-                )}
-              </div>
-
-              <div className="flex justify-center">
-                <Link
-                  href="/progetti"
-                  className="inline-flex items-center border-2 border-[#333] rounded-[100px] px-[24px] py-[10px] text-[16px] text-[#333] leading-[22px] hover:bg-[#333] hover:text-white transition-colors duration-200"
-                >
-                  Vai a tutti i progetti
-                </Link>
-              </div>
-            </div>
-          </section>
+          <HomeProjectsCarousel projects={projects} />
 
           {/* ── 6. STUDIO BLOCK ──────────────────────────────────────── */}
           <section className="px-[32px] py-10">

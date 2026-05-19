@@ -20,11 +20,24 @@ export const projectSchema = defineType({
       options: { list: ["In corso", "In approvazione", "Realizzato"] },
       validation: (r) => r.required(),
     }),
+    defineField({
+      name: "featured",
+      title: "In evidenza (card grande)",
+      type: "boolean",
+      description: "Spunta per mostrare questo progetto nella card grande in cima alla griglia. Max 4 consigliati.",
+      initialValue: false,
+    }),
     defineField({ name: "coverImage", title: "Immagine copertina (card)", type: "image", options: { hotspot: true } }),
     defineField({ name: "heroImage", title: "Hero image (pagina progetto)", type: "image", options: { hotspot: true } }),
     defineField({
       name: "gallery", title: "Galleria immagini", type: "array",
-      of: [{ type: "image", options: { hotspot: true } }],
+      of: [{
+        type: "image",
+        options: { hotspot: true },
+        fields: [
+          defineField({ name: "caption", title: "Didascalia", type: "string" }),
+        ],
+      }],
     }),
     defineField({ name: "description", title: "Descrizione", type: "array", of: [{ type: "block" }] }),
     defineField({

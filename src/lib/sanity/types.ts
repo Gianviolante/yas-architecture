@@ -6,6 +6,7 @@ export interface SanityImage {
   _type: "image";
   asset: { _ref: string; _type: "reference" };
   alt?: string;
+  caption?: string;
 }
 
 export interface Project {
@@ -20,6 +21,7 @@ export interface Project {
   description?: unknown; // PortableText
   heroImage?: SanityImage;
   gallery?: SanityImage[];
+  featured?: boolean;
   coverImage?: SanityImage;
   coverImageUrl?: string;
   teamMembers?: TeamMember[];
@@ -42,7 +44,34 @@ export interface Partner {
   website?: string;
 }
 
+export type EventType = "News" | "Evento";
+
+export interface Event {
+  _id: string;
+  title: string;
+  slug: { current: string };
+  type?: EventType;
+  date?: string;
+  coverImage?: SanityImage;
+  coverImageUrl?: string;
+  location?: string;
+  area?: string;
+  timeline?: string;
+  typology?: string;
+  description?: unknown; // PortableText (intro)
+  body?: unknown;        // PortableText (body)
+  gallery?: (SanityImage & { url?: string })[];
+}
+
 export interface Studio {
-  description?: unknown; // PortableText
-  images?: SanityImage[];
+  description?:         unknown; // PortableText
+  spaziDescription?:    unknown;
+  crescitaDescription?: unknown;
+  teamDescription?:     unknown;
+  progettiDescription?: unknown;
+  heroImage?:           SanityImage;
+  teamPortrait?:        SanityImage;
+  mainImage?:           SanityImage;
+  spaziImages?:         SanityImage[];
+  crescitaImages?:      SanityImage[];
 }

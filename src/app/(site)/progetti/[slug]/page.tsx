@@ -1,10 +1,13 @@
 import { notFound } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
+import { PortableText } from "@portabletext/react";
 import imageUrlBuilder from "@sanity/image-url";
 import { sanityClient } from "@/lib/sanity/client";
 import { projectBySlugQuery, allProjectsQuery } from "@/lib/sanity/queries";
 import type { Project, SanityImage } from "@/lib/sanity/types";
+import GallerySection from "@/components/sections/GallerySection";
+import ProjectsSlider from "@/components/sections/ProjectsSlider";
 
 export const revalidate = 60;
 
@@ -28,16 +31,23 @@ export default async function ProgettoPage({ params }: { params: Promise<{ slug:
 
   if (!project) notFound();
 
-  const otherProjects = allProjects.filter((p) => p.slug.current !== slug).slice(0, 6);
+  const otherProjects = allProjects.filter((p) => p.slug.current !== slug);
 
   const heroUrl = project.heroImage ? urlFor(project.heroImage).width(1440).url() : null;
-  const galleryUrls = project.gallery?.map((img) => urlFor(img).width(800).url()) ?? [];
+
+  // Gallery: first image → full-bleed block, rest → slider
+  const galleryItems = (project.gallery ?? []).map((img: SanityImage) => ({
+    url: urlFor(img).width(1200).url(),
+    caption: img.caption,
+  }));
+  const [secondImage, ...sliderItems] = galleryItems;
 
   return (
-    <div>
-      {/* Hero image — full bleed, navbar overlaps */}
-      <div className="relative w-full aspect-[16/7] bg-gray-lighter">
-        {heroUrl && (
+    <div className="bg-white">
+
+      {/* ── Hero image ─────────────────────────────────────────────── */}
+      <div className="relative mx-[15px] mt-[74px]" style={{ height: "752px" }}>
+        {heroUrl ? (
           <Image
             src={heroUrl}
             alt={project.title}
@@ -45,139 +55,123 @@ export default async function ProgettoPage({ params }: { params: Promise<{ slug:
             className="object-cover"
             priority
           />
+        ) : (
+          <div className="w-full h-full bg-[#d9d9d9]" />
+        )}
+        {galleryItems.length > 0 && (
+          <p className="absolute bottom-[16px] right-[16px] text-[12px] leading-[1.5] text-white/70">
+            1 / {galleryItems.length + 1}
+          </p>
         )}
       </div>
 
-      {/* Title + meta section */}
-      <div className="max-w-[1440px] mx-auto px-8 pt-10 pb-12">
-        <div className="flex items-start justify-between mb-6">
-          <h1 className="text-5xl font-bold">{project.title}</h1>
-          <Link href="/progetti" className="text-xs text-black/40 hover:text-black transition-colors mt-4 whitespace-nowrap">
-            Torna a progetti ↑
-          </Link>
+      {/* ── Title + back link ──────────────────────────────────────── */}
+      <div className="flex items-start justify-between page-px pt-[20px]">
+        <h1
+          className="font-bold leading-[1.3] text-[#282828]"
+          style={{ fontSize: "clamp(60px, 8.3vw, 120px)" }}
+        >
+          {project.title}
+        </h1>
+        <Link
+          href="/progetti"
+          className="text-[12px] leading-[1.3] text-[#282828] hover:opacity-60 transition-opacity whitespace-nowrap mt-[16px] shrink-0"
+        >
+          Torna a progetti →
+        </Link>
+      </div>
+
+      {/* ── Meta + description ─────────────────────────────────────── */}
+      <div className="flex gap-x-[32px] page-px pt-[24px] pb-[40px]">
+
+        {/* Left: stacked meta + chips */}
+        <div className="shrink-0" style={{ width: "577px" }}>
+          <div className="text-[12px] leading-[1.3] text-[#282828]">
+            {project.typology && <p>Area: {project.typology}</p>}
+            {project.year    && <p>Timeline: {project.year}</p>}
+            {project.location && <p>Location: {project.location}</p>}
+            {project.area    && <p>Superficie: {project.area} mq</p>}
+          </div>
+
+          {/* Column labels */}
+          <div className="flex gap-[24px] mt-[24px] mb-[6px]">
+            <p className="text-[12px] leading-[1.3] text-[#282828]">Area</p>
+            <p className="text-[12px] leading-[1.3] text-[#282828]">Stato</p>
+          </div>
+
+          {/* Chips */}
+          <div className="flex gap-[8px]">
+            <span className="inline-flex items-center border-[1.179px] border-[#333] rounded-[100px] px-[14px] py-[6px] text-[9.44px] text-[#333] leading-[1.4]">
+              {project.typology}
+            </span>
+            <span className="inline-flex items-center border-[1.179px] border-[#333] rounded-[100px] px-[14px] py-[6px] text-[9.44px] text-[#333] leading-[1.4]">
+              {project.status}
+            </span>
+          </div>
+
+          {/* Team */}
+          {project.teamMembers && project.teamMembers.length > 0 && (
+            <div className="mt-[24px]">
+              <p className="text-[12px] leading-[1.3] text-[#282828] mb-[6px]">Team</p>
+              <div className="flex flex-wrap gap-[8px]">
+                {project.teamMembers.map((m) => (
+                  <span key={m._id} className="text-[12px] leading-[1.3] text-[#282828]/60">{m.name}</span>
+                ))}
+              </div>
+            </div>
+          )}
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
-          {/* Meta info */}
-          <div className="space-y-3 text-sm">
-            <div className="grid grid-cols-2 gap-y-2">
-              {project.location && (
-                <>
-                  <span className="text-black/40">Location</span>
-                  <span>{project.location}</span>
-                </>
-              )}
-              {project.year && (
-                <>
-                  <span className="text-black/40">Anno</span>
-                  <span>{project.year}</span>
-                </>
-              )}
-              {project.area && (
-                <>
-                  <span className="text-black/40">Area</span>
-                  <span>{project.area} mq</span>
-                </>
-              )}
-              {project.typology && (
-                <>
-                  <span className="text-black/40">Tipologia</span>
-                  <span>{project.typology}</span>
-                </>
-              )}
-            </div>
-            <div className="flex gap-2 pt-2">
-              <span className="text-xs px-3 py-1 rounded-full border border-gray-light text-black/50">
-                {project.typology}
-              </span>
-              <span className="text-xs px-3 py-1 rounded-full border border-gray-light text-black/50">
-                {project.status}
-              </span>
-            </div>
-            {project.teamMembers && project.teamMembers.length > 0 && (
-              <div className="pt-2">
-                <p className="text-black/40 mb-1">Team</p>
-                <div className="flex flex-wrap gap-2">
-                  {project.teamMembers.map((m) => (
-                    <span key={m._id} className="text-xs text-black/60">{m.name}</span>
-                  ))}
-                </div>
-              </div>
-            )}
-          </div>
-
-          {/* Description */}
-          <div className="text-sm text-black/70 leading-relaxed">
-            {/* PortableText rendering — plain fallback for now */}
-            {typeof project.description === "string"
-              ? project.description
-              : project.description
-              ? <p>Descrizione disponibile nel CMS.</p>
-              : null}
-          </div>
+        {/* Right: description */}
+        <div
+          className="flex-1 text-[17.4px] leading-[1.2] text-[#282828]"
+          style={{ maxWidth: "798px" }}
+        >
+          {project.description
+            ? (
+              <PortableText
+                value={project.description as Parameters<typeof PortableText>[0]["value"]}
+                components={{
+                  block: {
+                    normal: ({ children }) => <p className="mb-[1em]">{children}</p>,
+                  },
+                }}
+              />
+            )
+            : (
+              <p className="text-[#d9d9d9]">Nessuna descrizione disponibile.</p>
+            )
+          }
         </div>
       </div>
 
-      {/* Gallery */}
-      {galleryUrls.length > 0 && (
-        <div className="max-w-[1440px] mx-auto px-8 pb-16">
-          {/* First gallery image — full width */}
-          {galleryUrls[0] && (
-            <div className="relative w-full aspect-[16/7] bg-gray-lighter mb-4">
-              <Image src={galleryUrls[0]} alt={`${project.title} — immagine`} fill className="object-cover" />
-            </div>
-          )}
+      {/* ── Second full-width image ────────────────────────────────── */}
+      <div className="relative mx-[15px]" style={{ height: "718px" }}>
+        {secondImage ? (
+          <Image
+            src={secondImage.url}
+            alt={secondImage.caption ?? `${project.title} — interno`}
+            fill
+            className="object-cover"
+          />
+        ) : (
+          <div className="w-full h-full bg-[#d9d9d9]" />
+        )}
+      </div>
 
-          {/* Rest of gallery — 3 col grid */}
-          {galleryUrls.length > 1 && (
-            <>
-              <p className="text-xs text-black/40 mb-4">Raccolta come immagini</p>
-              <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-                {galleryUrls.slice(1).map((url, i) => (
-                  <div key={i} className="relative aspect-[4/3] bg-gray-lighter overflow-hidden">
-                    <Image src={url} alt={`${project.title} ${i + 2}`} fill className="object-cover hover:scale-105 transition-transform duration-500" />
-                  </div>
-                ))}
-              </div>
-            </>
-          )}
-        </div>
-      )}
+      {/* ── Gallery slider ─────────────────────────────────────────── */}
+      <GallerySection items={sliderItems} projectTitle={project.title} />
 
-      {/* Other projects */}
+      {/* ── Divider bar ────────────────────────────────────────────── */}
+      <div className="w-full h-[48px] bg-white shadow-[0px_6px_8px_0px_rgba(0,0,0,0.1)] mt-[48px]" />
+
+      {/* ── Other projects slider ──────────────────────────────────── */}
       {otherProjects.length > 0 && (
-        <div className="border-t border-gray-light pt-12 pb-16">
-          <div className="max-w-[1440px] mx-auto px-8">
-            <p className="text-xs text-black/40 uppercase tracking-widest mb-6">Vedi altri progetti</p>
-            <div className="flex gap-4 overflow-x-auto pb-4 -mx-8 px-8 scrollbar-hide">
-              {otherProjects.map((p) => (
-                <Link
-                  key={p._id}
-                  href={`/progetti/${p.slug.current}`}
-                  className="shrink-0 w-48 group"
-                >
-                  <div className="aspect-[4/3] bg-gray-lighter overflow-hidden mb-2">
-                    {p.coverImageUrl && (
-                      <Image
-                        src={p.coverImageUrl}
-                        alt={p.title}
-                        width={192}
-                        height={144}
-                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                      />
-                    )}
-                  </div>
-                  <p className="text-xs font-medium truncate">{p.title}</p>
-                  <p className="text-xs text-black/40 truncate">{p.location}</p>
-                  <span className="inline-block mt-1 text-[10px] px-2 py-0.5 rounded-full border border-gray-light text-black/40">
-                    {p.typology}
-                  </span>
-                </Link>
-              ))}
-            </div>
-          </div>
+        <div className="pt-[32px]">
+          <ProjectsSlider projects={otherProjects} />
         </div>
       )}
+
     </div>
   );
 }
