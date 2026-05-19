@@ -67,7 +67,7 @@ export default function TeamClient({ teamMembers, partners }: Props) {
       {/* ══════════════════════════════════════════════════════════════
           Il team
       ══════════════════════════════════════════════════════════════ */}
-      <div className="pt-[37px] pb-[40px]">
+      <div className="pt-[60px] pb-[40px]">
         <p className="text-[16px] leading-normal text-black text-center mb-[26px]">Il team</p>
         <div className="page-px mb-[32px] text-[24px] leading-normal text-black">
           <p>{FALLBACK_INTRO}</p>
