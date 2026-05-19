@@ -5,9 +5,10 @@ import Footer from "@/components/layout/Footer";
 import HomeHeroSection from "@/components/sections/HomeHeroSection";
 import HomeSlider from "@/components/sections/HomeSlider";
 import HomeProjectsCarousel from "@/components/sections/HomeProjectsCarousel";
+import { PortableText } from "@portabletext/react";
 import { sanityClient } from "@/lib/sanity/client";
-import { allProjectsQuery } from "@/lib/sanity/queries";
-import type { Project } from "@/lib/sanity/types";
+import { allProjectsQuery, homeQuery } from "@/lib/sanity/queries";
+import type { Project, Home } from "@/lib/sanity/types";
 
 export const revalidate = 60;
 
@@ -23,8 +24,19 @@ const NAV_LINKS = [
   { href: "/eventi",   label: "Eventi",   img: "/assets/home-link-3.jpg",  flex: "flex-[217]" },
 ];
 
+const ptBlock = {
+  block: { normal: ({ children }: { children?: React.ReactNode }) => <p>{children}</p> },
+};
+
+const FALLBACK_INTRO = `I benefici derivanti dall'utilizzo di una griglia sono evidenti: chiarezza, efficienza, economia, continuità. Prima di ogni altra cosa, una griglia introduce ordine sistematico a una struttura visiva, facilitando la distinzione delle diverse categorie informative e indirizzando lo spostamento dell'occhio del lettore tra di esse.`;
+const FALLBACK_BODY_LEFT = `It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.`;
+const FALLBACK_BODY_RIGHT = `It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, making it look like readable English.`;
+
 export default async function HomePage() {
-  const projects: Project[] = await sanityClient.fetch(allProjectsQuery).catch(() => []);
+  const [projects, home]: [Project[], Home | null] = await Promise.all([
+    sanityClient.fetch(allProjectsQuery).catch(() => []),
+    sanityClient.fetch(homeQuery).catch(() => null),
+  ]);
 
   return (
     <>
@@ -81,22 +93,23 @@ export default async function HomePage() {
           </section>
 
           {/* ── 4. DESCRIPTION + slider ──────────────────────────────── */}
-          <section className="px-[32px]">
-            <p className="text-[24px] leading-normal text-black mb-14">
-              I benefici derivanti dall&apos;utilizzo di una griglia sono evidenti: chiarezza, efficienza, economia, continuità.
-              Prima di ogni altra cosa, una griglia introduce ordine sistematico a una struttura visiva, facilitando la
-              distinzione delle diverse categorie informative e indirizzando lo spostamento dell&apos;occhio del lettore tra di esse.
-            </p>
+          <section className="page-px pt-[40px]">
+            <div className="text-[24px] leading-normal text-black mb-14">
+              {home?.introDescription
+                ? <PortableText value={home.introDescription as Parameters<typeof PortableText>[0]["value"]} components={ptBlock} />
+                : <p>{FALLBACK_INTRO}</p>}
+            </div>
             <div className="grid grid-cols-2 gap-8 mb-12">
-              <p className="text-[17.5px] leading-[1.5] text-[#282828]">
-                It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.
-              </p>
-              <p className="text-[17.5px] leading-[1.2] text-[#282828]">
-                It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.
-                The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using
-                &lsquo;Content here, content here&rsquo;, making it look like readable English. Many desktop publishing packages and
-                web page editors now use…
-              </p>
+              <div className="text-[17.5px] leading-[1.5] text-[#282828]">
+                {home?.bodyLeft
+                  ? <PortableText value={home.bodyLeft as Parameters<typeof PortableText>[0]["value"]} components={ptBlock} />
+                  : <p>{FALLBACK_BODY_LEFT}</p>}
+              </div>
+              <div className="text-[17.5px] leading-[1.2] text-[#282828]">
+                {home?.bodyRight
+                  ? <PortableText value={home.bodyRight as Parameters<typeof PortableText>[0]["value"]} components={ptBlock} />
+                  : <p>{FALLBACK_BODY_RIGHT}</p>}
+              </div>
             </div>
           </section>
 
@@ -108,13 +121,13 @@ export default async function HomePage() {
           <HomeProjectsCarousel projects={projects} />
 
           {/* ── 6. STUDIO BLOCK ──────────────────────────────────────── */}
-          <section className="px-[32px] py-10">
+          <section className="page-px py-10">
             <p className="text-[16px] leading-normal text-black text-center mb-6">Lo studio</p>
-            <p className="text-[24px] leading-normal text-black mb-10">
-              I benefici derivanti dall&apos;utilizzo di una griglia sono evidenti: chiarezza, efficienza, economia, continuità.
-              Prima di ogni altra cosa, una griglia introduce ordine sistematico a una struttura visiva, facilitando la
-              distinzione delle diverse categorie informative e indirizzando lo spostamento dell&apos;occhio del lettore tra di esse.
-            </p>
+            <div className="text-[24px] leading-normal text-black mb-10">
+              {home?.studioDescription
+                ? <PortableText value={home.studioDescription as Parameters<typeof PortableText>[0]["value"]} components={ptBlock} />
+                : <p>{FALLBACK_INTRO}</p>}
+            </div>
             <div className="relative h-[631px] mx-auto max-w-[1027px] mb-10">
               <Image src="/assets/home-studio.jpg" alt="Lo studio" fill className="object-cover" />
             </div>

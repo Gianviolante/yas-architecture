@@ -63,6 +63,13 @@ export interface Event {
   gallery?: (SanityImage & { url?: string })[];
 }
 
+export interface Home {
+  introDescription?: unknown; // PortableText
+  bodyLeft?:         unknown; // PortableText
+  bodyRight?:        unknown; // PortableText
+  studioDescription?:unknown; // PortableText
+}
+
 export interface Studio {
   description?:         unknown; // PortableText
   spaziDescription?:    unknown;

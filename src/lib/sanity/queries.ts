@@ -43,6 +43,12 @@ export const eventBySlugQuery = `
   }
 `;
 
+export const homeQuery = `
+  *[_type == "home"][0] {
+    introDescription, bodyLeft, bodyRight, studioDescription
+  }
+`;
+
 export const studioQuery = `
   *[_type == "studio"][0] {
     description, spaziDescription, crescitaDescription, teamDescription, progettiDescription,
