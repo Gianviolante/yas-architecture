@@ -9,8 +9,15 @@ export const metadata = {
   title: "Progetti — YAS Architecture",
 };
 
-export default async function ProgettiPage() {
-  const projects: Project[] = await sanityClient.fetch(allProjectsQuery);
+export default async function ProgettiPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ tipologia?: string }>;
+}) {
+  const [projects, params] = await Promise.all([
+    sanityClient.fetch(allProjectsQuery) as Promise<Project[]>,
+    searchParams,
+  ]);
 
-  return <ProgettiClient projects={projects} />;
+  return <ProgettiClient projects={projects} initialTypology={params.tipologia} />;
 }

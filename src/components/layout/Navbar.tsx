@@ -14,16 +14,18 @@ const navLinks = [
 ];
 
 const progettiSubLinks = [
-  { href: "/progetti?tipologia=Residenziale", label: "Residenziali" },
-  { href: "/progetti?tipologia=Commerciale", label: "Commerciali" },
-  { href: "/progetti", label: "Tutti i progetti" },
-  { href: "/progetti#filtri", label: "Filtra ricerca" },
+  { href: "/progetti?tipologia=Residenziale",    label: "Residenziali" },
+  { href: "/progetti?tipologia=Commerciale",     label: "Commerciali" },
+  { href: "/progetti?tipologia=Interior Design", label: "Interior Design" },
+  { href: "/progetti?tipologia=Architettura",    label: "Architettura" },
+  { href: "/progetti",                           label: "Tutti i progetti" },
 ];
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [progettiOpen, setProgettiOpen] = useState(true);
+  const [progettiDropdown, setProgettiDropdown] = useState(false);
   const pathname = usePathname();
 
   useEffect(() => {
@@ -59,20 +61,57 @@ export default function Navbar() {
         <nav className="max-w-[1440px] mx-auto page-px h-full flex items-center justify-between gap-[430px_0]">
           {/* Desktop left nav */}
           <div className="hidden md:flex items-center gap-[10px]">
-            {navLinks.map(({ href, label }) => (
-              <Link
-                key={href}
-                href={href}
-                className={cn(
-                  "text-[14px] leading-normal transition-colors duration-200",
-                  isActive(href)
-                    ? "text-[#d9d9d9] cursor-default pointer-events-none"
-                    : "text-[#1a1a1a] hover:text-[#d9d9d9]"
-                )}
-              >
-                {label}
-              </Link>
-            ))}
+            {navLinks.map(({ href, label }) =>
+              href === "/progetti" ? (
+                <div
+                  key={href}
+                  className="relative"
+                  onMouseEnter={() => setProgettiDropdown(true)}
+                  onMouseLeave={() => setProgettiDropdown(false)}
+                >
+                  <Link
+                    href="/progetti"
+                    className={cn(
+                      "text-[14px] leading-normal transition-colors duration-200",
+                      isActive(href)
+                        ? "text-[#d9d9d9] cursor-default pointer-events-none"
+                        : "text-[#1a1a1a] hover:text-[#d9d9d9]"
+                    )}
+                  >
+                    {label}
+                  </Link>
+
+                  {progettiDropdown && (
+                    <div className="absolute top-full left-0 pt-[8px] z-50">
+                      <div className="bg-white rounded-[8px] shadow-[0px_4px_16px_rgba(0,0,0,0.12)] py-[8px] w-[180px]">
+                        {progettiSubLinks.map(({ href: subHref, label: subLabel }) => (
+                          <Link
+                            key={subLabel}
+                            href={subHref}
+                            className="block px-[16px] py-[7px] text-[13px] leading-normal text-[#282828] hover:bg-[#f5f5f5] transition-colors"
+                          >
+                            {subLabel}
+                          </Link>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+                </div>
+              ) : (
+                <Link
+                  key={href}
+                  href={href}
+                  className={cn(
+                    "text-[14px] leading-normal transition-colors duration-200",
+                    isActive(href)
+                      ? "text-[#d9d9d9] cursor-default pointer-events-none"
+                      : "text-[#1a1a1a] hover:text-[#d9d9d9]"
+                  )}
+                >
+                  {label}
+                </Link>
+              )
+            )}
           </div>
 
           {/* Mobile hamburger */}

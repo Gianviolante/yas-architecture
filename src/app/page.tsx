@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
+import HomeHeroSection from "@/components/sections/HomeHeroSection";
 import HomeSlider from "@/components/sections/HomeSlider";
 import HomeProjectsCarousel from "@/components/sections/HomeProjectsCarousel";
 import { sanityClient } from "@/lib/sanity/client";
@@ -32,39 +33,7 @@ export default async function HomePage() {
         <div className="pt-[53px]">
 
           {/* ── 1. HERO ──────────────────────────────────────────────── */}
-          <section className="relative h-[439px] overflow-hidden">
-            <h1
-              className="absolute font-bold text-black leading-none whitespace-nowrap select-none"
-              style={{ fontSize: "clamp(8rem,19.8vw,285px)", top: "7px", left: "198px" }}
-            >
-              yas-arch
-            </h1>
-
-            <div
-              className="absolute text-[12px] leading-[1.2] text-[#282828] text-right"
-              style={{ top: "79px", right: "calc(100% - 499px)" }}
-            >
-              <p>Studio architettura</p>
-              <p>e design</p>
-            </div>
-
-            <p
-              className="absolute text-[12px] leading-[1.2] text-[#282828]"
-              style={{ top: "79px", left: "765px" }}
-            >
-              Apulian inspiration guide
-            </p>
-
-            <div
-              className="absolute text-[12px] leading-[1.2] text-black text-right"
-              style={{ top: "327px", right: "calc(100% - 972px)" }}
-            >
-              <p>Via Dè Gracchi, 47</p>
-              <p>72100 Brindisi (BR) Italia</p>
-              <p>T +39 351 531 7762</p>
-              <p>info@yas-arch.com</p>
-            </div>
-          </section>
+          <HomeHeroSection projects={projects} />
 
           {/* ── 2. LINKS ─────────────────────────────────────────────── */}
           <section className="px-[32px]">

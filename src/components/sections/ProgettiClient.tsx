@@ -22,11 +22,20 @@ const STATO_FILTERS: { label: string; value: ProjectStatus }[] = [
   { label: "Realizzato",      value: "Realizzato" },
 ];
 
-interface Props { projects: Project[]; }
+interface Props {
+  projects: Project[];
+  initialTypology?: string;
+}
 
-export default function ProgettiClient({ projects }: Props) {
+export default function ProgettiClient({ projects, initialTypology }: Props) {
   const [view,             setView]             = useState<"grid" | "index">("grid");
-  const [typologyFilters,  setTypologyFilters]  = useState<Set<Typology>>(new Set());
+  const [typologyFilters,  setTypologyFilters]  = useState<Set<Typology>>(() => {
+    const all = [...AREA_FILTERS.map(f => f.value), ...CAT_FILTERS.map(f => f.value)].filter(v => v !== "all") as Typology[];
+    if (initialTypology && all.includes(initialTypology as Typology)) {
+      return new Set([initialTypology as Typology]);
+    }
+    return new Set();
+  });
   const [statoFilters,     setStatoFilters]     = useState<Set<ProjectStatus>>(new Set());
   const [hoveredId,        setHoveredId]        = useState<string | null>(null);
 
