@@ -90,7 +90,7 @@ body {
     animation: cursor-twinkle 1s ease-in-out infinite alternate both;
   }
 
-  /* The ring — starts tiny, expands to full size on hover */
+  /* The ring — small dot by default, full circle on hover */
   .cursor-circle::before {
     content: "";
     display: block;
@@ -99,13 +99,13 @@ body {
     border-radius: 50%;
     background: transparent;
     border: 2px solid #fff;        /* white + mix-blend-mode = black on white bg */
-    transform: scale(0.1);
+    transform: scale(0.18);        /* ~11px visible dot at rest */
     transition:
-      transform    .25s ease-in-out,
+      transform    .3s cubic-bezier(.22,.68,0,1.2),
       border-color .25s ease-in-out;
   }
 
-  /* Hover — ring expands */
+  /* Hover — ring expands to full 60px */
   .cursor-wrap.cursor--over .cursor-circle::before {
     transform: scale(1);
   }
