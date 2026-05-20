@@ -110,11 +110,7 @@ body {
     transform: scale(1.15);
   }
 
-  /* Hidden state — on sliders that have their own cursor */
-  .cursor-wrap.cursor--hidden {
-    opacity: 0 !important;
-    visibility: hidden !important;
-  }
+  /* Hidden state — managed by JS directly in tick(), no CSS needed */
 
   /* Twinkle: subtle scale pulse while hovering */
   @keyframes cursor-twinkle {

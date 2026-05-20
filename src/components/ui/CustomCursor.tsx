@@ -22,13 +22,13 @@ export default function CustomCursor() {
     let mouseX = 0, mouseY = 0;
     let x = 0, y = 0, o = 0;
     let initialized = false;
+    let hidden = false;   // true when over a [data-cursor="hide"] area
     let rafId = 0;
 
     const onMove = (e: MouseEvent) => {
       mouseX = e.clientX;
       mouseY = e.clientY;
       if (!initialized) {
-        // Snap to position on first move (no lerp jump from 0,0)
         x = mouseX;
         y = mouseY;
         initialized = true;
@@ -37,13 +37,20 @@ export default function CustomCursor() {
 
     function tick() {
       if (initialized) {
-        x += (mouseX - x) / 4;   // lerp ÷ 4 — same as davidegroppi
+        x += (mouseX - x) / 4;
         y += (mouseY - y) / 4;
-        o += (1 - o) / 10;       // opacity fade-in
 
         cursor.style.transform = `translate(${x}px, ${y}px)`;
-        cursor.style.opacity   = String(Math.min(o, 1));
-        if (o > 0.02) cursor.style.visibility = "visible";
+
+        if (hidden) {
+          // Override inline opacity each frame so it stays hidden
+          cursor.style.opacity    = "0";
+          cursor.style.visibility = "hidden";
+        } else {
+          o += (1 - o) / 10;
+          cursor.style.opacity    = String(Math.min(o, 1));
+          if (o > 0.02) cursor.style.visibility = "visible";
+        }
       }
       rafId = requestAnimationFrame(tick);
     }
@@ -54,20 +61,21 @@ export default function CustomCursor() {
 
     const onOver = (e: MouseEvent) => {
       const t = e.target as HTMLElement;
-      // Hide cursor entirely inside sliders that have their own custom cursor
       if (t.closest(HIDE_SEL)) {
-        cursor.classList.add("cursor--hidden");
+        hidden = true;
         cursor.classList.remove("cursor--over");
         return;
       }
-      cursor.classList.remove("cursor--hidden");
+      hidden = false;
       if (t.closest(HOVER_SEL)) {
         cursor.classList.add("cursor--over");
+      } else {
+        cursor.classList.remove("cursor--over");
       }
     };
     const onOut = (e: MouseEvent) => {
       const to = e.relatedTarget as HTMLElement | null;
-      if (!to?.closest(HIDE_SEL))  cursor.classList.remove("cursor--hidden");
+      if (!to?.closest(HIDE_SEL))  hidden = false;
       if (!to?.closest(HOVER_SEL)) cursor.classList.remove("cursor--over");
     };
 
