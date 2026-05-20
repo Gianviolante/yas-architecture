@@ -104,7 +104,7 @@ export default function EventiClient({ events }: Props) {
 
       {/* ── Events grid ─────────────────────────────────────────────── */}
       <div className="page-px pt-[37px] pb-[60px]">
-        <div className="grid grid-cols-3 gap-x-[15px] gap-y-[53px]">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-[15px] gap-y-[53px]">
           {displayed
             ? displayed.map((event) => (
                 <EventCard key={event._id} event={event} />

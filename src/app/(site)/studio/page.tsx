@@ -78,7 +78,7 @@ export default async function StudioPage() {
         </div>
 
         {/* Hero image — centered 1027×631, with nav arrow */}
-        <div className="relative" style={{ paddingLeft: "182px", paddingRight: "231px" }}>
+        <div className="relative" style={{ paddingLeft: "clamp(16px, 12.6vw, 182px)", paddingRight: "clamp(16px, 16vw, 231px)" }}>
           <div className="relative overflow-hidden" style={{ height: "631px" }}>
             {heroUrl
               ? <Image src={heroUrl} alt="Studio" fill className="object-cover" />
@@ -110,7 +110,7 @@ export default async function StudioPage() {
         </div>
 
         {/* Two images */}
-        <div className="flex gap-[12px] px-[238px]">
+        <div className="flex gap-[12px] page-px">
           {[0, 1].map((i) => (
             <div key={i} className="flex-1">
               <div className="relative overflow-hidden mb-[12px]" style={{ height: "632px" }}>
@@ -142,7 +142,7 @@ export default async function StudioPage() {
         </div>
 
         {/* Two images */}
-        <div className="flex gap-[15px] page-px">
+        <div className="flex flex-col sm:flex-row gap-[15px] page-px">
           {[0, 1].map((i) => (
             <div key={i} className="relative overflow-hidden flex-1" style={{ height: "483px" }}>
               {crescitaUrls[i]
@@ -216,7 +216,7 @@ export default async function StudioPage() {
 
         {/* Portrait — centered 705px */}
         <div className="flex justify-center mb-[40px]">
-          <div className="relative overflow-hidden" style={{ width: "705px", height: "908px" }}>
+          <div className="relative overflow-hidden w-full max-w-[705px]" style={{ height: "clamp(400px, 60vw, 908px)" }}>
             {teamPortraitUrl
               ? <Image src={teamPortraitUrl} alt="Team YAS Architecture" fill className="object-cover" />
               : <PlaceholderImg className="absolute inset-0" />}

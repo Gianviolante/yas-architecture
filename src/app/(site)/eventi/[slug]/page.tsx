@@ -70,10 +70,10 @@ export default async function EventoPage({ params }: { params: Promise<{ slug: s
       </div>
 
       {/* ── Meta + body ────────────────────────────────────────────── */}
-      <div className="flex gap-x-[32px] page-px pt-[24px] pb-[48px]">
+      <div className="flex flex-col lg:flex-row gap-x-[32px] page-px pt-[24px] pb-[48px]">
 
         {/* Left: meta info */}
-        <div className="shrink-0" style={{ width: "577px" }}>
+        <div className="w-full lg:w-[577px] lg:shrink-0">
           <div className="text-[12px] leading-[1.5] text-[#282828] space-y-[4px]">
             {event.typology && (
               <p>
@@ -134,7 +134,7 @@ export default async function EventoPage({ params }: { params: Promise<{ slug: s
       {/* ── Gallery: two side-by-side images ───────────────────────── */}
       {gallery.length > 0 && (
         <div
-          className="flex gap-[12px] pb-[60px]"
+          className="hidden lg:flex gap-[12px] pb-[60px]"
           style={{ paddingLeft: "253px", paddingRight: "15px" }}
         >
           {gallery.slice(0, 2).map((img, i) => (

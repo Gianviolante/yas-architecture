@@ -82,10 +82,10 @@ export default async function ProgettoPage({ params }: { params: Promise<{ slug:
       </div>
 
       {/* ── Meta + description ─────────────────────────────────────── */}
-      <div className="flex gap-x-[32px] page-px pt-[24px] pb-[40px]">
+      <div className="flex flex-col lg:flex-row gap-x-[32px] page-px pt-[24px] pb-[40px]">
 
         {/* Left: stacked meta + chips */}
-        <div className="shrink-0" style={{ width: "577px" }}>
+        <div className="w-full lg:w-[577px] lg:shrink-0">
           <div className="text-[12px] leading-[1.3] text-[#282828]">
             {project.typology && <p>Area: {project.typology}</p>}
             {project.year    && <p>Timeline: {project.year}</p>}

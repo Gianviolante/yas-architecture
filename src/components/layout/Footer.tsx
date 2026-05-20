@@ -17,7 +17,7 @@ export default function Footer() {
 
   return (
     <footer>
-      <div className="max-w-[1440px] mx-auto page-px py-10 flex justify-between gap-8">
+      <div className="max-w-[1440px] mx-auto page-px py-10 flex flex-col lg:flex-row justify-between gap-8">
 
         {/* ── Left block — Info (≈681px) ────────────────────────────── */}
         <div className="flex flex-col flex-1 min-w-0">
@@ -26,9 +26,9 @@ export default function Footer() {
           <p className={`${txt} mb-[17px]`}>YAS Architecture srl</p>
 
           {/* 3 columns — grow to fill space */}
-          <div className="flex flex-1">
+          <div className="flex flex-col sm:flex-row flex-1">
             {/* Col 1 — Company address */}
-            <div className={`${txt} w-[232px] shrink-0 space-y-0`}>
+            <div className={`${txt} w-full sm:w-[232px] sm:shrink-0 mb-4 sm:mb-0 space-y-0`}>
               <p>Via Dè Gracchi, 47</p>
               <p>72100 Brindisi (BR) Italia</p>
               <p>T +39 351 531 7762</p>
@@ -41,7 +41,7 @@ export default function Footer() {
             </div>
 
             {/* Col 2 — Contatti */}
-            <div className={`${txt} w-[232px] shrink-0`}>
+            <div className={`${txt} w-full sm:w-[232px] sm:shrink-0 mb-4 sm:mb-0`}>
               <p>Contatti</p>
               <p>informazioni generali</p>
               <a href="mailto:info@yas-arch.com" className="block hover:underline">info@yas-arch.com</a>
@@ -62,16 +62,16 @@ export default function Footer() {
           </div>
 
           {/* Bottom row — same 3-column alignment */}
-          <div className="flex items-end mt-10">
+          <div className="flex flex-col sm:flex-row items-start sm:items-end mt-10 gap-4 sm:gap-0">
             {/* Col 1 — Privacy */}
-            <div className={`${txt} w-[232px] shrink-0`}>
+            <div className={`${txt} w-full sm:w-[232px] sm:shrink-0`}>
               <p>Privacy Policy</p>
               <p>Coockie Solution</p>
               <p>Coockie Settings</p>
             </div>
 
             {/* Col 2 — Seguici su + social icons */}
-            <div className="w-[232px] shrink-0">
+            <div className="w-full sm:w-[232px] sm:shrink-0">
               <p className={`${txt} mb-[7px]`}>Seguici su</p>
               <div className="flex items-center gap-[12px]">
                 <SocialIcon href="https://facebook.com" label="Facebook" icon="/assets/icon-facebook-v.svg" />
@@ -95,7 +95,7 @@ export default function Footer() {
         </div>
 
         {/* ── Right block — Newsletter (490px) ─────────────────────── */}
-        <div className="w-[490px] shrink-0">
+        <div className="w-full lg:w-[490px] lg:shrink-0">
           <p className={`${txt} mb-[17px]`}>Iscriviti alla nostra newsletter</p>
 
           {sent ? (
@@ -153,7 +153,7 @@ export default function Footer() {
 
               {/* Privacy + submit */}
               <div className="mt-4">
-                <p className={`${txt} w-[263px] mb-3`}>
+                <p className={`${txt} w-full sm:w-[263px] mb-3`}>
                   Cliccando su &ldquo;Invia&rdquo; dichiaro di aver letto e accettato l&apos;informativa Privacy
                 </p>
                 <div className="flex items-center gap-[11px] mb-3">

@@ -44,7 +44,10 @@ export default async function HomePage() {
         <div className="pt-[53px]">
 
           {/* ── 1. HERO ──────────────────────────────────────────────── */}
-          <section className="relative h-[439px] overflow-hidden">
+          <section className="md:hidden flex items-center justify-center h-[160px]">
+            <h1 className="font-bold text-black leading-none text-[64px]">yas-arch</h1>
+          </section>
+          <section className="relative h-[439px] overflow-hidden hidden md:block">
             <h1
               className="absolute font-bold text-black leading-none whitespace-nowrap select-none"
               style={{ fontSize: "clamp(8rem,19.8vw,285px)", top: "7px", left: "198px" }}
@@ -80,17 +83,12 @@ export default async function HomePage() {
 
           {/* ── 2. LINKS ─────────────────────────────────────────────── */}
           <section className="page-px">
-            <div className="flex gap-[14px] h-[408px]">
+            <div className="flex flex-col sm:flex-row gap-[14px] sm:h-[408px]">
               {NAV_LINKS.map(({ href, label, img, flex }) => (
-                <Link key={href} href={href} className={`${flex} relative group overflow-hidden`}>
+                <Link key={href} href={href} className={`sm:${flex} h-[180px] sm:h-auto relative group overflow-hidden`}>
                   <p className="absolute top-0 left-0 text-[12px] leading-[1.5] text-[#282828] z-10">{label}</p>
                   <div className="absolute inset-0 top-[37px]">
-                    <Image
-                      src={img}
-                      alt={label}
-                      fill
-                      className="object-cover transition-transform duration-500 group-hover:scale-[1.03]"
-                    />
+                    <Image src={img} alt={label} fill className="object-cover transition-transform duration-500 group-hover:scale-[1.03]" />
                   </div>
                 </Link>
               ))}
@@ -98,7 +96,7 @@ export default async function HomePage() {
           </section>
 
           {/* ── 3. APULIA ────────────────────────────────────────────── */}
-          <section className="relative h-[345px] overflow-hidden">
+          <section className="relative h-[345px] overflow-hidden hidden md:block">
             <h2
               className="absolute font-bold text-black leading-none whitespace-nowrap select-none"
               style={{ fontSize: "clamp(8rem,19.8vw,285px)", top: 0, left: "29px" }}
@@ -130,7 +128,7 @@ export default async function HomePage() {
                 ? <PortableText value={home.introDescription as Parameters<typeof PortableText>[0]["value"]} components={ptBlock} />
                 : <p>{FALLBACK_INTRO}</p>}
             </div>
-            <div className="grid grid-cols-2 gap-8 mb-12">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
               <div className="text-[17.5px] leading-[1.5] text-[#282828]">
                 {home?.bodyLeft
                   ? <PortableText value={home.bodyLeft as Parameters<typeof PortableText>[0]["value"]} components={ptBlock} />
