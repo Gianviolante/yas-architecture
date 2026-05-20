@@ -54,33 +54,27 @@ body {
 }
 
 /* ── Custom cursor ─────────────────────────────────────────────────────
-   Replicates davidegroppi.com cursor behaviour.
-   - 60px circle, mix-blend-mode:difference (white → inverts colours)
-   - ::before: scale(0.1) → scale(1) on hover (.cursor--over)
-   - Continuous "twinkle" pulse on .cursor-circle
-   - Active only on pointer:fine devices
+   Circle visible ONLY on images (not sliders, not text areas).
+   Everywhere else the browser default cursor is used.
    ──────────────────────────────────────────────────────────────────── */
 @media (pointer: fine) {
-  /* Hide system cursor when our custom one is active */
-  .cursor-active *,
-  .cursor-active *::before,
-  .cursor-active *::after {
+  /* Hide system cursor only on images (our circle replaces it there) */
+  img {
     cursor: none !important;
   }
 
   /* Wrapper — positioned by JS via transform: translate(x,y) */
   .cursor-wrap {
     position: fixed;
-    /* -30px offset centres the 60px circle on the mouse pointer */
-    top:  -30px;
+    top:  -30px;   /* centres the 60px circle on mouse */
     left: -30px;
     pointer-events: none;
-    visibility: hidden;  /* shown by JS once mouse moves */
+    visibility: hidden;
     opacity: 0;
     z-index: 1000000;
   }
 
-  /* The circle — continuously pulses (twinkle) */
+  /* Circle — continuously pulses */
   .cursor-circle {
     width:  60px;
     height: 60px;
@@ -88,7 +82,7 @@ body {
     animation: cursor-twinkle 1s ease-in-out infinite alternate both;
   }
 
-  /* The ring — always visible, dark on white, visible on photos too */
+  /* Ring */
   .cursor-circle::before {
     content: "";
     display: block;
@@ -96,23 +90,45 @@ body {
     height: 60px;
     border-radius: 50%;
     background: transparent;
-    border: 1.5px solid #282828;
+    border: 1.5px solid #fff;   /* white ring — visible on photos */
+    mix-blend-mode: difference; /* inverts: white on dark → white, white on light → dark */
     transform: scale(1);
-    transition:
-      transform .3s cubic-bezier(.22,.68,0,1.2);
   }
 
-  /* Hover — expand */
-  .cursor-wrap.cursor--over .cursor-circle::before {
-    transform: scale(1.2);
-  }
-
-  /* Hidden state — managed by JS directly in tick(), no CSS needed */
-
-  /* Twinkle: subtle scale pulse while hovering */
   @keyframes cursor-twinkle {
-    0%   { transform: scale(0.9); }
-    100% { transform: scale(1);   }
+    0%   { transform: scale(0.92); }
+    100% { transform: scale(1);    }
+  }
+
+  /* ── Slider cursor (Davide Groppi style) ─────────────────────────── */
+  .slider-cursor {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width:  64px;
+    height: 64px;
+    pointer-events: none;
+    z-index: 9999;
+    transition: opacity 200ms ease;
+    /* JS sets transform: translate(calc(x - 50%), calc(y - 50%)) */
+  }
+
+  .slider-cursor__ring {
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    border: 1.5px solid #fff;
+    mix-blend-mode: difference;
+    animation: cursor-twinkle 1s ease-in-out infinite alternate both;
+  }
+
+  .slider-cursor__arrow {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    mix-blend-mode: difference;
   }
 }
 

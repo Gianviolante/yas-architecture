@@ -61,25 +61,23 @@ export default function HomeSlider() {
 
   return (
     <>
-      {/* Custom cursor */}
+      {/* Slider cursor — circle + dynamic arrow (Davide Groppi style) */}
       {isPointerFine && (
         <div
           ref={cursorEl}
-          className="fixed top-0 left-0 pointer-events-none z-[9999] size-[48px] mix-blend-difference"
-          style={{
-            opacity: inSlider ? 1 : 0,
-            transition: "opacity 200ms ease",
-          }}
+          className="slider-cursor"
+          style={{ opacity: inSlider ? 1 : 0 }}
         >
-          <Image src="/assets/nav-circle.svg" alt="" fill className="absolute inset-0" />
-          <div className="absolute inset-0 flex items-center justify-center z-10">
-            <Image
-              src="/assets/nav-arrow-right.svg"
-              alt=""
-              width={20}
-              height={20}
-              className={hoverSide === "left" ? "-scale-x-100" : ""}
-            />
+          {/* Pulsing ring */}
+          <div className="slider-cursor__ring" />
+          {/* Arrow — flips based on hover side */}
+          <div className="slider-cursor__arrow">
+            <svg
+              width="20" height="20" viewBox="0 0 20 20" fill="none"
+              style={{ transform: hoverSide === "left" ? "scaleX(-1)" : "none" }}
+            >
+              <path d="M4 10h12M11 5l5 5-5 5" stroke="#fff" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+            </svg>
           </div>
         </div>
       )}
