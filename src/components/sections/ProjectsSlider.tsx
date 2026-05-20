@@ -114,6 +114,7 @@ export default function ProjectsSlider({ projects, title = "Vedi altri progetti"
         <div
           ref={scrollRef}
           className={`flex gap-x-[15px] overflow-x-auto px-[32px] pb-[4px] no-scrollbar${isPointerFine ? " cursor-none" : ""}`}
+          data-cursor="hide"
           style={{ scrollbarWidth: "none" }}
         >
           {projects.map((p) => (

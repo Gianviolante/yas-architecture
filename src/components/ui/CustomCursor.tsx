@@ -48,19 +48,27 @@ export default function CustomCursor() {
       rafId = requestAnimationFrame(tick);
     }
 
-    // ── Hover: add/remove .over on links, buttons, images ────────────
+    // ── Hover detection ───────────────────────────────────────────────
     const HOVER_SEL = "a, button, img, [data-cursor]";
+    const HIDE_SEL  = "[data-cursor='hide']";
 
     const onOver = (e: MouseEvent) => {
-      if ((e.target as HTMLElement).closest(HOVER_SEL)) {
+      const t = e.target as HTMLElement;
+      // Hide cursor entirely inside sliders that have their own custom cursor
+      if (t.closest(HIDE_SEL)) {
+        cursor.classList.add("cursor--hidden");
+        cursor.classList.remove("cursor--over");
+        return;
+      }
+      cursor.classList.remove("cursor--hidden");
+      if (t.closest(HOVER_SEL)) {
         cursor.classList.add("cursor--over");
       }
     };
     const onOut = (e: MouseEvent) => {
       const to = e.relatedTarget as HTMLElement | null;
-      if (!to?.closest(HOVER_SEL)) {
-        cursor.classList.remove("cursor--over");
-      }
+      if (!to?.closest(HIDE_SEL))  cursor.classList.remove("cursor--hidden");
+      if (!to?.closest(HOVER_SEL)) cursor.classList.remove("cursor--over");
     };
 
     document.addEventListener("mousemove",  onMove);

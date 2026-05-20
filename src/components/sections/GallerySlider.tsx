@@ -120,6 +120,7 @@ export default function GallerySlider({ items, projectTitle, compact = false }: 
 
       <div
         className={isPointerFine ? "cursor-none" : ""}
+        data-cursor="hide"
         onMouseMove={handleMouseMove}
         onMouseEnter={() => setInSlider(true)}
         onMouseLeave={() => { setInSlider(false); setHoverSide(null); }}

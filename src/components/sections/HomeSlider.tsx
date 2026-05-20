@@ -86,6 +86,7 @@ export default function HomeSlider() {
 
       <div
         className={`relative w-full h-[752px] overflow-hidden ${isPointerFine ? "cursor-none" : ""}`}
+        data-cursor="hide"
         onMouseMove={handleMouseMove}
         onMouseEnter={() => setInSlider(true)}
         onMouseLeave={() => { setInSlider(false); setHoverSide(null); }}

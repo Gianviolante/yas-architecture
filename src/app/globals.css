@@ -90,7 +90,7 @@ body {
     animation: cursor-twinkle 1s ease-in-out infinite alternate both;
   }
 
-  /* The ring — small dot by default, full circle on hover */
+  /* The ring — always visible at full size */
   .cursor-circle::before {
     content: "";
     display: block;
@@ -99,15 +99,21 @@ body {
     border-radius: 50%;
     background: transparent;
     border: 2px solid #fff;        /* white + mix-blend-mode = black on white bg */
-    transform: scale(0.18);        /* ~11px visible dot at rest */
+    transform: scale(1);
     transition:
       transform    .3s cubic-bezier(.22,.68,0,1.2),
-      border-color .25s ease-in-out;
+      opacity      .25s ease;
   }
 
-  /* Hover — ring expands to full 60px */
+  /* Hover — slight scale up */
   .cursor-wrap.cursor--over .cursor-circle::before {
-    transform: scale(1);
+    transform: scale(1.15);
+  }
+
+  /* Hidden state — on sliders that have their own cursor */
+  .cursor-wrap.cursor--hidden {
+    opacity: 0 !important;
+    visibility: hidden !important;
   }
 
   /* Twinkle: subtle scale pulse while hovering */
