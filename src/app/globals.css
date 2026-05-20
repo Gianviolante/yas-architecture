@@ -53,84 +53,81 @@ body {
   }
 }
 
-/* ── Custom cursor ─────────────────────────────────────────────────────
-   Circle visible ONLY on images (not sliders, not text areas).
-   Everywhere else the browser default cursor is used.
+/* ── Custom cursor — faithful recreation of davidegroppi.com ───────────
+   [data-cursor-el] replaces their [cursor] attribute selector.
    ──────────────────────────────────────────────────────────────────── */
-@media (pointer: fine) {
-  /* Hide system cursor only on images (our circle replaces it there) */
-  img {
-    cursor: none !important;
-  }
 
-  /* Wrapper — positioned by JS via transform: translate(x,y) */
-  .cursor-wrap {
-    position: fixed;
-    top:  -30px;   /* centres the 60px circle on mouse */
-    left: -30px;
-    pointer-events: none;
-    visibility: hidden;
-    opacity: 0;
-    z-index: 1000000;
-  }
-
-  /* Circle — continuously pulses */
-  .cursor-circle {
-    width:  60px;
-    height: 60px;
-    border-radius: 50%;
-    animation: cursor-twinkle 1s ease-in-out infinite alternate both;
-  }
-
-  /* Ring */
-  .cursor-circle::before {
-    content: "";
-    display: block;
-    width:  60px;
-    height: 60px;
-    border-radius: 50%;
-    background: transparent;
-    border: 1.5px solid #fff;   /* white ring — visible on photos */
-    mix-blend-mode: difference; /* inverts: white on dark → white, white on light → dark */
-    transform: scale(1);
-  }
-
-  @keyframes cursor-twinkle {
-    0%   { transform: scale(0.92); }
-    100% { transform: scale(1);    }
-  }
-
-  /* ── Slider cursor (Davide Groppi style) ─────────────────────────── */
-  .slider-cursor {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width:  64px;
-    height: 64px;
-    pointer-events: none;
-    z-index: 9999;
-    transition: opacity 200ms ease;
-    /* JS sets transform: translate(calc(x - 50%), calc(y - 50%)) */
-  }
-
-  .slider-cursor__ring {
-    position: absolute;
-    inset: 0;
-    border-radius: 50%;
-    border: 1.5px solid #fff;
-    mix-blend-mode: difference;
-    animation: cursor-twinkle 1s ease-in-out infinite alternate both;
-  }
-
-  .slider-cursor__arrow {
-    position: absolute;
-    inset: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    mix-blend-mode: difference;
-  }
+/* Twinkle: .circle pulses continuously */
+[data-cursor-el] .circle {
+  animation: twinkle 1s ease-in-out infinite alternate both;
 }
+@keyframes twinkle {
+  0%  { transform: translateX(-50%) translateY(-50%) scale(.9); }
+  to  { transform: translateX(-50%) translateY(-50%) scale(1);  }
+}
+
+/* Cursor wrapper */
+[data-cursor-el] {
+  position: fixed;
+  top: 0; left: 0;
+  pointer-events: none;
+  mix-blend-mode: difference;
+  visibility: hidden;
+  opacity: 0;
+  z-index: 1000000;
+}
+
+/* Circle container */
+[data-cursor-el] .circle {
+  position: absolute;
+  width: 60px; height: 60px;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+/* The ring — starts tiny, expands on hover */
+[data-cursor-el] .circle::before {
+  content: "";
+  display: block;
+  width: 60px; height: 60px;
+  border-radius: 50%;
+  background: transparent;
+  border: 2px solid #fff;
+  transform: scale(.1);
+  transition: .25s ease-in-out;
+  transition-property: border-color, transform;
+}
+
+/* Icons — hidden by default */
+[data-cursor-el] svg {
+  position: absolute;
+  top: 15px; left: 15px;
+  width: 30px; height: 30px;
+  fill: #fff;
+  pointer-events: none;
+  opacity: 0;
+  transform: scale(.5);
+  transition: .25s ease-in-out;
+  transition-property: transform, opacity;
+}
+
+/* Hover: ring expands */
+[data-cursor-el].over .circle::before { transform: scale(1); }
+
+/* Each cursor type reveals its icon */
+[data-cursor-el].expand .cursor-expand,
+[data-cursor-el].drag   .cursor-drag,
+[data-cursor-el].prev   .cursor-prev,
+[data-cursor-el].next   .cursor-next,
+[data-cursor-el].blank  .cursor-blank,
+[data-cursor-el].close  .cursor-close {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* cursor--active on <html>: hide system cursor + show our cursor */
+.cursor--active * { cursor: none !important; }
+.cursor--active [data-cursor-el] { visibility: visible; }
 
 @layer base {
   ::selection {
