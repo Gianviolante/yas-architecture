@@ -75,11 +75,9 @@ body {
     top:  -30px;
     left: -30px;
     pointer-events: none;
-    mix-blend-mode: difference;
     visibility: hidden;  /* shown by JS once mouse moves */
     opacity: 0;
     z-index: 1000000;
-    will-change: transform, opacity;
   }
 
   /* The circle — continuously pulses (twinkle) */
@@ -90,7 +88,7 @@ body {
     animation: cursor-twinkle 1s ease-in-out infinite alternate both;
   }
 
-  /* The ring — always visible at full size */
+  /* The ring — always visible, dark on white, visible on photos too */
   .cursor-circle::before {
     content: "";
     display: block;
@@ -98,16 +96,15 @@ body {
     height: 60px;
     border-radius: 50%;
     background: transparent;
-    border: 2px solid #fff;        /* white + mix-blend-mode = black on white bg */
+    border: 1.5px solid #282828;
     transform: scale(1);
     transition:
-      transform    .3s cubic-bezier(.22,.68,0,1.2),
-      opacity      .25s ease;
+      transform .3s cubic-bezier(.22,.68,0,1.2);
   }
 
-  /* Hover — slight scale up */
+  /* Hover — expand */
   .cursor-wrap.cursor--over .cursor-circle::before {
-    transform: scale(1.15);
+    transform: scale(1.2);
   }
 
   /* Hidden state — managed by JS directly in tick(), no CSS needed */
