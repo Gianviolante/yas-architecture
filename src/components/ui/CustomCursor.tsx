@@ -3,115 +3,85 @@
 import { useEffect, useRef } from "react";
 
 /**
- * Custom cursor — small dot + lagging ring.
- * On images / [data-cursor="hover"] elements: ring expands and pulses.
- * Only active on pointer-fine devices (no touch).
+ * Custom cursor — replicates davidegroppi.com behaviour.
+ *
+ * A 60px circle with mix-blend-mode:difference (white → inverts underlying colours).
+ * ::before starts at scale(0.1) and expands to scale(1) on hover.
+ * Continuous "twinkle" pulse: scale(0.9) ↔ scale(1).
+ * Follows mouse with lerp ÷ 4 for a smooth lag effect.
+ * Only active on pointer:fine (mouse/trackpad) devices.
  */
 export default function CustomCursor() {
-  const dotRef  = useRef<HTMLDivElement>(null);
-  const ringRef = useRef<HTMLDivElement>(null);
+  const cursorRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    // Only activate on devices with a fine pointer (mouse/trackpad)
     if (!window.matchMedia("(pointer: fine)").matches) return;
 
-    const dot  = dotRef.current!;
-    const ring = ringRef.current!;
+    const cursor = cursorRef.current!;
 
     let mouseX = 0, mouseY = 0;
-    let dotX   = 0, dotY   = 0;
-    let ringX  = 0, ringY  = 0;
-    let rafId  = 0;
-    let visible = false;
-
-    // Smooth lerp — ring lags behind for a premium feel
-    const lerp = (a: number, b: number, t: number) => a + (b - a) * t;
-
-    function tick() {
-      dotX  = lerp(dotX,  mouseX, 0.25);
-      dotY  = lerp(dotY,  mouseY, 0.25);
-      ringX = lerp(ringX, mouseX, 0.10);
-      ringY = lerp(ringY, mouseY, 0.10);
-
-      dot.style.translate  = `${dotX}px ${dotY}px`;
-      ring.style.translate = `${ringX}px ${ringY}px`;
-
-      rafId = requestAnimationFrame(tick);
-    }
+    let x = 0, y = 0, o = 0;
+    let initialized = false;
+    let rafId = 0;
 
     const onMove = (e: MouseEvent) => {
       mouseX = e.clientX;
       mouseY = e.clientY;
-      if (!visible) {
-        // First move — snap cursor to position immediately and show
-        dotX = ringX = mouseX;
-        dotY = ringY = mouseY;
-        dot.style.opacity  = "1";
-        ring.style.opacity = "1";
-        visible = true;
+      if (!initialized) {
+        // Snap to position on first move (no lerp jump from 0,0)
+        x = mouseX;
+        y = mouseY;
+        initialized = true;
       }
     };
 
-    const onLeave = () => {
-      dot.style.opacity  = "0";
-      ring.style.opacity = "0";
-      visible = false;
-    };
+    function tick() {
+      if (initialized) {
+        x += (mouseX - x) / 4;   // lerp ÷ 4 — same as davidegroppi
+        y += (mouseY - y) / 4;
+        o += (1 - o) / 10;       // opacity fade-in
 
-    // ── Hover detection ──────────────────────────────────────────────
-    const SELECTORS = [
-      "img",
-      "a",
-      "button",
-      "[data-cursor]",
-      ".group",
-    ].join(",");
-
-    function setHover(active: boolean) {
-      dot.classList.toggle("cursor-dot--hover",   active);
-      ring.classList.toggle("cursor-ring--hover", active);
+        cursor.style.transform = `translate(${x}px, ${y}px)`;
+        cursor.style.opacity   = String(Math.min(o, 1));
+        if (o > 0.02) cursor.style.visibility = "visible";
+      }
+      rafId = requestAnimationFrame(tick);
     }
 
-    // Event delegation — works even for elements added later
-    const onEnter = (e: MouseEvent) => {
-      const target = e.target as HTMLElement;
-      if (target.closest(SELECTORS)) setHover(true);
+    // ── Hover: add/remove .over on links, buttons, images ────────────
+    const HOVER_SEL = "a, button, img, [data-cursor]";
+
+    const onOver = (e: MouseEvent) => {
+      if ((e.target as HTMLElement).closest(HOVER_SEL)) {
+        cursor.classList.add("cursor--over");
+      }
     };
-    const onExit = (e: MouseEvent) => {
-      const target = e.relatedTarget as HTMLElement | null;
-      if (!target?.closest(SELECTORS)) setHover(false);
+    const onOut = (e: MouseEvent) => {
+      const to = e.relatedTarget as HTMLElement | null;
+      if (!to?.closest(HOVER_SEL)) {
+        cursor.classList.remove("cursor--over");
+      }
     };
 
     document.addEventListener("mousemove",  onMove);
-    document.addEventListener("mouseleave", onLeave);
-    document.addEventListener("mouseover",  onEnter);
-    document.addEventListener("mouseout",   onExit);
+    document.addEventListener("mouseover",  onOver);
+    document.addEventListener("mouseout",   onOut);
+    document.documentElement.classList.add("cursor-active");
 
     rafId = requestAnimationFrame(tick);
 
     return () => {
       cancelAnimationFrame(rafId);
       document.removeEventListener("mousemove",  onMove);
-      document.removeEventListener("mouseleave", onLeave);
-      document.removeEventListener("mouseover",  onEnter);
-      document.removeEventListener("mouseout",   onExit);
+      document.removeEventListener("mouseover",  onOver);
+      document.removeEventListener("mouseout",   onOut);
+      document.documentElement.classList.remove("cursor-active");
     };
   }, []);
 
   return (
-    <>
-      {/* Dot — precise, fast */}
-      <div
-        ref={dotRef}
-        aria-hidden
-        className="cursor-dot"
-      />
-      {/* Ring — lagging, pulses on hover */}
-      <div
-        ref={ringRef}
-        aria-hidden
-        className="cursor-ring"
-      />
-    </>
+    <div ref={cursorRef} aria-hidden className="cursor-wrap">
+      <div className="cursor-circle" />
+    </div>
   );
 }

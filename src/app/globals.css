@@ -54,74 +54,66 @@ body {
 }
 
 /* ── Custom cursor ─────────────────────────────────────────────────────
-   Active only on pointer:fine (mouse/trackpad). The cursor: none rule is
-   scoped to @media (pointer: fine) so touch devices are unaffected.
+   Replicates davidegroppi.com cursor behaviour.
+   - 60px circle, mix-blend-mode:difference (white → inverts colours)
+   - ::before: scale(0.1) → scale(1) on hover (.cursor--over)
+   - Continuous "twinkle" pulse on .cursor-circle
+   - Active only on pointer:fine devices
    ──────────────────────────────────────────────────────────────────── */
 @media (pointer: fine) {
-  *, *::before, *::after { cursor: none !important; }
+  /* Hide system cursor when our custom one is active */
+  .cursor-active *,
+  .cursor-active *::before,
+  .cursor-active *::after {
+    cursor: none !important;
+  }
 
-  .cursor-dot {
+  /* Wrapper — positioned by JS via transform: translate(x,y) */
+  .cursor-wrap {
     position: fixed;
-    top:  -6px;   /* offset so translate(mouseX, mouseY) centres the dot */
-    left: -6px;
-    width:  12px;
-    height: 12px;
-    background: #282828;
-    border-radius: 50%;
+    /* -30px offset centres the 60px circle on the mouse pointer */
+    top:  -30px;
+    left: -30px;
     pointer-events: none;
-    z-index: 9999;
+    mix-blend-mode: difference;
+    visibility: hidden;  /* shown by JS once mouse moves */
     opacity: 0;
-    will-change: translate, transform;
-    transition:
-      opacity     .2s ease,
-      width       .3s ease,
-      height      .3s ease,
-      background  .3s ease,
-      top         .3s ease,
-      left        .3s ease;
+    z-index: 1000000;
+    will-change: transform, opacity;
   }
 
-  .cursor-dot--hover {
-    width:  0;
-    height: 0;
-    top:  0;
-    left: 0;
-  }
-
-  .cursor-ring {
-    position: fixed;
-    top:  -20px;  /* offset so translate(mouseX, mouseY) centres the ring */
-    left: -20px;
-    width:  40px;
-    height: 40px;
-    border: 1.5px solid #282828;
+  /* The circle — continuously pulses (twinkle) */
+  .cursor-circle {
+    width:  60px;
+    height: 60px;
     border-radius: 50%;
-    pointer-events: none;
-    z-index: 9998;
-    opacity: 0;
-    will-change: translate, transform;
+    animation: cursor-twinkle 1s ease-in-out infinite alternate both;
+  }
+
+  /* The ring — starts tiny, expands to full size on hover */
+  .cursor-circle::before {
+    content: "";
+    display: block;
+    width:  60px;
+    height: 60px;
+    border-radius: 50%;
+    background: transparent;
+    border: 2px solid #fff;        /* white + mix-blend-mode = black on white bg */
+    transform: scale(0.1);
     transition:
-      opacity  .2s ease,
-      width    .4s cubic-bezier(.22,.68,0,1.2),
-      height   .4s cubic-bezier(.22,.68,0,1.2),
-      top      .4s cubic-bezier(.22,.68,0,1.2),
-      left     .4s cubic-bezier(.22,.68,0,1.2),
-      border-color .3s ease;
+      transform    .25s ease-in-out,
+      border-color .25s ease-in-out;
   }
 
-  /* Hover state — ring expands and pulses */
-  .cursor-ring--hover {
-    width:  72px;
-    height: 72px;
-    top:  -36px;
-    left: -36px;
-    border-color: #282828;
-    animation: cursor-pulse 1.4s ease-in-out infinite;
+  /* Hover — ring expands */
+  .cursor-wrap.cursor--over .cursor-circle::before {
+    transform: scale(1);
   }
 
-  @keyframes cursor-pulse {
-    0%,  100% { transform: scale(1);    opacity: 1;   }
-    50%        { transform: scale(1.18); opacity: 0.5; }
+  /* Twinkle: subtle scale pulse while hovering */
+  @keyframes cursor-twinkle {
+    0%   { transform: scale(0.9); }
+    100% { transform: scale(1);   }
   }
 }
 
