@@ -53,6 +53,78 @@ body {
   }
 }
 
+/* ── Custom cursor ─────────────────────────────────────────────────────
+   Active only on pointer:fine (mouse/trackpad). The cursor: none rule is
+   scoped to @media (pointer: fine) so touch devices are unaffected.
+   ──────────────────────────────────────────────────────────────────── */
+@media (pointer: fine) {
+  *, *::before, *::after { cursor: none !important; }
+
+  .cursor-dot {
+    position: fixed;
+    top:  -6px;   /* offset so translate(mouseX, mouseY) centres the dot */
+    left: -6px;
+    width:  12px;
+    height: 12px;
+    background: #282828;
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 9999;
+    opacity: 0;
+    will-change: translate, transform;
+    transition:
+      opacity     .2s ease,
+      width       .3s ease,
+      height      .3s ease,
+      background  .3s ease,
+      top         .3s ease,
+      left        .3s ease;
+  }
+
+  .cursor-dot--hover {
+    width:  0;
+    height: 0;
+    top:  0;
+    left: 0;
+  }
+
+  .cursor-ring {
+    position: fixed;
+    top:  -20px;  /* offset so translate(mouseX, mouseY) centres the ring */
+    left: -20px;
+    width:  40px;
+    height: 40px;
+    border: 1.5px solid #282828;
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 9998;
+    opacity: 0;
+    will-change: translate, transform;
+    transition:
+      opacity  .2s ease,
+      width    .4s cubic-bezier(.22,.68,0,1.2),
+      height   .4s cubic-bezier(.22,.68,0,1.2),
+      top      .4s cubic-bezier(.22,.68,0,1.2),
+      left     .4s cubic-bezier(.22,.68,0,1.2),
+      border-color .3s ease;
+  }
+
+  /* Hover state — ring expands and pulses */
+  .cursor-ring--hover {
+    width:  72px;
+    height: 72px;
+    top:  -36px;
+    left: -36px;
+    border-color: #282828;
+    animation: cursor-pulse 1.4s ease-in-out infinite;
+  }
+
+  @keyframes cursor-pulse {
+    0%,  100% { transform: scale(1);    opacity: 1;   }
+    50%        { transform: scale(1.18); opacity: 0.5; }
+  }
+}
+
 @layer base {
   ::selection {
     background-color: #171717;
