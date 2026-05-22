@@ -15,11 +15,8 @@ interface Props {
 }
 
 export default function GallerySlider({ items, projectTitle, compact = false }: Props) {
-  const scrollRef    = useRef<HTMLDivElement>(null);
-  const containerRef = useRef<HTMLDivElement>(null);
+  const scrollRef = useRef<HTMLDivElement>(null);
   const [activeIdx,      setActiveIdx]      = useState(0);
-  const [hoverSide,      setHoverSide]      = useState<"left" | "right" | null>(null);
-  const [isPointerFine,  setIsPointerFine]  = useState(false);
   const [canScrollLeft,  setCanScrollLeft]  = useState(false);
   const [canScrollRight, setCanScrollRight] = useState(true);
 
@@ -27,14 +24,6 @@ export default function GallerySlider({ items, projectTitle, compact = false }: 
   const cardH = compact ? 202 : 633;
   const gap   = compact ? 15  : 77;
   const SLIDE_STEP = (compact ? 263 : 580) + gap;
-
-  useEffect(() => {
-    const mq = window.matchMedia("(hover: hover) and (pointer: fine)");
-    setIsPointerFine(mq.matches);
-    const h = (e: MediaQueryListEvent) => setIsPointerFine(e.matches);
-    mq.addEventListener("change", h);
-    return () => mq.removeEventListener("change", h);
-  }, []);
 
   const updateScrollState = () => {
     const el = scrollRef.current;
@@ -53,45 +42,12 @@ export default function GallerySlider({ items, projectTitle, compact = false }: 
     return () => el.removeEventListener("scroll", updateScrollState);
   }, [items, compact]);
 
-  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    const rect = e.currentTarget.getBoundingClientRect();
-    const side = e.clientX - rect.left < rect.width / 2 ? "left" : "right";
-    setHoverSide(side);
-
-    // Update global cursor type based on scroll availability
-    if (!containerRef.current) return;
-    if (side === "left" && canScrollLeft) {
-      containerRef.current.setAttribute("cursor-type", "prev");
-    } else if (side === "right" && canScrollRight) {
-      containerRef.current.setAttribute("cursor-type", "next");
-    } else {
-      containerRef.current.removeAttribute("cursor-type");
-    }
-  };
-
-  const handleMouseLeave = () => {
-    setHoverSide(null);
-    containerRef.current?.removeAttribute("cursor-type");
-  };
-
-  const handleClick = () => {
-    const el = scrollRef.current;
-    if (!el) return;
-    el.scrollBy({ left: hoverSide === "left" ? -SLIDE_STEP : SLIDE_STEP, behavior: "smooth" });
-  };
-
-  const hasImages   = items.length > 0;
+  const hasImages    = items.length > 0;
   const displayCount = hasImages ? items.length : 3;
   const activeCaption = hasImages ? items[activeIdx]?.caption : undefined;
 
   return (
-    <div
-      ref={containerRef}
-      className={isPointerFine ? "cursor-none" : ""}
-      onMouseMove={isPointerFine ? handleMouseMove : undefined}
-      onMouseLeave={isPointerFine ? handleMouseLeave : undefined}
-      onClick={isPointerFine ? handleClick : undefined}
-    >
+    <div>
       <div
         ref={scrollRef}
         className="flex overflow-x-auto pl-[30px] no-scrollbar"
