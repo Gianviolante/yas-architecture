@@ -61,17 +61,17 @@ export default function GallerySlider({ items, projectTitle, compact = false }: 
     // Update global cursor type based on scroll availability
     if (!containerRef.current) return;
     if (side === "left" && canScrollLeft) {
-      containerRef.current.setAttribute("data-cursor-type", "prev");
+      containerRef.current.setAttribute("cursor-type", "prev");
     } else if (side === "right" && canScrollRight) {
-      containerRef.current.setAttribute("data-cursor-type", "next");
+      containerRef.current.setAttribute("cursor-type", "next");
     } else {
-      containerRef.current.removeAttribute("data-cursor-type");
+      containerRef.current.removeAttribute("cursor-type");
     }
   };
 
   const handleMouseLeave = () => {
     setHoverSide(null);
-    containerRef.current?.removeAttribute("data-cursor-type");
+    containerRef.current?.removeAttribute("cursor-type");
   };
 
   const handleClick = () => {

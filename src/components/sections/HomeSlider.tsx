@@ -26,16 +26,16 @@ export default function HomeSlider() {
     return () => mq.removeEventListener("change", h);
   }, []);
 
-  // Update data-cursor-type directly (no re-render) so the global cursor
+  // Update cursor-type directly (no re-render) so the global cursor
   // shows ← prev or → next based on which half the mouse is on.
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     const rect = e.currentTarget.getBoundingClientRect();
     const side = e.clientX - rect.left < rect.width / 2 ? "prev" : "next";
-    containerRef.current?.setAttribute("data-cursor-type", side);
+    containerRef.current?.setAttribute("cursor-type", side);
   };
 
   const handleMouseLeave = () => {
-    containerRef.current?.removeAttribute("data-cursor-type");
+    containerRef.current?.removeAttribute("cursor-type");
   };
 
   const handleClick = (e: React.MouseEvent<HTMLDivElement>) => {

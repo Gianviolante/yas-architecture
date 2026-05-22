@@ -53,12 +53,12 @@ body {
   }
 }
 
-/* ── Custom cursor — faithful recreation of davidegroppi.com ───────────
-   [data-cursor-el] replaces their [cursor] attribute selector.
+/* ── Custom cursor — exact CSS copy from davidegroppi.com ──────────────
+   Uses [cursor] attribute selector, identical to Groppi's source.
    ──────────────────────────────────────────────────────────────────── */
 
 /* Twinkle: .circle pulses continuously */
-[data-cursor-el] .circle {
+[cursor] .circle {
   animation: twinkle 1s ease-in-out infinite alternate both;
 }
 @keyframes twinkle {
@@ -67,7 +67,7 @@ body {
 }
 
 /* Cursor wrapper */
-[data-cursor-el] {
+[cursor] {
   position: fixed;
   top: 0; left: 0;
   pointer-events: none;
@@ -78,7 +78,7 @@ body {
 }
 
 /* Circle container */
-[data-cursor-el] .circle {
+[cursor] .circle {
   position: absolute;
   width: 60px; height: 60px;
   overflow: hidden;
@@ -86,7 +86,7 @@ body {
 }
 
 /* The ring — starts tiny, expands on hover */
-[data-cursor-el] .circle::before {
+[cursor] .circle::before {
   content: "";
   display: block;
   width: 60px; height: 60px;
@@ -99,7 +99,7 @@ body {
 }
 
 /* Icons — hidden by default */
-[data-cursor-el] svg {
+[cursor] svg {
   position: absolute;
   top: 15px; left: 15px;
   width: 30px; height: 30px;
@@ -112,22 +112,29 @@ body {
 }
 
 /* Hover: ring expands */
-[data-cursor-el].over .circle::before { transform: scale(1); }
+[cursor].over .circle::before { transform: scale(1); }
 
-/* Each cursor type reveals its icon */
-[data-cursor-el].expand .cursor-expand,
-[data-cursor-el].drag   .cursor-drag,
-[data-cursor-el].prev   .cursor-prev,
-[data-cursor-el].next   .cursor-next,
-[data-cursor-el].blank  .cursor-blank,
-[data-cursor-el].close  .cursor-close {
+/* Each cursor type reveals its icon (exact from Groppi) */
+[cursor].add       .cursor-add,
+[cursor].audio-off .cursor-audio-off,
+[cursor].audio-on  .cursor-audio-on,
+[cursor].close     .cursor-close,
+[cursor].drag      .cursor-drag,
+[cursor].expand    .cursor-expand,
+[cursor].next      .cursor-next,
+[cursor].play      .cursor-play,
+[cursor].prev      .cursor-prev,
+[cursor].remove    .cursor-remove,
+[cursor].blank     .cursor-blank,
+[cursor].scroll    .cursor-scroll {
   opacity: 1;
   transform: scale(1);
 }
 
 /* cursor--active on <html>: hide system cursor + show our cursor */
-.cursor--active * { cursor: none !important; }
-.cursor--active [data-cursor-el] { visibility: visible; }
+.cursor--active [cursor]  { display: block; }
+.cursor--active *          { cursor: none !important; }
+.cursor--active [cursor]  { visibility: visible; }
 
 @layer base {
   ::selection {
