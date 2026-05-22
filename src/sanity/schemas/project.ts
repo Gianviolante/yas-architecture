@@ -28,6 +28,8 @@ export const projectSchema = defineType({
       initialValue: false,
     }),
     defineField({ name: "coverImage", title: "Immagine copertina (card)", type: "image", options: { hotspot: true } }),
+    defineField({ name: "hoverImage", title: "Immagine hover (anteprima lista)", type: "image", options: { hotspot: true },
+      description: "Immagine mostrata nell'anteprima quando passi il mouse sul progetto nella vista a lista. Se non inserita, viene usata l'immagine copertina." }),
     defineField({ name: "heroImage", title: "Hero image (pagina progetto)", type: "image", options: { hotspot: true } }),
     defineField({
       name: "gallery", title: "Galleria immagini", type: "array",

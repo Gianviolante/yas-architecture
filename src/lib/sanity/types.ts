@@ -24,6 +24,8 @@ export interface Project {
   featured?: boolean;
   coverImage?: SanityImage;
   coverImageUrl?: string;
+  hoverImage?: SanityImage;
+  hoverImageUrl?: string;
   teamMembers?: TeamMember[];
   subtitle?: string;
 }

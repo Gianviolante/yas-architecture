@@ -345,10 +345,10 @@ function IndexView({
             transition: "opacity 200ms ease, transform 80ms ease-out",
           }}
         >
-          {hoveredProject?.coverImageUrl ? (
+          {(hoveredProject?.hoverImageUrl ?? hoveredProject?.coverImageUrl) ? (
             <Image
-              src={hoveredProject.coverImageUrl}
-              alt={hoveredProject.title}
+              src={(hoveredProject!.hoverImageUrl ?? hoveredProject!.coverImageUrl)!}
+              alt={hoveredProject!.title}
               fill
               className="object-cover"
             />

@@ -3,7 +3,8 @@
 export const allProjectsQuery = `
   *[_type == "project"] | order(featured desc, year desc) {
     _id, title, slug, location, year, area, typology, status, featured,
-    coverImage, "coverImageUrl": coverImage.asset->url
+    coverImage, "coverImageUrl": coverImage.asset->url,
+    hoverImage, "hoverImageUrl": hoverImage.asset->url
   }
 `;
 
