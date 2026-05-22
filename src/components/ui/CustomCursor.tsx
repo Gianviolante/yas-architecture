@@ -3,27 +3,22 @@
 import { useEffect, useRef } from "react";
 
 /**
- * Cursor system — faithful 1:1 copy of davidegroppi.com
+ * Cursor — logica identica a davidegroppi.com
  *
- * Logic (mirrors Groppi's CursorTypeComponent + CursorComponent):
+ * Fix rispetto alla versione precedente:
+ *   – L'elemento usa data-cursor-el="" (attributo data-* garantito sul DOM da React)
+ *     invece di cursor="" che React strippava, causando il mancato match CSS
+ *     e il render visibile delle icone SVG sulla pagina.
+ *   – Sprite SVG nascosto con style={{ display:"none" }} anziché sr-only.
  *
- *  CursorTypeComponent (selector: '[cursor-type], a, button'):
- *    – If a/button has no cursor-type → assigns "nav"
- *    – mouseenter → setCursorType(type)
- *    – mouseleave → setCursorType("idle")
- *
- *  CursorComponent (selector: '[cursor]'):
- *    – RAF loop: lerp ÷4 position, ÷10 opacity  (same as Groppi)
- *    – active only when window.innerWidth >= 1024
- *    – className switch matches Groppi's cursorType setter exactly
- *
- *  Extra (React adapter):
- *    – MutationObserver watches DOM for new a/button/[cursor-type] nodes
- *    – Also watches cursor-type attribute changes (needed for sliders that
- *      update cursor-type on mousemove — e.g. HomeSlider, GallerySlider)
- *
- * HTML attribute:  cursor=""         (matches Groppi's [cursor] selector)
- * CSS classes:     over / over prev  (matches Groppi's class switch)
+ * Logica (mirrors Groppi's CursorTypeComponent + CursorComponent):
+ *   – Per ogni a/button senza cursor-type → assegna "nav"
+ *   – mouseenter → mostra cursore col tipo corretto
+ *   – mouseleave → torna idle
+ *   – MutationObserver: registra nuovi nodi e rileva cambio cursor-type
+ *     (necessario per slider che cambiano cursor-type su mousemove)
+ *   – RAF loop: lerp ÷4 posizione, ÷10 opacità (identico a Groppi)
+ *   – active solo se window.innerWidth >= 1024
  */
 
 const CURSOR_TYPES = [
@@ -41,127 +36,113 @@ export default function CustomCursor() {
   const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const _node = ref.current;
-    if (!_node || !window.matchMedia("(pointer: fine)").matches) return;
-    // Capture after null-check so TypeScript preserves HTMLDivElement in closures
-    const cursorNode = _node;
+    const _el = ref.current;
+    if (!_el || !window.matchMedia("(pointer: fine)").matches) return;
+    const el = _el; // HTMLDivElement — TypeScript preserva il tipo nei closure
 
     const html  = document.documentElement;
     const mouse = { x: window.innerWidth / 2, y: window.innerHeight / 2 };
-    let position: { x: number; y: number; o: number } | null = null;
+    let pos:    { x: number; y: number; o: number } | null = null;
     let rafId   = 0;
     let active_ = false;
-    let cType_: CursorType = "idle";
+    let type_: CursorType = "idle";
 
-    // ── active setter (mirrors Groppi) ────────────────────────────────
+    // ── active setter (identico a Groppi) ─────────────────────────────
     function setActive(val: boolean) {
       if (active_ === val) return;
       active_ = val;
-      if (active_ && cType_ !== "idle") html.classList.add("cursor--active");
-      else                               html.classList.remove("cursor--active");
+      if (active_ && type_ !== "idle") html.classList.add("cursor--active");
+      else                              html.classList.remove("cursor--active");
     }
 
-    // ── cursorType setter (mirrors Groppi's switch exactly) ───────────
-    function setCursorType(type: CursorType) {
-      if (cType_ === type) return;
-      cType_ = type;
+    // ── cursorType setter (switch identico a Groppi) ──────────────────
+    function setType(type: CursorType) {
+      if (type_ === type) return;
+      type_ = type;
       switch (type) {
-        case "nav":   cursorNode.setAttribute("class", "over");        break;
-        case "idle":  cursorNode.setAttribute("class", "");             break;
-        default:      cursorNode.setAttribute("class", `over ${type}`); break;
+        case "nav":  el.className = "over";        break;
+        case "idle": el.className = "";             break;
+        default:     el.className = `over ${type}`; break;
       }
-      if (active_ && cType_ !== "idle") html.classList.add("cursor--active");
-      else                               html.classList.remove("cursor--active");
+      if (active_ && type_ !== "idle") html.classList.add("cursor--active");
+      else                              html.classList.remove("cursor--active");
     }
 
-    // ── RAF render loop (mirrors Groppi's render$) ────────────────────
+    // ── RAF loop (lerp ÷4 pos, ÷10 opacity — identico a Groppi) ──────
     function tick() {
-      if (active_ && position !== null) {
-        position.x += (mouse.x - position.x) / 4;
-        position.y += (mouse.y - position.y) / 4;
-        position.o += (1 - position.o) / 10;
-        cursorNode.style.transform = `translate(${position.x}px, ${position.y}px)`;
-        cursorNode.style.opacity   = String(position.o);
+      if (active_ && pos !== null) {
+        pos.x += (mouse.x - pos.x) / 4;
+        pos.y += (mouse.y - pos.y) / 4;
+        pos.o += (1 - pos.o) / 10;
+        el.style.transform = `translate(${pos.x}px, ${pos.y}px)`;
+        el.style.opacity   = String(pos.o);
       }
       rafId = requestAnimationFrame(tick);
     }
 
-    // ── mousemove (mirrors Groppi's move$) ────────────────────────────
+    // ── mousemove ─────────────────────────────────────────────────────
     const onMove = (e: MouseEvent) => {
       mouse.x = e.clientX;
       mouse.y = e.clientY;
-      if (!position) position = { x: e.clientX, y: e.clientY, o: 0 };
+      if (!pos) pos = { x: e.clientX, y: e.clientY, o: 0 };
     };
 
-    // ── resize (mirrors Groppi's resize$) ─────────────────────────────
+    // ── resize (active solo su desktop) ───────────────────────────────
     const onResize = () => setActive(window.innerWidth >= 1024);
 
-    // ── Per-element registration (mirrors CursorTypeComponent) ────────
+    // ── Registrazione per-elemento (mirrors CursorTypeComponent) ──────
     const registered = new WeakSet<Element>();
-    let hoveredNode: Element | null = null;
+    let hovered: Element | null = null;
 
-    function registerNode(el: Element) {
-      if (registered.has(el)) return;
-      registered.add(el);
+    function registerNode(node: Element) {
+      if (registered.has(node)) return;
+      registered.add(node);
 
-      // If no explicit cursor-type on a/button → assign "nav" (Groppi logic)
-      if (!el.hasAttribute("cursor-type")) {
-        const tag = el.nodeName.toLowerCase();
-        if (tag === "a" || tag === "button") {
-          el.setAttribute("cursor-type", "nav");
-        }
+      // Se a/button senza cursor-type → "nav" (logica Groppi)
+      if (!node.hasAttribute("cursor-type")) {
+        const tag = node.nodeName.toLowerCase();
+        if (tag === "a" || tag === "button") node.setAttribute("cursor-type", "nav");
       }
 
-      const rawType = el.getAttribute("cursor-type");
-      if (!rawType || !(CURSOR_TYPES as readonly string[]).includes(rawType)) return;
+      const t = node.getAttribute("cursor-type");
+      if (!t || !(CURSOR_TYPES as readonly string[]).includes(t)) return;
 
-      el.addEventListener("mouseenter", () => {
-        hoveredNode = el;
-        const t = (el.getAttribute("cursor-type") || "idle") as CursorType;
-        setCursorType(t);
+      node.addEventListener("mouseenter", () => {
+        hovered = node;
+        setType((node.getAttribute("cursor-type") || "idle") as CursorType);
       });
-      el.addEventListener("mouseleave", () => {
-        if (hoveredNode === el) hoveredNode = null;
-        setCursorType("idle");
+      node.addEventListener("mouseleave", () => {
+        if (hovered === node) hovered = null;
+        setType("idle");
       });
     }
 
-    function scanAndRegister(root: Document | Element = document) {
+    function scan(root: Document | Element = document) {
       root.querySelectorAll<Element>("[cursor-type], a, button").forEach(registerNode);
     }
 
     // ── MutationObserver ──────────────────────────────────────────────
     const mo = new MutationObserver((mutations) => {
       for (const m of mutations) {
-        // New nodes added to DOM
+        // Nuovi nodi aggiunti al DOM
         if (m.type === "childList") {
           m.addedNodes.forEach((n) => {
             if (n.nodeType !== 1) return;
-            const el = n as Element;
-            const tag = el.nodeName.toLowerCase();
-            if (tag === "a" || tag === "button" || el.hasAttribute("cursor-type")) {
-              registerNode(el);
+            const node = n as Element;
+            const tag = node.nodeName.toLowerCase();
+            if (tag === "a" || tag === "button" || node.hasAttribute("cursor-type")) {
+              registerNode(node);
             }
-            el.querySelectorAll<Element>("[cursor-type], a, button").forEach(registerNode);
+            node.querySelectorAll<Element>("[cursor-type], a, button").forEach(registerNode);
           });
         }
-
-        // cursor-type attribute changed (sliders call setAttribute on mousemove)
+        // cursor-type modificato (slider lo cambiano su mousemove)
         if (m.type === "attributes" && m.attributeName === "cursor-type") {
           const target = m.target as Element;
           const newType = target.getAttribute("cursor-type") as CursorType | null;
-
-          if (!newType) {
-            // attribute removed → idle
-            if (hoveredNode && (hoveredNode === target || target.contains(hoveredNode))) {
-              setCursorType("idle");
-            }
-          } else {
-            // attribute added/changed
-            registerNode(target);
-            if (hoveredNode && (hoveredNode === target || target.contains(hoveredNode))) {
-              setCursorType(newType);
-            }
+          registerNode(target);
+          if (hovered && (hovered === target || target.contains(hovered))) {
+            setType(newType ?? "idle");
           }
         }
       }
@@ -171,12 +152,10 @@ export default function CustomCursor() {
     window.addEventListener("mousemove", onMove);
     window.addEventListener("resize",    onResize);
     setActive(window.innerWidth >= 1024);
-    scanAndRegister();
+    scan();
     mo.observe(document.body, {
-      childList:       true,
-      subtree:         true,
-      attributes:      true,
-      attributeFilter: ["cursor-type"],
+      childList: true, subtree: true,
+      attributes: true, attributeFilter: ["cursor-type"],
     });
     rafId = requestAnimationFrame(tick);
 
@@ -191,8 +170,14 @@ export default function CustomCursor() {
 
   return (
     <>
-      {/* ── SVG sprite — exact paths from davidegroppi.com ────────── */}
-      <svg width="0" height="0" className="sr-only" aria-hidden="true">
+      {/*
+        Sprite SVG — display:none garantisce che non sia mai visibile.
+        I <symbol> sono template puri, non si renderizzano mai da soli.
+      */}
+      <svg
+        aria-hidden="true"
+        style={{ display: "none" }}
+      >
         <symbol id="cursor-nav" viewBox="0 0 24 24">
           <path fillRule="evenodd" clipRule="evenodd"
             d="M1.6 12.7L1.6 11.3 19.2 11.3 12.3 5.7 13.3 4.6 22.4 12 13.3 19.4 12.3 18.3 19.2 12.7z"/>
@@ -245,8 +230,12 @@ export default function CustomCursor() {
         </symbol>
       </svg>
 
-      {/* ── Cursor element — attribute "cursor" matches Groppi's [cursor] selector ── */}
-      <div ref={ref} {...{ cursor: "" } as React.HTMLAttributes<HTMLDivElement>} aria-hidden="true">
+      {/*
+        Elemento cursore.
+        data-cursor-el="" — attributo data-* garantito sul DOM da React.
+        Senza questo match il CSS non si applica e le icone diventano visibili.
+      */}
+      <div ref={ref} data-cursor-el="" aria-hidden="true">
         <div className="circle">
           {ICON_TYPES.map((t) => (
             <svg key={t} className={`cursor-${t}`}>

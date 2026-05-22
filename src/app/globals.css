@@ -54,6 +54,68 @@ body {
 }
 
 
+/* ── Custom cursor — logica davidegroppi.com ────────────────────────── */
+
+[data-cursor-el] .circle {
+  animation: twinkle 1s ease-in-out infinite alternate both;
+}
+@keyframes twinkle {
+  0%  { transform: translateX(-50%) translateY(-50%) scale(.9); }
+  to  { transform: translateX(-50%) translateY(-50%) scale(1);  }
+}
+[data-cursor-el] {
+  position: fixed;
+  top: 0; left: 0;
+  pointer-events: none;
+  mix-blend-mode: difference;
+  visibility: hidden;
+  opacity: 0;
+  z-index: 1000000;
+}
+[data-cursor-el] .circle {
+  position: absolute;
+  width: 60px; height: 60px;
+  overflow: hidden;
+  pointer-events: none;
+}
+[data-cursor-el] .circle::before {
+  content: "";
+  display: block;
+  width: 60px; height: 60px;
+  border-radius: 50%;
+  background: transparent;
+  border: 2px solid #fff;
+  transform: scale(.1);
+  transition: .25s ease-in-out;
+  transition-property: border-color, transform;
+}
+[data-cursor-el] svg {
+  position: absolute;
+  top: 15px; left: 15px;
+  width: 30px; height: 30px;
+  fill: #fff;
+  pointer-events: none;
+  opacity: 0;
+  transform: scale(.5);
+  transition: .25s ease-in-out;
+  transition-property: transform, opacity;
+}
+[data-cursor-el].over .circle::before { transform: scale(1); }
+[data-cursor-el].add       .cursor-add,
+[data-cursor-el].audio-off .cursor-audio-off,
+[data-cursor-el].audio-on  .cursor-audio-on,
+[data-cursor-el].close     .cursor-close,
+[data-cursor-el].drag      .cursor-drag,
+[data-cursor-el].expand    .cursor-expand,
+[data-cursor-el].next      .cursor-next,
+[data-cursor-el].play      .cursor-play,
+[data-cursor-el].prev      .cursor-prev,
+[data-cursor-el].remove    .cursor-remove,
+[data-cursor-el].blank     .cursor-blank,
+[data-cursor-el].scroll    .cursor-scroll { opacity: 1; transform: scale(1); }
+.cursor--active [data-cursor-el] { display: block; visibility: visible; }
+.cursor--active *                { cursor: none !important; }
+
 @layer base {
   ::selection {
     background-color: #171717;
