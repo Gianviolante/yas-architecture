@@ -18,7 +18,7 @@ const CAT_FILTERS: { label: string; value: Typology }[] = [
 ];
 const STATO_FILTERS: { label: string; value: ProjectStatus }[] = [
   { label: "In corso",        value: "In corso" },
-  { label: "In approvazione", value: "In approvazione" },
+  { label: "Progetti",        value: "Progetti" },
   { label: "Realizzato",      value: "Realizzato" },
 ];
 

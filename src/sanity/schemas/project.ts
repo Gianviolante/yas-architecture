@@ -17,7 +17,7 @@ export const projectSchema = defineType({
     }),
     defineField({
       name: "status", title: "Stato", type: "string",
-      options: { list: ["In corso", "In approvazione", "Realizzato"] },
+      options: { list: ["In corso", "Progetti", "Realizzato"] },
       validation: (r) => r.required(),
     }),
     defineField({

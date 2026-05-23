@@ -1,5 +1,5 @@
 export type Typology = "Architettura" | "Interior Design" | "Residenziale" | "Commerciale" | "Altro";
-export type ProjectStatus = "In corso" | "In approvazione" | "Realizzato";
+export type ProjectStatus = "In corso" | "Progetti" | "Realizzato";
 export type TeamMemberType = "Studio" | "Designer" | "Partner";
 
 export interface SanityImage {
