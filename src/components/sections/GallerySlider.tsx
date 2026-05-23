@@ -15,7 +15,8 @@ interface Props {
 }
 
 export default function GallerySlider({ items, projectTitle, compact = false }: Props) {
-  const scrollRef    = useRef<HTMLDivElement>(null);
+  const scrollRef = useRef<HTMLDivElement>(null);
+
   const [activeIdx,      setActiveIdx]      = useState(0);
   const [canScrollLeft,  setCanScrollLeft]  = useState(false);
   const [canScrollRight, setCanScrollRight] = useState(true);
@@ -24,11 +25,6 @@ export default function GallerySlider({ items, projectTitle, compact = false }: 
   const cardH = compact ? 202 : 633;
   const gap   = compact ? 15  : 77;
   const SLIDE_STEP = (compact ? 263 : 580) + gap;
-
-  // cursor-type="drag" sulla striscia → doppia freccia
-  useEffect(() => {
-    scrollRef.current?.setAttribute("cursor-type", "drag");
-  }, [compact]);
 
   const updateScrollState = () => {
     const el = scrollRef.current;
@@ -51,13 +47,12 @@ export default function GallerySlider({ items, projectTitle, compact = false }: 
     scrollRef.current?.scrollBy({ left: dir === "left" ? -SLIDE_STEP : SLIDE_STEP, behavior: "smooth" });
   };
 
-  const hasImages    = items.length > 0;
-  const displayCount = hasImages ? items.length : 3;
+  const hasImages     = items.length > 0;
+  const displayCount  = hasImages ? items.length : 3;
   const activeCaption = hasImages ? items[activeIdx]?.caption : undefined;
 
   return (
     <div>
-      {/* Wrapper relativo per posizionare i bottoni */}
       <div className="relative">
         <div
           ref={scrollRef}
@@ -71,19 +66,22 @@ export default function GallerySlider({ items, projectTitle, compact = false }: 
               style={{ width: `${cardW(i)}px`, height: `${cardH}px`, transition: "width 300ms ease, height 300ms ease" }}
             >
               {hasImages && items[i]?.url && (
-                <Image src={items[i].url} alt={items[i].caption ?? `${projectTitle} — ${i + 1}`} fill className="object-cover" />
+                <Image
+                  src={items[i].url}
+                  alt={items[i].caption ?? `${projectTitle} — ${i + 1}`}
+                  fill
+                  className="object-cover"
+                />
               )}
             </div>
           ))}
         </div>
 
-        {/* Bottone prev — scompare su hover → cursor circle con ← */}
         {canScrollLeft && (
           <button
-            ref={(el) => { el?.setAttribute("cursor-type", "prev"); }}
             onClick={() => slideTo("left")}
             aria-label="Immagine precedente"
-            className="absolute left-[30px] top-1/2 -translate-y-1/2 size-[48px] flex items-center justify-center hover:opacity-0 transition-opacity duration-150 z-10"
+            className="absolute left-[30px] top-1/2 -translate-y-1/2 size-[48px] flex items-center justify-center z-10"
           >
             <span className="absolute inset-0 rounded-full border border-white/70" />
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
@@ -92,13 +90,11 @@ export default function GallerySlider({ items, projectTitle, compact = false }: 
           </button>
         )}
 
-        {/* Bottone next — scompare su hover → cursor circle con → */}
         {canScrollRight && (
           <button
-            ref={(el) => { el?.setAttribute("cursor-type", "next"); }}
             onClick={() => slideTo("right")}
             aria-label="Immagine successiva"
-            className="absolute right-[30px] top-1/2 -translate-y-1/2 size-[48px] flex items-center justify-center hover:opacity-0 transition-opacity duration-150 z-10"
+            className="absolute right-[30px] top-1/2 -translate-y-1/2 size-[48px] flex items-center justify-center z-10"
           >
             <span className="absolute inset-0 rounded-full border border-white/70" />
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">

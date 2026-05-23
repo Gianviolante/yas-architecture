@@ -18,11 +18,6 @@ export default function ProjectsSlider({ projects, title = "Vedi altri progetti"
   const [canScrollLeft,  setCanScrollLeft]  = useState(false);
   const [canScrollRight, setCanScrollRight] = useState(true);
 
-  // cursor-type="drag" sulla striscia scrollabile → doppia freccia
-  useEffect(() => {
-    scrollRef.current?.setAttribute("cursor-type", "drag");
-  }, []);
-
   const updateScrollState = () => {
     const el = scrollRef.current;
     if (!el) return;
@@ -51,7 +46,6 @@ export default function ProjectsSlider({ projects, title = "Vedi altri progetti"
         {title}
       </p>
 
-      {/* Wrapper relativo per posizionare i bottoni */}
       <div className="relative">
         <div
           ref={scrollRef}
@@ -59,14 +53,13 @@ export default function ProjectsSlider({ projects, title = "Vedi altri progetti"
           style={{ scrollbarWidth: "none" }}
         >
           {projects.map((p) => (
-            <div key={p._id} className="flex-none" style={{ width: "263px" }}>
-              {/* Foto: cerchio solo (nav), click apre progetto */}
-              <Link
-                href={`/progetti/${p.slug.current}`}
-                className="block relative overflow-hidden mb-[8px] group"
-                style={{ width: "263px", height: "202px" }}
-                ref={(el) => { el?.setAttribute("cursor-type", "nav"); }}
-              >
+            <Link
+              key={p._id}
+              href={`/progetti/${p.slug.current}`}
+              className="flex-none block group"
+              style={{ width: "263px" }}
+            >
+              <div className="relative overflow-hidden mb-[8px]" style={{ width: "263px", height: "202px" }}>
                 {p.coverImageUrl ? (
                   <Image
                     src={p.coverImageUrl}
@@ -77,24 +70,22 @@ export default function ProjectsSlider({ projects, title = "Vedi altri progetti"
                 ) : (
                   <div className="w-full h-full bg-[#d9d9d9]" />
                 )}
-              </Link>
+              </div>
               <p className="text-[15px] leading-[1.5] text-[#282828] mb-[6px]">
                 {p.title}{p.location ? `, ${p.location}` : ""}
               </p>
               <span className="inline-flex items-center border-2 border-[#333] rounded-[100px] px-[14px] py-[4px] text-[12px] text-[#333] leading-[1.4] whitespace-nowrap">
                 {p.typology ?? "Residenziale"}
               </span>
-            </div>
+            </Link>
           ))}
         </div>
 
-        {/* Bottone prev — visibile, scompare su hover → appare cursor circle con ← */}
         {canScrollLeft && (
           <button
-            ref={(el) => { el?.setAttribute("cursor-type", "prev"); }}
             onClick={() => scrollBy("left")}
             aria-label="Scorri a sinistra"
-            className="absolute left-[8px] top-1/2 -translate-y-1/2 size-[48px] flex items-center justify-center hover:opacity-0 transition-opacity duration-150 z-10"
+            className="absolute left-[8px] top-1/2 -translate-y-1/2 size-[48px] flex items-center justify-center z-10"
           >
             <span className="absolute inset-0 rounded-full border border-[#333]" />
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#333" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
@@ -103,13 +94,11 @@ export default function ProjectsSlider({ projects, title = "Vedi altri progetti"
           </button>
         )}
 
-        {/* Bottone next — visibile, scompare su hover → appare cursor circle con → */}
         {canScrollRight && (
           <button
-            ref={(el) => { el?.setAttribute("cursor-type", "next"); }}
             onClick={() => scrollBy("right")}
             aria-label="Scorri a destra"
-            className="absolute right-[8px] top-1/2 -translate-y-1/2 size-[48px] flex items-center justify-center hover:opacity-0 transition-opacity duration-150 z-10"
+            className="absolute right-[8px] top-1/2 -translate-y-1/2 size-[48px] flex items-center justify-center z-10"
           >
             <span className="absolute inset-0 rounded-full border border-[#333]" />
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#333" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">

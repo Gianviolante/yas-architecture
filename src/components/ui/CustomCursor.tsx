@@ -148,25 +148,8 @@ export default function CustomCursor() {
         hovered = node;
         setType((node.getAttribute("cursor-type") || "idle") as CursorType);
       });
-      node.addEventListener("mouseleave", (e: Event) => {
-        if (hovered !== node) return;
-        hovered = null;
-        // Se torniamo su un elemento padre con cursor-type, ripristinalo
-        const rt = (e as MouseEvent).relatedTarget as Element | null;
-        if (rt) {
-          let el: Element | null = rt;
-          while (el && el !== document.body) {
-            if (registered.has(el)) {
-              const t = el.getAttribute("cursor-type") as CursorType | null;
-              if (t && (CURSOR_TYPES as readonly string[]).includes(t)) {
-                hovered = el;
-                setType(t);
-                return;
-              }
-            }
-            el = el.parentElement;
-          }
-        }
+      node.addEventListener("mouseleave", () => {
+        if (hovered === node) hovered = null;
         setType("idle");
       });
     }

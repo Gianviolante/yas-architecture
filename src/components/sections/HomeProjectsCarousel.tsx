@@ -15,13 +15,9 @@ const PLACEHOLDERS = [
 interface Props { projects: Project[]; }
 
 export default function HomeProjectsCarousel({ projects }: Props) {
-  const [idx, setIdx]         = useState(0);
-  const [stepPx, setStepPx]   = useState(0);
-  const [isPointerFine, setIsPointerFine] = useState(false);
-  const [hoverSide, setHoverSide] = useState<"left" | "right" | null>(null);
-
-  const viewportRef  = useRef<HTMLDivElement>(null);
-  const containerRef = useRef<HTMLDivElement>(null);
+  const [idx, setIdx]     = useState(0);
+  const [stepPx, setStepPx] = useState(0);
+  const viewportRef       = useRef<HTMLDivElement>(null);
 
   const useSanity = projects.length > 0;
   const total     = useSanity ? projects.length : PLACEHOLDERS.length;
@@ -33,14 +29,6 @@ export default function HomeProjectsCarousel({ projects }: Props) {
   const next = () => setIdx((i) => Math.min(maxIdx, i + 1));
 
   useEffect(() => {
-    const mq = window.matchMedia("(hover: hover) and (pointer: fine)");
-    setIsPointerFine(mq.matches);
-    const h = (e: MediaQueryListEvent) => setIsPointerFine(e.matches);
-    mq.addEventListener("change", h);
-    return () => mq.removeEventListener("change", h);
-  }, []);
-
-  useEffect(() => {
     const update = () => {
       if (viewportRef.current)
         setStepPx((viewportRef.current.offsetWidth + 14) / 2);
@@ -49,26 +37,6 @@ export default function HomeProjectsCarousel({ projects }: Props) {
     window.addEventListener("resize", update);
     return () => window.removeEventListener("resize", update);
   }, []);
-
-  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (!containerRef.current) return;
-    const rect = e.currentTarget.getBoundingClientRect();
-    const side = e.clientX - rect.left < rect.width / 2 ? "left" : "right";
-    setHoverSide(side);
-    if (side === "left" && canPrev)       containerRef.current.setAttribute("cursor-type", "prev");
-    else if (side === "right" && canNext) containerRef.current.setAttribute("cursor-type", "next");
-    else                                  containerRef.current.removeAttribute("cursor-type");
-  };
-
-  const handleMouseLeave = () => {
-    setHoverSide(null);
-    containerRef.current?.removeAttribute("cursor-type");
-  };
-
-  const handleClick = () => {
-    if (hoverSide === "left" && canPrev) prev();
-    else if (hoverSide === "right" && canNext) next();
-  };
 
   return (
     <section className="relative">
@@ -82,14 +50,7 @@ export default function HomeProjectsCarousel({ projects }: Props) {
           &lsquo;Content here, content here&rsquo;, making it look like readable English. Many desktop publishing packages and web page editors now use…
         </p>
 
-        {/* ── Carousel ──────────────────────────────────────────── */}
-        <div
-          ref={containerRef}
-          className="relative mb-10"
-          onMouseMove={isPointerFine ? handleMouseMove : undefined}
-          onMouseLeave={isPointerFine ? handleMouseLeave : undefined}
-          onClick={isPointerFine ? handleClick : undefined}
-        >
+        <div className="relative mb-10">
           <div className="overflow-hidden" ref={viewportRef}>
             <div
               className="flex gap-[14px] transition-transform duration-500 ease-out"
@@ -98,18 +59,12 @@ export default function HomeProjectsCarousel({ projects }: Props) {
               {useSanity
                 ? projects.map((p) => (
                     <div key={p._id} className="w-[calc(50%-7px)] shrink-0">
-                      {/* Immagine — solo cerchio, il click sul container gestisce prev/next */}
-                      <div className="relative h-[550px] overflow-hidden mb-4">
-                        {p.coverImageUrl
-                          ? <Image src={p.coverImageUrl} alt={p.title} fill className="object-cover" />
-                          : <div className="w-full h-full bg-[#d9d9d9]" />}
-                      </div>
-                      {/* Testo — link per aprire il progetto */}
-                      <Link
-                        href={`/progetti/${p.slug.current}`}
-                        className="block group"
-                        onClick={(e) => isPointerFine && e.stopPropagation()}
-                      >
+                      <Link href={`/progetti/${p.slug.current}`} className="block group">
+                        <div className="relative h-[550px] overflow-hidden mb-4">
+                          {p.coverImageUrl
+                            ? <Image src={p.coverImageUrl} alt={p.title} fill className="object-cover transition-transform duration-500 group-hover:scale-[1.03]" />
+                            : <div className="w-full h-full bg-[#d9d9d9]" />}
+                        </div>
                         <p className="text-[17.5px] leading-[1.5] text-[#282828] mb-2 group-hover:opacity-70 transition-opacity">
                           {p.title}{p.location ? `, ${p.location}` : ""}
                         </p>
@@ -133,28 +88,18 @@ export default function HomeProjectsCarousel({ projects }: Props) {
             </div>
           </div>
 
-          {/* Prev — visibile, scompare su hover → cursor circle con ← */}
           {canPrev && (
-            <button
-              ref={(el) => { el?.setAttribute("cursor-type", "prev"); }}
-              onClick={(e) => { e.stopPropagation(); prev(); }}
-              aria-label="Progetto precedente"
-              className="absolute left-[12px] top-[275px] -translate-y-1/2 size-[48px] flex items-center justify-center hover:opacity-0 transition-opacity duration-150 z-10"
-            >
+            <button onClick={prev} aria-label="Progetto precedente"
+              className="absolute left-[12px] top-[275px] -translate-y-1/2 size-[48px] flex items-center justify-center z-10">
               <span className="absolute inset-0 rounded-full border border-[#333]" />
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#333" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M15 18l-6-6 6-6" />
               </svg>
             </button>
           )}
-          {/* Next — visibile, scompare su hover → cursor circle con → */}
           {canNext && (
-            <button
-              ref={(el) => { el?.setAttribute("cursor-type", "next"); }}
-              onClick={(e) => { e.stopPropagation(); next(); }}
-              aria-label="Prossimo progetto"
-              className="absolute right-[12px] top-[275px] -translate-y-1/2 size-[48px] flex items-center justify-center hover:opacity-0 transition-opacity duration-150 z-10"
-            >
+            <button onClick={next} aria-label="Prossimo progetto"
+              className="absolute right-[12px] top-[275px] -translate-y-1/2 size-[48px] flex items-center justify-center z-10">
               <span className="absolute inset-0 rounded-full border border-[#333]" />
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#333" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M9 18l6-6-6-6" />
