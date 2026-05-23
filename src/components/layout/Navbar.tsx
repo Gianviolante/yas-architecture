@@ -58,7 +58,7 @@ export default function Navbar() {
             : "bg-transparent"
         )}
       >
-        <nav className="max-w-[1440px] mx-auto page-px h-full flex items-center justify-between gap-[430px_0]">
+        <nav className="px-4 md:px-[30px] h-full flex items-center justify-between">
           {/* Desktop left nav */}
           <div className="hidden md:flex items-center gap-[10px]">
             {navLinks.map(({ href, label }) => (
