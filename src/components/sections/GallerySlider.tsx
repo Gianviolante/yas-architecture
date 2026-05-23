@@ -14,17 +14,30 @@ interface Props {
   compact?: boolean;
 }
 
+const EDGE_ZONE = 140;
+
 export default function GallerySlider({ items, projectTitle, compact = false }: Props) {
   const scrollRef = useRef<HTMLDivElement>(null);
 
+  const [isPointerFine,  setIsPointerFine]  = useState(false);
   const [activeIdx,      setActiveIdx]      = useState(0);
   const [canScrollLeft,  setCanScrollLeft]  = useState(false);
   const [canScrollRight, setCanScrollRight] = useState(true);
+  const [showPrev,       setShowPrev]       = useState(false);
+  const [showNext,       setShowNext]       = useState(false);
 
   const cardW = (i: number) => compact ? 263 : i === 0 ? 580 : 505;
   const cardH = compact ? 202 : 633;
   const gap   = compact ? 15  : 77;
   const SLIDE_STEP = (compact ? 263 : 580) + gap;
+
+  useEffect(() => {
+    const mq = window.matchMedia("(hover: hover) and (pointer: fine)");
+    setIsPointerFine(mq.matches);
+    const h = (e: MediaQueryListEvent) => setIsPointerFine(e.matches);
+    mq.addEventListener("change", h);
+    return () => mq.removeEventListener("change", h);
+  }, []);
 
   const updateScrollState = () => {
     const el = scrollRef.current;
@@ -43,6 +56,18 @@ export default function GallerySlider({ items, projectTitle, compact = false }: 
     return () => el.removeEventListener("scroll", updateScrollState);
   }, [items, compact]);
 
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    setShowPrev(x < EDGE_ZONE && canScrollLeft);
+    setShowNext(x > rect.width - EDGE_ZONE && canScrollRight);
+  };
+
+  const handleMouseLeave = () => {
+    setShowPrev(false);
+    setShowNext(false);
+  };
+
   const slideTo = (dir: "left" | "right") => {
     scrollRef.current?.scrollBy({ left: dir === "left" ? -SLIDE_STEP : SLIDE_STEP, behavior: "smooth" });
   };
@@ -53,7 +78,11 @@ export default function GallerySlider({ items, projectTitle, compact = false }: 
 
   return (
     <div>
-      <div className="relative">
+      <div
+        className="relative"
+        onMouseMove={isPointerFine ? handleMouseMove : undefined}
+        onMouseLeave={isPointerFine ? handleMouseLeave : undefined}
+      >
         <div
           ref={scrollRef}
           className="flex overflow-x-auto pl-[30px] no-scrollbar"
@@ -77,31 +106,31 @@ export default function GallerySlider({ items, projectTitle, compact = false }: 
           ))}
         </div>
 
-        {canScrollLeft && (
-          <button
-            onClick={() => slideTo("left")}
-            aria-label="Immagine precedente"
-            className="absolute left-[30px] top-1/2 -translate-y-1/2 size-[48px] flex items-center justify-center z-10"
-          >
-            <span className="absolute inset-0 rounded-full border border-white/70" />
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-              <path d="M15 18l-6-6 6-6" />
-            </svg>
-          </button>
-        )}
+        {/* Freccia sinistra */}
+        <button
+          onClick={() => slideTo("left")}
+          aria-label="Immagine precedente"
+          className="absolute left-[30px] top-1/2 -translate-y-1/2 size-[48px] flex items-center justify-center z-10 transition-opacity duration-200"
+          style={{ opacity: isPointerFine ? (showPrev ? 1 : 0) : (canScrollLeft ? 1 : 0), pointerEvents: showPrev || !isPointerFine ? "auto" : "none" }}
+        >
+          <span className="absolute inset-0 rounded-full border border-white/70" />
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M15 18l-6-6 6-6" />
+          </svg>
+        </button>
 
-        {canScrollRight && (
-          <button
-            onClick={() => slideTo("right")}
-            aria-label="Immagine successiva"
-            className="absolute right-[30px] top-1/2 -translate-y-1/2 size-[48px] flex items-center justify-center z-10"
-          >
-            <span className="absolute inset-0 rounded-full border border-white/70" />
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-              <path d="M9 18l6-6-6-6" />
-            </svg>
-          </button>
-        )}
+        {/* Freccia destra */}
+        <button
+          onClick={() => slideTo("right")}
+          aria-label="Immagine successiva"
+          className="absolute right-[30px] top-1/2 -translate-y-1/2 size-[48px] flex items-center justify-center z-10 transition-opacity duration-200"
+          style={{ opacity: isPointerFine ? (showNext ? 1 : 0) : (canScrollRight ? 1 : 0), pointerEvents: showNext || !isPointerFine ? "auto" : "none" }}
+        >
+          <span className="absolute inset-0 rounded-full border border-white/70" />
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M9 18l6-6-6-6" />
+          </svg>
+        </button>
       </div>
 
       {!compact && (

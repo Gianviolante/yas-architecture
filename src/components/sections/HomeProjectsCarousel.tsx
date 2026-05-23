@@ -14,10 +14,16 @@ const PLACEHOLDERS = [
 
 interface Props { projects: Project[]; }
 
+const EDGE_ZONE = 140;
+
 export default function HomeProjectsCarousel({ projects }: Props) {
-  const [idx, setIdx]     = useState(0);
-  const [stepPx, setStepPx] = useState(0);
-  const viewportRef       = useRef<HTMLDivElement>(null);
+  const [idx, setIdx]         = useState(0);
+  const [stepPx, setStepPx]   = useState(0);
+  const [isPointerFine, setIsPointerFine] = useState(false);
+  const [showPrev, setShowPrev] = useState(false);
+  const [showNext, setShowNext] = useState(false);
+  const viewportRef = useRef<HTMLDivElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
 
   const useSanity = projects.length > 0;
   const total     = useSanity ? projects.length : PLACEHOLDERS.length;
@@ -29,6 +35,14 @@ export default function HomeProjectsCarousel({ projects }: Props) {
   const next = () => setIdx((i) => Math.min(maxIdx, i + 1));
 
   useEffect(() => {
+    const mq = window.matchMedia("(hover: hover) and (pointer: fine)");
+    setIsPointerFine(mq.matches);
+    const h = (e: MediaQueryListEvent) => setIsPointerFine(e.matches);
+    mq.addEventListener("change", h);
+    return () => mq.removeEventListener("change", h);
+  }, []);
+
+  useEffect(() => {
     const update = () => {
       if (viewportRef.current)
         setStepPx((viewportRef.current.offsetWidth + 14) / 2);
@@ -37,6 +51,18 @@ export default function HomeProjectsCarousel({ projects }: Props) {
     window.addEventListener("resize", update);
     return () => window.removeEventListener("resize", update);
   }, []);
+
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    setShowPrev(x < EDGE_ZONE && canPrev);
+    setShowNext(x > rect.width - EDGE_ZONE && canNext);
+  };
+
+  const handleMouseLeave = () => {
+    setShowPrev(false);
+    setShowNext(false);
+  };
 
   return (
     <section className="relative">
@@ -50,7 +76,12 @@ export default function HomeProjectsCarousel({ projects }: Props) {
           &lsquo;Content here, content here&rsquo;, making it look like readable English. Many desktop publishing packages and web page editors now use…
         </p>
 
-        <div className="relative mb-10">
+        <div
+          ref={containerRef}
+          className="relative mb-10"
+          onMouseMove={isPointerFine ? handleMouseMove : undefined}
+          onMouseLeave={isPointerFine ? handleMouseLeave : undefined}
+        >
           <div className="overflow-hidden" ref={viewportRef}>
             <div
               className="flex gap-[14px] transition-transform duration-500 ease-out"
@@ -88,24 +119,31 @@ export default function HomeProjectsCarousel({ projects }: Props) {
             </div>
           </div>
 
-          {canPrev && (
-            <button onClick={prev} aria-label="Progetto precedente"
-              className="absolute left-[12px] top-[275px] -translate-y-1/2 size-[48px] flex items-center justify-center z-10">
-              <span className="absolute inset-0 rounded-full border border-[#333]" />
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#333" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M15 18l-6-6 6-6" />
-              </svg>
-            </button>
-          )}
-          {canNext && (
-            <button onClick={next} aria-label="Prossimo progetto"
-              className="absolute right-[12px] top-[275px] -translate-y-1/2 size-[48px] flex items-center justify-center z-10">
-              <span className="absolute inset-0 rounded-full border border-[#333]" />
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#333" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M9 18l6-6-6-6" />
-              </svg>
-            </button>
-          )}
+          {/* Freccia sinistra — appare solo vicino al bordo sx */}
+          <button
+            onClick={prev}
+            aria-label="Progetto precedente"
+            className="absolute left-[12px] top-[275px] -translate-y-1/2 size-[48px] flex items-center justify-center z-10 transition-opacity duration-200"
+            style={{ opacity: isPointerFine ? (showPrev ? 1 : 0) : (canPrev ? 1 : 0), pointerEvents: showPrev || !isPointerFine ? "auto" : "none" }}
+          >
+            <span className="absolute inset-0 rounded-full border border-[#333]" />
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#333" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M15 18l-6-6 6-6" />
+            </svg>
+          </button>
+
+          {/* Freccia destra — appare solo vicino al bordo dx */}
+          <button
+            onClick={next}
+            aria-label="Prossimo progetto"
+            className="absolute right-[12px] top-[275px] -translate-y-1/2 size-[48px] flex items-center justify-center z-10 transition-opacity duration-200"
+            style={{ opacity: isPointerFine ? (showNext ? 1 : 0) : (canNext ? 1 : 0), pointerEvents: showNext || !isPointerFine ? "auto" : "none" }}
+          >
+            <span className="absolute inset-0 rounded-full border border-[#333]" />
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#333" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M9 18l6-6-6-6" />
+            </svg>
+          </button>
         </div>
 
         <div className="flex justify-center">
