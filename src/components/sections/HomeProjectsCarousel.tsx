@@ -133,19 +133,32 @@ export default function HomeProjectsCarousel({ projects }: Props) {
             </div>
           </div>
 
-          {/* Mobile: frecce touch */}
-          {!isPointerFine && canPrev && (
-            <button onClick={(e) => { e.stopPropagation(); prev(); }} aria-label="Progetto precedente"
-              className="absolute left-[12px] top-[275px] -translate-y-1/2 size-[48px] mix-blend-difference flex items-center justify-center z-10">
-              <Image src="/assets/nav-circle.svg" alt="" fill className="absolute inset-0" />
-              <Image src="/assets/nav-arrow-right.svg" alt="" width={20} height={20} className="relative z-10 -scale-x-100" />
+          {/* Prev — visibile, scompare su hover → cursor circle con ← */}
+          {canPrev && (
+            <button
+              ref={(el) => { el?.setAttribute("cursor-type", "prev"); }}
+              onClick={(e) => { e.stopPropagation(); prev(); }}
+              aria-label="Progetto precedente"
+              className="absolute left-[12px] top-[275px] -translate-y-1/2 size-[48px] flex items-center justify-center hover:opacity-0 transition-opacity duration-150 z-10"
+            >
+              <span className="absolute inset-0 rounded-full border border-[#333]" />
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#333" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M15 18l-6-6 6-6" />
+              </svg>
             </button>
           )}
-          {!isPointerFine && canNext && (
-            <button onClick={(e) => { e.stopPropagation(); next(); }} aria-label="Prossimo progetto"
-              className="absolute right-[12px] top-[275px] -translate-y-1/2 size-[48px] mix-blend-difference flex items-center justify-center z-10">
-              <Image src="/assets/nav-circle.svg" alt="" fill className="absolute inset-0" />
-              <Image src="/assets/nav-arrow-right.svg" alt="" width={20} height={20} className="relative z-10" />
+          {/* Next — visibile, scompare su hover → cursor circle con → */}
+          {canNext && (
+            <button
+              ref={(el) => { el?.setAttribute("cursor-type", "next"); }}
+              onClick={(e) => { e.stopPropagation(); next(); }}
+              aria-label="Prossimo progetto"
+              className="absolute right-[12px] top-[275px] -translate-y-1/2 size-[48px] flex items-center justify-center hover:opacity-0 transition-opacity duration-150 z-10"
+            >
+              <span className="absolute inset-0 rounded-full border border-[#333]" />
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#333" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M9 18l6-6-6-6" />
+              </svg>
             </button>
           )}
         </div>

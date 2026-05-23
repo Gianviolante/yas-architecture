@@ -16,10 +16,7 @@ interface Props {
 
 export default function GallerySlider({ items, projectTitle, compact = false }: Props) {
   const scrollRef    = useRef<HTMLDivElement>(null);
-  const containerRef = useRef<HTMLDivElement>(null);
   const [activeIdx,      setActiveIdx]      = useState(0);
-  const [hoverSide,      setHoverSide]      = useState<"left" | "right" | null>(null);
-  const [isPointerFine,  setIsPointerFine]  = useState(false);
   const [canScrollLeft,  setCanScrollLeft]  = useState(false);
   const [canScrollRight, setCanScrollRight] = useState(true);
 
@@ -28,13 +25,10 @@ export default function GallerySlider({ items, projectTitle, compact = false }: 
   const gap   = compact ? 15  : 77;
   const SLIDE_STEP = (compact ? 263 : 580) + gap;
 
+  // cursor-type="drag" sulla striscia → doppia freccia
   useEffect(() => {
-    const mq = window.matchMedia("(hover: hover) and (pointer: fine)");
-    setIsPointerFine(mq.matches);
-    const h = (e: MediaQueryListEvent) => setIsPointerFine(e.matches);
-    mq.addEventListener("change", h);
-    return () => mq.removeEventListener("change", h);
-  }, []);
+    scrollRef.current?.setAttribute("cursor-type", "drag");
+  }, [compact]);
 
   const updateScrollState = () => {
     const el = scrollRef.current;
@@ -53,23 +47,8 @@ export default function GallerySlider({ items, projectTitle, compact = false }: 
     return () => el.removeEventListener("scroll", updateScrollState);
   }, [items, compact]);
 
-  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    const rect = e.currentTarget.getBoundingClientRect();
-    const side = e.clientX - rect.left < rect.width / 2 ? "left" : "right";
-    setHoverSide(side);
-    if (!containerRef.current) return;
-    if (side === "left" && canScrollLeft)       containerRef.current.setAttribute("cursor-type", "prev");
-    else if (side === "right" && canScrollRight) containerRef.current.setAttribute("cursor-type", "next");
-    else                                         containerRef.current.removeAttribute("cursor-type");
-  };
-
-  const handleMouseLeave = () => {
-    setHoverSide(null);
-    containerRef.current?.removeAttribute("cursor-type");
-  };
-
-  const handleClick = () => {
-    scrollRef.current?.scrollBy({ left: hoverSide === "left" ? -SLIDE_STEP : SLIDE_STEP, behavior: "smooth" });
+  const slideTo = (dir: "left" | "right") => {
+    scrollRef.current?.scrollBy({ left: dir === "left" ? -SLIDE_STEP : SLIDE_STEP, behavior: "smooth" });
   };
 
   const hasImages    = items.length > 0;
@@ -77,28 +56,56 @@ export default function GallerySlider({ items, projectTitle, compact = false }: 
   const activeCaption = hasImages ? items[activeIdx]?.caption : undefined;
 
   return (
-    <div
-      ref={containerRef}
-      onMouseMove={isPointerFine ? handleMouseMove : undefined}
-      onMouseLeave={isPointerFine ? handleMouseLeave : undefined}
-      onClick={isPointerFine ? handleClick : undefined}
-    >
-      <div
-        ref={scrollRef}
-        className="flex overflow-x-auto pl-[30px] no-scrollbar"
-        style={{ scrollbarWidth: "none", gap: `${gap}px`, transition: "gap 300ms ease" }}
-      >
-        {Array.from({ length: displayCount }).map((_, i) => (
-          <div
-            key={i}
-            className="flex-none relative overflow-hidden bg-[#d9d9d9]"
-            style={{ width: `${cardW(i)}px`, height: `${cardH}px`, transition: "width 300ms ease, height 300ms ease" }}
+    <div>
+      {/* Wrapper relativo per posizionare i bottoni */}
+      <div className="relative">
+        <div
+          ref={scrollRef}
+          className="flex overflow-x-auto pl-[30px] no-scrollbar"
+          style={{ scrollbarWidth: "none", gap: `${gap}px`, transition: "gap 300ms ease" }}
+        >
+          {Array.from({ length: displayCount }).map((_, i) => (
+            <div
+              key={i}
+              className="flex-none relative overflow-hidden bg-[#d9d9d9]"
+              style={{ width: `${cardW(i)}px`, height: `${cardH}px`, transition: "width 300ms ease, height 300ms ease" }}
+            >
+              {hasImages && items[i]?.url && (
+                <Image src={items[i].url} alt={items[i].caption ?? `${projectTitle} — ${i + 1}`} fill className="object-cover" />
+              )}
+            </div>
+          ))}
+        </div>
+
+        {/* Bottone prev — scompare su hover → cursor circle con ← */}
+        {canScrollLeft && (
+          <button
+            ref={(el) => { el?.setAttribute("cursor-type", "prev"); }}
+            onClick={() => slideTo("left")}
+            aria-label="Immagine precedente"
+            className="absolute left-[30px] top-1/2 -translate-y-1/2 size-[48px] flex items-center justify-center hover:opacity-0 transition-opacity duration-150 z-10"
           >
-            {hasImages && items[i]?.url && (
-              <Image src={items[i].url} alt={items[i].caption ?? `${projectTitle} — ${i + 1}`} fill className="object-cover" />
-            )}
-          </div>
-        ))}
+            <span className="absolute inset-0 rounded-full border border-white/70" />
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M15 18l-6-6 6-6" />
+            </svg>
+          </button>
+        )}
+
+        {/* Bottone next — scompare su hover → cursor circle con → */}
+        {canScrollRight && (
+          <button
+            ref={(el) => { el?.setAttribute("cursor-type", "next"); }}
+            onClick={() => slideTo("right")}
+            aria-label="Immagine successiva"
+            className="absolute right-[30px] top-1/2 -translate-y-1/2 size-[48px] flex items-center justify-center hover:opacity-0 transition-opacity duration-150 z-10"
+          >
+            <span className="absolute inset-0 rounded-full border border-white/70" />
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M9 18l6-6-6-6" />
+            </svg>
+          </button>
+        )}
       </div>
 
       {!compact && (

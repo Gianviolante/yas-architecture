@@ -13,20 +13,14 @@ interface Props {
 }
 
 export default function ProjectsSlider({ projects, title = "Vedi altri progetti" }: Props) {
-  const scrollRef    = useRef<HTMLDivElement>(null);
-  const containerRef = useRef<HTMLDivElement>(null);
+  const scrollRef = useRef<HTMLDivElement>(null);
 
-  const [hoverSide,      setHoverSide]      = useState<"left" | "right" | null>(null);
-  const [isPointerFine,  setIsPointerFine]  = useState(false);
   const [canScrollLeft,  setCanScrollLeft]  = useState(false);
   const [canScrollRight, setCanScrollRight] = useState(true);
 
+  // cursor-type="drag" sulla striscia scrollabile → doppia freccia
   useEffect(() => {
-    const mq = window.matchMedia("(hover: hover) and (pointer: fine)");
-    setIsPointerFine(mq.matches);
-    const h = (e: MediaQueryListEvent) => setIsPointerFine(e.matches);
-    mq.addEventListener("change", h);
-    return () => mq.removeEventListener("change", h);
+    scrollRef.current?.setAttribute("cursor-type", "drag");
   }, []);
 
   const updateScrollState = () => {
@@ -44,72 +38,85 @@ export default function ProjectsSlider({ projects, title = "Vedi altri progetti"
     return () => el.removeEventListener("scroll", updateScrollState);
   }, [projects]);
 
-  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    const rect = e.currentTarget.getBoundingClientRect();
-    const side = e.clientX - rect.left < rect.width / 2 ? "left" : "right";
-    setHoverSide(side);
-    if (!containerRef.current) return;
-    if (side === "left" && canScrollLeft)        containerRef.current.setAttribute("cursor-type", "prev");
-    else if (side === "right" && canScrollRight) containerRef.current.setAttribute("cursor-type", "next");
-    else                                          containerRef.current.removeAttribute("cursor-type");
-  };
-
-  const handleMouseLeave = () => {
-    setHoverSide(null);
-    containerRef.current?.removeAttribute("cursor-type");
-  };
-
-  const handleClick = (e: React.MouseEvent) => {
-    // Se il click è su una foto-link, lascia che il Link navighi
-    if ((e.target as Element).closest("a")) return;
-    scrollRef.current?.scrollBy({ left: hoverSide === "left" ? -CARD_STEP : CARD_STEP, behavior: "smooth" });
+  const scrollBy = (dir: "left" | "right") => {
+    scrollRef.current?.scrollBy({
+      left: dir === "left" ? -CARD_STEP : CARD_STEP,
+      behavior: "smooth",
+    });
   };
 
   return (
-    <div
-      ref={containerRef}
-      className="relative pb-[48px]"
-      onMouseMove={isPointerFine ? handleMouseMove : undefined}
-      onMouseLeave={isPointerFine ? handleMouseLeave : undefined}
-      onClick={isPointerFine ? handleClick : undefined}
-    >
+    <div className="relative pb-[48px]">
       <p className="px-[32px] text-[24px] leading-normal text-black mb-[21px]">
         {title}
       </p>
-      <div
-        ref={scrollRef}
-        className="flex gap-x-[15px] overflow-x-auto px-[32px] pb-[4px] no-scrollbar"
-        style={{ scrollbarWidth: "none" }}
-      >
-        {projects.map((p) => (
-          <div key={p._id} className="flex-none" style={{ width: "263px" }}>
-            {/* Immagine: cursor nav (solo cerchio), click apre il progetto */}
-            <Link
-              href={`/progetti/${p.slug.current}`}
-              className="block relative overflow-hidden mb-[8px] group"
-              style={{ width: "263px", height: "202px" }}
-              ref={(el) => { el?.setAttribute("cursor-type", "nav"); }}
-            >
-              {p.coverImageUrl ? (
-                <Image
-                  src={p.coverImageUrl}
-                  alt={p.title}
-                  fill
-                  className="object-cover transition-transform duration-500 group-hover:scale-[1.03]"
-                />
-              ) : (
-                <div className="w-full h-full bg-[#d9d9d9]" />
-              )}
-            </Link>
-            {/* Testo: nessun cursor custom */}
-            <p className="text-[15px] leading-[1.5] text-[#282828] mb-[6px]">
-              {p.title}{p.location ? `, ${p.location}` : ""}
-            </p>
-            <span className="inline-flex items-center border-2 border-[#333] rounded-[100px] px-[14px] py-[4px] text-[12px] text-[#333] leading-[1.4]">
-              {p.typology ?? "Residenziale"}
-            </span>
-          </div>
-        ))}
+
+      {/* Wrapper relativo per posizionare i bottoni */}
+      <div className="relative">
+        <div
+          ref={scrollRef}
+          className="flex gap-x-[15px] overflow-x-auto px-[32px] pb-[4px] no-scrollbar"
+          style={{ scrollbarWidth: "none" }}
+        >
+          {projects.map((p) => (
+            <div key={p._id} className="flex-none" style={{ width: "263px" }}>
+              {/* Foto: cerchio solo (nav), click apre progetto */}
+              <Link
+                href={`/progetti/${p.slug.current}`}
+                className="block relative overflow-hidden mb-[8px] group"
+                style={{ width: "263px", height: "202px" }}
+                ref={(el) => { el?.setAttribute("cursor-type", "nav"); }}
+              >
+                {p.coverImageUrl ? (
+                  <Image
+                    src={p.coverImageUrl}
+                    alt={p.title}
+                    fill
+                    className="object-cover transition-transform duration-500 group-hover:scale-[1.03]"
+                  />
+                ) : (
+                  <div className="w-full h-full bg-[#d9d9d9]" />
+                )}
+              </Link>
+              <p className="text-[15px] leading-[1.5] text-[#282828] mb-[6px]">
+                {p.title}{p.location ? `, ${p.location}` : ""}
+              </p>
+              <span className="inline-flex items-center border-2 border-[#333] rounded-[100px] px-[14px] py-[4px] text-[12px] text-[#333] leading-[1.4] whitespace-nowrap">
+                {p.typology ?? "Residenziale"}
+              </span>
+            </div>
+          ))}
+        </div>
+
+        {/* Bottone prev — visibile, scompare su hover → appare cursor circle con ← */}
+        {canScrollLeft && (
+          <button
+            ref={(el) => { el?.setAttribute("cursor-type", "prev"); }}
+            onClick={() => scrollBy("left")}
+            aria-label="Scorri a sinistra"
+            className="absolute left-[8px] top-1/2 -translate-y-1/2 size-[48px] flex items-center justify-center hover:opacity-0 transition-opacity duration-150 z-10"
+          >
+            <span className="absolute inset-0 rounded-full border border-[#333]" />
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#333" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M15 18l-6-6 6-6" />
+            </svg>
+          </button>
+        )}
+
+        {/* Bottone next — visibile, scompare su hover → appare cursor circle con → */}
+        {canScrollRight && (
+          <button
+            ref={(el) => { el?.setAttribute("cursor-type", "next"); }}
+            onClick={() => scrollBy("right")}
+            aria-label="Scorri a destra"
+            className="absolute right-[8px] top-1/2 -translate-y-1/2 size-[48px] flex items-center justify-center hover:opacity-0 transition-opacity duration-150 z-10"
+          >
+            <span className="absolute inset-0 rounded-full border border-[#333]" />
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#333" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M9 18l6-6-6-6" />
+            </svg>
+          </button>
+        )}
       </div>
     </div>
   );

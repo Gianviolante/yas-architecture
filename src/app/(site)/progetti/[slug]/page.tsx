@@ -103,11 +103,11 @@ export default async function ProgettoPage({ params }: { params: Promise<{ slug:
           </div>
 
           {/* Chips */}
-          <div className="flex gap-[8px]">
-            <span className="inline-flex items-center border-[1.179px] border-[#333] rounded-[100px] px-[14px] py-[6px] text-[9.44px] text-[#333] leading-[1.4]">
+          <div className="flex items-center gap-[8px]">
+            <span className="inline-flex items-center border-[1.179px] border-[#333] rounded-[100px] px-[14px] py-[6px] text-[9.44px] text-[#333] leading-[1.4] whitespace-nowrap">
               {project.typology}
             </span>
-            <span className="inline-flex items-center border-[1.179px] border-[#333] rounded-[100px] px-[14px] py-[6px] text-[9.44px] text-[#333] leading-[1.4]">
+            <span className="inline-flex items-center border-[1.179px] border-[#333] rounded-[100px] px-[14px] py-[6px] text-[9.44px] text-[#333] leading-[1.4] whitespace-nowrap">
               {project.status}
             </span>
           </div>
