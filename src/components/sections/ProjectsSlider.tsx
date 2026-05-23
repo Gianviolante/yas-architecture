@@ -13,10 +13,21 @@ interface Props {
 }
 
 export default function ProjectsSlider({ projects, title = "Vedi altri progetti" }: Props) {
-  const scrollRef = useRef<HTMLDivElement>(null);
+  const scrollRef    = useRef<HTMLDivElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
 
+  const [hoverSide,      setHoverSide]      = useState<"left" | "right" | null>(null);
+  const [isPointerFine,  setIsPointerFine]  = useState(false);
   const [canScrollLeft,  setCanScrollLeft]  = useState(false);
   const [canScrollRight, setCanScrollRight] = useState(true);
+
+  useEffect(() => {
+    const mq = window.matchMedia("(hover: hover) and (pointer: fine)");
+    setIsPointerFine(mq.matches);
+    const h = (e: MediaQueryListEvent) => setIsPointerFine(e.matches);
+    mq.addEventListener("change", h);
+    return () => mq.removeEventListener("change", h);
+  }, []);
 
   const updateScrollState = () => {
     const el = scrollRef.current;
@@ -33,16 +44,38 @@ export default function ProjectsSlider({ projects, title = "Vedi altri progetti"
     return () => el.removeEventListener("scroll", updateScrollState);
   }, [projects]);
 
-  const scrollBy = (dir: "left" | "right") => {
-    scrollRef.current?.scrollBy({ left: dir === "left" ? -CARD_STEP : CARD_STEP, behavior: "smooth" });
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    const side = e.clientX - rect.left < rect.width / 2 ? "left" : "right";
+    setHoverSide(side);
+    if (!containerRef.current) return;
+    if (side === "left" && canScrollLeft)        containerRef.current.setAttribute("cursor-type", "prev");
+    else if (side === "right" && canScrollRight) containerRef.current.setAttribute("cursor-type", "next");
+    else                                          containerRef.current.removeAttribute("cursor-type");
+  };
+
+  const handleMouseLeave = () => {
+    setHoverSide(null);
+    containerRef.current?.removeAttribute("cursor-type");
+  };
+
+  const handleClick = (e: React.MouseEvent) => {
+    // Se il click è su una foto-link, lascia che il Link navighi
+    if ((e.target as Element).closest("a")) return;
+    scrollRef.current?.scrollBy({ left: hoverSide === "left" ? -CARD_STEP : CARD_STEP, behavior: "smooth" });
   };
 
   return (
-    <div className="relative pb-[48px]">
+    <div
+      ref={containerRef}
+      className="relative pb-[48px]"
+      onMouseMove={isPointerFine ? handleMouseMove : undefined}
+      onMouseLeave={isPointerFine ? handleMouseLeave : undefined}
+      onClick={isPointerFine ? handleClick : undefined}
+    >
       <p className="px-[32px] text-[24px] leading-normal text-black mb-[21px]">
         {title}
       </p>
-
       <div
         ref={scrollRef}
         className="flex gap-x-[15px] overflow-x-auto px-[32px] pb-[4px] no-scrollbar"
@@ -50,12 +83,12 @@ export default function ProjectsSlider({ projects, title = "Vedi altri progetti"
       >
         {projects.map((p) => (
           <div key={p._id} className="flex-none" style={{ width: "263px" }}>
-            {/* Immagine — cursor attivo solo qui */}
+            {/* Immagine: cursor nav (solo cerchio), click apre il progetto */}
             <Link
               href={`/progetti/${p.slug.current}`}
               className="block relative overflow-hidden mb-[8px] group"
               style={{ width: "263px", height: "202px" }}
-              ref={(el) => { el?.setAttribute("cursor-type", "blank"); }}
+              ref={(el) => { el?.setAttribute("cursor-type", "nav"); }}
             >
               {p.coverImageUrl ? (
                 <Image
@@ -68,7 +101,7 @@ export default function ProjectsSlider({ projects, title = "Vedi altri progetti"
                 <div className="w-full h-full bg-[#d9d9d9]" />
               )}
             </Link>
-            {/* Testo — nessun cursor custom */}
+            {/* Testo: nessun cursor custom */}
             <p className="text-[15px] leading-[1.5] text-[#282828] mb-[6px]">
               {p.title}{p.location ? `, ${p.location}` : ""}
             </p>
@@ -78,28 +111,6 @@ export default function ProjectsSlider({ projects, title = "Vedi altri progetti"
           </div>
         ))}
       </div>
-
-      {/* Bottoni scroll */}
-      {canScrollLeft && (
-        <button
-          onClick={() => scrollBy("left")}
-          aria-label="Scorri a sinistra"
-          className="absolute left-[20px] top-[calc(21px+101px)] -translate-y-1/2 size-[48px] mix-blend-difference flex items-center justify-center z-10"
-        >
-          <Image src="/assets/nav-circle.svg" alt="" fill className="absolute inset-0" />
-          <Image src="/assets/nav-arrow-right.svg" alt="" width={20} height={20} className="relative z-10 -scale-x-100" />
-        </button>
-      )}
-      {canScrollRight && (
-        <button
-          onClick={() => scrollBy("right")}
-          aria-label="Scorri a destra"
-          className="absolute right-[20px] top-[calc(21px+101px)] -translate-y-1/2 size-[48px] mix-blend-difference flex items-center justify-center z-10"
-        >
-          <Image src="/assets/nav-circle.svg" alt="" fill className="absolute inset-0" />
-          <Image src="/assets/nav-arrow-right.svg" alt="" width={20} height={20} className="relative z-10" />
-        </button>
-      )}
     </div>
   );
 }
