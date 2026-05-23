@@ -15,13 +15,9 @@ const PLACEHOLDERS = [
 interface Props { projects: Project[]; }
 
 export default function HomeProjectsCarousel({ projects }: Props) {
-  const [idx, setIdx] = useState(0);
+  const [idx, setIdx]       = useState(0);
   const [stepPx, setStepPx] = useState(0);
-  const [hoverSide, setHoverSide] = useState<"left" | "right" | null>(null);
-  const [isPointerFine, setIsPointerFine] = useState(false);
-
-  const viewportRef  = useRef<HTMLDivElement>(null);
-  const containerRef = useRef<HTMLDivElement>(null);
+  const viewportRef         = useRef<HTMLDivElement>(null);
 
   const useSanity = projects.length > 0;
   const total     = useSanity ? projects.length : PLACEHOLDERS.length;
@@ -33,14 +29,6 @@ export default function HomeProjectsCarousel({ projects }: Props) {
   const next = () => setIdx((i) => Math.min(maxIdx, i + 1));
 
   useEffect(() => {
-    const mq = window.matchMedia("(hover: hover) and (pointer: fine)");
-    setIsPointerFine(mq.matches);
-    const handler = (e: MediaQueryListEvent) => setIsPointerFine(e.matches);
-    mq.addEventListener("change", handler);
-    return () => mq.removeEventListener("change", handler);
-  }, []);
-
-  useEffect(() => {
     const update = () => {
       if (viewportRef.current)
         setStepPx((viewportRef.current.offsetWidth + 14) / 2);
@@ -49,21 +37,6 @@ export default function HomeProjectsCarousel({ projects }: Props) {
     window.addEventListener("resize", update);
     return () => window.removeEventListener("resize", update);
   }, []);
-
-  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    const rect = e.currentTarget.getBoundingClientRect();
-    const side = e.clientX - rect.left < rect.width / 2 ? "left" : "right";
-    setHoverSide(side);
-    if (!containerRef.current) return;
-    if (side === "left" && canPrev)       containerRef.current.setAttribute("cursor-type", "prev");
-    else if (side === "right" && canNext) containerRef.current.setAttribute("cursor-type", "next");
-    else                                  containerRef.current.removeAttribute("cursor-type");
-  };
-
-  const handleMouseLeave = () => {
-    setHoverSide(null);
-    containerRef.current?.removeAttribute("cursor-type");
-  };
 
   return (
     <section className="relative">
@@ -78,12 +51,7 @@ export default function HomeProjectsCarousel({ projects }: Props) {
         </p>
 
         {/* ── Carousel ──────────────────────────────────────────── */}
-        <div
-          ref={containerRef}
-          className="relative mb-10"
-          onMouseMove={isPointerFine ? handleMouseMove : undefined}
-          onMouseLeave={isPointerFine ? handleMouseLeave : undefined}
-        >
+        <div className="relative mb-10">
           <div className="overflow-hidden" ref={viewportRef}>
             <div
               className="flex gap-[14px] transition-transform duration-500 ease-out"
@@ -92,24 +60,31 @@ export default function HomeProjectsCarousel({ projects }: Props) {
               {useSanity
                 ? projects.map((p) => (
                     <div key={p._id} className="w-[calc(50%-7px)] shrink-0">
-                      <div className="relative h-[550px] overflow-hidden mb-4">
+                      {/* Immagine — cursor attivo solo qui */}
+                      <Link
+                        href={`/progetti/${p.slug.current}`}
+                        className="block relative h-[550px] overflow-hidden mb-4 group"
+                        ref={(el) => { el?.setAttribute("cursor-type", "blank"); }}
+                      >
                         {p.coverImageUrl
-                          ? <Image src={p.coverImageUrl} alt={p.title} fill className="object-cover" />
+                          ? <Image src={p.coverImageUrl} alt={p.title} fill className="object-cover transition-transform duration-500 group-hover:scale-[1.03]" />
                           : <div className="w-full h-full bg-[#d9d9d9]" />}
-                      </div>
-                      <Link href={`/progetti/${p.slug.current}`} className="block group">
-                        <p className="text-[17.5px] leading-[1.5] text-[#282828] mb-2 group-hover:opacity-70 transition-opacity">
-                          {p.title}{p.location ? `, ${p.location}` : ""}
-                        </p>
-                        <span className="inline-flex items-center border-2 border-[#333] rounded-[100px] px-[10px] py-[3px] text-[11px] text-[#333] leading-[1.4] whitespace-nowrap">
-                          {p.typology ?? "Residenziale"}
-                        </span>
                       </Link>
+                      {/* Testo — nessun cursor custom */}
+                      <p className="text-[17.5px] leading-[1.5] text-[#282828] mb-2">
+                        {p.title}{p.location ? `, ${p.location}` : ""}
+                      </p>
+                      <span className="inline-flex items-center border-2 border-[#333] rounded-[100px] px-[10px] py-[3px] text-[11px] text-[#333] leading-[1.4] whitespace-nowrap">
+                        {p.typology ?? "Residenziale"}
+                      </span>
                     </div>
                   ))
                 : PLACEHOLDERS.map((p) => (
                     <div key={p.id} className="w-[calc(50%-7px)] shrink-0">
-                      <div className="relative h-[550px] overflow-hidden mb-4">
+                      <div
+                        className="relative h-[550px] overflow-hidden mb-4"
+                        ref={(el) => { el?.setAttribute("cursor-type", "blank"); }}
+                      >
                         <Image src={p.img} alt="" fill className="object-cover" />
                       </div>
                       <p className="text-[17.5px] leading-[1.5] text-[#282828] mb-2">{p.label}</p>
@@ -121,25 +96,17 @@ export default function HomeProjectsCarousel({ projects }: Props) {
             </div>
           </div>
 
-          {/* Desktop: click overlays */}
-          {isPointerFine && (
-            <>
-              <div className="absolute left-0 top-0 w-1/2 h-[550px] z-10" onClick={() => canPrev && prev()} />
-              <div className="absolute right-0 top-0 w-1/2 h-[550px] z-10" onClick={() => canNext && next()} />
-            </>
-          )}
-
-          {/* Mobile / touch: arrow buttons */}
-          {!isPointerFine && canPrev && (
+          {/* Prev / Next — visibili sempre se navigabile */}
+          {canPrev && (
             <button onClick={prev} aria-label="Progetto precedente"
-              className="absolute left-[12px] top-[275px] -translate-y-1/2 size-[48px] mix-blend-difference flex items-center justify-center">
+              className="absolute left-[12px] top-[275px] -translate-y-1/2 size-[48px] mix-blend-difference flex items-center justify-center z-10">
               <Image src="/assets/nav-circle.svg" alt="" fill className="absolute inset-0" />
               <Image src="/assets/nav-arrow-right.svg" alt="" width={20} height={20} className="relative z-10 -scale-x-100" />
             </button>
           )}
-          {!isPointerFine && canNext && (
+          {canNext && (
             <button onClick={next} aria-label="Prossimo progetto"
-              className="absolute right-[12px] top-[275px] -translate-y-1/2 size-[48px] mix-blend-difference flex items-center justify-center">
+              className="absolute right-[12px] top-[275px] -translate-y-1/2 size-[48px] mix-blend-difference flex items-center justify-center z-10">
               <Image src="/assets/nav-circle.svg" alt="" fill className="absolute inset-0" />
               <Image src="/assets/nav-arrow-right.svg" alt="" width={20} height={20} className="relative z-10" />
             </button>
