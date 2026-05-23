@@ -86,11 +86,14 @@ export default async function ProgettoPage({ params }: { params: Promise<{ slug:
 
         {/* Left: stacked meta + chips */}
         <div className="w-full lg:w-[577px] lg:shrink-0">
-          <div className="text-[12px] leading-[1.3] text-[#282828]">
+          <div className="text-[12px] leading-[1.3] text-[#282828] space-y-[4px]">
             {project.typology && <p>Area: {project.typology}</p>}
             {project.year    && <p>Timeline: {project.year}</p>}
             {project.location && <p>Location: {project.location}</p>}
             {project.area    && <p>Superficie: {project.area} mq</p>}
+            {project.concept     && <p>Concept: {project.concept}</p>}
+            {project.projectTeam && <p>Progetto: {project.projectTeam}</p>}
+            {project.photographer && <p>Fotografo: {project.photographer}</p>}
           </div>
 
           {/* Column labels */}

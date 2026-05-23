@@ -18,6 +18,9 @@ export interface Project {
   area?: number;
   typology: Typology;
   status: ProjectStatus;
+  concept?: string;
+  projectTeam?: string;
+  photographer?: string;
   description?: unknown; // PortableText
   heroImage?: SanityImage;
   gallery?: SanityImage[];

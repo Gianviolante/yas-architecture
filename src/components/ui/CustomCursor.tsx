@@ -21,7 +21,6 @@ const CURSOR_CSS = `
     left: 0;
     pointer-events: none;
     mix-blend-mode: difference;
-    visibility: hidden;
     opacity: 0;
     z-index: 1000000;
   }
@@ -75,7 +74,6 @@ const CURSOR_CSS = `
   [data-cursor-el].remove    .cursor-remove,
   [data-cursor-el].blank     .cursor-blank,
   [data-cursor-el].scroll    .cursor-scroll { opacity: 1; transform: scale(1); }
-  .cursor--active [data-cursor-el] { display: block; visibility: visible; }
   .cursor--active * { cursor: none !important; }
 `;
 
@@ -117,9 +115,11 @@ export default function CustomCursor() {
       if (active_ && pos !== null) {
         pos.x += (mouse.x - pos.x) / 4;
         pos.y += (mouse.y - pos.y) / 4;
-        pos.o += (1 - pos.o) / 10;
+        // lerpa verso 1 solo se su elemento interattivo, verso 0 altrimenti
+        const target = type_ !== "idle" ? 1 : 0;
+        pos.o += (target - pos.o) / 10;
         el.style.transform = `translate(${pos.x}px, ${pos.y}px)`;
-        el.style.opacity   = String(pos.o);
+        el.style.opacity   = String(pos.o < 0.005 ? 0 : pos.o);
       }
       rafId = requestAnimationFrame(tick);
     }

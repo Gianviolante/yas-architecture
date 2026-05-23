@@ -41,6 +41,12 @@ export const projectSchema = defineType({
         ],
       }],
     }),
+    defineField({ name: "concept", title: "Concept", type: "string",
+      description: "Es: arch. Angelo Melcarne" }),
+    defineField({ name: "projectTeam", title: "Progetto (team esteso)", type: "string",
+      description: "Es: YAS architecture associati + arch. Antonio De Castro" }),
+    defineField({ name: "photographer", title: "Fotografo", type: "string",
+      description: "Es: Studio Voda + Pierluigi Schena" }),
     defineField({ name: "description", title: "Descrizione", type: "array", of: [{ type: "block" }] }),
     defineField({
       name: "teamMembers", title: "Team", type: "array",
