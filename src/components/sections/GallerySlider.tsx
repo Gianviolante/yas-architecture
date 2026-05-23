@@ -17,14 +17,14 @@ interface Props {
 const EDGE_ZONE = 140;
 
 export default function GallerySlider({ items, projectTitle, compact = false }: Props) {
-  const scrollRef = useRef<HTMLDivElement>(null);
+  const scrollRef    = useRef<HTMLDivElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
 
   const [isPointerFine,  setIsPointerFine]  = useState(false);
   const [activeIdx,      setActiveIdx]      = useState(0);
   const [canScrollLeft,  setCanScrollLeft]  = useState(false);
   const [canScrollRight, setCanScrollRight] = useState(true);
-  const [showPrev,       setShowPrev]       = useState(false);
-  const [showNext,       setShowNext]       = useState(false);
+  const [hoverSide,      setHoverSide]      = useState<"left" | "right" | null>(null);
 
   const cardW = (i: number) => compact ? 263 : i === 0 ? 580 : 505;
   const cardH = compact ? 202 : 633;
@@ -57,19 +57,30 @@ export default function GallerySlider({ items, projectTitle, compact = false }: 
   }, [items, compact]);
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (!containerRef.current) return;
     const rect = e.currentTarget.getBoundingClientRect();
     const x = e.clientX - rect.left;
-    setShowPrev(x < EDGE_ZONE && canScrollLeft);
-    setShowNext(x > rect.width - EDGE_ZONE && canScrollRight);
+
+    if (x < EDGE_ZONE && canScrollLeft) {
+      setHoverSide("left");
+      containerRef.current.setAttribute("cursor-type", "prev");
+    } else if (x > rect.width - EDGE_ZONE && canScrollRight) {
+      setHoverSide("right");
+      containerRef.current.setAttribute("cursor-type", "next");
+    } else {
+      setHoverSide(null);
+      containerRef.current.removeAttribute("cursor-type");
+    }
   };
 
   const handleMouseLeave = () => {
-    setShowPrev(false);
-    setShowNext(false);
+    setHoverSide(null);
+    containerRef.current?.removeAttribute("cursor-type");
   };
 
-  const slideTo = (dir: "left" | "right") => {
-    scrollRef.current?.scrollBy({ left: dir === "left" ? -SLIDE_STEP : SLIDE_STEP, behavior: "smooth" });
+  const handleClick = () => {
+    if (hoverSide === "left")  scrollRef.current?.scrollBy({ left: -SLIDE_STEP, behavior: "smooth" });
+    if (hoverSide === "right") scrollRef.current?.scrollBy({ left:  SLIDE_STEP, behavior: "smooth" });
   };
 
   const hasImages     = items.length > 0;
@@ -79,9 +90,10 @@ export default function GallerySlider({ items, projectTitle, compact = false }: 
   return (
     <div>
       <div
-        className="relative"
+        ref={containerRef}
         onMouseMove={isPointerFine ? handleMouseMove : undefined}
         onMouseLeave={isPointerFine ? handleMouseLeave : undefined}
+        onClick={isPointerFine ? handleClick : undefined}
       >
         <div
           ref={scrollRef}
@@ -105,32 +117,6 @@ export default function GallerySlider({ items, projectTitle, compact = false }: 
             </div>
           ))}
         </div>
-
-        {/* Freccia sinistra */}
-        <button
-          onClick={() => slideTo("left")}
-          aria-label="Immagine precedente"
-          className="absolute left-[30px] top-1/2 -translate-y-1/2 size-[48px] flex items-center justify-center z-10 transition-opacity duration-200"
-          style={{ opacity: isPointerFine ? (showPrev ? 1 : 0) : (canScrollLeft ? 1 : 0), pointerEvents: showPrev || !isPointerFine ? "auto" : "none" }}
-        >
-          <span className="absolute inset-0 rounded-full border border-white/70" />
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-            <path d="M15 18l-6-6 6-6" />
-          </svg>
-        </button>
-
-        {/* Freccia destra */}
-        <button
-          onClick={() => slideTo("right")}
-          aria-label="Immagine successiva"
-          className="absolute right-[30px] top-1/2 -translate-y-1/2 size-[48px] flex items-center justify-center z-10 transition-opacity duration-200"
-          style={{ opacity: isPointerFine ? (showNext ? 1 : 0) : (canScrollRight ? 1 : 0), pointerEvents: showNext || !isPointerFine ? "auto" : "none" }}
-        >
-          <span className="absolute inset-0 rounded-full border border-white/70" />
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-            <path d="M9 18l6-6-6-6" />
-          </svg>
-        </button>
       </div>
 
       {!compact && (

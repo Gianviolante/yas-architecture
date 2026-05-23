@@ -5,8 +5,8 @@ import Link from "next/link";
 import Image from "next/image";
 import type { Project } from "@/lib/sanity/types";
 
-const CARD_STEP  = 263 + 15;
-const EDGE_ZONE  = 140; // px dal bordo per mostrare la freccia
+const CARD_STEP = 263 + 15;
+const EDGE_ZONE = 140; // px dal bordo
 
 interface Props {
   projects: Project[];
@@ -20,8 +20,7 @@ export default function ProjectsSlider({ projects, title = "Vedi altri progetti"
   const [isPointerFine,  setIsPointerFine]  = useState(false);
   const [canScrollLeft,  setCanScrollLeft]  = useState(false);
   const [canScrollRight, setCanScrollRight] = useState(true);
-  const [showPrev,       setShowPrev]       = useState(false);
-  const [showNext,       setShowNext]       = useState(false);
+  const [hoverSide,      setHoverSide]      = useState<"left" | "right" | null>(null);
 
   useEffect(() => {
     const mq = window.matchMedia("(hover: hover) and (pointer: fine)");
@@ -47,22 +46,31 @@ export default function ProjectsSlider({ projects, title = "Vedi altri progetti"
   }, [projects]);
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (!containerRef.current) return;
     const rect = e.currentTarget.getBoundingClientRect();
     const x = e.clientX - rect.left;
-    setShowPrev(x < EDGE_ZONE && canScrollLeft);
-    setShowNext(x > rect.width - EDGE_ZONE && canScrollRight);
+
+    if (x < EDGE_ZONE && canScrollLeft) {
+      setHoverSide("left");
+      containerRef.current.setAttribute("cursor-type", "prev");
+    } else if (x > rect.width - EDGE_ZONE && canScrollRight) {
+      setHoverSide("right");
+      containerRef.current.setAttribute("cursor-type", "next");
+    } else {
+      setHoverSide(null);
+      containerRef.current.removeAttribute("cursor-type");
+    }
   };
 
   const handleMouseLeave = () => {
-    setShowPrev(false);
-    setShowNext(false);
+    setHoverSide(null);
+    containerRef.current?.removeAttribute("cursor-type");
   };
 
-  const scrollBy = (dir: "left" | "right") => {
-    scrollRef.current?.scrollBy({
-      left: dir === "left" ? -CARD_STEP : CARD_STEP,
-      behavior: "smooth",
-    });
+  const handleClick = (e: React.MouseEvent) => {
+    if ((e.target as Element).closest("a")) return; // lascia navigare i link
+    if (hoverSide === "left")  scrollRef.current?.scrollBy({ left: -CARD_STEP, behavior: "smooth" });
+    if (hoverSide === "right") scrollRef.current?.scrollBy({ left:  CARD_STEP, behavior: "smooth" });
   };
 
   return (
@@ -73,9 +81,9 @@ export default function ProjectsSlider({ projects, title = "Vedi altri progetti"
 
       <div
         ref={containerRef}
-        className="relative"
         onMouseMove={isPointerFine ? handleMouseMove : undefined}
         onMouseLeave={isPointerFine ? handleMouseLeave : undefined}
+        onClick={isPointerFine ? handleClick : undefined}
       >
         <div
           ref={scrollRef}
@@ -110,32 +118,6 @@ export default function ProjectsSlider({ projects, title = "Vedi altri progetti"
             </Link>
           ))}
         </div>
-
-        {/* Freccia sinistra — appare solo quando mouse vicino al bordo sx */}
-        <button
-          onClick={() => scrollBy("left")}
-          aria-label="Scorri a sinistra"
-          className="absolute left-[8px] top-1/2 -translate-y-1/2 size-[48px] flex items-center justify-center z-10 transition-opacity duration-200"
-          style={{ opacity: isPointerFine ? (showPrev ? 1 : 0) : (canScrollLeft ? 1 : 0), pointerEvents: showPrev || !isPointerFine ? "auto" : "none" }}
-        >
-          <span className="absolute inset-0 rounded-full border border-[#333]" />
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#333" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-            <path d="M15 18l-6-6 6-6" />
-          </svg>
-        </button>
-
-        {/* Freccia destra — appare solo quando mouse vicino al bordo dx */}
-        <button
-          onClick={() => scrollBy("right")}
-          aria-label="Scorri a destra"
-          className="absolute right-[8px] top-1/2 -translate-y-1/2 size-[48px] flex items-center justify-center z-10 transition-opacity duration-200"
-          style={{ opacity: isPointerFine ? (showNext ? 1 : 0) : (canScrollRight ? 1 : 0), pointerEvents: showNext || !isPointerFine ? "auto" : "none" }}
-        >
-          <span className="absolute inset-0 rounded-full border border-[#333]" />
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#333" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-            <path d="M9 18l6-6-6-6" />
-          </svg>
-        </button>
       </div>
     </div>
   );

@@ -12,17 +12,17 @@ const PLACEHOLDERS = [
   { id: "p4", img: "/assets/home-slide-2.jpg",   label: "Marina One Residence, Marina Way – SG", typology: "Residential" },
 ];
 
-interface Props { projects: Project[]; }
-
 const EDGE_ZONE = 140;
+
+interface Props { projects: Project[]; }
 
 export default function HomeProjectsCarousel({ projects }: Props) {
   const [idx, setIdx]         = useState(0);
   const [stepPx, setStepPx]   = useState(0);
   const [isPointerFine, setIsPointerFine] = useState(false);
-  const [showPrev, setShowPrev] = useState(false);
-  const [showNext, setShowNext] = useState(false);
-  const viewportRef = useRef<HTMLDivElement>(null);
+  const [hoverSide, setHoverSide] = useState<"left" | "right" | null>(null);
+
+  const viewportRef  = useRef<HTMLDivElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
 
   const useSanity = projects.length > 0;
@@ -53,15 +53,31 @@ export default function HomeProjectsCarousel({ projects }: Props) {
   }, []);
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (!containerRef.current) return;
     const rect = e.currentTarget.getBoundingClientRect();
     const x = e.clientX - rect.left;
-    setShowPrev(x < EDGE_ZONE && canPrev);
-    setShowNext(x > rect.width - EDGE_ZONE && canNext);
+
+    if (x < EDGE_ZONE && canPrev) {
+      setHoverSide("left");
+      containerRef.current.setAttribute("cursor-type", "prev");
+    } else if (x > rect.width - EDGE_ZONE && canNext) {
+      setHoverSide("right");
+      containerRef.current.setAttribute("cursor-type", "next");
+    } else {
+      setHoverSide(null);
+      containerRef.current.removeAttribute("cursor-type");
+    }
   };
 
   const handleMouseLeave = () => {
-    setShowPrev(false);
-    setShowNext(false);
+    setHoverSide(null);
+    containerRef.current?.removeAttribute("cursor-type");
+  };
+
+  const handleClick = (e: React.MouseEvent) => {
+    if ((e.target as Element).closest("a")) return;
+    if (hoverSide === "left")  prev();
+    if (hoverSide === "right") next();
   };
 
   return (
@@ -81,6 +97,7 @@ export default function HomeProjectsCarousel({ projects }: Props) {
           className="relative mb-10"
           onMouseMove={isPointerFine ? handleMouseMove : undefined}
           onMouseLeave={isPointerFine ? handleMouseLeave : undefined}
+          onClick={isPointerFine ? handleClick : undefined}
         >
           <div className="overflow-hidden" ref={viewportRef}>
             <div
@@ -90,7 +107,11 @@ export default function HomeProjectsCarousel({ projects }: Props) {
               {useSanity
                 ? projects.map((p) => (
                     <div key={p._id} className="w-[calc(50%-7px)] shrink-0">
-                      <Link href={`/progetti/${p.slug.current}`} className="block group">
+                      <Link
+                        href={`/progetti/${p.slug.current}`}
+                        className="block group"
+                        onClick={(e) => isPointerFine && hoverSide !== null && e.preventDefault()}
+                      >
                         <div className="relative h-[550px] overflow-hidden mb-4">
                           {p.coverImageUrl
                             ? <Image src={p.coverImageUrl} alt={p.title} fill className="object-cover transition-transform duration-500 group-hover:scale-[1.03]" />
@@ -118,32 +139,6 @@ export default function HomeProjectsCarousel({ projects }: Props) {
                   ))}
             </div>
           </div>
-
-          {/* Freccia sinistra — appare solo vicino al bordo sx */}
-          <button
-            onClick={prev}
-            aria-label="Progetto precedente"
-            className="absolute left-[12px] top-[275px] -translate-y-1/2 size-[48px] flex items-center justify-center z-10 transition-opacity duration-200"
-            style={{ opacity: isPointerFine ? (showPrev ? 1 : 0) : (canPrev ? 1 : 0), pointerEvents: showPrev || !isPointerFine ? "auto" : "none" }}
-          >
-            <span className="absolute inset-0 rounded-full border border-[#333]" />
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#333" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-              <path d="M15 18l-6-6 6-6" />
-            </svg>
-          </button>
-
-          {/* Freccia destra — appare solo vicino al bordo dx */}
-          <button
-            onClick={next}
-            aria-label="Prossimo progetto"
-            className="absolute right-[12px] top-[275px] -translate-y-1/2 size-[48px] flex items-center justify-center z-10 transition-opacity duration-200"
-            style={{ opacity: isPointerFine ? (showNext ? 1 : 0) : (canNext ? 1 : 0), pointerEvents: showNext || !isPointerFine ? "auto" : "none" }}
-          >
-            <span className="absolute inset-0 rounded-full border border-[#333]" />
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#333" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-              <path d="M9 18l6-6-6-6" />
-            </svg>
-          </button>
         </div>
 
         <div className="flex justify-center">
