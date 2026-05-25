@@ -47,6 +47,8 @@ export const projectSchema = defineType({
       description: "Es: YAS architecture associati + arch. Antonio De Castro" }),
     defineField({ name: "photographer", title: "Fotografo", type: "string",
       description: "Es: Studio Voda + Pierluigi Schena" }),
+    defineField({ name: "rendering", title: "Rendering", type: "string",
+      description: "Es: YAS Architecture" }),
     defineField({ name: "description", title: "Descrizione", type: "array", of: [{ type: "block" }] }),
     defineField({
       name: "teamMembers", title: "Team", type: "array",

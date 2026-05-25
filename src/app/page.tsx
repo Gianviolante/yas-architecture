@@ -17,10 +17,10 @@ export const metadata = {
 };
 
 const NAV_LINKS = [
-  { href: "/progetti", label: "Progetti", img: "/assets/home-link-1.jpg",  flex: "flex-[449]" },
-  { href: "/studio",   label: "Studio",   img: "/assets/home-studio.jpg",  flex: "flex-[333]" },
-  { href: "/team",     label: "Team",     img: "/assets/home-link-2.jpg",  flex: "flex-[333]" },
-  { href: "/eventi",   label: "Eventi",   img: "/assets/home-link-3.jpg",  flex: "flex-[217]" },
+  { href: "/progetti", label: "Progetti", img: "/assets/home-link-1.jpg",  flexGrow: 449 },
+  { href: "/studio",   label: "Studio",   img: "/assets/home-studio.jpg",  flexGrow: 333 },
+  { href: "/team",     label: "Team",     img: "/assets/home-link-2.jpg",  flexGrow: 333 },
+  { href: "/eventi",   label: "Eventi",   img: "/assets/home-link-3.jpg",  flexGrow: 217 },
 ];
 
 const ptBlock = {
@@ -41,7 +41,7 @@ export default async function HomePage() {
     <>
       <Navbar />
       <main className="flex-1">
-        <div className="pt-[53px]">
+        <div className="pt-[80px]">
 
           {/* ── 1. HERO ──────────────────────────────────────────────── */}
           <section className="md:hidden flex items-center justify-center h-[160px]">
@@ -82,12 +82,17 @@ export default async function HomePage() {
           </section>
 
           {/* ── 2. LINKS ─────────────────────────────────────────────── */}
-          <section className="page-px">
-            <div className="flex flex-col sm:flex-row gap-[14px] sm:h-[408px]">
-              {NAV_LINKS.map(({ href, label, img, flex }) => (
-                <Link key={href} href={href} className={`sm:${flex} h-[180px] sm:h-auto relative group overflow-hidden`}>
-                  <p className="absolute top-0 left-0 text-[12px] leading-[1.5] text-[#282828] z-10">{label}</p>
-                  <div className="absolute inset-0 top-[37px]">
+          <section className="px-4 md:px-[30px]">
+            <div className="flex flex-col sm:flex-row sm:h-[371px] gap-[15px]">
+              {NAV_LINKS.map(({ href, label, img, flexGrow }) => (
+                <Link
+                  key={href}
+                  href={href}
+                  style={{ flexGrow, flexShrink: 1, flexBasis: 0 }}
+                  className="flex flex-col group"
+                >
+                  <p className="text-[12px] leading-[1.5] text-[#282828] shrink-0">{label}</p>
+                  <div className="relative flex-1 overflow-hidden bg-[#d9d9d9] min-h-[180px] sm:min-h-0">
                     <Image src={img} alt={label} fill className="object-cover transition-transform duration-500 group-hover:scale-[1.03]" />
                   </div>
                 </Link>

@@ -21,6 +21,7 @@ export interface Project {
   concept?: string;
   projectTeam?: string;
   photographer?: string;
+  rendering?: string;
   description?: unknown; // PortableText
   heroImage?: SanityImage;
   gallery?: SanityImage[];

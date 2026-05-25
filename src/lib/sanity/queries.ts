@@ -11,7 +11,7 @@ export const allProjectsQuery = `
 export const projectBySlugQuery = `
   *[_type == "project" && slug.current == $slug][0] {
     _id, title, slug, location, year, area, typology, status,
-    concept, projectTeam, photographer,
+    concept, projectTeam, photographer, rendering,
     description, heroImage,
     gallery[]{ ..., caption },
     teamMembers[]->{ name, role }

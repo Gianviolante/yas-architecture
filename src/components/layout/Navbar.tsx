@@ -52,7 +52,7 @@ export default function Navbar() {
     <>
       <header
         className={cn(
-          "fixed top-0 left-0 right-0 z-50 h-[53px] transition-all duration-200 ease-out",
+          "fixed top-0 left-0 right-0 z-50 h-[80px] transition-all duration-200 ease-out",
           scrolled || menuOpen || pathname !== "/"
             ? "bg-white drop-shadow-[0px_0px_4px_rgba(0,0,0,0.2)]"
             : "bg-transparent"
@@ -136,7 +136,7 @@ export default function Navbar() {
       {/* Mobile full-screen menu */}
       <div
         className={cn(
-          "fixed inset-0 z-40 bg-white flex flex-col pt-[53px] transition-transform duration-300 ease-out md:hidden",
+          "fixed inset-0 z-40 bg-white flex flex-col pt-[80px] transition-transform duration-300 ease-out md:hidden",
           menuOpen ? "translate-x-0" : "-translate-x-full"
         )}
       >

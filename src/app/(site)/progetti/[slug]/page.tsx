@@ -91,8 +91,9 @@ export default async function ProgettoPage({ params }: { params: Promise<{ slug:
             {project.year    && <p>Timeline: {project.year}</p>}
             {project.location && <p>Location: {project.location}</p>}
             {project.area    && <p>Superficie: {project.area} mq</p>}
-            {project.concept     && <p>Concept: {project.concept}</p>}
-            {project.projectTeam && <p>Progetto: {project.projectTeam}</p>}
+            {project.concept      && <p>Concept: {project.concept}</p>}
+            {project.projectTeam  && <p>Progetto: {project.projectTeam}</p>}
+            {project.rendering    && <p>Rendering: {project.rendering}</p>}
             {project.photographer && <p>Fotografo: {project.photographer}</p>}
           </div>
 
