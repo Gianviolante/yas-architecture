@@ -85,7 +85,7 @@ export default function ProgettiClient({ projects, initialTypology }: Props) {
       </div>
 
       {/* ── Sticky filter bar ──────────────────────────────────────── */}
-      <div className="sticky top-[60px] md:top-[80px] z-40 bg-white shadow-[0px_6px_4px_rgba(0,0,0,0.1)]">
+      <div className="sticky top-[60px] md:top-[53px] z-40 bg-white shadow-[0px_6px_4px_rgba(0,0,0,0.1)]">
 
         {/* ── Mobile filter (stacked groups, horizontal scroll) ─────── */}
         <div className="md:hidden pt-[8px] pb-[10px]">
@@ -144,8 +144,57 @@ export default function ProgettiClient({ projects, initialTypology }: Props) {
           </div>
         </div>
 
+        {/* ── Tablet filter (Area full row, Categoria|Stato 2-col) ────── */}
+        <div className="hidden md:block lg:hidden page-px pt-[8px] pb-[10px]">
+          {/* Row 1: Area */}
+          <p className="text-[12px] leading-[22px] text-[#282828] mb-[4px]">Area</p>
+          <div className="flex flex-wrap gap-[8px] mb-[12px]">
+            <button onClick={() => setTypologyFilters(new Set())} className={chipDt(typologyFilters.size === 0)}>
+              Tutti i progetti
+            </button>
+            {AREA_FILTERS.slice(1).map(({ label, value }) => (
+              <button key={value} onClick={() => toggleTypology(value as Typology)} className={chipDt(typologyFilters.has(value as Typology))}>
+                {label}
+              </button>
+            ))}
+          </div>
+          {/* Row 2: Categoria | Stato side-by-side */}
+          <div className="grid grid-cols-2 gap-[14px] mb-[4px]">
+            <p className="text-[12px] leading-[22px] text-[#282828]">Categoria</p>
+            <p className="text-[12px] leading-[22px] text-[#282828]">Stato</p>
+          </div>
+          <div className="grid grid-cols-2 gap-[14px]">
+            <div className="flex flex-wrap gap-[8px]">
+              {CAT_FILTERS.map(({ label, value }) => (
+                <button key={value} onClick={() => toggleTypology(value)} className={chipDt(typologyFilters.has(value))}>
+                  {label}
+                </button>
+              ))}
+            </div>
+            <div className="flex flex-wrap gap-[8px]">
+              {STATO_FILTERS.map(({ label, value }) => (
+                <button key={value} onClick={() => toggleStato(value)} className={chipDt(statoFilters.has(value))}>
+                  {label}
+                </button>
+              ))}
+            </div>
+          </div>
+          <div className="flex items-center justify-between mt-[10px] min-h-[22px]">
+            <p className="text-[12px] leading-[22px] text-[#282828]">
+              <span>Filtra per: </span>
+              {hasFilters && <span className="text-[#d9d9d9]">{activeLabel}</span>}
+            </p>
+            {hasFilters && (
+              <button onClick={reset} className="flex items-center gap-[6px] text-[12px] leading-[22px] text-[#282828] hover:opacity-50 transition-opacity">
+                Reset
+                <Image src="/assets/icon-reset.svg" alt="" width={10} height={8} />
+              </button>
+            )}
+          </div>
+        </div>
+
         {/* ── Desktop filter (3-col grid) ────────────────────────────── */}
-        <div className="hidden md:block page-px pt-[8px] pb-[10px]">
+        <div className="hidden lg:block page-px pt-[8px] pb-[10px]">
           <div className="grid grid-cols-3 gap-[14px] mb-[4px]">
             <p className="text-[12px] leading-[22px] text-[#282828]">Area</p>
             <p className="text-[12px] leading-[22px] text-[#282828]">Categoria</p>
@@ -249,9 +298,9 @@ function GridView({ largeRows, small }: { largeRows: Project[][]; small: Project
           {row.map((p) => <ProjectCard key={p._id} project={p} size="large" />)}
         </div>
       ))}
-      {/* Others: 1 col mobile, 3 col desktop */}
+      {/* Others: 1 col mobile, 2 col tablet, 3 col desktop */}
       {small.length > 0 && (
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-x-[15px] gap-y-[26px] md:gap-y-[38px]">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-[15px] gap-y-[26px] md:gap-y-[38px]">
           {small.map((p) => <ProjectCard key={p._id} project={p} size="small" />)}
         </div>
       )}
@@ -260,7 +309,7 @@ function GridView({ largeRows, small }: { largeRows: Project[][]; small: Project
 }
 
 function ProjectCard({ project: p, size }: { project: Project; size: "large" | "small" }) {
-  const imgH = size === "large" ? "h-[256px] md:h-[484px]" : "h-[256px] md:h-[335px]";
+  const imgH = size === "large" ? "h-[256px] md:h-[280px] lg:h-[484px]" : "h-[256px] md:h-[280px] lg:h-[335px]";
   return (
     <Link href={`/progetti/${p.slug.current}`} className="block group">
       <div className={`relative ${imgH} overflow-hidden mb-[6px]`}>
@@ -363,14 +412,14 @@ function IndexView({
               <tr key={p._id} onMouseEnter={() => onHover(p._id)} onMouseLeave={() => onHover(null)} className="border-b border-black">
                 <td className="py-[20px] pr-6">
                   <Link href={`/progetti/${p.slug.current}`} className="block">
-                    <p className="text-[17.5px] leading-[1.5] text-[#282828]">{p.title}</p>
+                    <p className="text-[17.5px] md:text-[24px] lg:text-[17.5px] leading-[1.5] text-[#282828]">{p.title}</p>
                     {p.location && <p className="text-[12px] leading-[1.5] text-[#282828]/60">{p.location}</p>}
                   </Link>
                 </td>
-                <td className="py-[20px] pr-6 text-[14px] leading-[1.5] text-[#282828]">{p.location ?? "—"}</td>
-                <td className="py-[20px] pr-6 text-[14px] leading-[1.5] text-[#282828]">{p.status ?? "—"}</td>
-                <td className="py-[20px] pr-6 text-[14px] leading-[1.5] text-[#282828]">{p.year ?? "—"}</td>
-                <td className="py-[20px] pr-6 text-[14px] leading-[1.5] text-[#282828]">{p.area ?? "—"}</td>
+                <td className="py-[20px] pr-6 text-[14px] md:text-[16px] leading-[1.5] text-[#282828]">{p.location ?? "—"}</td>
+                <td className="py-[20px] pr-6 text-[14px] md:text-[16px] leading-[1.5] text-[#282828]">{p.status ?? "—"}</td>
+                <td className="py-[20px] pr-6 text-[14px] md:text-[16px] leading-[1.5] text-[#282828]">{p.year ?? "—"}</td>
+                <td className="py-[20px] pr-6 text-[14px] md:text-[16px] leading-[1.5] text-[#282828]">{p.area ?? "—"}</td>
                 <td className="py-[20px]">
                   <span className="inline-flex items-center border border-[#333] rounded-[100px] px-[10px] py-[3px] text-[11px] text-[#333] leading-[1.4] whitespace-nowrap">
                     {p.typology}
