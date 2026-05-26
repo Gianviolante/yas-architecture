@@ -50,7 +50,7 @@ export default async function ProgettoPage({ params }: { params: Promise<{ slug:
     <div className="bg-white">
 
       {/* ── Hero image ─────────────────────────────────────────────── */}
-      <div className="relative mx-[15px] mt-[60px] md:mt-[74px] h-[245px] md:h-[752px] overflow-hidden">
+      <div className="relative mx-[15px] mt-[60px] md:mt-[72px] h-[245px] md:h-[571px] lg:h-[752px] overflow-hidden">
         {heroUrl ? (
           <Image src={heroUrl} alt={project.title} fill className="object-cover" priority />
         ) : (
@@ -83,7 +83,7 @@ export default async function ProgettoPage({ params }: { params: Promise<{ slug:
       <div className="hidden md:flex items-start justify-between page-px pt-[20px]">
         <h1
           className="font-bold leading-[1.3] text-[#282828]"
-          style={{ fontSize: "clamp(60px, 8.3vw, 120px)" }}
+          style={{ fontSize: "clamp(60px, 14.4vw, 120px)" }}
         >
           {project.title}
         </h1>
@@ -101,10 +101,10 @@ export default async function ProgettoPage({ params }: { params: Promise<{ slug:
           Mobile (flex-col): meta → description → chips ✓
           Desktop (flex-row lg): left(meta+chips) | right(description) ✓
       */}
-      <div className="flex flex-col lg:flex-row gap-x-[32px] page-px pt-[16px] md:pt-[24px] pb-[24px] md:pb-[40px]">
+      <div className="flex flex-col md:flex-row gap-x-[32px] page-px pt-[16px] md:pt-[24px] pb-[24px] md:pb-[40px]">
 
-        {/* LEFT: meta lines + (desktop-only) column labels + chips + team */}
-        <div className="w-full lg:w-[577px] lg:shrink-0">
+        {/* LEFT: meta lines + (tablet/desktop) column labels + chips + team */}
+        <div className="w-full md:w-1/3 md:shrink-0 lg:w-[577px]">
           <div className="text-[12px] leading-[1.3] text-[#282828] space-y-[4px]">
             {project.typology    && <p>Area: {project.typology}</p>}
             {project.year        && <p>Timeline: {project.year}</p>}
@@ -145,7 +145,7 @@ export default async function ProgettoPage({ params }: { params: Promise<{ slug:
 
         {/* RIGHT: description */}
         <div
-          className="flex-1 text-[16px] md:text-[17.4px] leading-[1.4] md:leading-[1.2] text-[#282828] mt-[16px] lg:mt-0"
+          className="flex-1 text-[16px] md:text-[17.4px] leading-[1.4] md:leading-[1.2] text-[#282828] mt-[16px] md:mt-0"
           style={{ maxWidth: "798px" }}
         >
           {project.description ? (
@@ -174,7 +174,7 @@ export default async function ProgettoPage({ params }: { params: Promise<{ slug:
       </div>
 
       {/* ── Second full-width image ────────────────────────────────── */}
-      <div className="relative mx-[15px] h-[245px] md:h-[718px]">
+      <div className="relative mx-[15px] h-[245px] md:h-[571px] lg:h-[718px]">
         {secondImage ? (
           <Image
             src={secondImage.url}

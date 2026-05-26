@@ -25,22 +25,29 @@ export default function GallerySlider({ items, projectTitle, compact = false }: 
   const [canScrollLeft,  setCanScrollLeft]  = useState(false);
   const [canScrollRight, setCanScrollRight] = useState(true);
   const [hoverSide,      setHoverSide]      = useState<"left" | "right" | null>(null);
-  const [isMobile,       setIsMobile]       = useState(false);
+  const [breakpoint,     setBreakpoint]     = useState<"mobile" | "tablet" | "desktop">("mobile");
 
   useEffect(() => {
-    const update = () => setIsMobile(window.innerWidth < 768);
+    const update = () => {
+      const w = window.innerWidth;
+      setBreakpoint(w < 768 ? "mobile" : w < 1024 ? "tablet" : "desktop");
+    };
     update();
     window.addEventListener("resize", update);
     return () => window.removeEventListener("resize", update);
   }, []);
 
+  const isMobile  = breakpoint === "mobile";
+  const isTablet  = breakpoint === "tablet";
+
   const cardW = (i: number) => {
     if (compact) return 263;
     if (isMobile) return i === 0 ? 222 : 193;
+    if (isTablet) return i === 0 ? 307 : 267;
     return i === 0 ? 580 : 505;
   };
-  const cardH = compact ? 202 : (isMobile ? 242 : 633);
-  const gap   = compact ? 15  : (isMobile ? 30 : 77);
+  const cardH = compact ? 202 : (isMobile ? 242 : isTablet ? 335 : 633);
+  const gap   = compact ? 15  : (isMobile ? 30  : isTablet ? 40  : 77);
   const SLIDE_STEP = cardW(0) + gap;
 
   useEffect(() => {
