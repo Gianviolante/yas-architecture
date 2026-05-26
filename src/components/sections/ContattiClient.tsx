@@ -40,14 +40,15 @@ export default function ContattiClient() {
   };
 
   return (
-    <div className="pt-[60px] md:pt-[80px]">
+    <div className="pt-[60px] md:pt-[53px]">
+
       {/* ── Hero section ───────────────────────────────────────────── */}
-      <div className="max-w-[1440px] mx-auto px-[32px] pt-16 pb-12 space-y-14">
+      <div className="page-px pt-[40px] md:pt-[50px] space-y-[40px] md:space-y-[60px]">
         <div>
           <p className="text-[16px] leading-[1.2] text-black mb-2">Get in touch</p>
           <a
             href="mailto:info@yas-arch.com"
-            className="text-[36px] leading-[1.2] text-black hover:opacity-60 transition-opacity"
+            className="text-[28px] md:text-[36px] leading-[1.2] text-black hover:opacity-60 transition-opacity break-all"
           >
             info@yas-arch.com
           </a>
@@ -57,13 +58,13 @@ export default function ContattiClient() {
           <p className="text-[16px] leading-[1.2] text-black mb-2">Have a new project</p>
           <a
             href="#form"
-            className="text-[36px] leading-[1.2] text-black underline decoration-solid underline-offset-4 hover:opacity-60 transition-opacity"
+            className="text-[28px] md:text-[36px] leading-[1.2] text-black underline decoration-solid underline-offset-4 hover:opacity-60 transition-opacity"
           >
             Start a project
           </a>
         </div>
 
-        <div className="flex items-center gap-[50px]">
+        <div className="flex items-center gap-[32px] md:gap-[50px] pb-[40px] md:pb-[52px]">
           {SOCIAL.map(({ label, href }) => (
             <a
               key={label}
@@ -82,15 +83,17 @@ export default function ContattiClient() {
       <div className="w-full h-[75px] bg-white shadow-[0px_6px_8px_0px_rgba(0,0,0,0.1)]" />
 
       {/* ── Form section ───────────────────────────────────────────── */}
-      <div id="form" className="max-w-[1440px] mx-auto px-[32px] pt-10 pb-20">
-        <div className="flex items-baseline justify-between mb-10">
+      <div id="form" className="page-px pt-[24px] md:pt-[32px] pb-20">
+        <div className="flex items-baseline justify-between mb-[24px] md:mb-[32px]">
           <p className="text-[16px] leading-[1.2] text-black">Richiedi informazioni</p>
           <p className="text-[11px] leading-[1.2] text-black/40">* campi obbligatori</p>
         </div>
 
-        <div className="grid grid-cols-[1fr_2.5fr] gap-16">
+        {/* Two-column layout: contact info + form */}
+        <div className="flex flex-col md:grid md:grid-cols-[1fr_2fr] gap-[32px] md:gap-[40px] lg:gap-16">
+
           {/* Left — contact info */}
-          <div className="space-y-8">
+          <div className="space-y-[24px] md:space-y-8">
             <div>
               <p className="text-[12px] leading-normal text-black mb-1">Office</p>
               <p className="text-[16px] leading-[1.2] text-black">Via Dè Gracchi, 47</p>
@@ -118,26 +121,27 @@ export default function ContattiClient() {
             </div>
           ) : (
             <form onSubmit={handleSubmit}>
-              {/* Row 1: Nome | Cognome */}
-              <div className="grid grid-cols-[2fr_3fr] border-t border-black">
+
+              {/* Row 1: Nome | Cognome — stacked mobile, side-by-side md+ */}
+              <div className="grid grid-cols-1 md:grid-cols-[2fr_3fr] border-t border-black">
                 <Field label="Nome" value={form.nome} onChange={set("nome")} autoComplete="given-name" borderRight />
                 <Field label="Cognome" value={form.cognome} onChange={set("cognome")} autoComplete="family-name" />
               </div>
 
               {/* Row 2: Indirizzo | Paese */}
-              <div className="grid grid-cols-[3fr_2fr] border-t border-black">
+              <div className="grid grid-cols-1 md:grid-cols-[3fr_2fr] border-t border-black">
                 <Field label="Indirizzo *" value={form.indirizzo} onChange={set("indirizzo")} autoComplete="street-address" required borderRight />
                 <Field label="Paese" value={form.paese} onChange={set("paese")} autoComplete="country-name" />
               </div>
 
               {/* Row 3: Città | CAP */}
-              <div className="grid grid-cols-[3fr_2fr] border-t border-black">
+              <div className="grid grid-cols-1 md:grid-cols-[3fr_2fr] border-t border-black">
                 <Field label="Città *" value={form.citta} onChange={set("citta")} autoComplete="address-level2" required borderRight />
                 <Field label="CAP" value={form.cap} onChange={set("cap")} autoComplete="postal-code" />
               </div>
 
               {/* Row 4: e-mail | Telefono */}
-              <div className="grid grid-cols-[3fr_2fr] border-t border-b border-black">
+              <div className="grid grid-cols-1 md:grid-cols-[3fr_2fr] border-t border-b border-black">
                 <Field label="e-mail *" value={form.email} onChange={set("email")} type="email" autoComplete="email" required borderRight />
                 <Field label="Telefono" value={form.telefono} onChange={set("telefono")} type="tel" autoComplete="tel" />
               </div>
@@ -190,9 +194,9 @@ export default function ContattiClient() {
                   <button
                     type="submit"
                     disabled={status === "sending" || privacyBlocked}
-                    className="text-[16px] leading-[22px] text-[#333] px-[24px] py-[10px] rounded-[100px] bg-[#e9ebed] hover:bg-[#d9dadb] transition-colors duration-200 disabled:opacity-40 disabled:cursor-not-allowed"
+                    className="w-full md:w-auto text-[16px] leading-[22px] text-[#333] px-[24px] py-[10px] rounded-[100px] bg-[#e9ebed] hover:bg-[#d9dadb] transition-colors duration-200 disabled:opacity-40 disabled:cursor-not-allowed"
                   >
-                    {status === "sending" ? "Invio…" : "Invia"}
+                    {status === "sending" ? "Invio…" : "Invia richiesta"}
                   </button>
                 </div>
               </div>
@@ -218,7 +222,7 @@ function Field({
   borderRight?: boolean;
 }) {
   return (
-    <label className={`h-[90px] px-1 py-3 flex flex-col justify-start cursor-text${borderRight ? " border-r border-black" : ""}`}>
+    <label className={`h-[90px] px-1 py-3 flex flex-col justify-start cursor-text${borderRight ? " md:border-r border-black" : ""}`}>
       <input
         type={type}
         placeholder={label}
