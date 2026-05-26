@@ -180,19 +180,20 @@ export default async function HomePage() {
           </section>
 
           {/* ── 4. DESCRIPTION + slider ──────────────────────────────── */}
-          <section className="page-px pt-[40px]">
-            <div className="text-[24px] leading-normal text-black mb-14">
+          <section className="px-[15px] md:page-px pt-[40px]">
+            <div className="text-[16px] md:text-[24px] leading-normal text-black mb-6 md:mb-14">
               {home?.introDescription
                 ? <PortableText value={home.introDescription as Parameters<typeof PortableText>[0]["value"]} components={ptBlock} />
                 : <p>{FALLBACK_INTRO}</p>}
             </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
-              <div className="text-[17.5px] leading-[1.5] text-[#282828]">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8 md:mb-12">
+              <div className="text-[16px] md:text-[17.5px] leading-[1.5] text-[#282828]">
                 {home?.bodyLeft
                   ? <PortableText value={home.bodyLeft as Parameters<typeof PortableText>[0]["value"]} components={ptBlock} />
                   : <p>{FALLBACK_BODY_LEFT}</p>}
               </div>
-              <div className="text-[17.5px] leading-[1.2] text-[#282828]">
+              {/* bodyRight hidden on mobile — Figma shows single column */}
+              <div className="hidden md:block text-[17.5px] leading-[1.2] text-[#282828]">
                 {home?.bodyRight
                   ? <PortableText value={home.bodyRight as Parameters<typeof PortableText>[0]["value"]} components={ptBlock} />
                   : <p>{FALLBACK_BODY_RIGHT}</p>}
@@ -208,20 +209,24 @@ export default async function HomePage() {
           <HomeProjectsCarousel projects={projects} />
 
           {/* ── 6. STUDIO BLOCK ──────────────────────────────────────── */}
-          <section className="page-px py-10">
+          <section className="px-[15px] md:page-px py-10">
             <p className="text-[16px] leading-normal text-black text-center mb-6">Lo studio</p>
-            <div className="text-[24px] leading-normal text-black mb-10">
+            <div className="text-[24px] leading-normal text-black mb-6 md:mb-10">
               {home?.studioDescription
                 ? <PortableText value={home.studioDescription as Parameters<typeof PortableText>[0]["value"]} components={ptBlock} />
                 : <p>{FALLBACK_INTRO}</p>}
             </div>
-            <div className="relative h-[631px] mx-auto max-w-[1027px] mb-10">
+            {/* immagine: 245px mobile / 631px desktop */}
+            <div className="relative h-[245px] md:h-[631px] mx-auto md:max-w-[1027px] mb-2 md:mb-10">
               <Image src="/assets/home-studio.jpg" alt="Lo studio" fill className="object-cover" />
             </div>
-            <div className="flex justify-center">
+            {/* contatore "4 / 6" — visibile solo su mobile */}
+            <p className="md:hidden text-[12px] leading-[1.5] text-[#282828] text-right mb-6">4 / 6</p>
+            {/* bottone: full-width mobile, centrato desktop */}
+            <div className="md:flex md:justify-center">
               <Link
                 href="/studio"
-                className="inline-flex items-center border-2 border-[#333] rounded-[100px] px-[24px] py-[10px] text-[16px] text-[#333] leading-[22px] hover:bg-[#333] hover:text-white transition-colors duration-200"
+                className="flex items-center justify-center border-2 border-[#333] rounded-[100px] px-[24px] py-[10px] text-[16px] text-[#333] leading-[22px] hover:bg-[#333] hover:text-white transition-colors duration-200 w-full md:w-auto"
               >
                 Vedi lo studio
               </Link>

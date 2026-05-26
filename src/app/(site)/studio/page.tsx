@@ -142,7 +142,7 @@ export default async function StudioPage() {
         </div>
 
         {/* Two images */}
-        <div className="flex flex-col sm:flex-row gap-[15px] page-px">
+        <div className="flex flex-col md:flex-row gap-[15px] page-px">
           {[0, 1].map((i) => (
             <div key={i} className="relative overflow-hidden flex-1" style={{ height: "483px" }}>
               {crescitaUrls[i]

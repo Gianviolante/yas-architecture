@@ -74,7 +74,7 @@ export default function TeamClient({ teamMembers, partners }: Props) {
         </div>
 
         {/* 3-column grid */}
-        <div className="page-px grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-[15px]">
+        <div className="page-px grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-[15px]">
           {cards.slice(0, 6).map((member, i) => (
             <MemberCard
               key={member?._id ?? i}
@@ -99,7 +99,7 @@ export default function TeamClient({ teamMembers, partners }: Props) {
         </div>
 
         {/* 4-column grid */}
-        <div className="page-px grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-[15px]">
+        <div className="page-px grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-x-[15px]">
           {(partners.length > 0 ? partners : (Array(4).fill(null) as null[])).map((p, i) => (
             <div key={p?._id ?? i}>
               <p className="text-[16px] leading-[1.2] text-black mb-[8px]">
