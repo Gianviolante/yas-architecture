@@ -78,33 +78,30 @@ export default async function HomePage() {
             </div>
           </section>
 
-          {/* ── 1. HERO — desktop ────────────────────────────────────── */}
-          <section className="relative h-[439px] overflow-hidden hidden md:block">
+          {/* ── 1. HERO — tablet + desktop ───────────────────────────── */}
+          <section className="relative md:h-[295px] lg:h-[439px] overflow-hidden hidden md:block">
             <h1
-              className="absolute font-bold text-black leading-none whitespace-nowrap select-none"
-              style={{ fontSize: "clamp(8rem,19.8vw,285px)", top: "7px", left: "198px" }}
+              className="absolute font-bold text-black leading-none whitespace-nowrap select-none md:top-[23px] md:left-[81px] lg:top-[7px] lg:left-[198px]"
+              style={{ fontSize: "clamp(8rem,19.8vw,285px)" }}
             >
               yas-arch
             </h1>
 
             <div
-              className="absolute text-[12px] leading-[1.2] text-[#282828] text-right"
-              style={{ top: "79px", right: "calc(100% - 499px)" }}
+              className="absolute text-[12px] leading-[1.2] text-[#282828] text-right md:top-[48px] md:right-[calc(100%-362px)] lg:top-[79px] lg:right-[calc(100%-499px)]"
             >
               <p>Studio architettura</p>
               <p>e design</p>
             </div>
 
             <p
-              className="absolute text-[12px] leading-[1.2] text-[#282828]"
-              style={{ top: "79px", left: "765px" }}
+              className="absolute text-[12px] leading-[1.2] text-[#282828] md:top-[48px] md:left-[462px] lg:top-[79px] lg:left-[765px]"
             >
               Apulian inspiration guide
             </p>
 
             <div
-              className="absolute text-[12px] leading-[1.2] text-black text-right"
-              style={{ top: "327px", right: "calc(100% - 972px)" }}
+              className="absolute text-[12px] leading-[1.2] text-black text-right md:top-[221px] md:right-[calc(100%-545px)] lg:top-[327px] lg:right-[calc(100%-972px)]"
             >
               <p>Via Dè Gracchi, 47</p>
               <p>72100 Brindisi (BR) Italia</p>
@@ -114,8 +111,8 @@ export default async function HomePage() {
           </section>
 
           {/* ── 2. LINKS ─────────────────────────────────────────────── */}
-          <section className="px-[15px] md:px-[30px]">
-            <div className="flex flex-col gap-[25px] md:flex-row md:gap-[15px] md:h-[371px]">
+          <section className="px-[15px] lg:px-[30px]">
+            <div className="flex flex-col gap-[25px] md:flex-row md:gap-[15px] md:h-[225px] lg:h-[371px]">
               {NAV_LINKS.map(({ href, label, img, flexGrow, mobileH }) => (
                 <Link
                   key={href}
@@ -153,8 +150,8 @@ export default async function HomePage() {
             </div>
           </section>
 
-          {/* ── 3. APULIA — desktop ──────────────────────────────────── */}
-          <section className="relative h-[345px] overflow-hidden hidden md:block">
+          {/* ── 3. APULIA — tablet + desktop ─────────────────────────── */}
+          <section className="relative md:h-[206px] lg:h-[345px] overflow-hidden hidden md:block">
             <h2
               className="absolute font-bold text-black leading-none whitespace-nowrap select-none"
               style={{ fontSize: "clamp(8rem,19.8vw,285px)", top: 0, left: "29px" }}
@@ -163,15 +160,13 @@ export default async function HomePage() {
             </h2>
 
             <p
-              className="absolute text-[12px] leading-[1.2] text-[#282828]"
-              style={{ top: "78px", left: "755px" }}
+              className="absolute text-[12px] leading-[1.2] text-[#282828] md:top-[45px] md:left-[136px] lg:top-[78px] lg:left-[755px]"
             >
               Apulian inspiration guide
             </p>
 
             <div
-              className="absolute text-[12px] leading-[1.2] text-[#282828] text-right right-[32px]"
-              style={{ top: "123px" }}
+              className="absolute text-[12px] leading-[1.2] text-[#282828] text-right right-[32px] md:top-[70px] lg:top-[123px]"
             >
               <Link href="/progetti?tipologia=Interior Design" className="block hover:opacity-60 transition-opacity">Interior design→</Link>
               <Link href="/progetti?tipologia=Architettura"    className="block hover:opacity-60 transition-opacity">Architecture →</Link>
@@ -216,8 +211,8 @@ export default async function HomePage() {
                 ? <PortableText value={home.studioDescription as Parameters<typeof PortableText>[0]["value"]} components={ptBlock} />
                 : <p>{FALLBACK_INTRO}</p>}
             </div>
-            {/* immagine: 245px mobile / 631px desktop */}
-            <div className="relative h-[245px] md:h-[631px] mx-auto md:max-w-[1027px] mb-2 md:mb-10">
+            {/* immagine: 245px mobile / 411px tablet / 631px desktop */}
+            <div className="relative h-[245px] md:h-[411px] lg:h-[631px] mx-auto md:max-w-[668px] lg:max-w-[1027px] mb-2 md:mb-10">
               <Image src="/assets/home-studio.jpg" alt="Lo studio" fill className="object-cover" />
             </div>
             {/* contatore "4 / 6" — visibile solo su mobile */}

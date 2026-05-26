@@ -126,7 +126,7 @@ export default function HomeProjectsCarousel({ projects }: Props) {
                         onClick={(e) => isPointerFine && hoverSide !== null && e.preventDefault()}
                       >
                         {/* immagine con frecce overlay su mobile */}
-                        <div className="relative h-[376px] md:h-[550px] overflow-hidden mb-4">
+                        <div className="relative h-[376px] md:h-[322px] lg:h-[550px] overflow-hidden mb-4">
                           {p.coverImageUrl
                             ? <Image src={p.coverImageUrl} alt={p.title} fill className="object-cover transition-transform duration-500 group-hover:scale-[1.03]" />
                             : <div className="w-full h-full bg-[#d9d9d9]" />}
@@ -168,7 +168,7 @@ export default function HomeProjectsCarousel({ projects }: Props) {
                   ))
                 : PLACEHOLDERS.map((p) => (
                     <div key={p.id} className="w-full md:w-[calc(50%-7px)] shrink-0">
-                      <div className="relative h-[376px] md:h-[550px] overflow-hidden mb-4">
+                      <div className="relative h-[376px] md:h-[322px] lg:h-[550px] overflow-hidden mb-4">
                         <Image src={p.img} alt="" fill className="object-cover" />
                       </div>
                       <p className="text-[17.5px] leading-[1.5] text-[#282828] mb-2">{p.label}</p>
