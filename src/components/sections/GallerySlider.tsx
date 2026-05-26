@@ -25,11 +25,23 @@ export default function GallerySlider({ items, projectTitle, compact = false }: 
   const [canScrollLeft,  setCanScrollLeft]  = useState(false);
   const [canScrollRight, setCanScrollRight] = useState(true);
   const [hoverSide,      setHoverSide]      = useState<"left" | "right" | null>(null);
+  const [isMobile,       setIsMobile]       = useState(false);
 
-  const cardW = (i: number) => compact ? 263 : i === 0 ? 580 : 505;
-  const cardH = compact ? 202 : 633;
-  const gap   = compact ? 15  : 77;
-  const SLIDE_STEP = (compact ? 263 : 580) + gap;
+  useEffect(() => {
+    const update = () => setIsMobile(window.innerWidth < 768);
+    update();
+    window.addEventListener("resize", update);
+    return () => window.removeEventListener("resize", update);
+  }, []);
+
+  const cardW = (i: number) => {
+    if (compact) return 263;
+    if (isMobile) return i === 0 ? 222 : 193;
+    return i === 0 ? 580 : 505;
+  };
+  const cardH = compact ? 202 : (isMobile ? 242 : 633);
+  const gap   = compact ? 15  : (isMobile ? 30 : 77);
+  const SLIDE_STEP = cardW(0) + gap;
 
   useEffect(() => {
     const mq = window.matchMedia("(hover: hover) and (pointer: fine)");
@@ -97,7 +109,7 @@ export default function GallerySlider({ items, projectTitle, compact = false }: 
       >
         <div
           ref={scrollRef}
-          className="flex overflow-x-auto pl-[30px] no-scrollbar"
+          className="flex overflow-x-auto pl-[15px] md:pl-[30px] no-scrollbar"
           style={{ scrollbarWidth: "none", gap: `${gap}px`, transition: "gap 300ms ease" }}
         >
           {Array.from({ length: displayCount }).map((_, i) => (

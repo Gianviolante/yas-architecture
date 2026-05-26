@@ -75,7 +75,7 @@ export default function ProjectsSlider({ projects, title = "Vedi altri progetti"
 
   return (
     <div className="relative pb-[48px]">
-      <p className="px-[32px] text-[24px] leading-normal text-black mb-[21px]">
+      <p className="px-[15px] md:px-[32px] text-[12px] md:text-[24px] leading-normal text-black mb-[16px] md:mb-[21px]">
         {title}
       </p>
 
@@ -87,7 +87,7 @@ export default function ProjectsSlider({ projects, title = "Vedi altri progetti"
       >
         <div
           ref={scrollRef}
-          className="flex gap-x-[15px] overflow-x-auto px-[32px] pb-[4px] no-scrollbar"
+          className="flex gap-x-[15px] overflow-x-auto px-[15px] md:px-[32px] pb-[4px] no-scrollbar"
           style={{ scrollbarWidth: "none" }}
         >
           {projects.map((p) => (
