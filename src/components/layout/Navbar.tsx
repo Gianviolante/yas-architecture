@@ -16,16 +16,30 @@ const navLinks = [
 const progettiSubLinks = [
   { href: "/progetti?tipologia=Residenziale",    label: "Residenziali" },
   { href: "/progetti?tipologia=Commerciale",     label: "Commerciali" },
-  { href: "/progetti?tipologia=Interior Design", label: "Interior Design" },
-  { href: "/progetti?tipologia=Architettura",    label: "Architettura" },
   { href: "/progetti",                           label: "Tutti i progetti" },
 ];
 
+/** Circular chip with + or − */
+function AccordionChip({ open }: { open: boolean }) {
+  return (
+    <div className="size-[26px] rounded-full border border-[#1a1a1a] flex items-center justify-center shrink-0">
+      {open ? (
+        <svg width="12" height="2" viewBox="0 0 12 2" fill="none">
+          <path d="M0 1H12" stroke="#1a1a1a" strokeWidth="1.5" strokeLinecap="round" />
+        </svg>
+      ) : (
+        <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+          <path d="M6 0V12M0 6H12" stroke="#1a1a1a" strokeWidth="1.5" strokeLinecap="round" />
+        </svg>
+      )}
+    </div>
+  );
+}
+
 export default function Navbar() {
-  const [scrolled, setScrolled] = useState(false);
-  const [menuOpen, setMenuOpen] = useState(false);
+  const [scrolled, setScrolled]         = useState(false);
+  const [menuOpen, setMenuOpen]         = useState(false);
   const [progettiOpen, setProgettiOpen] = useState(true);
-  // const [progettiDropdown, setProgettiDropdown] = useState(false);
   const pathname = usePathname();
 
   useEffect(() => {
@@ -34,9 +48,7 @@ export default function Navbar() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  useEffect(() => {
-    setMenuOpen(false);
-  }, [pathname]);
+  useEffect(() => { setMenuOpen(false); }, [pathname]);
 
   useEffect(() => {
     document.body.style.overflow = menuOpen ? "hidden" : "";
@@ -59,47 +71,37 @@ export default function Navbar() {
         )}
       >
         <nav className="px-4 md:px-[30px] h-full flex items-center justify-between">
+
           {/* Desktop left nav */}
           <div className="hidden md:flex items-center gap-[10px]">
             {navLinks.map(({ href, label }) => (
-                <Link
-                  key={href}
-                  href={href}
-                  className={cn(
-                    "text-[14px] leading-normal transition-colors duration-200",
-                    isActive(href)
-                      ? "text-[#d9d9d9] cursor-default pointer-events-none"
-                      : "text-[#1a1a1a] hover:text-[#d9d9d9]"
-                  )}
-                >
-                  {label}
-                </Link>
-              )
-            )}
+              <Link
+                key={href}
+                href={href}
+                className={cn(
+                  "text-[14px] leading-normal transition-colors duration-200",
+                  isActive(href)
+                    ? "text-[#d9d9d9] cursor-default pointer-events-none"
+                    : "text-[#1a1a1a] hover:text-[#d9d9d9]"
+                )}
+              >
+                {label}
+              </Link>
+            ))}
           </div>
 
           {/* Mobile hamburger */}
           <button
             className="md:hidden p-2 -ml-2 text-xl leading-none"
             onClick={() => setMenuOpen((v) => !v)}
-            aria-label="Menu"
+            aria-label={menuOpen ? "Chiudi menu" : "Apri menu"}
           >
             {menuOpen ? "✕" : "☰"}
           </button>
 
           {/* Logo — center absolute */}
-          <Link
-            href="/"
-            className="absolute left-1/2 -translate-x-1/2"
-            aria-label="YAS Architecture — Home"
-          >
-            <Image
-              src="/assets/logo-yas.svg"
-              alt="YAS Architecture"
-              width={102}
-              height={31}
-              priority
-            />
+          <Link href="/" className="absolute left-1/2 -translate-x-1/2" aria-label="YAS Architecture — Home">
+            <Image src="/assets/logo-yas.svg" alt="YAS Architecture" width={102} height={31} priority />
           </Link>
 
           {/* Desktop right nav */}
@@ -133,48 +135,78 @@ export default function Navbar() {
         </nav>
       </header>
 
-      {/* Mobile full-screen menu */}
+      {/* ── Mobile dropdown menu ─────────────────────────────────────── */}
       <div
         className={cn(
-          "fixed inset-0 z-40 bg-white flex flex-col pt-[60px] transition-transform duration-300 ease-out md:hidden",
-          menuOpen ? "translate-x-0" : "-translate-x-full"
+          "fixed top-[60px] left-0 right-0 z-40 bg-white md:hidden transition-all duration-300 ease-out",
+          menuOpen
+            ? "opacity-100 translate-y-0 pointer-events-auto drop-shadow-[0px_6px_4px_rgba(0,0,0,0.2)]"
+            : "opacity-0 -translate-y-2 pointer-events-none"
         )}
       >
-        <nav className="flex-1 overflow-y-auto">
-          {/* Progetti accordion */}
-          <div className="border-b border-gray-light">
+        <nav>
+
+          {/* Progetti — accordion */}
+          <div className="border-b border-black">
             <button
-              className="w-full flex items-center justify-between px-6 py-5 text-[14px] font-medium"
+              className="w-full flex items-center justify-between px-[10px] py-[10px]"
               onClick={() => setProgettiOpen((v) => !v)}
+              aria-expanded={progettiOpen}
             >
-              <span>Progetti</span>
-              <span className="text-xl leading-none text-black/40">{progettiOpen ? "−" : "+"}</span>
+              <span className="text-[22px] leading-normal text-[#1a1a1a] px-0">Progetti</span>
+              <AccordionChip open={progettiOpen} />
             </button>
-            {progettiOpen && (
-              <div className="pb-4">
-                {progettiSubLinks.map(({ href, label }) => (
-                  <Link key={label} href={href} className="block px-10 py-2 text-[12px] text-black/50 hover:text-black">
-                    {label}
-                  </Link>
-                ))}
-              </div>
-            )}
+
+            {/* Sub-items */}
+            <div
+              className={cn(
+                "overflow-hidden transition-[max-height] duration-200 ease-out",
+                progettiOpen ? "max-h-[240px]" : "max-h-0"
+              )}
+            >
+              {progettiSubLinks.map(({ href, label }) => (
+                <Link
+                  key={label}
+                  href={href}
+                  className="block px-5 py-[9px] text-[17px] text-[#1a1a1a] hover:opacity-60 transition-opacity"
+                >
+                  {label}
+                </Link>
+              ))}
+              <p className="px-5 pb-4 pt-[6px] text-[12px] text-[#1a1a1a]/60 italic">
+                Filtra ricerca
+              </p>
+            </div>
           </div>
+
+          {/* Studio — chip icon, navigates on click */}
+          <Link
+            href="/studio"
+            className="flex items-center justify-between border-b border-black px-[10px] py-[10px]"
+          >
+            <span className="text-[22px] leading-normal text-[#1a1a1a]">Studio</span>
+            <AccordionChip open={false} />
+          </Link>
+
+          {/* Team, Eventi — plain links, no icon */}
           {[
-            { href: "/studio", label: "Studio" },
-            { href: "/team", label: "Team" },
-            { href: "/eventi", label: "Eventi" },
-            { href: "/contatti", label: "Contatti" },
+            { href: "/team",    label: "Team" },
+            { href: "/eventi",  label: "Eventi" },
           ].map(({ href, label }) => (
             <Link
               key={href}
               href={href}
-              className="flex items-center justify-between border-b border-gray-light px-6 py-5 text-[14px] font-medium hover:bg-gray-lightest"
+              className="flex items-center border-b border-black px-[10px] py-[10px]"
             >
-              {label}
-              <span className="text-xl leading-none text-black/40">+</span>
+              <span className="text-[22px] leading-normal text-[#1a1a1a]">{label}</span>
             </Link>
           ))}
+
+          {/* Contatti — no border-b */}
+          <Link href="/contatti" className="flex items-center px-[10px] py-[10px]">
+            <span className="text-[22px] leading-normal text-[#1a1a1a]">Contatti</span>
+          </Link>
+
         </nav>
       </div>
     </>
