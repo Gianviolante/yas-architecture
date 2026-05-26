@@ -45,7 +45,7 @@ export default function TeamClient({ teamMembers, partners }: Props) {
     <div className="bg-white">
 
       {/* ── Tab bar ─────────────────────────────────────────────────── */}
-      <div className="sticky top-[60px] md:top-[80px] z-40 bg-white shadow-[0px_6px_8px_0px_rgba(0,0,0,0.1)] h-[75px] flex items-center justify-center gap-[8px]">
+      <div className="sticky top-[60px] md:top-[53px] z-40 bg-white shadow-[0px_6px_8px_0px_rgba(0,0,0,0.1)] h-[75px] flex items-center justify-center gap-[8px]">
         <Link
           href="/studio"
           className="inline-flex items-center border-2 border-[#333] rounded-[100px] px-[24px] py-[10px] text-[16px] leading-[22px] text-[#333] hover:bg-black hover:border-black hover:text-white transition-colors duration-200"
@@ -67,14 +67,14 @@ export default function TeamClient({ teamMembers, partners }: Props) {
       {/* ══════════════════════════════════════════════════════════════
           Il team
       ══════════════════════════════════════════════════════════════ */}
-      <div className="pt-[60px] pb-[40px]">
+      <div className="pt-[60px] md:pt-[48px] pb-[40px]">
         <p className="text-[16px] leading-normal text-black text-center mb-[26px]">Il team</p>
-        <div className="page-px mb-[32px] text-[24px] leading-normal text-black">
+        <div className="page-px mb-[32px] text-[18px] md:text-[24px] leading-normal text-black">
           <p>{FALLBACK_INTRO}</p>
         </div>
 
-        {/* 3-column grid */}
-        <div className="page-px grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-[15px]">
+        {/* 3-column grid (mobile: 1col, tablet+: 3col) */}
+        <div className="page-px grid grid-cols-1 md:grid-cols-3 gap-x-[15px]">
           {cards.slice(0, 6).map((member, i) => (
             <MemberCard
               key={member?._id ?? i}
@@ -94,12 +94,12 @@ export default function TeamClient({ teamMembers, partners }: Props) {
       <div className="pt-[37px] pb-[60px]">
         <SectionLabel>Associati e Partners</SectionLabel>
 
-        <div className="page-px mb-[72px] text-[24px] leading-normal text-black">
+        <div className="page-px mb-[72px] text-[18px] md:text-[24px] leading-normal text-black">
           <p>{FALLBACK_INTRO}</p>
         </div>
 
-        {/* 4-column grid */}
-        <div className="page-px grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-x-[15px]">
+        {/* partners: 2-col mobile, 4-col tablet+ */}
+        <div className="page-px grid grid-cols-2 md:grid-cols-4 gap-x-[15px] gap-y-[32px]">
           {(partners.length > 0 ? partners : (Array(4).fill(null) as null[])).map((p, i) => (
             <div key={p?._id ?? i}>
               <p className="text-[16px] leading-[1.2] text-black mb-[8px]">
@@ -152,7 +152,7 @@ function MemberCard({
   return (
     <div className="mb-[40px]">
       {/* Photo */}
-      <div className="relative w-full overflow-hidden mb-[12px]" style={{ height: "451px" }}>
+      <div className="relative w-full overflow-hidden mb-[12px] h-[300px] md:h-[261px] lg:h-[451px]">
         {member?.photo ? (
           <Image
             src={urlFor(member.photo).width(449).url()}
