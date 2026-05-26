@@ -80,7 +80,7 @@ export default function ProgettiClient({ projects, initialTypology }: Props) {
     }`;
 
   return (
-    <div className="pt-[80px]">
+    <div className="pt-[60px] md:pt-[80px]">
 
       {/* ── Intro text ─────────────────────────────────────────────── */}
       <div className="page-px pt-[37px] pb-[26px]">
@@ -92,7 +92,7 @@ export default function ProgettiClient({ projects, initialTypology }: Props) {
       </div>
 
       {/* ── Sticky filter bar ──────────────────────────────────────── */}
-      <div className="sticky top-[80px] z-40 bg-white shadow-[0px_6px_4px_rgba(0,0,0,0.1)] page-px pt-[8px] pb-[10px]">
+      <div className="sticky top-[60px] md:top-[80px] z-40 bg-white shadow-[0px_6px_4px_rgba(0,0,0,0.1)] page-px pt-[8px] pb-[10px]">
 
         {/* Labels */}
         <div className="grid grid-cols-3 gap-[14px] mb-[4px]">

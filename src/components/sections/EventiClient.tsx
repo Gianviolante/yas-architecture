@@ -54,7 +54,7 @@ export default function EventiClient({ events }: Props) {
       </div>
 
       {/* ── Filter bar ──────────────────────────────────────────────── */}
-      <div className="sticky top-[80px] z-40 bg-white shadow-[0px_6px_4px_rgba(0,0,0,0.1)] h-[144px]">
+      <div className="sticky top-[60px] md:top-[80px] z-40 bg-white shadow-[0px_6px_4px_rgba(0,0,0,0.1)] h-[144px]">
         <div className="page-px h-full flex flex-col justify-start">
 
           {/* Row 1 — Area label */}

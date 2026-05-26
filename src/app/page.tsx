@@ -17,10 +17,10 @@ export const metadata = {
 };
 
 const NAV_LINKS = [
-  { href: "/progetti", label: "Progetti", img: "/assets/home-link-1.jpg",  flexGrow: 449 },
-  { href: "/studio",   label: "Studio",   img: "/assets/home-studio.jpg",  flexGrow: 333 },
-  { href: "/team",     label: "Team",     img: "/assets/home-link-2.jpg",  flexGrow: 333 },
-  { href: "/eventi",   label: "Eventi",   img: "/assets/home-link-3.jpg",  flexGrow: 217 },
+  { href: "/progetti", label: "Progetti", img: "/assets/home-link-1.jpg", flexGrow: 449, mobileH: 268 },
+  { href: "/studio",   label: "Studio",   img: "/assets/home-studio.jpg", flexGrow: 333, mobileH: 361 },
+  { href: "/team",     label: "Team",     img: "/assets/home-link-2.jpg", flexGrow: 333, mobileH: 361 },
+  { href: "/eventi",   label: "Eventi",   img: "/assets/home-link-3.jpg", flexGrow: 217, mobileH: 250 },
 ];
 
 const ptBlock = {
@@ -41,12 +41,44 @@ export default async function HomePage() {
     <>
       <Navbar />
       <main className="flex-1">
-        <div className="pt-[80px]">
+        <div className="pt-[60px] md:pt-[80px]">
 
-          {/* ── 1. HERO ──────────────────────────────────────────────── */}
-          <section className="md:hidden flex items-center justify-center h-[160px]">
-            <h1 className="font-bold text-black leading-none text-[64px]">yas-arch</h1>
+          {/* ── 1. HERO — mobile ─────────────────────────────────────── */}
+          <section className="md:hidden relative h-[382px] overflow-hidden">
+            {/* labels top */}
+            <div className="absolute text-[12px] leading-[1.2] text-[#282828]" style={{ top: 0, left: "16px" }}>
+              <p>Studio archietettura</p>
+              <p>e design</p>
+            </div>
+            <p className="absolute text-[12px] leading-[1.2] text-[#282828] text-right" style={{ top: 0, right: "15px" }}>
+              Apulian inspiration guide
+            </p>
+
+            {/* big title */}
+            <h1
+              className="absolute font-bold text-black select-none"
+              style={{ fontSize: "128px", lineHeight: "0.67", top: "26px", left: "25px", width: "350px" }}
+            >
+              yas-arch
+            </h1>
+
+            {/* address bottom-left */}
+            <div className="absolute text-[12px] leading-[1.2] text-black" style={{ top: "254px", left: "16px" }}>
+              <p>Via Dè Gracchi, 47</p>
+              <p>72100 Brindisi (BR) Italia</p>
+              <p>T +39 351 531 7762</p>
+              <p>info@yas-arch.com</p>
+            </div>
+
+            {/* links bottom-right */}
+            <div className="absolute text-[12px] leading-[1.2] text-[#282828] text-right" style={{ top: "256px", right: "15px" }}>
+              <Link href="/progetti?tipologia=Interior Design" className="block hover:opacity-60 transition-opacity">Interior design→</Link>
+              <Link href="/progetti?tipologia=Architettura"    className="block hover:opacity-60 transition-opacity">Architecture →</Link>
+              <Link href="/progetti"                           className="block hover:opacity-60 transition-opacity">Tutti i progetti→</Link>
+            </div>
           </section>
+
+          {/* ── 1. HERO — desktop ────────────────────────────────────── */}
           <section className="relative h-[439px] overflow-hidden hidden md:block">
             <h1
               className="absolute font-bold text-black leading-none whitespace-nowrap select-none"
@@ -82,9 +114,9 @@ export default async function HomePage() {
           </section>
 
           {/* ── 2. LINKS ─────────────────────────────────────────────── */}
-          <section className="px-4 md:px-[30px]">
-            <div className="flex flex-col sm:flex-row sm:h-[371px] gap-[15px]">
-              {NAV_LINKS.map(({ href, label, img, flexGrow }) => (
+          <section className="px-[15px] md:px-[30px]">
+            <div className="flex flex-col gap-[25px] md:flex-row md:gap-[15px] md:h-[371px]">
+              {NAV_LINKS.map(({ href, label, img, flexGrow, mobileH }) => (
                 <Link
                   key={href}
                   href={href}
@@ -92,7 +124,10 @@ export default async function HomePage() {
                   className="flex flex-col group"
                 >
                   <p className="text-[12px] leading-[1.5] text-[#282828] shrink-0">{label}</p>
-                  <div className="relative flex-1 overflow-hidden bg-[#d9d9d9] min-h-[180px] sm:min-h-0">
+                  <div
+                    className="relative flex-1 overflow-hidden bg-[#d9d9d9] md:min-h-0"
+                    style={{ minHeight: `${mobileH}px` }}
+                  >
                     <Image src={img} alt={label} fill className="object-cover transition-transform duration-500 group-hover:scale-[1.03]" />
                   </div>
                 </Link>
@@ -100,7 +135,25 @@ export default async function HomePage() {
             </div>
           </section>
 
-          {/* ── 3. APULIA ────────────────────────────────────────────── */}
+          {/* ── 3. APULIA — mobile ───────────────────────────────────── */}
+          <section className="md:hidden relative h-[208px] overflow-hidden">
+            <h2
+              className="absolute font-bold text-black select-none"
+              style={{ fontSize: "128px", lineHeight: "0.67", top: 0, left: "6px", width: "363px" }}
+            >
+              Apulia
+            </h2>
+            <p className="absolute text-[12px] leading-[1.2] text-[#282828]" style={{ top: "3px", left: "109px" }}>
+              Apulian inspiration guide
+            </p>
+            <div className="absolute text-[12px] leading-[1.2] text-[#282828] text-right" style={{ top: "162px", right: "15px" }}>
+              <Link href="/progetti?tipologia=Interior Design" className="block hover:opacity-60 transition-opacity">Interior design→</Link>
+              <Link href="/progetti?tipologia=Architettura"    className="block hover:opacity-60 transition-opacity">Architecture →</Link>
+              <Link href="/progetti"                           className="block hover:opacity-60 transition-opacity">Tutti i progetti→</Link>
+            </div>
+          </section>
+
+          {/* ── 3. APULIA — desktop ──────────────────────────────────── */}
           <section className="relative h-[345px] overflow-hidden hidden md:block">
             <h2
               className="absolute font-bold text-black leading-none whitespace-nowrap select-none"

@@ -52,7 +52,7 @@ export default async function StudioPage() {
     <div className="bg-white">
 
       {/* ── Tab bar ────────────────────────────────────────────────── */}
-      <div className="sticky top-[80px] z-40 bg-white shadow-[0px_6px_8px_0px_rgba(0,0,0,0.1)] h-[75px] flex items-center justify-center gap-[8px]">
+      <div className="sticky top-[60px] md:top-[80px] z-40 bg-white shadow-[0px_6px_8px_0px_rgba(0,0,0,0.1)] h-[75px] flex items-center justify-center gap-[8px]">
         <span className="inline-flex items-center bg-black border-2 border-black rounded-[100px] px-[24px] py-[10px] text-[16px] text-white leading-[22px]">
           Lo studio
         </span>

@@ -40,7 +40,7 @@ export default function ContattiClient() {
   };
 
   return (
-    <div className="pt-[80px]">
+    <div className="pt-[60px] md:pt-[80px]">
       {/* ── Hero section ───────────────────────────────────────────── */}
       <div className="max-w-[1440px] mx-auto px-[32px] pt-16 pb-12 space-y-14">
         <div>
