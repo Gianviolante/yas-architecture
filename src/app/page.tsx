@@ -20,7 +20,6 @@ const NAV_LINKS = [
   { href: "/progetti", label: "Progetti", img: "/assets/home-link-1.jpg", flexGrow: 449, mobileH: 268 },
   { href: "/studio",   label: "Studio",   img: "/assets/home-studio.jpg", flexGrow: 333, mobileH: 361 },
   { href: "/team",     label: "Team",     img: "/assets/home-link-2.jpg", flexGrow: 333, mobileH: 361 },
-  { href: "/eventi",   label: "Eventi",   img: "/assets/home-link-3.jpg", flexGrow: 217, mobileH: 250 },
 ];
 
 const ptBlock = {

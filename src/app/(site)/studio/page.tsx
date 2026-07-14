@@ -46,7 +46,6 @@ export default async function StudioPage() {
   const spaziUrls       = (studio?.spaziImages ?? []).map((img) => ({
     url: urlFor(img).width(700).url(), caption: img.caption,
   }));
-  const crescitaUrls    = (studio?.crescitaImages ?? []).map((img) => urlFor(img).width(800).url());
 
   return (
     <div className="bg-white">
@@ -132,33 +131,6 @@ export default async function StudioPage() {
               <p className="text-[12px] md:text-[17.5px] leading-[1.5] text-[#282828]">
                 {spaziUrls[i]?.caption ?? "Dettaglio progettuale"}
               </p>
-            </div>
-          ))}
-        </div>
-      </div>
-
-      <Divider />
-
-      {/* ══════════════════════════════════════════════════════════════
-          SEZIONE 3 — Crescita e innovazione
-      ══════════════════════════════════════════════════════════════ */}
-      <div className="pt-[26px] md:pt-[37px] pb-[40px]">
-        <SectionLabel>Crescita e innovazione</SectionLabel>
-
-        {/* Description */}
-        <div className="page-px mb-[24px] md:mb-[40px] text-[24px] font-medium leading-[1.2] text-[#282828]">
-          {studio?.crescitaDescription
-            ? <PortableText value={studio.crescitaDescription as Parameters<typeof PortableText>[0]["value"]} components={ptComponents} />
-            : <p>{BODY_FALLBACK}</p>}
-        </div>
-
-        {/* Two images — stacked on mobile, side-by-side on tablet/desktop */}
-        <div className="flex flex-col md:flex-row gap-[15px] page-px">
-          {[0, 1].map((i) => (
-            <div key={i} className="relative overflow-hidden flex-1 h-[245px] md:h-[282px] lg:h-[483px]">
-              {crescitaUrls[i]
-                ? <Image src={crescitaUrls[i]} alt={`Crescita ${i + 1}`} fill className="object-cover" />
-                : <PlaceholderImg className="absolute inset-0" />}
             </div>
           ))}
         </div>

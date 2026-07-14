@@ -54,10 +54,7 @@ export default function Footer() {
               <Link href="/studio" className="block hover:underline">Studio</Link>
               <Link href="/team" className="block hover:underline">Team</Link>
               <Link href="/progetti" className="block hover:underline">Progetti</Link>
-              <Link href="/eventi" className="block hover:underline">Eventi</Link>
               <Link href="/press" className="block hover:underline">Press</Link>
-              <p>&nbsp;</p>
-              <button className={`${txt} hover:underline`}>Partners↓</button>
             </div>
           </div>
 
@@ -94,12 +91,12 @@ export default function Footer() {
           </div>
         </div>
 
-        {/* ── Right block — Newsletter (490px) ─────────────────────── */}
+        {/* ── Right block — Contatti (490px) ─────────────────────── */}
         <div className="w-full lg:w-[490px] lg:shrink-0">
-          <p className={`${txt} mb-[17px]`}>Iscriviti alla nostra newsletter</p>
+          <p className={`${txt} mb-[17px]`}>Contatti</p>
 
           {sent ? (
-            <p className={`${txt} text-black/50`}>Grazie per l&apos;iscrizione!</p>
+            <p className={`${txt} text-black/50`}>Grazie, ti risponderemo il prima possibile!</p>
           ) : (
             <form onSubmit={handleSubmit}>
               {/* Row 1: Nome (40%) | Cognome (60%) */}

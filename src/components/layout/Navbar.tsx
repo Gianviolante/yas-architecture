@@ -10,7 +10,6 @@ const navLinks = [
   { href: "/progetti", label: "Progetti" },
   { href: "/studio", label: "Studio" },
   { href: "/team", label: "Team" },
-  { href: "/eventi", label: "Eventi" },
 ];
 
 const progettiSubLinks = [
@@ -188,10 +187,9 @@ export default function Navbar() {
             <AccordionChip open={false} />
           </Link>
 
-          {/* Team, Eventi — plain links, no icon */}
+          {/* Team — plain link, no icon */}
           {[
-            { href: "/team",    label: "Team" },
-            { href: "/eventi",  label: "Eventi" },
+            { href: "/team", label: "Team" },
           ].map(({ href, label }) => (
             <Link
               key={href}

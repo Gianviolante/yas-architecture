@@ -14,11 +14,14 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   return { title: event ? `${event.title} — YAS Architecture` : "Evento" };
 }
 
+// Pagina nascosta su richiesta cliente (2026-07-14) — rimettere a `false` per riattivarla.
+const EVENTI_HIDDEN = true;
+
 export default async function EventoPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
   const event: Event | null = await sanityClient.fetch(eventBySlugQuery, { slug });
 
-  if (!event) notFound();
+  if (!event || EVENTI_HIDDEN) notFound();
 
   const gallery = event.gallery ?? [];
 

@@ -6,7 +6,7 @@ import Link from "next/link";
 import { PortableText } from "@portabletext/react";
 import imageUrlBuilder from "@sanity/image-url";
 import { sanityClient } from "@/lib/sanity/client";
-import type { TeamMember, Partner, SanityImage } from "@/lib/sanity/types";
+import type { TeamMember, SanityImage } from "@/lib/sanity/types";
 
 const builder = imageUrlBuilder(sanityClient);
 function urlFor(source: SanityImage) {
@@ -15,22 +15,13 @@ function urlFor(source: SanityImage) {
 
 interface Props {
   teamMembers: TeamMember[];
-  partners: Partner[];
 }
 
 type Tab = "studio" | "designers";
 
 const FALLBACK_INTRO = `I benefici derivanti dall'utilizzo di una griglia sono evidenti: chiarezza, efficienza, economia, continuità. Prima di ogni altra cosa, una griglia introduce ordine sistematico a una struttura visiva, facilitando la distinzione delle diverse categorie informative e indirizzando lo spostamento dell'occhio del lettore tra di esse.`;
 
-function SectionLabel({ children }: { children: React.ReactNode }) {
-  return <p className="text-[16px] leading-normal text-black text-center mb-[26px]">{children}</p>;
-}
-
-function Divider() {
-  return <div className="w-full h-[48px] bg-white shadow-[0px_6px_8px_0px_rgba(0,0,0,0.1)]" />;
-}
-
-export default function TeamClient({ teamMembers, partners }: Props) {
+export default function TeamClient({ teamMembers }: Props) {
   const [activeTab, setActiveTab] = useState<Tab>("designers");
   const [expandedId, setExpandedId] = useState<string | null>(null);
 
@@ -82,56 +73,6 @@ export default function TeamClient({ teamMembers, partners }: Props) {
               expanded={!!member && expandedId === member._id}
               onToggle={member ? () => setExpandedId(expandedId === member._id ? null : member._id) : undefined}
             />
-          ))}
-        </div>
-      </div>
-
-      <Divider />
-
-      {/* ══════════════════════════════════════════════════════════════
-          Associati e Partners
-      ══════════════════════════════════════════════════════════════ */}
-      <div className="pt-[37px] pb-[60px]">
-        <SectionLabel>Associati e Partners</SectionLabel>
-
-        <div className="page-px mb-[72px] text-[18px] md:text-[24px] leading-normal text-black">
-          <p>{FALLBACK_INTRO}</p>
-        </div>
-
-        {/* partners: 2-col mobile, 4-col tablet+ */}
-        <div className="page-px grid grid-cols-2 md:grid-cols-4 gap-x-[15px] gap-y-[32px]">
-          {(partners.length > 0 ? partners : (Array(4).fill(null) as null[])).map((p, i) => (
-            <div key={p?._id ?? i}>
-              <p className="text-[16px] leading-[1.2] text-black mb-[8px]">
-                {p?.name ?? `Associato ${i + 1}`}
-              </p>
-              <div className="text-[16px] leading-[1.2] text-black mb-[16px]">
-                {p?.address ? (
-                  <p>{p.address}</p>
-                ) : (
-                  <>
-                    <p>Via Dè Gracchi, 47</p>
-                    <p>72100 Brindisi (BR) Italia</p>
-                    <p>T +39 351 531 7762</p>
-                    <p>info@yas-arch.com</p>
-                  </>
-                )}
-              </div>
-              {p?.website ? (
-                <a
-                  href={p.website}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center border-[1.5px] border-[#333] rounded-[100px] px-[14px] py-[4px] text-[11px] text-[#333] leading-normal hover:bg-[#333] hover:text-white transition-colors duration-200"
-                >
-                  Website
-                </a>
-              ) : (
-                <div className="inline-flex items-center border-[1.5px] border-[#333] rounded-[100px] px-[14px] py-[4px] text-[11px] text-[#333] leading-normal">
-                  Website
-                </div>
-              )}
-            </div>
           ))}
         </div>
       </div>

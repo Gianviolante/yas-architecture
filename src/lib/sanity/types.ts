@@ -43,13 +43,6 @@ export interface TeamMember {
   type: TeamMemberType;
 }
 
-export interface Partner {
-  _id: string;
-  name: string;
-  address?: string;
-  website?: string;
-}
-
 export type EventType = "News" | "Evento";
 
 export interface Event {

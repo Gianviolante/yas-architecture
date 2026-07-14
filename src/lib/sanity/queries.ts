@@ -24,10 +24,6 @@ export const allTeamMembersQuery = `
   }
 `;
 
-export const allPartnersQuery = `
-  *[_type == "partner"] { _id, name, address, website }
-`;
-
 export const allEventsQuery = `
   *[_type == "event"] | order(date desc) {
     _id, title, slug, type, date,
