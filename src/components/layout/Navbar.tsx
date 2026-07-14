@@ -59,6 +59,9 @@ export default function Navbar() {
       ? pathname === "/progetti" || pathname.startsWith("/progetti/")
       : pathname === href || pathname.startsWith(href);
 
+  /** Link disabilitato (già sulla pagina esatta, non sulle sotto-pagine) */
+  const isDisabled = (href: string) => pathname === href;
+
   return (
     <>
       <header
@@ -79,9 +82,11 @@ export default function Navbar() {
                 href={href}
                 className={cn(
                   "text-[14px] leading-normal transition-colors duration-200",
-                  isActive(href)
+                  isDisabled(href)
                     ? "text-[#d9d9d9] cursor-default pointer-events-none"
-                    : "text-[#1a1a1a] hover:text-[#d9d9d9]"
+                    : isActive(href)
+                      ? "text-[#d9d9d9] hover:text-[#1a1a1a]"
+                      : "text-[#1a1a1a] hover:text-[#d9d9d9]"
                 )}
               >
                 {label}
@@ -100,7 +105,7 @@ export default function Navbar() {
 
           {/* Logo — center absolute */}
           <Link href="/" className="absolute left-1/2 -translate-x-1/2" aria-label="YAS Architecture — Home">
-            <Image src="/assets/logo-yas.svg" alt="YAS Architecture" width={102} height={31} priority />
+            <Image src="/assets/logo-yas.svg" alt="YAS Architecture" width={163} height={21} priority />
           </Link>
 
           {/* Desktop right nav */}

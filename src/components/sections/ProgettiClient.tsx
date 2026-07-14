@@ -85,10 +85,10 @@ export default function ProgettiClient({ projects, initialTypology }: Props) {
       </div>
 
       {/* ── Sticky filter bar ──────────────────────────────────────── */}
-      <div className="sticky top-[60px] md:top-[53px] z-40 bg-white shadow-[0px_6px_4px_rgba(0,0,0,0.1)]">
+      <div className="sticky top-[60px] md:top-[80px] z-40 bg-white shadow-[0px_6px_4px_rgba(0,0,0,0.1)]">
 
         {/* ── Mobile filter (stacked groups, horizontal scroll) ─────── */}
-        <div className="md:hidden pt-[8px] pb-[10px]">
+        <div className="md:hidden pt-[16px] pb-[10px]">
 
           {/* Area */}
           <p className="text-[12px] leading-[1.5] text-[#282828] px-[15px]">Area</p>
@@ -145,7 +145,7 @@ export default function ProgettiClient({ projects, initialTypology }: Props) {
         </div>
 
         {/* ── Tablet filter (Area full row, Categoria|Stato 2-col) ────── */}
-        <div className="hidden md:block lg:hidden page-px pt-[8px] pb-[10px]">
+        <div className="hidden md:block lg:hidden page-px pt-[16px] pb-[10px]">
           {/* Row 1: Area */}
           <p className="text-[12px] leading-[22px] text-[#282828] mb-[4px]">Area</p>
           <div className="flex flex-wrap gap-[8px] mb-[12px]">
@@ -194,7 +194,7 @@ export default function ProgettiClient({ projects, initialTypology }: Props) {
         </div>
 
         {/* ── Desktop filter (3-col grid) ────────────────────────────── */}
-        <div className="hidden lg:block page-px pt-[8px] pb-[10px]">
+        <div className="hidden lg:block page-px pt-[16px] pb-[10px]">
           <div className="grid grid-cols-3 gap-[14px] mb-[4px]">
             <p className="text-[12px] leading-[22px] text-[#282828]">Area</p>
             <p className="text-[12px] leading-[22px] text-[#282828]">Categoria</p>

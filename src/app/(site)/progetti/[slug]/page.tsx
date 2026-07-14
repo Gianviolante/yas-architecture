@@ -118,17 +118,21 @@ export default async function ProgettoPage({ params }: { params: Promise<{ slug:
 
           {/* Desktop only: column labels + chips + team */}
           <div className="hidden md:block">
-            <div className="flex gap-[24px] mt-[24px] mb-[6px]">
-              <p className="text-[12px] leading-[1.3] text-[#282828]">Area</p>
-              <p className="text-[12px] leading-[1.3] text-[#282828]">Stato</p>
-            </div>
-            <div className="flex items-center gap-[8px]">
-              <span className="inline-flex items-center border-[1.179px] border-[#333] rounded-[100px] px-[14px] py-[6px] text-[9.44px] text-[#333] leading-[1.4] whitespace-nowrap">
-                {project.typology}
-              </span>
-              <span className="inline-flex items-center border-[1.179px] border-[#333] rounded-[100px] px-[14px] py-[6px] text-[9.44px] text-[#333] leading-[1.4] whitespace-nowrap">
-                {project.status}
-              </span>
+            <div className="flex gap-[8px] mt-[24px]">
+              {/* Area column */}
+              <div className="flex flex-col gap-[6px]">
+                <p className="text-[12px] leading-[1.3] text-[#282828]">Area</p>
+                <span className="inline-flex items-center border-[1.179px] border-[#333] rounded-[100px] px-[14px] py-[6px] text-[9.44px] text-[#333] leading-[1.4] whitespace-nowrap">
+                  {project.typology}
+                </span>
+              </div>
+              {/* Stato column */}
+              <div className="flex flex-col gap-[6px]">
+                <p className="text-[12px] leading-[1.3] text-[#282828]">Stato</p>
+                <span className="inline-flex items-center border-[1.179px] border-[#333] rounded-[100px] px-[14px] py-[6px] text-[9.44px] text-[#333] leading-[1.4] whitespace-nowrap">
+                  {project.status}
+                </span>
+              </div>
             </div>
             {project.teamMembers && project.teamMembers.length > 0 && (
               <div className="mt-[24px]">

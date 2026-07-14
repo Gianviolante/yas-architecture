@@ -1,7 +1,8 @@
 "use client";
 
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, useCallback } from "react";
 import Image from "next/image";
+import Lightbox from "@/components/ui/Lightbox";
 
 export interface GalleryItem {
   url: string;
@@ -14,19 +15,73 @@ interface Props {
   compact?: boolean;
 }
 
-const EDGE_ZONE = 140;
+const DURATION      = 700;
+const NAV_THRESHOLD = 0.25;
+const DRAG_MIN      = 5;
+const RUBBER        = 0.25;
+const WHEEL_WAIT    = DURATION + 80;
+
+// ── Groppi easing: cubic-bezier(0.77, 0, 0.18, 1) ────────────────────
+// Implementazione Newton-Raphson identica ai browser.
+function makeCubicBezier(x1: number, y1: number, x2: number, y2: number) {
+  const sX  = (t: number) => 3*t*(1-t)*(1-t)*x1 + 3*t*t*(1-t)*x2 + t*t*t;
+  const sY  = (t: number) => 3*t*(1-t)*(1-t)*y1 + 3*t*t*(1-t)*y2 + t*t*t;
+  const dsX = (t: number) => 3*(1-t)*(1-t)*x1 + 6*t*(1-t)*(x2-x1) + 3*t*t*(1-x2);
+  const solve = (x: number) => {
+    let t = x;
+    for (let i = 0; i < 8; i++) {
+      const d = dsX(t); if (Math.abs(d) < 1e-9) break;
+      t -= (sX(t) - x) / d;
+    }
+    return t;
+  };
+  return (x: number) => sY(solve(x));
+}
+const groppiEase = makeCubicBezier(0.77, 0, 0.18, 1);
+
+// ── Animazione JS pura via rAF ────────────────────────────────────────
+// Anima `from → to` chiamando onUpdate ad ogni frame.
+// Restituisce una funzione cancel.
+function animateValue(
+  from: number,
+  to: number,
+  duration: number,
+  ease: (t: number) => number,
+  onUpdate: (v: number) => void,
+): () => void {
+  let startTime: number | null = null;
+  let rafId: number;
+  const tick = (now: number) => {
+    if (startTime === null) startTime = now;
+    const p = Math.min((now - startTime) / duration, 1);
+    onUpdate(from + (to - from) * ease(p));
+    if (p < 1) rafId = requestAnimationFrame(tick);
+  };
+  rafId = requestAnimationFrame(tick);
+  return () => cancelAnimationFrame(rafId);
+}
 
 export default function GallerySlider({ items, projectTitle, compact = false }: Props) {
-  const scrollRef    = useRef<HTMLDivElement>(null);
-  const containerRef = useRef<HTMLDivElement>(null);
+  const wrapperRef = useRef<HTMLDivElement>(null); // overflow:hidden — clip
+  const trackRef   = useRef<HTMLDivElement>(null); // transform target — si muove fisicamente
 
-  const [isPointerFine,  setIsPointerFine]  = useState(false);
-  const [activeIdx,      setActiveIdx]      = useState(0);
-  const [canScrollLeft,  setCanScrollLeft]  = useState(false);
-  const [canScrollRight, setCanScrollRight] = useState(true);
-  const [hoverSide,      setHoverSide]      = useState<"left" | "right" | null>(null);
-  const [breakpoint,     setBreakpoint]     = useState<"mobile" | "tablet" | "desktop">("mobile");
+  const [isPointerFine, setIsPointerFine] = useState(false);
+  const [current,       setCurrent]       = useState(0);
+  const [breakpoint,    setBreakpoint]    = useState<"mobile" | "tablet" | "desktop">("mobile");
+  const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
 
+  const isDragging      = useRef(false);
+  const hasDragged      = useRef(false);
+  const startX          = useRef(0);
+  const baseTranslate   = useRef(0);
+  const currentRef      = useRef(0);
+  const cancelAnim      = useRef<(() => void) | null>(null);
+  const wheelActive     = useRef(false);
+  const wheelTimer      = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
+
+  useEffect(() => { currentRef.current = current; }, [current]);
+
+  // ── breakpoint ─────────────────────────────────────────────────────────
   useEffect(() => {
     const update = () => {
       const w = window.innerWidth;
@@ -37,19 +92,44 @@ export default function GallerySlider({ items, projectTitle, compact = false }: 
     return () => window.removeEventListener("resize", update);
   }, []);
 
-  const isMobile  = breakpoint === "mobile";
-  const isTablet  = breakpoint === "tablet";
+  const isMobile = breakpoint === "mobile";
+  const isTablet = breakpoint === "tablet";
 
-  const cardW = (i: number) => {
+  const cardW = useCallback((i: number) => {
     if (compact) return 263;
     if (isMobile) return i === 0 ? 222 : 193;
     if (isTablet) return i === 0 ? 307 : 267;
     return i === 0 ? 580 : 505;
-  };
+  }, [compact, isMobile, isTablet]);
+
   const cardH = compact ? 202 : (isMobile ? 242 : isTablet ? 335 : 633);
   const gap   = compact ? 15  : (isMobile ? 30  : isTablet ? 40  : 77);
-  const SLIDE_STEP = cardW(0) + gap;
+  const pl    = isMobile ? 15 : 30;
 
+  const getSnapPositions = useCallback(() => {
+    const n = Math.max(items.length, 1);
+    const pos: number[] = [0];
+    for (let i = 1; i < n; i++) {
+      pos[i] = pos[i - 1] + cardW(i - 1) + gap;
+    }
+    return pos;
+  }, [items.length, cardW, gap]);
+
+  // ── legge translateX visivo corrente (anche mid-animation) ────────────
+  const getTrackX = useCallback((): number => {
+    const t = trackRef.current;
+    if (!t) return 0;
+    const raw = window.getComputedStyle(t).transform;
+    return raw === "none" ? 0 : new DOMMatrix(raw).m41;
+  }, []);
+
+  // ── imposta transform senza animazione ────────────────────────────────
+  const setTrackX = useCallback((x: number) => {
+    const t = trackRef.current;
+    if (t) t.style.transform = `translate3d(${x}px, 0, 0)`;
+  }, []);
+
+  // ── pointer device ─────────────────────────────────────────────────────
   useEffect(() => {
     const mq = window.matchMedia("(hover: hover) and (pointer: fine)");
     setIsPointerFine(mq.matches);
@@ -58,79 +138,194 @@ export default function GallerySlider({ items, projectTitle, compact = false }: 
     return () => mq.removeEventListener("change", h);
   }, []);
 
-  const updateScrollState = () => {
-    const el = scrollRef.current;
-    if (!el) return;
-    setCanScrollLeft(el.scrollLeft > 0);
-    setCanScrollRight(el.scrollLeft < el.scrollWidth - el.clientWidth - 1);
-    setActiveIdx(Math.min(Math.round(el.scrollLeft / SLIDE_STEP), Math.max(0, items.length - 1)));
-  };
+  // ── goTo: anima il TRACK (il div fisico) con rAF + curva Groppi ───────
+  // Il track si muove fisicamente verso sinistra/destra portando con sé
+  // tutte le card — esattamente come fa Groppi con il suo SwiperComponent.
+  const goTo = useCallback((idx: number) => {
+    const snapPos = getSnapPositions();
+    const clamped = Math.max(0, Math.min(Math.max(0, items.length - 1), idx));
+    currentRef.current = clamped;
+    setCurrent(clamped);
+    const from = getTrackX();       // posizione visiva attuale
+    const to   = -snapPos[clamped]; // posizione target
+    cancelAnim.current?.();         // ferma eventuale animazione in corso
+    cancelAnim.current = animateValue(from, to, DURATION, groppiEase, setTrackX);
+  }, [getSnapPositions, items.length, getTrackX, setTrackX]);
+
+  // ── reset ──────────────────────────────────────────────────────────────
+  useEffect(() => {
+    cancelAnim.current?.();
+    currentRef.current = 0;
+    setCurrent(0);
+    setTrackX(0);
+  }, [items, compact, setTrackX]);
 
   useEffect(() => {
-    const el = scrollRef.current;
-    if (!el) return;
-    el.scrollLeft = 0;
-    updateScrollState();
-    el.addEventListener("scroll", updateScrollState, { passive: true });
-    return () => el.removeEventListener("scroll", updateScrollState);
-  }, [items, compact]);
+    cancelAnim.current?.();
+    const snapPos = getSnapPositions();
+    const cur = Math.min(currentRef.current, Math.max(0, items.length - 1));
+    setTrackX(-snapPos[cur]);
+  }, [breakpoint]); // eslint-disable-line react-hooks/exhaustive-deps
 
-  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (!containerRef.current) return;
-    const rect = e.currentTarget.getBoundingClientRect();
-    const x = e.clientX - rect.left;
+  // ── wheel / trackpad — listener nativo non-passivo ────────────────────
+  useEffect(() => {
+    const wrapper = wrapperRef.current;
+    if (!wrapper || !isPointerFine || items.length === 0) return;
 
-    if (x < EDGE_ZONE && canScrollLeft) {
-      setHoverSide("left");
-      containerRef.current.setAttribute("cursor-type", "prev");
-    } else if (x > rect.width - EDGE_ZONE && canScrollRight) {
-      setHoverSide("right");
-      containerRef.current.setAttribute("cursor-type", "next");
-    } else {
-      setHoverSide(null);
-      containerRef.current.removeAttribute("cursor-type");
+    const onWheel = (e: WheelEvent) => {
+      if (wheelActive.current || isDragging.current) return;
+      const absX  = Math.abs(e.deltaX);
+      const absY  = Math.abs(e.deltaY);
+      const delta = absX >= absY ? e.deltaX : e.deltaY;
+      const cur   = currentRef.current;
+
+      if (delta > 10 && cur < items.length - 1) {
+        e.preventDefault(); e.stopPropagation();
+        wheelActive.current = true;
+        goTo(cur + 1);
+        clearTimeout(wheelTimer.current);
+        wheelTimer.current = setTimeout(() => { wheelActive.current = false; }, WHEEL_WAIT);
+      } else if (delta < -10 && cur > 0) {
+        e.preventDefault(); e.stopPropagation();
+        wheelActive.current = true;
+        goTo(cur - 1);
+        clearTimeout(wheelTimer.current);
+        wheelTimer.current = setTimeout(() => { wheelActive.current = false; }, WHEEL_WAIT);
+      } else if (Math.abs(delta) > 5) {
+        e.preventDefault();
+      }
+    };
+
+    wrapper.addEventListener("wheel", onWheel, { passive: false });
+    return () => wrapper.removeEventListener("wheel", onWheel);
+  }, [isPointerFine, goTo, items]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  // ── drag ──────────────────────────────────────────────────────────────
+  const onPointerDown = (e: React.PointerEvent<HTMLDivElement>) => {
+    cancelAnim.current?.();              // ferma animazione: prende posizione visiva corrente
+    isDragging.current  = true;
+    hasDragged.current  = false;
+    startX.current      = e.clientX;
+    baseTranslate.current = getTrackX(); // posizione visiva al momento del click
+    e.currentTarget.setPointerCapture(e.pointerId);
+    wrapperRef.current?.setAttribute("cursor-type", "drag");
+  };
+
+  const onPointerMove = (e: React.PointerEvent<HTMLDivElement>) => {
+    if (!isDragging.current) return;
+    const dx = e.clientX - startX.current;
+    if (Math.abs(dx) > DRAG_MIN) hasDragged.current = true;
+    const cur    = currentRef.current;
+    const maxIdx = items.length - 1;
+    const atEdge = (cur === 0 && dx > 0) || (cur === maxIdx && dx < 0);
+    const eff    = atEdge ? dx * RUBBER : dx;
+    setTrackX(baseTranslate.current + eff);
+  };
+
+  const onPointerUp = (e: React.PointerEvent<HTMLDivElement>) => {
+    if (!isDragging.current) return;
+    isDragging.current = false;
+    const dx = e.clientX - startX.current;
+
+    if (!hasDragged.current && items.length > 0) {
+      // tap → lightbox
+      const snapPos  = getSnapPositions();
+      const cur      = currentRef.current;
+      const wLeft    = wrapperRef.current?.getBoundingClientRect().left ?? 0;
+      const contentX = e.clientX - wLeft - pl + snapPos[cur];
+      let accum = 0; let idx = items.length - 1;
+      for (let i = 0; i < items.length; i++) {
+        if (contentX < accum + cardW(i)) { idx = i; break; }
+        accum += cardW(i) + gap;
+      }
+      setLightboxIndex(idx);
+      return;
     }
+
+    if (!hasDragged.current) { goTo(currentRef.current); return; }
+
+    const cw  = wrapperRef.current?.offsetWidth ?? 800;
+    const thr = cw * NAV_THRESHOLD;
+    const cur = currentRef.current;
+    if      (dx < -thr) goTo(cur + 1);
+    else if (dx >  thr) goTo(cur - 1);
+    else                goTo(cur);
   };
 
-  const handleMouseLeave = () => {
-    setHoverSide(null);
-    containerRef.current?.removeAttribute("cursor-type");
+  const onPointerCancel = () => {
+    if (!isDragging.current) return;
+    isDragging.current = false;
+    goTo(currentRef.current);
   };
 
-  const handleClick = () => {
-    if (hoverSide === "left")  scrollRef.current?.scrollBy({ left: -SLIDE_STEP, behavior: "smooth" });
-    if (hoverSide === "right") scrollRef.current?.scrollBy({ left:  SLIDE_STEP, behavior: "smooth" });
+  // ── cursore ────────────────────────────────────────────────────────────
+  const onMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (isDragging.current || items.length === 0) return;
+    const wrapper = wrapperRef.current;
+    if (!wrapper) return;
+    const snapPos  = getSnapPositions();
+    const cur      = currentRef.current;
+    const wLeft    = wrapper.getBoundingClientRect().left;
+    // usa la posizione snap (non quella mid-animation) per il cursore
+    const contentX = e.clientX - wLeft - pl + snapPos[cur];
+    let over = false; let accum = 0;
+    for (let i = 0; i < items.length; i++) {
+      const w = cardW(i);
+      if (contentX >= accum && contentX < accum + w) { over = true; break; }
+      accum += w + gap;
+    }
+    if (over) wrapper.setAttribute("cursor-type", "expand");
+    else      wrapper.removeAttribute("cursor-type");
   };
+
+  const onMouseLeave = () => wrapperRef.current?.removeAttribute("cursor-type");
 
   const hasImages     = items.length > 0;
   const displayCount  = hasImages ? items.length : 3;
-  const activeCaption = hasImages ? items[activeIdx]?.caption : undefined;
+  const activeCaption = hasImages ? items[current]?.caption : undefined;
 
   return (
     <div>
+      {/* Wrapper: overflow-hidden → taglia il track fuori viewport */}
+      {/* Track:   transform       → il DIV fisico scorre orizzontalmente */}
       <div
-        ref={containerRef}
-        onMouseMove={isPointerFine ? handleMouseMove : undefined}
-        onMouseLeave={isPointerFine ? handleMouseLeave : undefined}
-        onClick={isPointerFine ? handleClick : undefined}
+        ref={wrapperRef}
+        className={`select-none${isPointerFine ? " overflow-hidden" : ""}`}
+        onMouseMove={isPointerFine ? onMouseMove : undefined}
+        onMouseLeave={isPointerFine ? onMouseLeave : undefined}
+        onPointerDown={isPointerFine ? onPointerDown : undefined}
+        onPointerMove={isPointerFine ? onPointerMove : undefined}
+        onPointerUp={isPointerFine ? onPointerUp : undefined}
+        onPointerCancel={isPointerFine ? onPointerCancel : undefined}
       >
         <div
-          ref={scrollRef}
-          className="flex overflow-x-auto pl-[15px] md:pl-[30px] no-scrollbar"
-          style={{ scrollbarWidth: "none", gap: `${gap}px`, transition: "gap 300ms ease" }}
+          ref={trackRef}
+          className={`flex${!isPointerFine ? " overflow-x-auto no-scrollbar" : ""}`}
+          style={{
+            paddingLeft: `${pl}px`,
+            gap: `${gap}px`,
+            ...(isPointerFine
+              ? { willChange: "transform" }
+              : { scrollbarWidth: "none" }),
+          }}
         >
           {Array.from({ length: displayCount }).map((_, i) => (
             <div
               key={i}
               className="flex-none relative overflow-hidden bg-[#d9d9d9]"
-              style={{ width: `${cardW(i)}px`, height: `${cardH}px`, transition: "width 300ms ease, height 300ms ease" }}
+              style={{
+                width:      `${cardW(i)}px`,
+                height:     `${cardH}px`,
+                transition: "width 300ms ease, height 300ms ease",
+              }}
             >
               {hasImages && items[i]?.url && (
                 <Image
                   src={items[i].url}
                   alt={items[i].caption ?? `${projectTitle} — ${i + 1}`}
                   fill
-                  className="object-cover"
+                  className="object-cover pointer-events-none"
+                  draggable={false}
                 />
               )}
             </div>
@@ -140,8 +335,18 @@ export default function GallerySlider({ items, projectTitle, compact = false }: 
 
       {!compact && (
         <div className="h-[40px] flex items-center px-[32px] mt-[16px]">
-          {activeCaption && <p className="text-[12px] leading-[1.2] text-[#282828]">{activeCaption}</p>}
+          {activeCaption && (
+            <p className="text-[12px] leading-[1.2] text-[#282828]">{activeCaption}</p>
+          )}
         </div>
+      )}
+
+      {lightboxIndex !== null && (
+        <Lightbox
+          items={items}
+          initialIndex={lightboxIndex}
+          onClose={() => setLightboxIndex(null)}
+        />
       )}
     </div>
   );

@@ -173,7 +173,16 @@ export default function CustomCursor() {
           const target = m.target as Element;
           const newType = target.getAttribute("cursor-type") as CursorType | null;
           registerNode(target);
-          if (hovered && (hovered === target || target.contains(hovered))) setType(newType ?? "idle");
+          // Controlla se il mouse è fisicamente sopra il target (risolve il bug
+          // "primo hover": hovered è null perché mouseenter non aveva ancora un
+          // listener, ma il mouse è già dentro → usiamo getBoundingClientRect)
+          const rect = target.getBoundingClientRect();
+          const mouseOver =
+            mouse.x >= rect.left && mouse.x <= rect.right &&
+            mouse.y >= rect.top  && mouse.y <= rect.bottom;
+          if (mouseOver || (hovered && (hovered === target || target.contains(hovered)))) {
+            setType(newType ?? "idle");
+          }
         }
       }
     });
