@@ -242,10 +242,10 @@ export default function ProgettiClient({ projects, initialTypology }: Props) {
       </div>
 
       {/* ── Projects content ───────────────────────────────────────── */}
-      <div className="page-px pb-16">
+      <div className="pb-16">
 
-        {/* View toggle */}
-        <div className="flex items-baseline justify-between py-[8px] mb-[21px]">
+        {/* View toggle — resta nella larghezza di lettura standard */}
+        <div className="page-px flex items-baseline justify-between py-[8px] mb-[21px]">
           <p className={`hidden md:block text-[24px] font-bold leading-normal text-black ${view === "grid" ? "invisible" : ""}`}>
             Yas-arch progetti index
           </p>
@@ -258,16 +258,23 @@ export default function ProgettiClient({ projects, initialTypology }: Props) {
         </div>
 
         {filtered.length === 0 ? (
-          <p className="text-[12px] text-[#282828]/40 py-16 text-center">Nessun progetto trovato.</p>
+          <p className="page-px text-[12px] text-[#282828]/40 py-16 text-center">Nessun progetto trovato.</p>
         ) : view === "grid" ? (
-          <GridView largeRows={largeRows} small={small} />
+          // Griglia immagini: piena larghezza su schermi molto larghi (stesso
+          // margine del Footer), non bloccata a 1440px come il resto — le
+          // foto beneficiano dello spazio, a differenza dei blocchi di testo.
+          <div className="px-4 md:px-[30px]">
+            <GridView largeRows={largeRows} small={small} />
+          </div>
         ) : (
-          <IndexView
-            projects={filtered}
-            hoveredId={hoveredId}
-            onHover={setHoveredId}
-            hoveredProject={hoveredProject}
-          />
+          <div className="page-px">
+            <IndexView
+              projects={filtered}
+              hoveredId={hoveredId}
+              onHover={setHoveredId}
+              hoveredProject={hoveredProject}
+            />
+          </div>
         )}
       </div>
 
@@ -298,9 +305,9 @@ function GridView({ largeRows, small }: { largeRows: Project[][]; small: Project
           {row.map((p) => <ProjectCard key={p._id} project={p} size="large" />)}
         </div>
       ))}
-      {/* Others: 1 col mobile, 2 col tablet, 3 col desktop */}
+      {/* Others: 1 col mobile, 2 col tablet, 3 col desktop, 4 su schermi molto larghi (2xl, 1536px+) */}
       {small.length > 0 && (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-[15px] gap-y-[26px] md:gap-y-[38px]">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-x-[15px] gap-y-[26px] md:gap-y-[38px]">
           {small.map((p) => <ProjectCard key={p._id} project={p} size="small" />)}
         </div>
       )}
