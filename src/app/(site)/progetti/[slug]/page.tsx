@@ -58,7 +58,11 @@ export default async function ProgettoPage({ params }: { params: Promise<{ slug:
     <div className="bg-white">
 
       {/* ── Hero image ─────────────────────────────────────────────── */}
-      <div className="relative mx-[15px] mt-[60px] md:mt-[72px] h-[245px] md:h-[571px] lg:h-[752px] overflow-hidden">
+      {/* aspect-[4/3] invece di altezze fisse per breakpoint: cosí il
+          rapporto resta 4:3 a qualsiasi larghezza (prima diventava molto
+          più larga/bassa — quasi 16:9 — sui monitor ultra-wide perché la
+          larghezza cresceva ma l'altezza restava fissa). */}
+      <div className="relative mx-4 md:mx-[30px] mt-[60px] md:mt-[72px] aspect-[4/3] overflow-hidden">
         {heroUrl ? (
           <Image src={heroUrl} alt={project.title} fill className="object-cover" priority />
         ) : (
@@ -68,16 +72,16 @@ export default async function ProgettoPage({ params }: { params: Promise<{ slug:
 
       {/* ── Title ──────────────────────────────────────────────────── */}
       {/* Mobile: just the title */}
-      <div className="md:hidden page-px pt-[14px]">
-        <h1 className="text-[48px] font-bold leading-[1.3] text-[#282828]">
+      <div className="md:hidden px-4 md:px-[30px] pt-[14px]">
+        <h1 className="text-[48px] font-bold tracking-tight leading-[1.3] text-[#282828]">
           {project.title}
         </h1>
       </div>
 
       {/* Desktop: title + back link */}
-      <div className="hidden md:flex items-start justify-between page-px pt-[20px]">
+      <div className="hidden md:flex items-start justify-between px-4 md:px-[30px] pt-[20px]">
         <h1
-          className="font-bold leading-[1.3] text-[#282828]"
+          className="font-bold tracking-tight leading-[1.3] text-[#282828]"
           style={{ fontSize: "clamp(60px, 14.4vw, 120px)" }}
         >
           {project.title}
@@ -96,7 +100,7 @@ export default async function ProgettoPage({ params }: { params: Promise<{ slug:
           Mobile (flex-col): meta → description → chips ✓
           Desktop (flex-row lg): left(meta+chips) | right(description) ✓
       */}
-      <div className="flex flex-col md:flex-row gap-x-[32px] page-px pt-[16px] md:pt-[24px] pb-[24px] md:pb-[40px]">
+      <div className="flex flex-col md:flex-row gap-x-[32px] px-4 md:px-[30px] pt-[16px] md:pt-[24px] pb-[24px] md:pb-[40px]">
 
         {/* LEFT: meta lines + (tablet/desktop) column labels + chips + team */}
         <div className="w-full md:w-1/3 md:shrink-0 lg:w-[577px]">
@@ -175,7 +179,7 @@ export default async function ProgettoPage({ params }: { params: Promise<{ slug:
       {/* ── Second full-width image ────────────────────────────────── */}
       {/* Foto verticali: centrate a piena altezza senza crop (come Groppi).
           Foto orizzontali: full-bleed con object-cover come da design. */}
-      <div className="relative mx-[15px] h-[245px] md:h-[571px] lg:h-[718px]">
+      <div className="relative mx-4 md:mx-[30px] aspect-[4/3]">
         {secondImage ? (
           secondIsPortrait ? (
             <div className="h-full flex justify-center">
