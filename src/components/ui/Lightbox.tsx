@@ -15,12 +15,12 @@ const WHEEL_THRESHOLD = 60;   // px trackpad
 const NAV_COOLDOWN    = 600;  // ms tra una navigazione e la prossima
 
 const ArrowLeft  = () => (
-  <svg width="20" height="20" viewBox="0 0 24 24" fill="#000000">
+  <svg width="24" height="24" viewBox="0 0 24 24" fill="#000000">
     <path fillRule="evenodd" clipRule="evenodd" d="M2.1,12l7.5,6.2L9,19l-9-7.5L9,4l0.6,0.8L2.1,11H24v1C24,12,2.1,12,2.1,12z"/>
   </svg>
 );
 const ArrowRight = () => (
-  <svg width="20" height="20" viewBox="0 0 24 24" fill="#000000">
+  <svg width="24" height="24" viewBox="0 0 24 24" fill="#000000">
     <path fillRule="evenodd" clipRule="evenodd" d="M21.9,12l-7.5,6.2L15,19l9-7.5L15,4l-0.6,0.8l7.5,6.2H0v1C0,12,21.9,12,21.9,12z"/>
   </svg>
 );
@@ -32,11 +32,11 @@ export default function Lightbox({ items, initialIndex, onClose }: Props) {
   const prevRef       = useRef<HTMLButtonElement>(null);
   const nextRef       = useRef<HTMLButtonElement>(null);
 
-  // refs per wheel / touch — non servono re-render
+  // refs per wheel / drag — non servono re-render
   const wheelAccum  = useRef(0);
   const lastNav     = useRef(0);
   const wheelTimer  = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
-  const touchStartX = useRef<number | null>(null);
+  const dragStartX  = useRef<number | null>(null);
 
   const prev = () => setIdx((i: number) => Math.max(0, i - 1));
   const next = () => setIdx((i: number) => Math.min(items.length - 1, i + 1));
@@ -102,17 +102,22 @@ export default function Lightbox({ items, initialIndex, onClose }: Props) {
     }
   };
 
-  // ── Touch swipe (mobile) ─────────────────────────────────────────────
-  const onTouchStart = (e: React.TouchEvent<HTMLDivElement>) => {
-    touchStartX.current = e.touches[0].clientX;
+  // ── Drag/swipe unificato mouse + touch (Pointer Events) ──────────────
+  // Prima qui c'erano solo onTouchStart/onTouchEnd: funzionava lo swipe
+  // su mobile ma non il drag col mouse su desktop, dove restavano solo
+  // le frecce. I Pointer Events coprono entrambi gli input.
+  const onPointerDown = (e: React.PointerEvent<HTMLDivElement>) => {
+    dragStartX.current = e.clientX;
+    try { e.currentTarget.setPointerCapture(e.pointerId); } catch { /* pointer non attivo, ignora */ }
   };
-  const onTouchEnd = (e: React.TouchEvent<HTMLDivElement>) => {
-    if (touchStartX.current === null) return;
-    const delta = e.changedTouches[0].clientX - touchStartX.current;
-    touchStartX.current = null;
+  const onPointerUp = (e: React.PointerEvent<HTMLDivElement>) => {
+    if (dragStartX.current === null) return;
+    const delta = e.clientX - dragStartX.current;
+    dragStartX.current = null;
     if (delta < -SWIPE_THRESHOLD) tryNext();
     else if (delta > SWIPE_THRESHOLD) tryPrev();
   };
+  const onPointerCancel = () => { dragStartX.current = null; };
 
   // cursor drag sull'area immagine (desktop)
   const onMouseEnter = () => imgAreaRef.current?.setAttribute("cursor-type", "drag");
@@ -128,9 +133,9 @@ export default function Lightbox({ items, initialIndex, onClose }: Props) {
         ref={closeRef}
         onClick={onClose}
         aria-label="Chiudi"
-        className="absolute top-[20px] right-[20px] z-10 size-[44px] flex items-center justify-center hover:opacity-40 transition-opacity"
+        className="absolute top-[15px] right-[15px] z-10 size-[40px] flex items-center justify-center hover:opacity-40 transition-opacity"
       >
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="#000000">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="#000000">
           <path fillRule="evenodd" clipRule="evenodd" d="M12,11.3L22.3,1L23,1.7L12.7,12L23,22.3L22.3,23L12,12.7L1.7,23L1,22.3L11.3,12L1,1.7L1.7,1C1.7,1,12,11.3,12,11.3z"/>
         </svg>
       </button>
@@ -143,8 +148,9 @@ export default function Lightbox({ items, initialIndex, onClose }: Props) {
           onMouseEnter={onMouseEnter}
           onMouseLeave={onMouseLeave}
           onWheel={onWheel}
-          onTouchStart={onTouchStart}
-          onTouchEnd={onTouchEnd}
+          onPointerDown={onPointerDown}
+          onPointerUp={onPointerUp}
+          onPointerCancel={onPointerCancel}
         >
           {item && (
             <Image
@@ -169,7 +175,7 @@ export default function Lightbox({ items, initialIndex, onClose }: Props) {
           onClick={prev}
           aria-label="Immagine precedente"
           disabled={!canPrev}
-          className="absolute left-[20px] flex items-center transition-opacity hover:opacity-40 disabled:opacity-20"
+          className="absolute left-[15px] size-[40px] flex items-center justify-center transition-opacity hover:opacity-40 disabled:opacity-20"
         >
           <ArrowLeft />
         </button>
@@ -183,7 +189,7 @@ export default function Lightbox({ items, initialIndex, onClose }: Props) {
           onClick={next}
           aria-label="Immagine successiva"
           disabled={!canNext}
-          className="absolute right-[20px] flex items-center transition-opacity hover:opacity-40 disabled:opacity-20"
+          className="absolute right-[15px] size-[40px] flex items-center justify-center transition-opacity hover:opacity-40 disabled:opacity-20"
         >
           <ArrowRight />
         </button>

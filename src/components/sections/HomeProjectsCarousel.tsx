@@ -22,7 +22,6 @@ export default function HomeProjectsCarousel({ projects }: Props) {
   const [idx, setIdx]             = useState(0);
   const [stepPx, setStepPx]       = useState(0);
   const [isMobile, setIsMobile]   = useState(false);
-  const [hoverSide, setHoverSide] = useState<"left" | "right" | null>(null);
 
   const viewportRef  = useRef<HTMLDivElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
@@ -64,26 +63,16 @@ export default function HomeProjectsCarousel({ projects }: Props) {
     const rect = e.currentTarget.getBoundingClientRect();
     const x = e.clientX - rect.left;
     if (x < EDGE_ZONE && canPrev) {
-      setHoverSide("left");
       containerRef.current.setAttribute("cursor-type", "prev");
     } else if (x > rect.width - EDGE_ZONE && canNext) {
-      setHoverSide("right");
       containerRef.current.setAttribute("cursor-type", "next");
     } else {
-      setHoverSide(null);
       containerRef.current.removeAttribute("cursor-type");
     }
   };
 
   const handleMouseLeave = () => {
-    setHoverSide(null);
     containerRef.current?.removeAttribute("cursor-type");
-  };
-
-  const handleClick = (e: React.MouseEvent) => {
-    if ((e.target as Element).closest("a")) return;
-    if (hoverSide === "left")  prev();
-    if (hoverSide === "right") next();
   };
 
   return (
@@ -103,8 +92,26 @@ export default function HomeProjectsCarousel({ projects }: Props) {
           className="relative mb-10"
           onMouseMove={isPointerFine ? handleMouseMove : undefined}
           onMouseLeave={isPointerFine ? handleMouseLeave : undefined}
-          onClick={isPointerFine ? handleClick : undefined}
         >
+          {/* Overlay trasparenti sui bordi: intercettano il click prima che
+              arrivi alle Link delle card, così vicino al bordo si scrolla
+              invece di aprire il progetto. */}
+          {isPointerFine && (
+            <>
+              <button
+                aria-label="Progetto precedente"
+                onClick={prev}
+                className="absolute inset-y-0 left-0 z-10"
+                style={{ width: EDGE_ZONE, cursor: "none", pointerEvents: canPrev ? "auto" : "none" }}
+              />
+              <button
+                aria-label="Progetto successivo"
+                onClick={next}
+                className="absolute inset-y-0 right-0 z-10"
+                style={{ width: EDGE_ZONE, cursor: "none", pointerEvents: canNext ? "auto" : "none" }}
+              />
+            </>
+          )}
           <div className="overflow-hidden" ref={viewportRef}>
             <div
               className="flex gap-[14px] transition-transform duration-500 ease-out"
@@ -116,7 +123,6 @@ export default function HomeProjectsCarousel({ projects }: Props) {
                       <Link
                         href={`/progetti/${p.slug.current}`}
                         className="block group"
-                        onClick={(e) => isPointerFine && hoverSide !== null && e.preventDefault()}
                       >
                         {/* immagine con frecce overlay su mobile */}
                         <div className="relative h-[376px] md:h-[322px] lg:h-[550px] overflow-hidden mb-4">

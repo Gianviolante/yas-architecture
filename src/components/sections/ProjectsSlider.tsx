@@ -21,7 +21,6 @@ export default function ProjectsSlider({ projects, title = "Vedi altri progetti"
   const isPointerFine = usePointerFine();
   const [canScrollLeft,  setCanScrollLeft]  = useState(false);
   const [canScrollRight, setCanScrollRight] = useState(true);
-  const [hoverSide,      setHoverSide]      = useState<"left" | "right" | null>(null);
 
 
   const updateScrollState = () => {
@@ -45,27 +44,20 @@ export default function ProjectsSlider({ projects, title = "Vedi altri progetti"
     const x = e.clientX - rect.left;
 
     if (x < EDGE_ZONE && canScrollLeft) {
-      setHoverSide("left");
       containerRef.current.setAttribute("cursor-type", "prev");
     } else if (x > rect.width - EDGE_ZONE && canScrollRight) {
-      setHoverSide("right");
       containerRef.current.setAttribute("cursor-type", "next");
     } else {
-      setHoverSide(null);
       containerRef.current.removeAttribute("cursor-type");
     }
   };
 
   const handleMouseLeave = () => {
-    setHoverSide(null);
     containerRef.current?.removeAttribute("cursor-type");
   };
 
-  const handleClick = (e: React.MouseEvent) => {
-    if ((e.target as Element).closest("a")) return; // lascia navigare i link
-    if (hoverSide === "left")  scrollRef.current?.scrollBy({ left: -CARD_STEP, behavior: "smooth" });
-    if (hoverSide === "right") scrollRef.current?.scrollBy({ left:  CARD_STEP, behavior: "smooth" });
-  };
+  const scrollLeft  = () => scrollRef.current?.scrollBy({ left: -CARD_STEP, behavior: "smooth" });
+  const scrollRight = () => scrollRef.current?.scrollBy({ left:  CARD_STEP, behavior: "smooth" });
 
   return (
     <div className="relative pb-[48px]">
@@ -75,10 +67,29 @@ export default function ProjectsSlider({ projects, title = "Vedi altri progetti"
 
       <div
         ref={containerRef}
+        className="relative"
         onMouseMove={isPointerFine ? handleMouseMove : undefined}
         onMouseLeave={isPointerFine ? handleMouseLeave : undefined}
-        onClick={isPointerFine ? handleClick : undefined}
       >
+        {/* Overlay trasparenti sui bordi: intercettano il click prima che
+            arrivi alle Link delle card, così vicino al bordo si scrolla
+            invece di aprire il progetto. */}
+        {isPointerFine && (
+          <>
+            <button
+              aria-label="Progetti precedenti"
+              onClick={scrollLeft}
+              className="absolute inset-y-0 left-0 z-10"
+              style={{ width: EDGE_ZONE, cursor: "none", pointerEvents: canScrollLeft ? "auto" : "none" }}
+            />
+            <button
+              aria-label="Progetti successivi"
+              onClick={scrollRight}
+              className="absolute inset-y-0 right-0 z-10"
+              style={{ width: EDGE_ZONE, cursor: "none", pointerEvents: canScrollRight ? "auto" : "none" }}
+            />
+          </>
+        )}
         <div
           ref={scrollRef}
           className="flex gap-x-[15px] overflow-x-auto px-[15px] md:px-[32px] pb-[4px] no-scrollbar"

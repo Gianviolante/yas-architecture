@@ -237,9 +237,14 @@ export default function GallerySlider({ items, projectTitle, compact = false }: 
 
     if (!hasDragged.current) { goTo(currentRef.current); return; }
 
-    const cw  = wrapperRef.current?.offsetWidth ?? 800;
-    const thr = cw * NAV_THRESHOLD;
+    // Soglia basata sulla larghezza della card corrente, non sull'intero
+    // wrapper: su desktop il wrapper può essere largo 1440px e più card
+    // sono visibili insieme, quindi usare la larghezza del contenitore
+    // avrebbe richiesto un drag enorme (es. 360px) per passare a quella
+    // successiva. Con la larghezza della singola card la soglia resta
+    // proporzionata a quanto l'utente si aspetta di dover trascinare.
     const cur = currentRef.current;
+    const thr = cardW(cur) * NAV_THRESHOLD;
     if      (dx < -thr) goTo(cur + 1);
     else if (dx >  thr) goTo(cur - 1);
     else                goTo(cur);
