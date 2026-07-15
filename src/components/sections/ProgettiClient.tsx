@@ -333,7 +333,9 @@ function ProjectCard({ project: p, size }: { project: Project; size: "large" | "
           <div className="w-full h-full bg-[#d9d9d9]" />
         )}
       </div>
-      <p className="text-[17.5px] leading-[1.5] text-[#282828] mb-[4px]">
+      {/* h-[52.5px] = 2 righe fisse: chip allineato tra le card della griglia
+          indipendentemente dalla lunghezza del titolo */}
+      <p className="text-[17.5px] leading-[1.5] text-[#282828] mb-[4px] h-[52.5px] line-clamp-2">
         {p.title}{p.location ? `, ${p.location}` : ""}
       </p>
       <span className="inline-flex items-center border-2 border-[#333] rounded-[100px] px-[14px] py-[4px] text-[12px] text-[#333] leading-[1.4]">

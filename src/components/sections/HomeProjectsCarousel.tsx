@@ -156,7 +156,7 @@ export default function HomeProjectsCarousel({ projects }: Props) {
                             )}
                           </div>
                         </div>
-                        <p className="text-[17.5px] leading-[1.5] text-[#282828] mb-2 group-hover:opacity-70 transition-opacity">
+                        <p className="text-[17.5px] leading-[1.5] text-[#282828] mb-2 h-[52.5px] line-clamp-2 group-hover:opacity-70 transition-opacity">
                           {p.title}{p.location ? `, ${p.location}` : ""}
                         </p>
                         <span className="inline-flex items-center border-2 border-[#333] rounded-[100px] px-[10px] py-[3px] text-[11px] text-[#333] leading-[1.4] whitespace-nowrap">
@@ -170,7 +170,7 @@ export default function HomeProjectsCarousel({ projects }: Props) {
                       <div className="relative h-[376px] md:h-[322px] lg:h-[550px] overflow-hidden mb-4">
                         <Image src={p.img} alt="" fill className="object-cover" />
                       </div>
-                      <p className="text-[17.5px] leading-[1.5] text-[#282828] mb-2">{p.label}</p>
+                      <p className="text-[17.5px] leading-[1.5] text-[#282828] mb-2 h-[52.5px] line-clamp-2">{p.label}</p>
                       <span className="inline-flex items-center border-2 border-[#333] rounded-[100px] px-[10px] py-[3px] text-[11px] text-[#333] leading-[1.4] whitespace-nowrap">
                         {p.typology}
                       </span>
