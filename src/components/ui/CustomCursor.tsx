@@ -224,7 +224,7 @@ export default function CustomCursor() {
           <path fillRule="evenodd" clipRule="evenodd" d="M17 5.9L8 5.9 8 4.4 19.6 4.4 19.5 16 18 16 18.1 7 5.4 19.6 4.4 18.6z"/>
         </symbol>
         <symbol id="cursor-close" viewBox="0 0 24 24">
-          <path fillRule="evenodd" clipRule="evenodd" d="M12 11L19.8 3.1 20.9 4.2 13 12 20.9 19.8 19.8 20.9 12 13 4.2 20.9 3.1 19.8 11 12 3.1 4.2 4.2 3.1z"/>
+          <path fillRule="evenodd" clipRule="evenodd" d="M12,11.3L22.3,1L23,1.7L12.7,12L23,22.3L22.3,23L12,12.7L1.7,23L1,22.3L11.3,12L1,1.7L1.7,1C1.7,1,12,11.3,12,11.3z"/>
         </symbol>
         <symbol id="cursor-add" viewBox="0 0 24 24">
           <path fillRule="evenodd" clipRule="evenodd" d="M21.7 11.3L12.8 11.3 12.8 2.4 11.3 2.4 11.3 11.3 2.4 11.3 2.4 12.8 11.3 12.8 11.3 21.7 12.8 21.7 12.8 12.8 21.7 12.8z"/>

@@ -99,13 +99,21 @@ export default function Navbar() {
             ))}
           </div>
 
-          {/* Mobile hamburger */}
+          {/* Mobile hamburger — icone esatte davidegroppi.com */}
           <button
-            className="md:hidden p-2 -ml-2 text-xl leading-none"
+            className="md:hidden p-2 -ml-2 flex items-center justify-center"
             onClick={() => setMenuOpen((v) => !v)}
             aria-label={menuOpen ? "Chiudi menu" : "Apri menu"}
           >
-            {menuOpen ? "✕" : "☰"}
+            {menuOpen ? (
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="#1a1a1a">
+                <path fillRule="evenodd" clipRule="evenodd" d="M12,11.3L22.3,1L23,1.7L12.7,12L23,22.3L22.3,23L12,12.7L1.7,23L1,22.3L11.3,12L1,1.7L1.7,1C1.7,1,12,11.3,12,11.3z"/>
+              </svg>
+            ) : (
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="#1a1a1a">
+                <path fillRule="evenodd" clipRule="evenodd" d="M24,18v1H0v-1H24z M24,12v1H0v-1H24z M24,6v1H0V6H24z"/>
+              </svg>
+            )}
           </button>
 
           {/* Logo — center absolute */}

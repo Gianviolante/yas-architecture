@@ -131,7 +131,7 @@ export default function Lightbox({ items, initialIndex, onClose }: Props) {
         className="absolute top-[20px] right-[20px] z-10 size-[44px] flex items-center justify-center hover:opacity-40 transition-opacity"
       >
         <svg width="18" height="18" viewBox="0 0 24 24" fill="#282828">
-          <path fillRule="evenodd" clipRule="evenodd" d="M12 11L19.8 3.1 20.9 4.2 13 12 20.9 19.8 19.8 20.9 12 13 4.2 20.9 3.1 19.8 11 12 3.1 4.2 4.2 3.1z"/>
+          <path fillRule="evenodd" clipRule="evenodd" d="M12,11.3L22.3,1L23,1.7L12.7,12L23,22.3L22.3,23L12,12.7L1.7,23L1,22.3L11.3,12L1,1.7L1.7,1C1.7,1,12,11.3,12,11.3z"/>
         </svg>
       </button>
 
