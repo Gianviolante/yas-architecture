@@ -267,7 +267,9 @@ export default function ProgettiClient({ projects, initialTypology }: Props) {
             <GridView largeRows={largeRows} small={small} />
           </div>
         ) : (
-          <div className="page-px">
+          // Vista index: stesso trattamento della griglia — piena larghezza
+          // con margine da Footer, effetto più editoriale su schermi larghi.
+          <div className="px-4 md:px-[30px]">
             <IndexView
               projects={filtered}
               hoveredId={hoveredId}
