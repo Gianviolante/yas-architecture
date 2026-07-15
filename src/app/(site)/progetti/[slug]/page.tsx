@@ -58,11 +58,11 @@ export default async function ProgettoPage({ params }: { params: Promise<{ slug:
     <div className="bg-white">
 
       {/* ── Hero image ─────────────────────────────────────────────── */}
-      {/* aspect-[4/3] invece di altezze fisse per breakpoint: cosí il
-          rapporto resta 4:3 a qualsiasi larghezza (prima diventava molto
-          più larga/bassa — quasi 16:9 — sui monitor ultra-wide perché la
-          larghezza cresceva ma l'altezza restava fissa). */}
-      <div className="relative mx-4 md:mx-[30px] mt-[60px] md:mt-[72px] aspect-[4/3] overflow-hidden">
+      {/* aspect-ratio invece di altezze fisse per breakpoint: cosí il
+          rapporto resta costante a qualsiasi larghezza (prima diventava
+          molto più larga/bassa sui monitor ultra-wide perché la larghezza
+          cresceva ma l'altezza restava fissa). */}
+      <div className="relative mx-4 md:mx-[30px] mt-[60px] md:mt-[72px] aspect-[16/9] overflow-hidden">
         {heroUrl ? (
           <Image src={heroUrl} alt={project.title} fill className="object-cover" priority />
         ) : (
