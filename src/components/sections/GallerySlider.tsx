@@ -272,8 +272,15 @@ export default function GallerySlider({ items, projectTitle, compact = false }: 
       if (contentX >= accum && contentX < accum + w) { over = true; break; }
       accum += w + gap;
     }
-    if (over) wrapper.setAttribute("cursor-type", "expand");
-    else      wrapper.removeAttribute("cursor-type");
+    // Scrivi l'attributo solo se cambia davvero: settarlo ad ogni mousemove
+    // (anche con lo stesso valore) genera una raffica di mutation events per
+    // il MutationObserver del cursore, che per ognuna fa un
+    // getBoundingClientRect() — con il mouse in movimento veloce la coda si
+    // accumula e il cursore custom resta "indietro" per un po'.
+    const wantedType = over ? "expand" : null;
+    if (wrapper.getAttribute("cursor-type") === wantedType) return;
+    if (wantedType) wrapper.setAttribute("cursor-type", wantedType);
+    else            wrapper.removeAttribute("cursor-type");
   };
 
   const onMouseLeave = () => wrapperRef.current?.removeAttribute("cursor-type");

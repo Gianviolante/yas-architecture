@@ -43,13 +43,12 @@ export default function ProjectsSlider({ projects, title = "Vedi altri progetti"
     const rect = e.currentTarget.getBoundingClientRect();
     const x = e.clientX - rect.left;
 
-    if (x < EDGE_ZONE && canScrollLeft) {
-      containerRef.current.setAttribute("cursor-type", "prev");
-    } else if (x > rect.width - EDGE_ZONE && canScrollRight) {
-      containerRef.current.setAttribute("cursor-type", "next");
-    } else {
-      containerRef.current.removeAttribute("cursor-type");
-    }
+    const wanted = x < EDGE_ZONE && canScrollLeft ? "prev" : x > rect.width - EDGE_ZONE && canScrollRight ? "next" : null;
+    // scrivi solo se cambia — evita di floodare il MutationObserver del
+    // cursore ad ogni mousemove (vedi stesso fix in GallerySlider)
+    if (containerRef.current.getAttribute("cursor-type") === wanted) return;
+    if (wanted) containerRef.current.setAttribute("cursor-type", wanted);
+    else        containerRef.current.removeAttribute("cursor-type");
   };
 
   const handleMouseLeave = () => {

@@ -22,6 +22,9 @@ export default function HomeSlider() {
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     const side = e.clientX - e.currentTarget.getBoundingClientRect().left < e.currentTarget.offsetWidth / 2 ? "prev" : "next";
+    // scrivi solo se cambia — evita di floodare il MutationObserver del
+    // cursore ad ogni mousemove (vedi stesso fix in GallerySlider)
+    if (containerRef.current?.getAttribute("cursor-type") === side) return;
     containerRef.current?.setAttribute("cursor-type", side);
   };
 
