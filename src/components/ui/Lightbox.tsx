@@ -15,12 +15,12 @@ const WHEEL_THRESHOLD = 60;   // px trackpad
 const NAV_COOLDOWN    = 600;  // ms tra una navigazione e la prossima
 
 const ArrowLeft  = () => (
-  <svg width="20" height="20" viewBox="0 0 24 24" fill="#282828">
+  <svg width="20" height="20" viewBox="0 0 24 24" fill="#000000">
     <path fillRule="evenodd" clipRule="evenodd" d="M2.1,12l7.5,6.2L9,19l-9-7.5L9,4l0.6,0.8L2.1,11H24v1C24,12,2.1,12,2.1,12z"/>
   </svg>
 );
 const ArrowRight = () => (
-  <svg width="20" height="20" viewBox="0 0 24 24" fill="#282828">
+  <svg width="20" height="20" viewBox="0 0 24 24" fill="#000000">
     <path fillRule="evenodd" clipRule="evenodd" d="M21.9,12l-7.5,6.2L15,19l9-7.5L15,4l-0.6,0.8l7.5,6.2H0v1C0,12,21.9,12,21.9,12z"/>
   </svg>
 );
@@ -130,7 +130,7 @@ export default function Lightbox({ items, initialIndex, onClose }: Props) {
         aria-label="Chiudi"
         className="absolute top-[20px] right-[20px] z-10 size-[44px] flex items-center justify-center hover:opacity-40 transition-opacity"
       >
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="#282828">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="#000000">
           <path fillRule="evenodd" clipRule="evenodd" d="M12,11.3L22.3,1L23,1.7L12.7,12L23,22.3L22.3,23L12,12.7L1.7,23L1,22.3L11.3,12L1,1.7L1.7,1C1.7,1,12,11.3,12,11.3z"/>
         </svg>
       </button>
