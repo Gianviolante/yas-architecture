@@ -68,18 +68,18 @@ export default function Lightbox({ items, initialIndex, onClose }: Props) {
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
       if (e.key === "Escape")     onClose();
-      if (e.key === "ArrowLeft")  prev();
-      if (e.key === "ArrowRight") next();
+      if (e.key === "ArrowLeft")  setIdx((i) => Math.max(0, i - 1));
+      if (e.key === "ArrowRight") setIdx((i) => Math.min(items.length - 1, i + 1));
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
-  }, [onClose]);
+  }, [onClose, items.length]);
 
-  // cursor-type sui bottoni
+  // cursor-type sui bottoni — come Groppi (.btn--prev/.btn--next)
   useEffect(() => {
     closeRef.current?.setAttribute("cursor-type", "close");
-    prevRef.current?.setAttribute("cursor-type",  "nav");
-    nextRef.current?.setAttribute("cursor-type",  "nav");
+    prevRef.current?.setAttribute("cursor-type",  "prev");
+    nextRef.current?.setAttribute("cursor-type",  "next");
   }, []);
 
   // ── Trackpad horizontal scroll (wheel) ──────────────────────────────

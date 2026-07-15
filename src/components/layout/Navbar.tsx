@@ -47,7 +47,12 @@ export default function Navbar() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  useEffect(() => { setMenuOpen(false); }, [pathname]);
+  // chiudi il menu mobile su cambio pagina — adjust-during-render
+  const [prevPath, setPrevPath] = useState(pathname);
+  if (prevPath !== pathname) {
+    setPrevPath(pathname);
+    setMenuOpen(false);
+  }
 
   useEffect(() => {
     document.body.style.overflow = menuOpen ? "hidden" : "";
@@ -105,7 +110,7 @@ export default function Navbar() {
 
           {/* Logo — center absolute */}
           <Link href="/" className="absolute left-1/2 -translate-x-1/2" aria-label="YAS Architecture — Home">
-            <Image src="/assets/logo-yas.svg" alt="YAS Architecture" width={163} height={21} priority />
+            <Image src="/assets/logo-yas.svg" alt="YAS Architecture" width={102} height={31} priority />
           </Link>
 
           {/* Desktop right nav */}

@@ -2,6 +2,7 @@
 
 import { useState, useRef, useEffect } from "react";
 import Image from "next/image";
+import { usePointerFine } from "@/lib/hooks/usePointerFine";
 
 const SLIDES = [
   "/assets/home-slide-1.jpg",
@@ -11,20 +12,13 @@ const SLIDES = [
 ];
 
 export default function HomeSlider() {
+  const isPointerFine = usePointerFine();
   const [idx, setIdx] = useState(0);
-  const [isPointerFine, setIsPointerFine] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
 
   const prev = () => setIdx((i) => (i - 1 + SLIDES.length) % SLIDES.length);
   const next = () => setIdx((i) => (i + 1) % SLIDES.length);
 
-  useEffect(() => {
-    const mq = window.matchMedia("(hover: hover) and (pointer: fine)");
-    setIsPointerFine(mq.matches);
-    const h = (e: MediaQueryListEvent) => setIsPointerFine(e.matches);
-    mq.addEventListener("change", h);
-    return () => mq.removeEventListener("change", h);
-  }, []);
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     const side = e.clientX - e.currentTarget.getBoundingClientRect().left < e.currentTarget.offsetWidth / 2 ? "prev" : "next";

@@ -4,6 +4,7 @@ import { useState, useRef, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import type { Project } from "@/lib/sanity/types";
+import { usePointerFine } from "@/lib/hooks/usePointerFine";
 
 const CARD_STEP = 263 + 15;
 const EDGE_ZONE = 140; // px dal bordo
@@ -17,18 +18,11 @@ export default function ProjectsSlider({ projects, title = "Vedi altri progetti"
   const scrollRef    = useRef<HTMLDivElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
 
-  const [isPointerFine,  setIsPointerFine]  = useState(false);
+  const isPointerFine = usePointerFine();
   const [canScrollLeft,  setCanScrollLeft]  = useState(false);
   const [canScrollRight, setCanScrollRight] = useState(true);
   const [hoverSide,      setHoverSide]      = useState<"left" | "right" | null>(null);
 
-  useEffect(() => {
-    const mq = window.matchMedia("(hover: hover) and (pointer: fine)");
-    setIsPointerFine(mq.matches);
-    const h = (e: MediaQueryListEvent) => setIsPointerFine(e.matches);
-    mq.addEventListener("change", h);
-    return () => mq.removeEventListener("change", h);
-  }, []);
 
   const updateScrollState = () => {
     const el = scrollRef.current;

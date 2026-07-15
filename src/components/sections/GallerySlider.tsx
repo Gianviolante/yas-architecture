@@ -1,8 +1,9 @@
 "use client";
 
-import { useState, useRef, useEffect, useCallback } from "react";
+import { useState, useRef, useEffect, useCallback, useSyncExternalStore } from "react";
 import Image from "next/image";
 import Lightbox from "@/components/ui/Lightbox";
+import { usePointerFine } from "@/lib/hooks/usePointerFine";
 
 export interface GalleryItem {
   url: string;
@@ -61,13 +62,24 @@ function animateValue(
   return () => cancelAnimationFrame(rafId);
 }
 
+// Store esterno per breakpoint — pattern useSyncExternalStore, niente setState in effect
+function subscribeResize(cb: () => void) {
+  window.addEventListener("resize", cb);
+  return () => window.removeEventListener("resize", cb);
+}
+const getBreakpoint = (): "mobile" | "tablet" | "desktop" => {
+  const w = window.innerWidth;
+  return w < 768 ? "mobile" : w < 1024 ? "tablet" : "desktop";
+};
+
 export default function GallerySlider({ items, projectTitle, compact = false }: Props) {
   const wrapperRef = useRef<HTMLDivElement>(null); // overflow:hidden — clip
   const trackRef   = useRef<HTMLDivElement>(null); // transform target — si muove fisicamente
 
-  const [isPointerFine, setIsPointerFine] = useState(false);
+  const isPointerFine = usePointerFine();
+  const breakpoint    = useSyncExternalStore(subscribeResize, getBreakpoint, () => "mobile" as const);
+
   const [current,       setCurrent]       = useState(0);
-  const [breakpoint,    setBreakpoint]    = useState<"mobile" | "tablet" | "desktop">("mobile");
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
 
   const isDragging      = useRef(false);
@@ -80,17 +92,6 @@ export default function GallerySlider({ items, projectTitle, compact = false }: 
   const wheelTimer      = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
 
   useEffect(() => { currentRef.current = current; }, [current]);
-
-  // ── breakpoint ─────────────────────────────────────────────────────────
-  useEffect(() => {
-    const update = () => {
-      const w = window.innerWidth;
-      setBreakpoint(w < 768 ? "mobile" : w < 1024 ? "tablet" : "desktop");
-    };
-    update();
-    window.addEventListener("resize", update);
-    return () => window.removeEventListener("resize", update);
-  }, []);
 
   const isMobile = breakpoint === "mobile";
   const isTablet = breakpoint === "tablet";
@@ -129,15 +130,6 @@ export default function GallerySlider({ items, projectTitle, compact = false }: 
     if (t) t.style.transform = `translate3d(${x}px, 0, 0)`;
   }, []);
 
-  // ── pointer device ─────────────────────────────────────────────────────
-  useEffect(() => {
-    const mq = window.matchMedia("(hover: hover) and (pointer: fine)");
-    setIsPointerFine(mq.matches);
-    const h = (e: MediaQueryListEvent) => setIsPointerFine(e.matches);
-    mq.addEventListener("change", h);
-    return () => mq.removeEventListener("change", h);
-  }, []);
-
   // ── goTo: anima il TRACK (il div fisico) con rAF + curva Groppi ───────
   // Il track si muove fisicamente verso sinistra/destra portando con sé
   // tutte le card — esattamente come fa Groppi con il suo SwiperComponent.
@@ -152,20 +144,21 @@ export default function GallerySlider({ items, projectTitle, compact = false }: 
     cancelAnim.current = animateValue(from, to, DURATION, groppiEase, setTrackX);
   }, [getSnapPositions, items.length, getTrackX, setTrackX]);
 
-  // ── reset ──────────────────────────────────────────────────────────────
-  useEffect(() => {
-    cancelAnim.current?.();
-    currentRef.current = 0;
+  // ── reset su cambio items/compact — adjust-during-render (solo state, no ref)
+  const [prevResetKey, setPrevResetKey] = useState<{ items: GalleryItem[]; compact: boolean }>({ items, compact });
+  if (prevResetKey.items !== items || prevResetKey.compact !== compact) {
+    setPrevResetKey({ items, compact });
     setCurrent(0);
-    setTrackX(0);
-  }, [items, compact, setTrackX]);
-
+  }
+  // Riallinea il track su cambio layout/reset. currentRef è già sincronizzato
+  // dall'effect sopra (gira prima di questo nell'ordine di definizione).
   useEffect(() => {
     cancelAnim.current?.();
     const snapPos = getSnapPositions();
     const cur = Math.min(currentRef.current, Math.max(0, items.length - 1));
+    currentRef.current = cur;
     setTrackX(-snapPos[cur]);
-  }, [breakpoint]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [breakpoint, items, compact, getSnapPositions, setTrackX]);
 
   // ── wheel / trackpad — listener nativo non-passivo ────────────────────
   useEffect(() => {
@@ -198,7 +191,7 @@ export default function GallerySlider({ items, projectTitle, compact = false }: 
 
     wrapper.addEventListener("wheel", onWheel, { passive: false });
     return () => wrapper.removeEventListener("wheel", onWheel);
-  }, [isPointerFine, goTo, items]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [isPointerFine, goTo, items]);
 
   // ── drag ──────────────────────────────────────────────────────────────
   const onPointerDown = (e: React.PointerEvent<HTMLDivElement>) => {

@@ -36,11 +36,19 @@ export default async function ProgettoPage({ params }: { params: Promise<{ slug:
   const heroUrl = project.heroImage ? urlFor(project.heroImage).width(1440).url() : null;
 
   // Gallery: first image → full-bleed block, rest → slider
+  // L'aspect ratio è codificato nell'asset _ref ("...-6732x4490-jpg"):
+  // serve a non croppare le foto verticali nel blocco orizzontale.
+  const parseAspect = (img: SanityImage): number | null => {
+    const m = img.asset?._ref?.match(/-(\d+)x(\d+)-/);
+    return m ? Number(m[1]) / Number(m[2]) : null;
+  };
   const galleryItems = (project.gallery ?? []).map((img: SanityImage) => ({
     url: urlFor(img).width(1200).url(),
     caption: img.caption,
+    aspect: parseAspect(img),
   }));
   const [secondImage, ...sliderItems] = galleryItems;
+  const secondIsPortrait = secondImage?.aspect != null && secondImage.aspect < 1;
 
   const ptComponents = {
     block: { normal: ({ children }: { children?: React.ReactNode }) => <p className="mb-[1em]">{children}</p> },
@@ -56,20 +64,7 @@ export default async function ProgettoPage({ params }: { params: Promise<{ slug:
         ) : (
           <div className="w-full h-full bg-[#d9d9d9]" />
         )}
-        {/* Counter overlaid — desktop only */}
-        {galleryItems.length > 0 && (
-          <p className="hidden md:block absolute bottom-[16px] right-[16px] text-[12px] leading-[1.5] text-white/70">
-            1 / {galleryItems.length + 1}
-          </p>
-        )}
       </div>
-
-      {/* Counter — mobile only, below hero */}
-      {galleryItems.length > 0 && (
-        <p className="md:hidden text-right text-[12px] leading-[1.5] text-[#282828] mx-[15px] mt-[6px]">
-          1 / {galleryItems.length + 1}
-        </p>
-      )}
 
       {/* ── Title ──────────────────────────────────────────────────── */}
       {/* Mobile: just the title */}
@@ -178,14 +173,29 @@ export default async function ProgettoPage({ params }: { params: Promise<{ slug:
       </div>
 
       {/* ── Second full-width image ────────────────────────────────── */}
+      {/* Foto verticali: centrate a piena altezza senza crop (come Groppi).
+          Foto orizzontali: full-bleed con object-cover come da design. */}
       <div className="relative mx-[15px] h-[245px] md:h-[571px] lg:h-[718px]">
         {secondImage ? (
-          <Image
-            src={secondImage.url}
-            alt={secondImage.caption ?? `${project.title} — interno`}
-            fill
-            className="object-cover"
-          />
+          secondIsPortrait ? (
+            <div className="h-full flex justify-center">
+              <div className="relative h-full" style={{ aspectRatio: String(secondImage.aspect) }}>
+                <Image
+                  src={secondImage.url}
+                  alt={secondImage.caption ?? `${project.title} — interno`}
+                  fill
+                  className="object-cover"
+                />
+              </div>
+            </div>
+          ) : (
+            <Image
+              src={secondImage.url}
+              alt={secondImage.caption ?? `${project.title} — interno`}
+              fill
+              className="object-cover"
+            />
+          )
         ) : (
           <div className="w-full h-full bg-[#d9d9d9]" />
         )}

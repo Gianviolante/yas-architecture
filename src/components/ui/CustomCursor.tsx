@@ -113,8 +113,9 @@ export default function CustomCursor() {
 
     function tick() {
       if (active_ && pos !== null) {
-        pos.x += (mouse.x - pos.x) / 4;
-        pos.y += (mouse.y - pos.y) / 4;
+        // Groppi segue il mouse quasi istantaneamente — lerp stretto
+        pos.x += (mouse.x - pos.x) / 2;
+        pos.y += (mouse.y - pos.y) / 2;
         // lerpa verso 1 solo se su elemento interattivo, verso 0 altrimenti
         const target = type_ !== "idle" ? 1 : 0;
         pos.o += (target - pos.o) / 10;
@@ -135,15 +136,15 @@ export default function CustomCursor() {
     const registered = new WeakSet<Element>();
     let hovered: Element | null = null;
 
+    // Come Groppi: il cursore custom appare SOLO su elementi marcati
+    // esplicitamente con cursor-type, mai su link/bottoni generici.
     function registerNode(node: Element) {
-      if (registered.has(node)) return;
-      registered.add(node);
-      if (!node.hasAttribute("cursor-type")) {
-        const tag = node.nodeName.toLowerCase();
-        if (tag === "a" || tag === "button") node.setAttribute("cursor-type", "nav");
-      }
       const t = node.getAttribute("cursor-type");
       if (!t || !(CURSOR_TYPES as readonly string[]).includes(t)) return;
+      // registrato solo quando i listener vengono davvero agganciati, così
+      // un nodo che riceve cursor-type più tardi non resta senza listener
+      if (registered.has(node)) return;
+      registered.add(node);
       node.addEventListener("mouseenter", () => {
         hovered = node;
         setType((node.getAttribute("cursor-type") || "idle") as CursorType);
@@ -155,7 +156,7 @@ export default function CustomCursor() {
     }
 
     function scan(root: Document | Element = document) {
-      root.querySelectorAll<Element>("[cursor-type], a, button").forEach(registerNode);
+      root.querySelectorAll<Element>("[cursor-type]").forEach(registerNode);
     }
 
     const mo = new MutationObserver((mutations) => {
@@ -164,9 +165,8 @@ export default function CustomCursor() {
           m.addedNodes.forEach((n) => {
             if (n.nodeType !== 1) return;
             const node = n as Element;
-            const tag = node.nodeName.toLowerCase();
-            if (tag === "a" || tag === "button" || node.hasAttribute("cursor-type")) registerNode(node);
-            node.querySelectorAll<Element>("[cursor-type], a, button").forEach(registerNode);
+            if (node.hasAttribute("cursor-type")) registerNode(node);
+            node.querySelectorAll<Element>("[cursor-type]").forEach(registerNode);
           });
         }
         if (m.type === "attributes" && m.attributeName === "cursor-type") {

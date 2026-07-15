@@ -4,6 +4,7 @@ import { useState, useRef, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import type { Project } from "@/lib/sanity/types";
+import { usePointerFine } from "@/lib/hooks/usePointerFine";
 
 const PLACEHOLDERS = [
   { id: "p1", img: "/assets/home-project-1.jpg", label: "Marina One Residence, Marina Way – SG", typology: "Residential" },
@@ -17,10 +18,10 @@ const EDGE_ZONE = 140;
 interface Props { projects: Project[]; }
 
 export default function HomeProjectsCarousel({ projects }: Props) {
+  const isPointerFine = usePointerFine();
   const [idx, setIdx]             = useState(0);
   const [stepPx, setStepPx]       = useState(0);
   const [isMobile, setIsMobile]   = useState(false);
-  const [isPointerFine, setIsPointerFine] = useState(false);
   const [hoverSide, setHoverSide] = useState<"left" | "right" | null>(null);
 
   const viewportRef  = useRef<HTMLDivElement>(null);
@@ -31,20 +32,16 @@ export default function HomeProjectsCarousel({ projects }: Props) {
 
   // su mobile mostra 1 card alla volta, su desktop 2
   const maxIdx  = Math.max(0, isMobile ? total - 1 : total - 2);
-  const canPrev = idx > 0;
-  const canNext = idx < maxIdx;
+  // clamp derivato (niente setState in effect): se maxIdx si riduce
+  // dopo un resize, l'indice effettivo resta in range
+  const shownIdx = Math.min(idx, maxIdx);
+  const canPrev = shownIdx > 0;
+  const canNext = shownIdx < maxIdx;
 
-  const prev = () => setIdx((i) => Math.max(0, i - 1));
-  const next = () => setIdx((i) => Math.min(maxIdx, i + 1));
+  const prev = () => setIdx(Math.max(0, shownIdx - 1));
+  const next = () => setIdx(Math.min(maxIdx, shownIdx + 1));
 
   // rileva pointer fine
-  useEffect(() => {
-    const mq = window.matchMedia("(hover: hover) and (pointer: fine)");
-    setIsPointerFine(mq.matches);
-    const h = (e: MediaQueryListEvent) => setIsPointerFine(e.matches);
-    mq.addEventListener("change", h);
-    return () => mq.removeEventListener("change", h);
-  }, []);
 
   // step responsivo
   useEffect(() => {
@@ -61,10 +58,6 @@ export default function HomeProjectsCarousel({ projects }: Props) {
     return () => window.removeEventListener("resize", update);
   }, []);
 
-  // reset idx se cambia maxIdx (es. resize da desktop a mobile)
-  useEffect(() => {
-    setIdx((i) => Math.min(i, maxIdx));
-  }, [maxIdx]);
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     if (!containerRef.current) return;
@@ -115,7 +108,7 @@ export default function HomeProjectsCarousel({ projects }: Props) {
           <div className="overflow-hidden" ref={viewportRef}>
             <div
               className="flex gap-[14px] transition-transform duration-500 ease-out"
-              style={{ transform: `translateX(-${idx * stepPx}px)` }}
+              style={{ transform: `translateX(-${shownIdx * stepPx}px)` }}
             >
               {useSanity
                 ? projects.map((p) => (

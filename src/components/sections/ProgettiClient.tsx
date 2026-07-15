@@ -309,10 +309,15 @@ function GridView({ largeRows, small }: { largeRows: Project[][]; small: Project
 }
 
 function ProjectCard({ project: p, size }: { project: Project; size: "large" | "small" }) {
-  const imgH = size === "large" ? "h-[256px] md:h-[280px] lg:h-[484px]" : "h-[256px] md:h-[280px] lg:h-[335px]";
+  // Aspect ratio al posto di altezze fisse: le card scalano in proporzione
+  // alla larghezza colonna a qualsiasi viewport (stessi rapporti del design
+  // ai riferimenti 375/768/1440).
+  const imgAspect = size === "large"
+    ? "aspect-[345/256] md:aspect-[339/280] lg:aspect-[683/484]"
+    : "aspect-[345/256] md:aspect-[339/280] lg:aspect-[450/335]";
   return (
     <Link href={`/progetti/${p.slug.current}`} className="block group">
-      <div className={`relative ${imgH} overflow-hidden mb-[6px]`}>
+      <div className={`relative ${imgAspect} overflow-hidden mb-[6px]`}>
         {p.coverImageUrl ? (
           <Image src={p.coverImageUrl} alt={p.title} fill className="object-cover transition-transform duration-500 group-hover:scale-[1.03]" />
         ) : (
