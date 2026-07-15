@@ -114,10 +114,9 @@ export default function ProjectsSlider({ projects, title = "Vedi altri progetti"
                   <div className="w-full h-full bg-[#d9d9d9]" />
                 )}
               </div>
-              {/* h-[45px] = 2 righe fisse (line-height 22.5px): il chip sotto
-                  resta sempre allineato, indipendentemente dalla lunghezza
-                  del titolo — line-clamp-2 tronca con ellissi se supera. */}
-              <p className="text-[15px] leading-[1.5] text-[#282828] mb-[6px] h-[45px] line-clamp-2">
+              {/* Una riga, troncata con ellissi: il chip sotto resta sempre
+                  allineato indipendentemente dalla lunghezza del titolo. */}
+              <p className="text-[15px] leading-[1.5] text-[#282828] mb-[6px] truncate">
                 {p.title}{p.location ? `, ${p.location}` : ""}
               </p>
               <span className="inline-flex items-center border-2 border-[#333] rounded-[100px] px-[14px] py-[4px] text-[12px] text-[#333] leading-[1.4] whitespace-nowrap">
