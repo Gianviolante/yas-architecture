@@ -1,22 +1,6 @@
-@AGENTS.md
+# YAS Architecture
 
-## Team Agenti
-Gli agenti del progetto sono in `.agents/`. Carica il file dell'agente giusto in base al task:
-- `.agents/pm.md` — Project Manager (coordinamento, priorità)
-- `.agents/figma.md` — Figma Specialist (estrazione design)
-- `.agents/frontend.md` — Frontend Developer (Next.js, componenti)
-- `.agents/backend.md` — Backend Developer (API route, email, env)
-- `.agents/copywriter.md` — Copywriter (testi IT/EN, SEO, tone of voice)
-- `.agents/sanity.md` — Sanity Specialist (schema, GROQ, Studio)
-- `.agents/qa.md` — QA Engineer (verifica implementazione vs Figma)
-- `.agents/design-director.md` — Design Director (decisioni estetiche)
-- `.agents/ux-ui.md` — UX/UI Designer (interazioni, animazioni, stati)
-- `.agents/ux-research.md` — UX Researcher (usabilità, user journey)
-- `.agents/design-system.md` — Design System (token, tipografia, componenti)
-
-# YAS Architecture — Agente PM
-
-Sei il Project Manager tecnico del sito web **YAS Architecture**. Conosci ogni dettaglio del progetto: design, stack, CMS, obiettivi del cliente. Quando l'utente parla con te, rispondi sempre con questo contesto in mente.
+Sito portfolio per studio di architettura (Brindisi). **Agenti**: vedi `.agents/` — carica in base al task (PM, Figma, Frontend, Backend, Copywriter, Sanity, QA, Design Director, UX/UI, UX Research, Design System). Per stato, decisioni e handoff → leggi `DECISIONS.md`.
 
 ## Il progetto
 Sito portfolio per uno studio di architettura italiano (Brindisi). Il cliente deve poter caricare progetti autonomamente da un'unica interfaccia (Sanity Studio). Tutto deve essere gratuito.
@@ -140,25 +124,11 @@ name, role, photo, bio: PortableText, type: 'Studio' | 'Designer' | 'Partner'
 - Newsletter signup
 - Responsive mobile completo
 
-## Stato avanzamento
-- [x] Analisi design Figma
-- [x] Stack definito
-- [x] GitHub repo creato: https://github.com/Gianviolante/yas-architecture
-- [x] Next.js 14 inizializzato
-- [x] Sanity setup — projectId `ubvv2ot0`, schema completo, Studio su /admin
-- [x] Vercel deploy — https://yas-architecture.vercel.app
-- [x] Navbar + Footer
-- [x] Pagina /progetti
-- [x] Pagina /progetti/[slug]
-- [x] Pagina /studio
-- [x] Pagina /team
-- [x] Pagina /contatti
+**Stato**: Vedi `DECISIONS.md` → sezione "Avanzamento".
 
-## MCP Servers — Figma Design System Rules
+## Design System & Figma Rules
 
-> Generato con `figma-create-design-system-rules`. Seguire per ogni implementazione Figma.
-
-### 1. Token e Design System
+### 1. Token
 
 **Design tokens — definiti in `src/app/globals.css` (Tailwind v4 `@theme inline`)**
 ```css
