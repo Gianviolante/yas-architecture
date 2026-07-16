@@ -153,9 +153,12 @@ export default function Navbar() {
       </header>
 
       {/* ── Mobile dropdown menu ─────────────────────────────────────── */}
+      {/* z-50: sopra qualsiasi barra sticky di pagina (Team/Studio z-40,
+          filtri Progetti z-40) — il menu di navigazione deve sempre
+          restare in primo piano, come su qualsiasi sito. */}
       <div
         className={cn(
-          "fixed top-[60px] left-0 right-0 z-40 bg-white md:hidden transition-all duration-300 ease-out",
+          "fixed top-[60px] left-0 right-0 z-50 bg-white md:hidden transition-all duration-300 ease-out",
           menuOpen
             ? "opacity-100 translate-y-0 pointer-events-auto drop-shadow-[0px_6px_4px_rgba(0,0,0,0.2)]"
             : "opacity-0 -translate-y-2 pointer-events-none"

@@ -38,7 +38,7 @@ export default function TeamClient({ teamMembers }: Props) {
     <div className="bg-white">
 
       {/* ── Tab bar ─────────────────────────────────────────────────── */}
-      <div className="sticky top-[60px] md:top-[53px] z-40 bg-white shadow-[0px_6px_8px_0px_rgba(0,0,0,0.1)] h-[75px] flex items-center justify-center gap-[8px]">
+      <div className="sticky top-[60px] md:top-[80px] z-40 bg-white shadow-[0px_6px_8px_0px_rgba(0,0,0,0.1)] h-[75px] flex items-center justify-center gap-[8px]">
         <Link
           href="/studio"
           className="inline-flex items-center border-2 border-[#333] rounded-[100px] px-[24px] py-[10px] text-[16px] leading-[22px] text-[#333] hover:bg-black hover:border-black hover:text-white transition-colors duration-200"
