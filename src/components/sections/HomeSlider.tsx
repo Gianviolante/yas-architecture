@@ -31,7 +31,8 @@ export default function HomeSlider() {
   const handleMouseLeave = () => containerRef.current?.removeAttribute("cursor-type");
 
   const handleClick = (e: React.MouseEvent<HTMLDivElement>) => {
-    e.clientX - e.currentTarget.getBoundingClientRect().left < e.currentTarget.offsetWidth / 2 ? prev() : next();
+    const isLeftHalf = e.clientX - e.currentTarget.getBoundingClientRect().left < e.currentTarget.offsetWidth / 2;
+    if (isLeftHalf) prev(); else next();
   };
 
   return (

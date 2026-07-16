@@ -72,12 +72,10 @@ export interface Home {
 export interface Studio {
   description?:         unknown; // PortableText
   spaziDescription?:    unknown;
-  crescitaDescription?: unknown;
   teamDescription?:     unknown;
   progettiDescription?: unknown;
   heroImage?:           SanityImage;
   teamPortrait?:        SanityImage;
   mainImage?:           SanityImage;
   spaziImages?:         SanityImage[];
-  crescitaImages?:      SanityImage[];
 }

@@ -47,11 +47,14 @@ export const homeQuery = `
   }
 `;
 
+// crescitaDescription/crescitaImages non fetchati: la sezione "Crescita e
+// innovazione" è nascosta dal frontend (richiesta cliente), ma il campo
+// resta nello schema Sanity — il cliente ha già caricato foto lì, recuperabile
+// in 2 minuti se la sezione torna visibile.
 export const studioQuery = `
   *[_type == "studio"][0] {
-    description, spaziDescription, crescitaDescription, teamDescription, progettiDescription,
+    description, spaziDescription, teamDescription, progettiDescription,
     heroImage, teamPortrait, mainImage,
-    spaziImages[]{ ..., caption },
-    crescitaImages[]{ ... }
+    spaziImages[]{ ..., caption }
   }
 `;

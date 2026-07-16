@@ -26,9 +26,9 @@ export default function TeamClient({ teamMembers }: Props) {
   const [expandedId, setExpandedId] = useState<string | null>(null);
 
   const studioMembers = teamMembers.filter((m) => m.type === "Studio");
-  // I membri senza type non devono sparire dalla pagina: li trattiamo
-  // come Designer (il tab di default che elenca il team).
-  const designers = teamMembers.filter((m) => m.type === "Designer" || !m.type);
+  // Tutti i non-Studio (Designer, Partner, o senza type) finiscono nel tab
+  // "Designers": è l'unico altro tab, nessuno deve sparire dalla pagina.
+  const designers = teamMembers.filter((m) => m.type !== "Studio");
   const displayed = activeTab === "studio" ? studioMembers : designers;
 
   const placeholders = Array(6).fill(null) as null[];

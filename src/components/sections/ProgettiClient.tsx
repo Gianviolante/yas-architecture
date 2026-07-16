@@ -47,9 +47,17 @@ export default function ProgettiClient({ projects, initialTypology }: Props) {
   ].join(", ");
 
   const toggleTypology = (value: Typology) =>
-    setTypologyFilters(prev => { const n = new Set(prev); n.has(value) ? n.delete(value) : n.add(value); return n; });
+    setTypologyFilters(prev => {
+      const n = new Set(prev);
+      if (n.has(value)) n.delete(value); else n.add(value);
+      return n;
+    });
   const toggleStato = (value: ProjectStatus) =>
-    setStatoFilters(prev => { const n = new Set(prev); n.has(value) ? n.delete(value) : n.add(value); return n; });
+    setStatoFilters(prev => {
+      const n = new Set(prev);
+      if (n.has(value)) n.delete(value); else n.add(value);
+      return n;
+    });
   const reset = () => { setTypologyFilters(new Set()); setStatoFilters(new Set()); };
 
   // Featured → large 2-col (max 4), rest → small 3-col
@@ -270,7 +278,6 @@ export default function ProgettiClient({ projects, initialTypology }: Props) {
           <div className="px-4 md:px-[30px]">
             <IndexView
               projects={filtered}
-              hoveredId={hoveredId}
               onHover={setHoveredId}
               hoveredProject={hoveredProject}
             />
@@ -346,10 +353,9 @@ function ProjectCard({ project: p, size }: { project: Project; size: "large" | "
 /* ── Index view ──────────────────────────────────────────────────── */
 
 function IndexView({
-  projects, hoveredId, onHover, hoveredProject,
+  projects, onHover, hoveredProject,
 }: {
   projects: Project[];
-  hoveredId: string | null;
   onHover: (id: string | null) => void;
   hoveredProject: Project | null;
 }) {

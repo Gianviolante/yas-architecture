@@ -16,7 +16,6 @@ export default defineConfig({
           .items([
             S.listItem().title("Progetti").schemaType("project").child(S.documentTypeList("project")),
             S.listItem().title("Team").schemaType("teamMember").child(S.documentTypeList("teamMember")),
-            S.listItem().title("Partner").schemaType("partner").child(S.documentTypeList("partner")),
             S.listItem().title("Studio").schemaType("studio").child(
               S.document().schemaType("studio").documentId("studio")
             ),
