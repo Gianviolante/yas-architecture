@@ -58,7 +58,7 @@ export default async function ProgettoPageV2({ params }: { params: Promise<{ slu
       <div className="md:flex md:gap-[30px] md:px-[30px] md:mt-[72px]">
 
         {/* ── Left column: Hero image (1:1 square) ──────────────────── */}
-        <div className="flex-shrink-0 mx-4 md:mx-0 mt-[60px] md:mt-0 aspect-square overflow-hidden relative">
+        <div className="flex-shrink-0 w-full md:w-[calc(50%-15px)] mx-4 md:mx-0 mt-[60px] md:mt-0 aspect-square overflow-hidden relative">
           {heroUrl ? (
             <Image src={heroUrl} alt={project.title} fill className="object-cover" priority />
           ) : (
