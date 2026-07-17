@@ -54,105 +54,163 @@ export default async function ProgettoPageV2({ params }: { params: Promise<{ slu
   return (
     <div className="bg-white">
 
-      {/* ── Hero image (1:1 square - Groppi style) ──────────────────── */}
-      <div className="relative mx-4 md:mx-[30px] mt-[60px] md:mt-[72px] aspect-square overflow-hidden">
-        {heroUrl ? (
-          <Image src={heroUrl} alt={project.title} fill className="object-cover" priority />
-        ) : (
-          <div className="w-full h-full bg-[#d9d9d9]" />
-        )}
+      {/* ── Desktop: Side-by-side layout (hero left, content right) ──── */}
+      <div className="md:flex md:gap-[30px] md:px-[30px] md:mt-[72px]">
+
+        {/* ── Left column: Hero image (1:1 square) ──────────────────── */}
+        <div className="flex-shrink-0 mx-4 md:mx-0 mt-[60px] md:mt-0 aspect-square overflow-hidden relative">
+          {heroUrl ? (
+            <Image src={heroUrl} alt={project.title} fill className="object-cover" priority />
+          ) : (
+            <div className="w-full h-full bg-[#d9d9d9]" />
+          )}
+        </div>
+
+        {/* ── Right column: Content (title, meta, description, share) ── */}
+        <div className="flex-1">
+
+          {/* Title */}
+          <div className="page-px md:p-0 pt-[14px] md:pt-0">
+            <div className="md:flex md:items-start md:justify-between md:gap-[40px]">
+              <h1
+                className="text-[48px] md:text-[60px] font-bold tracking-tight leading-[1.3] text-[#282828] md:flex-1"
+                style={{ fontSize: "clamp(48px, 10vw, 80px)" }}
+              >
+                {project.title}
+              </h1>
+              <Link
+                href="/progetti"
+                className="hidden md:block text-[12px] leading-[1.3] text-[#282828] hover:opacity-60 transition-opacity whitespace-nowrap flex-shrink-0"
+              >
+                Torna a progetti →
+              </Link>
+            </div>
+          </div>
+
+          {/* Meta Information */}
+          <div className="page-px md:p-0 pt-[16px] md:pt-[24px] pb-[24px]">
+            <div className="space-y-[8px] md:space-y-[12px]">
+              {project.typology && (
+                <div className="flex flex-col md:flex-row md:gap-[40px]">
+                  <p className="text-[12px] leading-[1.3] text-[#282828] font-semibold md:w-[140px] md:flex-shrink-0">Area</p>
+                  <p className="text-[12px] leading-[1.3] text-[#282828]">{project.typology}</p>
+                </div>
+              )}
+              {project.year && (
+                <div className="flex flex-col md:flex-row md:gap-[40px]">
+                  <p className="text-[12px] leading-[1.3] text-[#282828] font-semibold md:w-[140px] md:flex-shrink-0">Timeline</p>
+                  <p className="text-[12px] leading-[1.3] text-[#282828]">{project.year}</p>
+                </div>
+              )}
+              {project.location && (
+                <div className="flex flex-col md:flex-row md:gap-[40px]">
+                  <p className="text-[12px] leading-[1.3] text-[#282828] font-semibold md:w-[140px] md:flex-shrink-0">Location</p>
+                  <p className="text-[12px] leading-[1.3] text-[#282828]">{project.location}</p>
+                </div>
+              )}
+              {project.area && (
+                <div className="flex flex-col md:flex-row md:gap-[40px]">
+                  <p className="text-[12px] leading-[1.3] text-[#282828] font-semibold md:w-[140px] md:flex-shrink-0">Superficie</p>
+                  <p className="text-[12px] leading-[1.3] text-[#282828]">{project.area} mq</p>
+                </div>
+              )}
+              {project.concept && (
+                <div className="flex flex-col md:flex-row md:gap-[40px]">
+                  <p className="text-[12px] leading-[1.3] text-[#282828] font-semibold md:w-[140px] md:flex-shrink-0">Concept</p>
+                  <p className="text-[12px] leading-[1.3] text-[#282828]">{project.concept}</p>
+                </div>
+              )}
+              {project.projectTeam && (
+                <div className="flex flex-col md:flex-row md:gap-[40px]">
+                  <p className="text-[12px] leading-[1.3] text-[#282828] font-semibold md:w-[140px] md:flex-shrink-0">Progetto</p>
+                  <p className="text-[12px] leading-[1.3] text-[#282828]">{project.projectTeam}</p>
+                </div>
+              )}
+              {project.rendering && (
+                <div className="flex flex-col md:flex-row md:gap-[40px]">
+                  <p className="text-[12px] leading-[1.3] text-[#282828] font-semibold md:w-[140px] md:flex-shrink-0">Rendering</p>
+                  <p className="text-[12px] leading-[1.3] text-[#282828]">{project.rendering}</p>
+                </div>
+              )}
+              {project.photographer && (
+                <div className="flex flex-col md:flex-row md:gap-[40px]">
+                  <p className="text-[12px] leading-[1.3] text-[#282828] font-semibold md:w-[140px] md:flex-shrink-0">Fotografo</p>
+                  <p className="text-[12px] leading-[1.3] text-[#282828]">{project.photographer}</p>
+                </div>
+              )}
+            </div>
+          </div>
+
+          {/* Description */}
+          <div className="page-px md:p-0 pb-[24px] md:pb-[40px]">
+            <div
+              className="text-[16px] md:text-[17.4px] leading-[1.4] md:leading-[1.2] text-[#282828]"
+              style={{ maxWidth: "798px" }}
+            >
+              {project.description ? (
+                <PortableText value={project.description as Parameters<typeof PortableText>[0]["value"]} components={ptComponents} />
+              ) : (
+                <p className="text-[#d9d9d9]">Nessuna descrizione disponibile.</p>
+              )}
+            </div>
+          </div>
+
+          {/* Condividi (Share) Section */}
+          <div className="page-px md:p-0 pb-[40px] md:pb-0 md:pt-[24px] border-t border-[#e5e5e5] pt-[24px] md:mt-[40px]">
+            <p className="text-[12px] font-semibold leading-[1.3] text-[#282828] mb-[16px]">Condividi</p>
+            <div className="flex gap-[16px]">
+              <a
+                href={`https://www.facebook.com/sharer/sharer.php?u=${typeof window !== 'undefined' ? window.location.href : ''}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-[12px] leading-[1.3] text-[#888] hover:text-[#282828] transition-colors"
+              >
+                Facebook
+              </a>
+              <a
+                href={`https://www.linkedin.com/sharing/share-offsite/?url=${typeof window !== 'undefined' ? window.location.href : ''}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-[12px] leading-[1.3] text-[#888] hover:text-[#282828] transition-colors"
+              >
+                LinkedIn
+              </a>
+              <a
+                href={`https://twitter.com/intent/tweet?url=${typeof window !== 'undefined' ? window.location.href : ''}&text=${project.title}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-[12px] leading-[1.3] text-[#888] hover:text-[#282828] transition-colors"
+              >
+                Twitter
+              </a>
+              <a
+                href={`https://wa.me/?text=${project.title} ${typeof window !== 'undefined' ? window.location.href : ''}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-[12px] leading-[1.3] text-[#888] hover:text-[#282828] transition-colors"
+              >
+                WhatsApp
+              </a>
+              <a
+                href={`mailto:?subject=${project.title}&body=${typeof window !== 'undefined' ? window.location.href : ''}`}
+                className="text-[12px] leading-[1.3] text-[#888] hover:text-[#282828] transition-colors"
+              >
+                Email
+              </a>
+            </div>
+          </div>
+
+        </div>
       </div>
 
-      {/* ── Title ──────────────────────────────────────────────────── */}
-      <div className="md:hidden page-px pt-[14px]">
-        <h1 className="text-[48px] font-bold tracking-tight leading-[1.3] text-[#282828]">
-          {project.title}
-        </h1>
-      </div>
-
-      <div className="hidden md:flex items-start justify-between page-px pt-[20px]">
-        <h1
-          className="font-bold tracking-tight leading-[1.3] text-[#282828]"
-          style={{ fontSize: "clamp(60px, 14.4vw, 120px)" }}
-        >
-          {project.title}
-        </h1>
+      {/* Mobile only: Torna a progetti link */}
+      <div className="md:hidden page-px py-[16px] border-t border-[#e5e5e5]">
         <Link
           href="/progetti"
-          className="text-[12px] leading-[1.3] text-[#282828] hover:opacity-60 transition-opacity whitespace-nowrap mt-[16px] shrink-0"
+          className="text-[12px] leading-[1.3] text-[#282828] hover:opacity-60 transition-opacity"
         >
           Torna a progetti →
         </Link>
-      </div>
-
-      {/* ── Meta Information (Groppi-style: labeled rows) ──────────── */}
-      {/* Mobile: full-width list */}
-      {/* Desktop: left column narrow, right column content */}
-      <div className="page-px pt-[16px] md:pt-[24px] pb-[24px] md:pb-[40px]">
-        <div className="space-y-[8px] md:space-y-[12px]">
-          {project.typology && (
-            <div className="flex flex-col md:flex-row md:gap-[40px]">
-              <p className="text-[12px] leading-[1.3] text-[#282828] font-semibold md:w-[140px] md:flex-shrink-0">Area</p>
-              <p className="text-[12px] leading-[1.3] text-[#282828]">{project.typology}</p>
-            </div>
-          )}
-          {project.year && (
-            <div className="flex flex-col md:flex-row md:gap-[40px]">
-              <p className="text-[12px] leading-[1.3] text-[#282828] font-semibold md:w-[140px] md:flex-shrink-0">Timeline</p>
-              <p className="text-[12px] leading-[1.3] text-[#282828]">{project.year}</p>
-            </div>
-          )}
-          {project.location && (
-            <div className="flex flex-col md:flex-row md:gap-[40px]">
-              <p className="text-[12px] leading-[1.3] text-[#282828] font-semibold md:w-[140px] md:flex-shrink-0">Location</p>
-              <p className="text-[12px] leading-[1.3] text-[#282828]">{project.location}</p>
-            </div>
-          )}
-          {project.area && (
-            <div className="flex flex-col md:flex-row md:gap-[40px]">
-              <p className="text-[12px] leading-[1.3] text-[#282828] font-semibold md:w-[140px] md:flex-shrink-0">Superficie</p>
-              <p className="text-[12px] leading-[1.3] text-[#282828]">{project.area} mq</p>
-            </div>
-          )}
-          {project.concept && (
-            <div className="flex flex-col md:flex-row md:gap-[40px]">
-              <p className="text-[12px] leading-[1.3] text-[#282828] font-semibold md:w-[140px] md:flex-shrink-0">Concept</p>
-              <p className="text-[12px] leading-[1.3] text-[#282828]">{project.concept}</p>
-            </div>
-          )}
-          {project.projectTeam && (
-            <div className="flex flex-col md:flex-row md:gap-[40px]">
-              <p className="text-[12px] leading-[1.3] text-[#282828] font-semibold md:w-[140px] md:flex-shrink-0">Progetto</p>
-              <p className="text-[12px] leading-[1.3] text-[#282828]">{project.projectTeam}</p>
-            </div>
-          )}
-          {project.rendering && (
-            <div className="flex flex-col md:flex-row md:gap-[40px]">
-              <p className="text-[12px] leading-[1.3] text-[#282828] font-semibold md:w-[140px] md:flex-shrink-0">Rendering</p>
-              <p className="text-[12px] leading-[1.3] text-[#282828]">{project.rendering}</p>
-            </div>
-          )}
-          {project.photographer && (
-            <div className="flex flex-col md:flex-row md:gap-[40px]">
-              <p className="text-[12px] leading-[1.3] text-[#282828] font-semibold md:w-[140px] md:flex-shrink-0">Fotografo</p>
-              <p className="text-[12px] leading-[1.3] text-[#282828]">{project.photographer}</p>
-            </div>
-          )}
-        </div>
-      </div>
-
-      {/* ── Description ────────────────────────────────────────────── */}
-      <div className="page-px pb-[24px] md:pb-[40px]">
-        <div
-          className="flex-1 text-[16px] md:text-[17.4px] leading-[1.4] md:leading-[1.2] text-[#282828]"
-          style={{ maxWidth: "798px" }}
-        >
-          {project.description ? (
-            <PortableText value={project.description as Parameters<typeof PortableText>[0]["value"]} components={ptComponents} />
-          ) : (
-            <p className="text-[#d9d9d9]">Nessuna descrizione disponibile.</p>
-          )}
-        </div>
       </div>
 
       {/* ── Two square images (Groppi-style) ──────────────────────── */}
