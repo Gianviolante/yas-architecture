@@ -338,10 +338,35 @@ export default function GallerySlider({ items, projectTitle, compact = false }: 
         </div>
       </div>
 
+      {/* Navigation arrows + caption (Groppi-style) */}
       {!compact && (
-        <div className="h-[40px] flex items-center px-[32px] mt-[16px]">
-          {activeCaption && (
-            <p className="text-[12px] leading-[1.2] text-[#282828]">{activeCaption}</p>
+        <div className="flex items-center justify-between px-[32px] mt-[16px] gap-[16px]">
+          <p className="text-[12px] leading-[1.2] text-[#282828] flex-1">
+            {activeCaption}
+          </p>
+          {isPointerFine && items.length > 1 && (
+            <div className="flex gap-[12px] flex-shrink-0">
+              <button
+                onClick={() => goTo(current - 1)}
+                disabled={current === 0}
+                className="p-[8px] text-[#282828] hover:opacity-60 disabled:opacity-30 transition-opacity"
+                aria-label="Immagine precedente"
+              >
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                  <path fillRule="evenodd" d="M2.1,12l7.5,6.2L9,19l-9-7.5L9,4l0.6,0.8 L2.1,11H24v1C24,12,2.1,12,2.1,12z" clipRule="evenodd"/>
+                </svg>
+              </button>
+              <button
+                onClick={() => goTo(current + 1)}
+                disabled={current === items.length - 1}
+                className="p-[8px] text-[#282828] hover:opacity-60 disabled:opacity-30 transition-opacity"
+                aria-label="Immagine successiva"
+              >
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                  <path fillRule="evenodd" d="M21.9,12l-7.5,6.2L15,19l9-7.5L15,4l-0.6,0.8 l7.5,6.2H0v1C0,12,21.9,12,21.9,12z" clipRule="evenodd"/>
+                </svg>
+              </button>
+            </div>
           )}
         </div>
       )}
