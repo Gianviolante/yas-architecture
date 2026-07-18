@@ -144,7 +144,7 @@ export default async function ProgettoPageV2({ params }: { params: Promise<{ slu
           {/* Description */}
           <div className="page-px md:p-0 pt-[32px] md:pt-[40px] pb-[24px] md:pb-[40px]">
             <div
-              className="text-[15px] md:text-[17px] leading-[1.6] md:leading-[1.5] text-[#282828]"
+              className="text-[15px] md:text-[17px] leading-[1.8] md:leading-[1.8] text-[#282828]"
               style={{ maxWidth: "798px" }}
             >
               {project.description ? (
