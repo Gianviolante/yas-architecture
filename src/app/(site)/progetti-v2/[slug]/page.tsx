@@ -71,16 +71,16 @@ export default async function ProgettoPageV2({ params }: { params: Promise<{ slu
 
           {/* Title */}
           <div className="page-px md:p-0 pt-[14px] md:pt-0">
-            <div className="md:flex md:items-start md:justify-between md:gap-[40px]">
+            <div className="flex flex-col md:flex-row md:items-start md:justify-between md:gap-[24px]">
               <h1
-                className="text-[48px] md:text-[60px] font-bold tracking-tight leading-[1.3] text-[#282828] md:flex-1"
+                className="text-[48px] md:text-[60px] font-bold tracking-tight leading-[1.3] text-[#282828]"
                 style={{ fontSize: "clamp(48px, 10vw, 80px)" }}
               >
                 {project.title}
               </h1>
               <Link
                 href="/progetti"
-                className="hidden md:block text-[12px] leading-[1.3] text-[#282828] hover:opacity-60 transition-opacity whitespace-nowrap flex-shrink-0"
+                className="text-[12px] leading-[1.3] text-[#282828] hover:opacity-60 transition-opacity whitespace-nowrap md:mt-[8px]"
               >
                 Torna a progetti →
               </Link>
@@ -142,9 +142,9 @@ export default async function ProgettoPageV2({ params }: { params: Promise<{ slu
           </div>
 
           {/* Description */}
-          <div className="page-px md:p-0 pb-[24px] md:pb-[40px]">
+          <div className="page-px md:p-0 pt-[32px] md:pt-[40px] pb-[24px] md:pb-[40px]">
             <div
-              className="text-[16px] md:text-[17.4px] leading-[1.4] md:leading-[1.2] text-[#282828]"
+              className="text-[16px] md:text-[17.4px] leading-[1.5] md:leading-[1.5] text-[#282828]"
               style={{ maxWidth: "798px" }}
             >
               {project.description ? (
