@@ -86,8 +86,9 @@ export default function CustomCursor() {
     const el = _el;
 
     const html  = document.documentElement;
-    const mouse = { x: window.innerWidth / 2, y: window.innerHeight / 2 };
-    let pos:    { x: number; y: number; o: number } | null = null;
+    let mouse = { x: 0, y: 0 };
+    let mouseMoved = false;
+    let pos = { x: window.innerWidth / 2, y: window.innerHeight / 2, o: 0 };
     let rafId   = 0;
     let active_ = false;
     let type_: CursorType = "idle";
@@ -112,7 +113,7 @@ export default function CustomCursor() {
     }
 
     function tick() {
-      if (active_ && pos !== null) {
+      if (active_) {
         // Groppi segue il mouse quasi istantaneamente — lerp stretto.
         // Se il target è un bottone piccolo, si aggancia al suo centro
         // (snap magnetico) invece del punto esatto del mouse.
@@ -130,20 +131,25 @@ export default function CustomCursor() {
       rafId = requestAnimationFrame(tick);
     }
 
-    // Inizializza pos subito (al centro dello schermo) per evitare che il cursore sia bloccato in (0,0)
-    pos = { x: window.innerWidth / 2, y: window.innerHeight / 2, o: 0 };
-
     const onMove = (e: MouseEvent) => {
+      // Inizializza mouse e pos al primo movimento
+      if (!mouseMoved) {
+        mouseMoved = true;
+        pos.x = e.clientX;
+        pos.y = e.clientY;
+      }
       mouse.x = e.clientX;
       mouse.y = e.clientY;
-      pos!.x = e.clientX;
-      pos!.y = e.clientY;
+      pos.x = e.clientX;
+      pos.y = e.clientY;
     };
 
     const onResize = () => setActive(window.innerWidth >= 1024);
 
     const registered = new WeakSet<Element>();
+    const listeners = new Map<Element, { enter: () => void; leave: () => void }>();
     let hovered: Element | null = null;
+    let hoveredRect: DOMRect | null = null;
 
     // Snap magnetico: su bottoni piccoli (frecce, chiudi — icona fissa) il
     // follower si centra esattamente sull'elemento invece di seguire il
@@ -155,14 +161,13 @@ export default function CustomCursor() {
     // deve restare libero di seguire il mouse.
     const MAGNETIC_MAX = 60;
     function magneticTarget(): { x: number; y: number } | null {
-      if (!hovered) return null;
-      const r = hovered.getBoundingClientRect();
-      if (r.width > MAGNETIC_MAX || r.height > MAGNETIC_MAX) return null;
-      return { x: r.left + r.width / 2, y: r.top + r.height / 2 };
+      if (!hovered || !hoveredRect) return null;
+      if (hoveredRect.width > MAGNETIC_MAX || hoveredRect.height > MAGNETIC_MAX) return null;
+      return { x: hoveredRect.left + hoveredRect.width / 2, y: hoveredRect.top + hoveredRect.height / 2 };
     }
 
     // Aggiungi cursor-type="nav" a tutti i link che non lo hanno
-    function addCursorTypeToLinks(root: Document | Element = document) {
+    function ensureNavCursorOnLinks(root: Document | Element = document) {
       root.querySelectorAll<HTMLAnchorElement>("a").forEach((link) => {
         if (!link.hasAttribute("cursor-type")) {
           link.setAttribute("cursor-type", "nav");
@@ -175,22 +180,29 @@ export default function CustomCursor() {
     function registerNode(node: Element) {
       const t = node.getAttribute("cursor-type");
       if (!t || !(CURSOR_TYPES as readonly string[]).includes(t)) return;
-      // registrato solo quando i listener vengono davvero agganciati, così
-      // un nodo che riceve cursor-type più tardi non resta senza listener
       if (registered.has(node)) return;
       registered.add(node);
-      node.addEventListener("mouseenter", () => {
+
+      const enterHandler = () => {
         hovered = node;
+        hoveredRect = node.getBoundingClientRect();
         setType((node.getAttribute("cursor-type") || "idle") as CursorType);
-      });
-      node.addEventListener("mouseleave", () => {
-        if (hovered === node) hovered = null;
+      };
+      const leaveHandler = () => {
+        if (hovered === node) {
+          hovered = null;
+          hoveredRect = null;
+        }
         setType("idle");
-      });
+      };
+
+      node.addEventListener("mouseenter", enterHandler);
+      node.addEventListener("mouseleave", leaveHandler);
+      listeners.set(node, { enter: enterHandler, leave: leaveHandler });
     }
 
     function scan(root: Document | Element = document) {
-      addCursorTypeToLinks(root);
+      ensureNavCursorOnLinks(root);
       root.querySelectorAll<Element>("[cursor-type]").forEach(registerNode);
     }
 
@@ -200,15 +212,7 @@ export default function CustomCursor() {
           m.addedNodes.forEach((n) => {
             if (n.nodeType !== 1) return;
             const node = n as Element;
-            // Aggiungi cursor-type="nav" ai link se non ce l'hanno già
-            if (node.tagName === "A" && !node.hasAttribute("cursor-type")) {
-              node.setAttribute("cursor-type", "nav");
-            }
-            node.querySelectorAll<HTMLAnchorElement>("a").forEach((link) => {
-              if (!link.hasAttribute("cursor-type")) {
-                link.setAttribute("cursor-type", "nav");
-              }
-            });
+            ensureNavCursorOnLinks(node);
             if (node.hasAttribute("cursor-type")) registerNode(node);
             node.querySelectorAll<Element>("[cursor-type]").forEach(registerNode);
           });
@@ -231,6 +235,8 @@ export default function CustomCursor() {
       }
     });
 
+    // IMPORTANTE: pos DEVE essere inizializzato prima di aggiungere listener
+    // Se cambiate questo ordine, assicuratevi che pos sia sempre valido prima di onMove()
     window.addEventListener("mousemove", onMove);
     window.addEventListener("resize",    onResize);
     setActive(window.innerWidth >= 1024);
@@ -244,6 +250,12 @@ export default function CustomCursor() {
       window.removeEventListener("resize",    onResize);
       mo.disconnect();
       html.classList.remove("cursor--active");
+      // Rimuovi tutti i listener tracciati per evitare memory leak
+      listeners.forEach((handlers, node) => {
+        node.removeEventListener("mouseenter", handlers.enter);
+        node.removeEventListener("mouseleave", handlers.leave);
+      });
+      listeners.clear();
     };
   }, []);
 
