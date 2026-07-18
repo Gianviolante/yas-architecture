@@ -136,6 +136,9 @@ export default function CustomCursor() {
       if (!pos) pos = { x: e.clientX, y: e.clientY, o: 0 };
     };
 
+    // Inizializza pos subito (al centro dello schermo) per evitare che il cursore sia bloccato in (0,0)
+    pos = { x: window.innerWidth / 2, y: window.innerHeight / 2, o: 0 };
+
     const onResize = () => setActive(window.innerWidth >= 1024);
 
     const registered = new WeakSet<Element>();
