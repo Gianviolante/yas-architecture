@@ -150,7 +150,7 @@ export default async function HomePage() {
                     className="relative flex-1 overflow-hidden bg-[#d9d9d9] md:min-h-0"
                     style={{ minHeight: `${mobileH}px` }}
                   >
-                    <Image src={img} alt={label} fill className="object-cover transition-transform duration-500 group-hover:scale-[1.03]" />
+                    <Image src={img} alt={label} fill className="object-cover transition-transform duration-500 group-hover:scale-[1.03]" priority />
                   </div>
                 </Link>
               ))}
@@ -241,7 +241,7 @@ export default async function HomePage() {
               {home?.studioImage?.url ? (
                 <Image src={home.studioImage.url} alt="Lo studio" fill className="object-cover" />
               ) : (
-                <Image src="/assets/home-studio.jpg" alt="Lo studio" fill className="object-cover" />
+                <Image src="/assets/home-studio.jpg" alt="Lo studio" fill className="object-cover" priority />
               )}
             </div>
             {/* contatore "4 / 6" — visibile solo su mobile */}

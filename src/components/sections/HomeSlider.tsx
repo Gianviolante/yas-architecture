@@ -53,7 +53,7 @@ export default function HomeSlider() {
       >
         {SLIDES.map((src, i) => (
           <div key={i} className="relative w-full h-full shrink-0">
-            <Image src={src} alt="" fill className="object-cover" />
+            <Image src={src} alt="" fill className="object-cover" priority={i === 0} />
           </div>
         ))}
       </div>

@@ -145,7 +145,7 @@ export default function HomeProjectsCarousel({ projects }: Props) {
               style={{ transform: `translateX(-${shownIdx * stepPx}px)` }}
             >
               {useSanity
-                ? projects.map((p) => (
+                ? projects.map((p, idx) => (
                     <div key={p._id} className="w-full md:w-[calc(50%-7px)] shrink-0">
                       <Link
                         href={`/progetti/${p.slug.current}`}
@@ -154,7 +154,7 @@ export default function HomeProjectsCarousel({ projects }: Props) {
                         {/* immagine senza frecce (frecce sono fisse sul carousel esterno) */}
                         <div className="relative h-[376px] md:h-[322px] lg:h-[550px] overflow-hidden mb-4">
                           {p.coverImageUrl
-                            ? <Image src={p.coverImageUrl} alt={p.title} fill className="object-cover transition-transform duration-500 group-hover:scale-[1.03]" />
+                            ? <Image src={p.coverImageUrl} alt={p.title} fill className="object-cover transition-transform duration-500 group-hover:scale-[1.03]" priority={idx < 3} />
                             : <div className="w-full h-full bg-[#d9d9d9]" />}
                         </div>
                         <p className="text-[17.5px] leading-[1.5] text-[#282828] mb-2 truncate group-hover:opacity-70 transition-opacity">
@@ -166,10 +166,10 @@ export default function HomeProjectsCarousel({ projects }: Props) {
                       </Link>
                     </div>
                   ))
-                : PLACEHOLDERS.map((p) => (
+                : PLACEHOLDERS.map((p, idx) => (
                     <div key={p.id} className="w-full md:w-[calc(50%-7px)] shrink-0">
                       <div className="relative h-[376px] md:h-[322px] lg:h-[550px] overflow-hidden mb-4">
-                        <Image src={p.img} alt="" fill className="object-cover" />
+                        <Image src={p.img} alt="" fill className="object-cover" priority={idx < 3} />
                       </div>
                       <p className="text-[17.5px] leading-[1.5] text-[#282828] mb-2 truncate">{p.label}</p>
                       <span className="inline-flex items-center border-2 border-[#333] rounded-[100px] px-[10px] py-[3px] text-[11px] text-[#333] leading-[1.4] whitespace-nowrap">
