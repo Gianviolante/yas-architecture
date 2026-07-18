@@ -63,10 +63,18 @@ export interface Event {
 }
 
 export interface Home {
-  introDescription?: unknown; // PortableText
-  bodyLeft?:         unknown; // PortableText
-  bodyRight?:        unknown; // PortableText
-  studioDescription?:unknown; // PortableText
+  // Hero section
+  heroTitleMain?:     string;  // "yas-arch"
+  heroSubtitleLeft?:  unknown; // PortableText "Studio architettura e design"
+  heroSubtitleRight?: string;  // "Apulian inspiration guide"
+  heroAddress?:       unknown; // PortableText (Via Dè Gracchi, 47, ecc.)
+  // Descrizione section
+  introDescription?:  unknown; // PortableText
+  bodyLeft?:          unknown; // PortableText
+  bodyRight?:         unknown; // PortableText
+  // Studio section
+  studioDescription?: unknown; // PortableText
+  studioImage?:       SanityImage;
 }
 
 export interface Studio {

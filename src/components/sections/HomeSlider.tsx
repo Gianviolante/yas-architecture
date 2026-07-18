@@ -38,7 +38,8 @@ export default function HomeSlider() {
   return (
     <div
       ref={containerRef}
-      className="relative w-full h-[752px] overflow-hidden"
+      className="relative w-full overflow-hidden"
+      style={{ aspectRatio: "4/3" }}
       onMouseMove={isPointerFine ? handleMouseMove : undefined}
       onMouseLeave={isPointerFine ? handleMouseLeave : undefined}
       onClick={isPointerFine ? handleClick : undefined}
@@ -60,15 +61,17 @@ export default function HomeSlider() {
 
       {!isPointerFine && (
         <>
-          <button onClick={prev} aria-label="Precedente"
-            className="absolute left-[15px] top-1/2 -translate-y-1/2 size-[48px] mix-blend-difference flex items-center justify-center">
-            <Image src="/assets/nav-circle.svg" alt="" fill className="absolute inset-0" />
-            <Image src="/assets/nav-arrow-right.svg" alt="" width={20} height={20} className="relative z-10 -scale-x-100" />
+          <button onClick={prev} aria-label="Slide precedente"
+            className="absolute left-[5px] top-1/2 -translate-y-1/2 z-20 size-[48px] flex items-center justify-center rounded-full border-2 border-white mix-blend-difference">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="white">
+              <path fillRule="evenodd" clipRule="evenodd" d="M2.1,12l7.5,6.2L9,19l-9-7.5L9,4l0.6,0.8L2.1,11H24v1C24,12,2.1,12,2.1,12z"/>
+            </svg>
           </button>
-          <button onClick={next} aria-label="Successivo"
-            className="absolute right-[15px] top-1/2 -translate-y-1/2 size-[48px] mix-blend-difference flex items-center justify-center">
-            <Image src="/assets/nav-circle.svg" alt="" fill className="absolute inset-0" />
-            <Image src="/assets/nav-arrow-right.svg" alt="" width={20} height={20} className="relative z-10" />
+          <button onClick={next} aria-label="Slide successivo"
+            className="absolute right-[5px] top-1/2 -translate-y-1/2 z-20 size-[48px] flex items-center justify-center rounded-full border-2 border-white mix-blend-difference">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="white">
+              <path fillRule="evenodd" clipRule="evenodd" d="M21.9,12l-7.5,6.2L15,19l9-7.5L15,4l-0.6,0.8l7.5,6.2H0v1C0,12,21.9,12,21.9,12z"/>
+            </svg>
           </button>
         </>
       )}

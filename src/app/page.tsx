@@ -45,28 +45,40 @@ export default async function HomePage() {
           {/* ── 1. HERO — mobile ─────────────────────────────────────── */}
           <section className="md:hidden relative h-[382px] overflow-hidden">
             {/* labels top */}
-            <div className="absolute text-[12px] leading-[1.2] text-[#282828]" style={{ top: 0, left: "16px" }}>
-              <p>Studio archietettura</p>
-              <p>e design</p>
+            <div className="absolute text-[12px] leading-[1.2]" style={{ top: "8px", left: "16px", color: "#000000" }}>
+              {home?.heroSubtitleLeft ? (
+                <PortableText value={home.heroSubtitleLeft as Parameters<typeof PortableText>[0]["value"]} components={ptBlock} />
+              ) : (
+                <>
+                  <p>Studio architettura</p>
+                  <p>e design</p>
+                </>
+              )}
             </div>
-            <p className="absolute text-[12px] leading-[1.2] text-[#282828] text-right" style={{ top: 0, right: "15px" }}>
-              Apulian inspiration guide
+            <p className="absolute text-[12px] leading-[1.2] text-right" style={{ top: "8px", right: "15px", color: "#000000" }}>
+              {home?.heroSubtitleRight || "Apulian inspiration guide"}
             </p>
 
             {/* big title */}
             <h1
               className="absolute font-bold text-black select-none"
-              style={{ fontSize: "128px", lineHeight: "0.67", top: "26px", left: "25px", width: "350px" }}
+              style={{ fontSize: "clamp(64px, 18vw, 120px)", lineHeight: "0.8", top: "50px", left: "12px", width: "100%", paddingRight: "16px" }}
             >
-              yas-arch
+              {home?.heroTitleMain || "yas-arch"}
             </h1>
 
             {/* address bottom-left */}
             <div className="absolute text-[12px] leading-[1.2] text-black" style={{ top: "254px", left: "16px" }}>
-              <p>Via Dè Gracchi, 47</p>
-              <p>72100 Brindisi (BR) Italia</p>
-              <p>T +39 351 531 7762</p>
-              <p>info@yas-arch.com</p>
+              {home?.heroAddress ? (
+                <PortableText value={home.heroAddress as Parameters<typeof PortableText>[0]["value"]} components={ptBlock} />
+              ) : (
+                <>
+                  <p>Via Dè Gracchi, 47</p>
+                  <p>72100 Brindisi (BR) Italia</p>
+                  <p>T +39 351 531 7762</p>
+                  <p>info@yas-arch.com</p>
+                </>
+              )}
             </div>
 
             {/* links bottom-right */}
@@ -83,29 +95,43 @@ export default async function HomePage() {
               className="absolute font-bold text-black leading-none whitespace-nowrap select-none md:top-[23px] md:left-[81px] lg:top-[7px] lg:left-[198px]"
               style={{ fontSize: "clamp(8rem,19.8vw,285px)" }}
             >
-              yas-arch
+              {home?.heroTitleMain || "yas-arch"}
             </h1>
 
             <div
-              className="absolute text-[12px] leading-[1.2] text-[#282828] text-right md:top-[48px] md:right-[calc(100%-362px)] lg:top-[79px] lg:right-[calc(100%-499px)]"
+              className="absolute text-[12px] leading-[1.2] text-right md:top-[48px] md:right-[calc(100%-362px)] lg:top-[79px] lg:right-[calc(100%-499px)]"
+              style={{ color: "#000000" }}
             >
-              <p>Studio architettura</p>
-              <p>e design</p>
+              {home?.heroSubtitleLeft ? (
+                <PortableText value={home.heroSubtitleLeft as Parameters<typeof PortableText>[0]["value"]} components={ptBlock} />
+              ) : (
+                <>
+                  <p>Studio architettura</p>
+                  <p>e design</p>
+                </>
+              )}
             </div>
 
             <p
-              className="absolute text-[12px] leading-[1.2] text-[#282828] md:top-[48px] md:left-[462px] lg:top-[79px] lg:left-[765px]"
+              className="absolute text-[12px] leading-[1.2] md:top-[48px] md:left-[462px] lg:top-[79px] lg:left-[765px]"
+              style={{ color: "#000000" }}
             >
-              Apulian inspiration guide
+              {home?.heroSubtitleRight || "Apulian inspiration guide"}
             </p>
 
             <div
               className="absolute text-[12px] leading-[1.2] text-black text-right md:top-[221px] md:right-[calc(100%-545px)] lg:top-[327px] lg:right-[calc(100%-972px)]"
             >
-              <p>Via Dè Gracchi, 47</p>
-              <p>72100 Brindisi (BR) Italia</p>
-              <p>T +39 351 531 7762</p>
-              <p>info@yas-arch.com</p>
+              {home?.heroAddress ? (
+                <PortableText value={home.heroAddress as Parameters<typeof PortableText>[0]["value"]} components={ptBlock} />
+              ) : (
+                <>
+                  <p>Via Dè Gracchi, 47</p>
+                  <p>72100 Brindisi (BR) Italia</p>
+                  <p>T +39 351 531 7762</p>
+                  <p>info@yas-arch.com</p>
+                </>
+              )}
             </div>
           </section>
 
@@ -212,7 +238,11 @@ export default async function HomePage() {
             </div>
             {/* immagine: 245px mobile / 411px tablet / 631px desktop */}
             <div className="relative h-[245px] md:h-[411px] lg:h-[631px] mx-auto md:max-w-[668px] lg:max-w-[1027px] mb-2 md:mb-10">
-              <Image src="/assets/home-studio.jpg" alt="Lo studio" fill className="object-cover" />
+              {home?.studioImage?.asset?.url ? (
+                <Image src={home.studioImage.asset.url} alt="Lo studio" fill className="object-cover" />
+              ) : (
+                <Image src="/assets/home-studio.jpg" alt="Lo studio" fill className="object-cover" />
+              )}
             </div>
             {/* contatore "4 / 6" — visibile solo su mobile */}
             <p className="md:hidden text-[12px] leading-[1.5] text-[#282828] text-right mb-6">4 / 6</p>

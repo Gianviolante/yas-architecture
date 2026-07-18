@@ -169,6 +169,14 @@ export default function Lightbox({ items, initialIndex, onClose }: Props) {
   const onMouseEnter = () => wrapperRef.current?.setAttribute("cursor-type", "drag");
   const onMouseLeave = () => wrapperRef.current?.removeAttribute("cursor-type");
 
+  // arrow hover — freccia scompare, cursore diventa la freccia
+  const onArrowMouseEnter = (arrowType: "prev" | "next") => {
+    // L'attributo cursor-type è già impostato nell'effect, qui solo gestisci hover
+  };
+  const onArrowMouseLeave = () => {
+    // arrow ritorna visible (via CSS)
+  };
+
   return (
     <div className="fixed inset-0 z-[9999] bg-white flex flex-col">
 
@@ -220,9 +228,11 @@ export default function Lightbox({ items, initialIndex, onClose }: Props) {
         <button
           ref={prevRef}
           onClick={tryPrev}
+          onMouseEnter={() => onArrowMouseEnter("prev")}
+          onMouseLeave={onArrowMouseLeave}
           aria-label="Immagine precedente"
           disabled={!canPrev}
-          className="absolute left-[15px] size-[40px] flex items-center justify-center transition-opacity hover:opacity-40 disabled:opacity-20"
+          className="arrow-nav absolute left-[15px] size-[40px] flex items-center justify-center transition-opacity hover:opacity-0 disabled:opacity-20"
         >
           <ArrowLeft />
         </button>
@@ -234,9 +244,11 @@ export default function Lightbox({ items, initialIndex, onClose }: Props) {
         <button
           ref={nextRef}
           onClick={tryNext}
+          onMouseEnter={() => onArrowMouseEnter("next")}
+          onMouseLeave={onArrowMouseLeave}
           aria-label="Immagine successiva"
           disabled={!canNext}
-          className="absolute right-[15px] size-[40px] flex items-center justify-center transition-opacity hover:opacity-40 disabled:opacity-20"
+          className="arrow-nav absolute right-[15px] size-[40px] flex items-center justify-center transition-opacity hover:opacity-0 disabled:opacity-20"
         >
           <ArrowRight />
         </button>

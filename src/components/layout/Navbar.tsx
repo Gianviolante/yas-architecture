@@ -42,7 +42,7 @@ export default function Navbar() {
   const pathname = usePathname();
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 80);
+    const onScroll = () => setScrolled(window.scrollY > 40);
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
@@ -134,21 +134,10 @@ export default function Navbar() {
             >
               Contatti
             </Link>
-            <button className="text-[11.82px] leading-normal px-[17.727px] py-[7.386px] rounded-[100px] bg-[#e9ebed] text-[#333] hover:bg-[#d9dadb] transition-colors duration-200">
-              IT
-            </button>
-            <button aria-label="Cerca" className="relative size-[24px] shrink-0">
-              <Image src="/assets/icon-search.svg" alt="Cerca" fill />
-            </button>
           </div>
 
           {/* Mobile right controls */}
-          <div className="md:hidden flex items-center gap-2">
-            <button className="text-[11px] px-3 py-1 rounded-full bg-[#e9ebed] text-[#333]">IT</button>
-            <button aria-label="Cerca" className="relative size-6 shrink-0">
-              <Image src="/assets/icon-search.svg" alt="Cerca" fill />
-            </button>
-          </div>
+          <div className="md:hidden flex items-center gap-2" />
         </nav>
       </header>
 

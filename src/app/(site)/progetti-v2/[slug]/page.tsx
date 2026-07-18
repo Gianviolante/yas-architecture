@@ -55,7 +55,7 @@ export default async function ProgettoPageV2({ params }: { params: Promise<{ slu
     <div className="bg-white">
 
       {/* ── Desktop: Side-by-side layout (hero left, content right) ──── */}
-      <div className="md:flex md:gap-[30px] md:px-[30px] md:mt-[120px]">
+      <div className="md:flex md:gap-[30px] lg:gap-[50px] md:px-[30px] lg:px-[40px] md:mt-[120px]">
 
         {/* ── Left column: Hero image (1:1 square - responsive like Groppi) ──────────────────── */}
         <div className="flex-shrink-0 w-full md:max-w-[50%] mx-4 md:mx-0 mt-[60px] md:mt-0 aspect-square overflow-hidden relative">
@@ -71,7 +71,7 @@ export default async function ProgettoPageV2({ params }: { params: Promise<{ slu
 
           {/* Title */}
           <div className="page-px md:p-0 pt-[24px] md:pt-[20px]">
-            <div className="flex flex-col md:flex-row md:items-start md:justify-between md:gap-[40px]">
+            <div className="flex flex-col md:flex-row md:items-start md:justify-between md:gap-[40px] lg:gap-[60px]">
               <h1
                 className="text-[48px] md:text-[60px] font-bold tracking-tight leading-[1.3] text-[#282828]"
                 style={{ fontSize: "clamp(48px, 10vw, 80px)" }}
@@ -91,49 +91,49 @@ export default async function ProgettoPageV2({ params }: { params: Promise<{ slu
           <div className="page-px md:p-0 pt-[16px] md:pt-[24px] pb-[24px]">
             <div className="space-y-[8px] md:space-y-[12px]">
               {project.typology && (
-                <div className="flex flex-col md:flex-row md:gap-[40px]">
+                <div className="flex flex-col md:flex-row md:gap-[40px] lg:gap-[60px]">
                   <p className="text-[12px] leading-[1.3] text-[#282828] font-semibold md:w-[140px] md:flex-shrink-0">Area</p>
                   <p className="text-[12px] leading-[1.3] text-[#282828]">{project.typology}</p>
                 </div>
               )}
               {project.year && (
-                <div className="flex flex-col md:flex-row md:gap-[40px]">
+                <div className="flex flex-col md:flex-row md:gap-[40px] lg:gap-[60px]">
                   <p className="text-[12px] leading-[1.3] text-[#282828] font-semibold md:w-[140px] md:flex-shrink-0">Timeline</p>
                   <p className="text-[12px] leading-[1.3] text-[#282828]">{project.year}</p>
                 </div>
               )}
               {project.location && (
-                <div className="flex flex-col md:flex-row md:gap-[40px]">
+                <div className="flex flex-col md:flex-row md:gap-[40px] lg:gap-[60px]">
                   <p className="text-[12px] leading-[1.3] text-[#282828] font-semibold md:w-[140px] md:flex-shrink-0">Location</p>
                   <p className="text-[12px] leading-[1.3] text-[#282828]">{project.location}</p>
                 </div>
               )}
               {project.area && (
-                <div className="flex flex-col md:flex-row md:gap-[40px]">
+                <div className="flex flex-col md:flex-row md:gap-[40px] lg:gap-[60px]">
                   <p className="text-[12px] leading-[1.3] text-[#282828] font-semibold md:w-[140px] md:flex-shrink-0">Superficie</p>
                   <p className="text-[12px] leading-[1.3] text-[#282828]">{project.area} mq</p>
                 </div>
               )}
               {project.concept && (
-                <div className="flex flex-col md:flex-row md:gap-[40px]">
+                <div className="flex flex-col md:flex-row md:gap-[40px] lg:gap-[60px]">
                   <p className="text-[12px] leading-[1.3] text-[#282828] font-semibold md:w-[140px] md:flex-shrink-0">Concept</p>
                   <p className="text-[12px] leading-[1.3] text-[#282828]">{project.concept}</p>
                 </div>
               )}
               {project.projectTeam && (
-                <div className="flex flex-col md:flex-row md:gap-[40px]">
+                <div className="flex flex-col md:flex-row md:gap-[40px] lg:gap-[60px]">
                   <p className="text-[12px] leading-[1.3] text-[#282828] font-semibold md:w-[140px] md:flex-shrink-0">Progetto</p>
                   <p className="text-[12px] leading-[1.3] text-[#282828]">{project.projectTeam}</p>
                 </div>
               )}
               {project.rendering && (
-                <div className="flex flex-col md:flex-row md:gap-[40px]">
+                <div className="flex flex-col md:flex-row md:gap-[40px] lg:gap-[60px]">
                   <p className="text-[12px] leading-[1.3] text-[#282828] font-semibold md:w-[140px] md:flex-shrink-0">Rendering</p>
                   <p className="text-[12px] leading-[1.3] text-[#282828]">{project.rendering}</p>
                 </div>
               )}
               {project.photographer && (
-                <div className="flex flex-col md:flex-row md:gap-[40px]">
+                <div className="flex flex-col md:flex-row md:gap-[40px] lg:gap-[60px]">
                   <p className="text-[12px] leading-[1.3] text-[#282828] font-semibold md:w-[140px] md:flex-shrink-0">Fotografo</p>
                   <p className="text-[12px] leading-[1.3] text-[#282828]">{project.photographer}</p>
                 </div>
@@ -142,7 +142,7 @@ export default async function ProgettoPageV2({ params }: { params: Promise<{ slu
           </div>
 
           {/* Description */}
-          <div className="page-px md:p-0 pt-[32px] md:pt-[40px] pb-[24px] md:pb-[40px]">
+          <div className="page-px md:p-0 pt-[32px] md:pt-[40px] lg:pt-[60px] pb-[24px] md:pb-[40px] lg:pb-[60px]">
             <div
               className="text-[15px] md:text-[17px] leading-[1.8] md:leading-[1.8] text-[#282828]"
               style={{ maxWidth: "798px" }}
@@ -156,7 +156,7 @@ export default async function ProgettoPageV2({ params }: { params: Promise<{ slu
           </div>
 
           {/* Condividi (Share) Section */}
-          <div className="page-px md:p-0 pb-[40px] md:pb-0 md:pt-[24px] pt-[24px] md:mt-[40px]">
+          <div className="page-px md:p-0 pb-[40px] md:pb-0 md:pt-[24px] lg:pt-[40px] pt-[24px] md:mt-[40px] lg:mt-[60px]">
             <div className="flex items-center gap-[12px]">
               <p className="text-[12px] font-semibold leading-[1.3] text-[#282828]">Condividi</p>
               <div className="flex gap-[12px]">

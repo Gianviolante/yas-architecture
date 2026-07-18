@@ -3,8 +3,8 @@
 export const allProjectsQuery = `
   *[_type == "project"] | order(featured desc, year desc) {
     _id, title, slug, location, year, area, typology, status, featured,
-    coverImage, "coverImageUrl": coverImage.asset->url + "?w=1200&q=75&auto=format",
-    hoverImage, "hoverImageUrl": hoverImage.asset->url + "?w=600&q=75&auto=format"
+    coverImage, "coverImageUrl": coverImage.asset->url + "?w=1200&q=80&auto=format&dpr=2",
+    hoverImage, "hoverImageUrl": hoverImage.asset->url + "?w=600&q=80&auto=format&dpr=2"
   }
 `;
 
@@ -27,7 +27,7 @@ export const allTeamMembersQuery = `
 export const allEventsQuery = `
   *[_type == "event"] | order(date desc) {
     _id, title, slug, type, date,
-    coverImage, "coverImageUrl": coverImage.asset->url + "?w=1200&q=75&auto=format"
+    coverImage, "coverImageUrl": coverImage.asset->url + "?w=1200&q=80&auto=format&dpr=2"
   }
 `;
 
@@ -35,15 +35,17 @@ export const eventBySlugQuery = `
   *[_type == "event" && slug.current == $slug][0] {
     _id, title, slug, type, date,
     location, area, timeline, typology,
-    coverImage, "coverImageUrl": coverImage.asset->url + "?w=1200&q=75&auto=format",
+    coverImage, "coverImageUrl": coverImage.asset->url + "?w=1200&q=80&auto=format&dpr=2",
     description, body,
-    gallery[]{ ..., "url": asset->url }
+    gallery[]{ ..., "url": asset->url + "?w=1440&q=80&auto=format&dpr=2" }
   }
 `;
 
 export const homeQuery = `
   *[_type == "home"][0] {
-    introDescription, bodyLeft, bodyRight, studioDescription
+    introDescription, bodyLeft, bodyRight, studioDescription,
+    heroSubtitleLeft, heroTitleMain, heroSubtitleRight, heroAddress,
+    studioImage{ ..., "url": asset->url + "?w=1200&q=80&auto=format&dpr=2" }
   }
 `;
 

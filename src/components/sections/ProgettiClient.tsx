@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect, useRef } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import type { Project, Typology, ProjectStatus } from "@/lib/sanity/types";
@@ -26,6 +26,7 @@ interface Props { projects: Project[]; initialTypology?: string; }
 
 export default function ProgettiClient({ projects, initialTypology }: Props) {
   const [view,            setView]            = useState<"grid" | "index">("grid");
+  const [filtersOpen,     setFiltersOpen]     = useState(false);
   const [typologyFilters, setTypologyFilters] = useState<Set<Typology>>(() => {
     const all = [...AREA_FILTERS.map(f => f.value), ...CAT_FILTERS.map(f => f.value)].filter(v => v !== "all") as Typology[];
     if (initialTypology && all.includes(initialTypology as Typology)) return new Set([initialTypology as Typology]);
@@ -33,6 +34,25 @@ export default function ProgettiClient({ projects, initialTypology }: Props) {
   });
   const [statoFilters,   setStatoFilters]    = useState<Set<ProjectStatus>>(new Set());
   const [hoveredId,      setHoveredId]       = useState<string | null>(null);
+  const lastClickRef = useRef(0); // Traccia l'ultimo click sul bottone "Filtra"
+
+  // Auto-close filtri al scroll (con debounce veloce + smooth transition)
+  useEffect(() => {
+    let timeoutId: NodeJS.Timeout | null = null;
+    const handleScroll = () => {
+      // Ignora scroll entro 500ms dal click (evita auto-close subito dopo apertura)
+      if (Date.now() - lastClickRef.current < 500) return;
+      if (timeoutId) clearTimeout(timeoutId);
+      timeoutId = setTimeout(() => {
+        setFiltersOpen(false);
+      }, 80); // Chiusura rapida ma smooth grazie alla transizione CSS
+    };
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      if (timeoutId) clearTimeout(timeoutId);
+    };
+  }, []);
 
   const filtered = useMemo(() => projects.filter((p) => {
     const matchType  = typologyFilters.size === 0 || typologyFilters.has(p.typology);
@@ -98,61 +118,86 @@ export default function ProgettiClient({ projects, initialTypology }: Props) {
       {/* ── Sticky filter bar ──────────────────────────────────────── */}
       <div className="sticky top-[60px] md:top-[80px] z-40 bg-white shadow-[0px_6px_4px_rgba(0,0,0,0.1)]">
 
-        {/* ── Mobile filter (stacked groups, horizontal scroll) ─────── */}
+        {/* ── Mobile filter (collapsible accordion) ─────────────────── */}
         <div className="md:hidden pt-[16px] pb-[10px]">
 
-          {/* Area */}
-          <p className="text-[12px] leading-[1.5] text-[#282828] px-[15px]">Area</p>
-          <div className="overflow-x-auto">
-            <div className="flex gap-[8px] px-[15px] py-[11px]">
-              <button onClick={() => setTypologyFilters(new Set())} className={chipMb(typologyFilters.size === 0)}>
-                Tutti i progetti
-              </button>
-              {AREA_FILTERS.slice(1).map(({ label, value }) => (
-                <button key={value} onClick={() => toggleTypology(value as Typology)} className={chipMb(typologyFilters.has(value as Typology))}>
-                  {label}
-                </button>
-              ))}
-            </div>
-          </div>
+          {/* Filter toggle button */}
+          <button
+            onClick={() => {
+              lastClickRef.current = Date.now();
+              setFiltersOpen(!filtersOpen);
+            }}
+            className="w-full flex items-center justify-between px-[15px] py-[10px] mb-[8px]"
+          >
+            <span className="text-[16px] leading-normal text-[#1a1a1a]">Filtra</span>
+            <svg
+              width="12"
+              height="12"
+              viewBox="0 0 12 12"
+              fill="none"
+              className={`transition-transform duration-200 ${filtersOpen ? "rotate-180" : ""}`}
+            >
+              <path d="M6 0V12M0 6H12" stroke="#1a1a1a" strokeWidth="1.5" strokeLinecap="round" />
+            </svg>
+          </button>
 
-          {/* Categoria */}
-          <p className="text-[12px] leading-[1.5] text-[#282828] px-[15px]">Categoria</p>
-          <div className="overflow-x-auto">
-            <div className="flex gap-[8px] px-[15px] py-[11px]">
-              {CAT_FILTERS.map(({ label, value }) => (
-                <button key={value} onClick={() => toggleTypology(value)} className={chipMb(typologyFilters.has(value))}>
-                  {label}
-                </button>
-              ))}
-            </div>
-          </div>
+          {/* Filter groups (hidden when collapsed) */}
+          {filtersOpen && (
+            <div className="border-t border-black pt-[12px] animate-in fade-in duration-300">
+              {/* Area */}
+              <p className="text-[12px] leading-[1.5] text-[#282828] px-[15px]">Area</p>
+              <div className="overflow-x-auto">
+                <div className="flex gap-[8px] px-[15px] py-[11px]">
+                  <button onClick={() => setTypologyFilters(new Set())} className={chipMb(typologyFilters.size === 0)}>
+                    Tutti i progetti
+                  </button>
+                  {AREA_FILTERS.slice(1).map(({ label, value }) => (
+                    <button key={value} onClick={() => toggleTypology(value as Typology)} className={chipMb(typologyFilters.has(value as Typology))}>
+                      {label}
+                    </button>
+                  ))}
+                </div>
+              </div>
 
-          {/* Stato */}
-          <p className="text-[12px] leading-[1.5] text-[#282828] px-[15px]">Stato</p>
-          <div className="overflow-x-auto">
-            <div className="flex gap-[8px] px-[15px] py-[11px]">
-              {STATO_FILTERS.map(({ label, value }) => (
-                <button key={value} onClick={() => toggleStato(value)} className={chipMb(statoFilters.has(value))}>
-                  {label}
-                </button>
-              ))}
-            </div>
-          </div>
+              {/* Categoria */}
+              <p className="text-[12px] leading-[1.5] text-[#282828] px-[15px]">Categoria</p>
+              <div className="overflow-x-auto">
+                <div className="flex gap-[8px] px-[15px] py-[11px]">
+                  {CAT_FILTERS.map(({ label, value }) => (
+                    <button key={value} onClick={() => toggleTypology(value)} className={chipMb(typologyFilters.has(value))}>
+                      {label}
+                    </button>
+                  ))}
+                </div>
+              </div>
 
-          {/* Active filters summary */}
-          <div className="flex items-center justify-between px-[15px] min-h-[22px] pb-[8px]">
-            <p className="text-[12px] leading-[22px] text-[#282828]">
-              <span>Filtra per: </span>
-              {hasFilters && <span className="text-[#d9d9d9]">{activeLabel}</span>}
-            </p>
-            {hasFilters && (
-              <button onClick={reset} className="flex items-center gap-[6px] text-[12px] leading-[22px] text-[#282828]">
-                Reset
-                <Image src="/assets/icon-reset.svg" alt="" width={10} height={8} />
-              </button>
-            )}
-          </div>
+              {/* Stato */}
+              <p className="text-[12px] leading-[1.5] text-[#282828] px-[15px]">Stato</p>
+              <div className="overflow-x-auto">
+                <div className="flex gap-[8px] px-[15px] py-[11px]">
+                  {STATO_FILTERS.map(({ label, value }) => (
+                    <button key={value} onClick={() => toggleStato(value)} className={chipMb(statoFilters.has(value))}>
+                      {label}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              {/* Active filters summary */}
+              <div className="flex items-center justify-between px-[15px] min-h-[22px] pb-[8px]">
+                <p className="text-[12px] leading-[22px] text-[#282828]">
+                  <span>Filtra per: </span>
+                  {hasFilters && <span className="text-[#d9d9d9]">{activeLabel}</span>}
+                </p>
+                {hasFilters && (
+                  <button onClick={reset} className="flex items-center gap-[6px] text-[12px] leading-[22px] text-[#282828]">
+                    Reset
+                    <Image src="/assets/icon-reset.svg" alt="" width={10} height={8} />
+                  </button>
+                )}
+              </div>
+            </div>
+          )}
         </div>
 
         {/* ── Tablet filter (Area full row, Categoria|Stato 2-col) ────── */}

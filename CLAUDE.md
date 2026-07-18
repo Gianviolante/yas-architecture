@@ -186,7 +186,11 @@ export default function MyComponent({ className, variant = "a" }: Props) {
 - NO stili inline salvo valori dinamici (`style={{ width: value }}`)
 - NO CSS modules — solo classi Tailwind
 - Responsività: mobile-first (`sm:`, `md:`, `lg:`, `xl:`)
-- Breakpoint principale: 375px (mobile), 768px (tablet), 1440px (desktop)
+- **Breakpoints ufficiali**: 
+  - 375px (mobile) — no prefix
+  - 768px (tablet/desktop) — `md:` prefix
+  - 1024px (iPad landscape) — `lg:` prefix
+  - 1440px (large desktop) — max-w container
 - Transizioni standard: `transition-all duration-200 ease-out`
 
 ### 4. Asset handling
