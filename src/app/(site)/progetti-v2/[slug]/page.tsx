@@ -58,9 +58,9 @@ export default async function ProgettoPageV2({ params }: { params: Promise<{ slu
       <div className="md:flex md:gap-[30px] md:px-[30px] md:mt-[72px]">
 
         {/* ── Left column: Hero image (1:1 square - responsive like Groppi) ──────────────────── */}
-        <div className="flex-shrink-0 w-full md:flex-1 mx-4 md:mx-0 mt-[60px] md:mt-0 aspect-square overflow-hidden relative max-w-[600px] md:max-w-none">
+        <div className="flex-shrink-0 w-full md:basis-0 md:grow mx-4 md:mx-0 mt-[60px] md:mt-0 aspect-square overflow-hidden relative max-w-[600px] md:max-w-none">
           {heroUrl ? (
-            <Image src={heroUrl} alt={project.title} fill className="object-cover" priority />
+            <Image src={heroUrl} alt={project.title} fill className="object-contain bg-[#f5f5f5]" priority />
           ) : (
             <div className="w-full h-full bg-[#d9d9d9]" />
           )}
@@ -70,7 +70,7 @@ export default async function ProgettoPageV2({ params }: { params: Promise<{ slu
         <div className="flex-1">
 
           {/* Title */}
-          <div className="page-px md:p-0 pt-[14px] md:pt-0">
+          <div className="page-px md:p-0 pt-[24px] md:pt-[20px]">
             <div className="flex flex-col md:flex-row md:items-start md:justify-between md:gap-[40px]">
               <h1
                 className="text-[48px] md:text-[60px] font-bold tracking-tight leading-[1.3] text-[#282828]"
