@@ -74,7 +74,7 @@ export interface Home {
   bodyRight?:         unknown; // PortableText
   // Studio section
   studioDescription?: unknown; // PortableText
-  studioImage?:       SanityImage;
+  studioImage?:       SanityImage & { url?: string };
 }
 
 export interface Studio {

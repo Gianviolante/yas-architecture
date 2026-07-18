@@ -238,8 +238,8 @@ export default async function HomePage() {
             </div>
             {/* immagine: 245px mobile / 411px tablet / 631px desktop */}
             <div className="relative h-[245px] md:h-[411px] lg:h-[631px] mx-auto md:max-w-[668px] lg:max-w-[1027px] mb-2 md:mb-10">
-              {home?.studioImage?.asset?.url ? (
-                <Image src={home.studioImage.asset.url} alt="Lo studio" fill className="object-cover" />
+              {home?.studioImage?.url ? (
+                <Image src={home.studioImage.url} alt="Lo studio" fill className="object-cover" />
               ) : (
                 <Image src="/assets/home-studio.jpg" alt="Lo studio" fill className="object-cover" />
               )}
