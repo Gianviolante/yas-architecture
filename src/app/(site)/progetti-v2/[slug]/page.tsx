@@ -55,7 +55,7 @@ export default async function ProgettoPageV2({ params }: { params: Promise<{ slu
     <div className="bg-white">
 
       {/* ── Desktop: Side-by-side layout (hero left, content right) ──── */}
-      <div className="md:flex md:gap-[30px] md:px-[30px] md:mt-[72px]">
+      <div className="md:flex md:gap-[30px] md:px-[30px] md:mt-[48px]">
 
         {/* ── Left column: Hero image (1:1 square - responsive like Groppi) ──────────────────── */}
         <div className="flex-shrink-0 w-full md:max-w-[50%] mx-4 md:mx-0 mt-[60px] md:mt-0 aspect-square overflow-hidden relative">
