@@ -251,12 +251,12 @@ export default function ProgettiClient({ projects, initialTypology }: Props) {
 
         {/* ── Desktop filter (3-col grid) ────────────────────────────── */}
         <div className="hidden lg:block page-px pt-[16px] pb-[10px]">
-          <div className="grid grid-cols-3 gap-[14px] mb-[4px]">
+          <div className="grid grid-cols-3 gap-[8px] mb-[4px]">
             <p className="text-[12px] leading-[22px] text-[#282828]">Area</p>
             <p className="text-[12px] leading-[22px] text-[#282828]">Categoria</p>
             <p className="text-[12px] leading-[22px] text-[#282828]">Stato</p>
           </div>
-          <div className="grid grid-cols-3 gap-[14px]">
+          <div className="grid grid-cols-3 gap-[8px]">
             <div className="flex flex-wrap gap-[8px]">
               <button onClick={() => setTypologyFilters(new Set())} className={chipDt(typologyFilters.size === 0)}>
                 Tutti i progetti
