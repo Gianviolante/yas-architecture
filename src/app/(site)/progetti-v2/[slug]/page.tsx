@@ -156,47 +156,33 @@ export default async function ProgettoPageV2({ params }: { params: Promise<{ slu
           </div>
 
           {/* Condividi (Share) Section */}
-          <div className="page-px md:p-0 pb-[40px] md:pb-0 md:pt-[24px] border-t border-[#e5e5e5] pt-[24px] md:mt-[40px]">
-            <p className="text-[12px] font-semibold leading-[1.3] text-[#282828] mb-[16px]">Condividi</p>
-            <div className="flex gap-[16px]">
-              <a
-                href={`https://www.facebook.com/sharer/sharer.php?u=${typeof window !== 'undefined' ? window.location.href : ''}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-[12px] leading-[1.3] text-[#888] hover:text-[#282828] transition-colors"
-              >
-                Facebook
-              </a>
-              <a
-                href={`https://www.linkedin.com/sharing/share-offsite/?url=${typeof window !== 'undefined' ? window.location.href : ''}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-[12px] leading-[1.3] text-[#888] hover:text-[#282828] transition-colors"
-              >
-                LinkedIn
-              </a>
-              <a
-                href={`https://twitter.com/intent/tweet?url=${typeof window !== 'undefined' ? window.location.href : ''}&text=${project.title}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-[12px] leading-[1.3] text-[#888] hover:text-[#282828] transition-colors"
-              >
-                Twitter
-              </a>
-              <a
-                href={`https://wa.me/?text=${project.title} ${typeof window !== 'undefined' ? window.location.href : ''}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-[12px] leading-[1.3] text-[#888] hover:text-[#282828] transition-colors"
-              >
-                WhatsApp
-              </a>
-              <a
-                href={`mailto:?subject=${project.title}&body=${typeof window !== 'undefined' ? window.location.href : ''}`}
-                className="text-[12px] leading-[1.3] text-[#888] hover:text-[#282828] transition-colors"
-              >
-                Email
-              </a>
+          <div className="page-px md:p-0 pb-[40px] md:pb-0 md:pt-[24px] pt-[24px] md:mt-[40px]">
+            <div className="flex items-center gap-[12px]">
+              <p className="text-[12px] font-semibold leading-[1.3] text-[#282828]">Condividi</p>
+              <div className="flex gap-[12px]">
+                <a
+                  href={`https://www.facebook.com/sharer/sharer.php?u=${typeof window !== 'undefined' ? window.location.href : ''}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="Condividi su Facebook"
+                  className="flex items-center justify-center w-[20px] h-[20px] text-[#888] hover:text-[#282828] transition-colors"
+                >
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+                  </svg>
+                </a>
+                <a
+                  href={`https://www.linkedin.com/sharing/share-offsite/?url=${typeof window !== 'undefined' ? window.location.href : ''}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="Condividi su LinkedIn"
+                  className="flex items-center justify-center w-[20px] h-[20px] text-[#888] hover:text-[#282828] transition-colors"
+                >
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.475-2.236-1.986-2.236-1.081 0-1.722.725-2.004 1.426-.103.25-.129.599-.129.949v5.43h-3.554s.05-8.807 0-9.726h3.554v1.375c.428-.659 1.191-1.596 2.897-1.596 2.116 0 3.702 1.382 3.702 4.356v5.591zM5.337 8.855c-1.144 0-1.915-.758-1.915-1.706 0-.962.771-1.709 1.96-1.709 1.188 0 1.914.747 1.939 1.709 0 .948-.751 1.706-1.984 1.706zm1.946 11.597H3.392V9.726h3.891v10.726zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.225 0z"/>
+                  </svg>
+                </a>
+              </div>
             </div>
           </div>
 
