@@ -111,6 +111,34 @@ export default function HomeProjectsCarousel({ projects }: Props) {
               />
             </>
           )}
+
+          {/* Frecce mobili fisse (non scrollano con le card) */}
+          {!isPointerFine && (
+            <>
+              <button
+                onClick={(e) => { e.preventDefault(); prev(); }}
+                className="absolute left-[5px] top-1/2 -translate-y-1/2 z-20 size-[48px] flex items-center justify-center rounded-full border-2 border-white mix-blend-difference"
+                aria-label="Progetto precedente"
+                disabled={!canPrev}
+                style={{ opacity: canPrev ? 1 : 0.3 }}
+              >
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="white">
+                  <path fillRule="evenodd" clipRule="evenodd" d="M2.1,12l7.5,6.2L9,19l-9-7.5L9,4l0.6,0.8L2.1,11H24v1C24,12,2.1,12,2.1,12z"/>
+                </svg>
+              </button>
+              <button
+                onClick={(e) => { e.preventDefault(); next(); }}
+                className="absolute right-[5px] top-1/2 -translate-y-1/2 z-20 size-[48px] flex items-center justify-center rounded-full border-2 border-white mix-blend-difference"
+                aria-label="Progetto successivo"
+                disabled={!canNext}
+                style={{ opacity: canNext ? 1 : 0.3 }}
+              >
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="white">
+                  <path fillRule="evenodd" clipRule="evenodd" d="M21.9,12l-7.5,6.2L15,19l9-7.5L15,4l-0.6,0.8l7.5,6.2H0v1C0,12,21.9,12,21.9,12z"/>
+                </svg>
+              </button>
+            </>
+          )}
           <div className="overflow-hidden" ref={viewportRef}>
             <div
               className="flex gap-[14px] transition-transform duration-500 ease-out"
@@ -123,37 +151,11 @@ export default function HomeProjectsCarousel({ projects }: Props) {
                         href={`/progetti/${p.slug.current}`}
                         className="block group"
                       >
-                        {/* immagine con frecce overlay su mobile */}
+                        {/* immagine senza frecce (frecce sono fisse sul carousel esterno) */}
                         <div className="relative h-[376px] md:h-[322px] lg:h-[550px] overflow-hidden mb-4">
                           {p.coverImageUrl
                             ? <Image src={p.coverImageUrl} alt={p.title} fill className="object-cover transition-transform duration-500 group-hover:scale-[1.03]" />
                             : <div className="w-full h-full bg-[#d9d9d9]" />}
-
-                          {/* frecce mobile — overlay sull'immagine */}
-                          <div className="md:hidden">
-                            {canPrev && (
-                              <button
-                                onClick={(e) => { e.preventDefault(); prev(); }}
-                                className="absolute left-[5px] top-[164px] size-[48px] flex items-center justify-center rounded-full border-2 border-white mix-blend-difference"
-                                aria-label="Progetto precedente"
-                              >
-                                <svg width="24" height="24" viewBox="0 0 24 24" fill="white">
-                                  <path fillRule="evenodd" clipRule="evenodd" d="M2.1,12l7.5,6.2L9,19l-9-7.5L9,4l0.6,0.8L2.1,11H24v1C24,12,2.1,12,2.1,12z"/>
-                                </svg>
-                              </button>
-                            )}
-                            {canNext && (
-                              <button
-                                onClick={(e) => { e.preventDefault(); next(); }}
-                                className="absolute right-[5px] top-[164px] size-[48px] flex items-center justify-center rounded-full border-2 border-white mix-blend-difference"
-                                aria-label="Progetto successivo"
-                              >
-                                <svg width="24" height="24" viewBox="0 0 24 24" fill="white">
-                                  <path fillRule="evenodd" clipRule="evenodd" d="M21.9,12l-7.5,6.2L15,19l9-7.5L15,4l-0.6,0.8l7.5,6.2H0v1C0,12,21.9,12,21.9,12z"/>
-                                </svg>
-                              </button>
-                            )}
-                          </div>
                         </div>
                         <p className="text-[17.5px] leading-[1.5] text-[#282828] mb-2 truncate group-hover:opacity-70 transition-opacity">
                           {p.title}{p.location ? `, ${p.location}` : ""}

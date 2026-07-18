@@ -43,7 +43,9 @@ export const eventBySlugQuery = `
 
 export const homeQuery = `
   *[_type == "home"][0] {
-    introDescription, bodyLeft, bodyRight, studioDescription
+    introDescription, bodyLeft, bodyRight, studioDescription,
+    heroSubtitleLeft, heroTitleMain, heroSubtitleRight, heroAddress,
+    studioImage{ ..., asset->url }
   }
 `;
 
