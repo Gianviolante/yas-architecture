@@ -4,6 +4,7 @@ import { useState, useRef, useEffect, useCallback, useSyncExternalStore } from "
 import Image from "next/image";
 import Lightbox from "@/components/ui/Lightbox";
 import { usePointerFine } from "@/lib/hooks/usePointerFine";
+import { animateValue, groppiEase } from "@/lib/utils/animate";
 
 export interface GalleryItem {
   url: string;
@@ -21,46 +22,6 @@ const NAV_THRESHOLD = 0.25;
 const DRAG_MIN      = 5;
 const RUBBER        = 0.25;
 const WHEEL_WAIT    = DURATION + 80;
-
-// ── Groppi easing: cubic-bezier(0.77, 0, 0.18, 1) ────────────────────
-// Implementazione Newton-Raphson identica ai browser.
-function makeCubicBezier(x1: number, y1: number, x2: number, y2: number) {
-  const sX  = (t: number) => 3*t*(1-t)*(1-t)*x1 + 3*t*t*(1-t)*x2 + t*t*t;
-  const sY  = (t: number) => 3*t*(1-t)*(1-t)*y1 + 3*t*t*(1-t)*y2 + t*t*t;
-  const dsX = (t: number) => 3*(1-t)*(1-t)*x1 + 6*t*(1-t)*(x2-x1) + 3*t*t*(1-x2);
-  const solve = (x: number) => {
-    let t = x;
-    for (let i = 0; i < 8; i++) {
-      const d = dsX(t); if (Math.abs(d) < 1e-9) break;
-      t -= (sX(t) - x) / d;
-    }
-    return t;
-  };
-  return (x: number) => sY(solve(x));
-}
-const groppiEase = makeCubicBezier(0.77, 0, 0.18, 1);
-
-// ── Animazione JS pura via rAF ────────────────────────────────────────
-// Anima `from → to` chiamando onUpdate ad ogni frame.
-// Restituisce una funzione cancel.
-function animateValue(
-  from: number,
-  to: number,
-  duration: number,
-  ease: (t: number) => number,
-  onUpdate: (v: number) => void,
-): () => void {
-  let startTime: number | null = null;
-  let rafId: number;
-  const tick = (now: number) => {
-    if (startTime === null) startTime = now;
-    const p = Math.min((now - startTime) / duration, 1);
-    onUpdate(from + (to - from) * ease(p));
-    if (p < 1) rafId = requestAnimationFrame(tick);
-  };
-  rafId = requestAnimationFrame(tick);
-  return () => cancelAnimationFrame(rafId);
-}
 
 // Store esterno per breakpoint — pattern useSyncExternalStore, niente setState in effect
 function subscribeResize(cb: () => void) {
@@ -295,7 +256,7 @@ export default function GallerySlider({ items, projectTitle, compact = false }: 
       {/* Track:   transform       → il DIV fisico scorre orizzontalmente */}
       <div
         ref={wrapperRef}
-        className={`select-none${isPointerFine ? " overflow-hidden" : ""}`}
+        className={`select-none relative${isPointerFine ? " overflow-hidden" : ""}`}
         onMouseMove={isPointerFine ? onMouseMove : undefined}
         onMouseLeave={isPointerFine ? onMouseLeave : undefined}
         onPointerDown={isPointerFine ? onPointerDown : undefined}
@@ -338,36 +299,14 @@ export default function GallerySlider({ items, projectTitle, compact = false }: 
         </div>
       </div>
 
-      {/* Navigation arrows + caption (Groppi-style) */}
+      {/* Navigation arrows disabled for now */}
+
+      {/* Caption below gallery */}
       {!compact && (
-        <div className="flex items-center justify-between px-[32px] mt-[16px] gap-[16px]">
-          <p className="text-[12px] leading-[1.2] text-[#282828] flex-1">
+        <div className="px-[32px] mt-[16px]">
+          <p className="text-[12px] leading-[1.2] text-[#282828]">
             {activeCaption}
           </p>
-          {isPointerFine && items.length > 1 && (
-            <div className="flex gap-[12px] flex-shrink-0">
-              <button
-                onClick={() => goTo(current - 1)}
-                disabled={current === 0}
-                className="p-[8px] text-[#282828] hover:opacity-60 disabled:opacity-30 transition-opacity"
-                aria-label="Immagine precedente"
-              >
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-                  <path fillRule="evenodd" d="M2.1,12l7.5,6.2L9,19l-9-7.5L9,4l0.6,0.8 L2.1,11H24v1C24,12,2.1,12,2.1,12z" clipRule="evenodd"/>
-                </svg>
-              </button>
-              <button
-                onClick={() => goTo(current + 1)}
-                disabled={current === items.length - 1}
-                className="p-[8px] text-[#282828] hover:opacity-60 disabled:opacity-30 transition-opacity"
-                aria-label="Immagine successiva"
-              >
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-                  <path fillRule="evenodd" d="M21.9,12l-7.5,6.2L15,19l9-7.5L15,4l-0.6,0.8 l7.5,6.2H0v1C0,12,21.9,12,21.9,12z" clipRule="evenodd"/>
-                </svg>
-              </button>
-            </div>
-          )}
         </div>
       )}
 

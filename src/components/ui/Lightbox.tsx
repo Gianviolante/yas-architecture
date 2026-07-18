@@ -1,8 +1,9 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useCallback } from "react";
 import Image from "next/image";
 import type { GalleryItem } from "@/components/sections/GallerySlider";
+import { animateValue, groppiEase } from "@/lib/utils/animate";
 
 interface Props {
   items: GalleryItem[];
@@ -10,9 +11,10 @@ interface Props {
   onClose: () => void;
 }
 
-const SWIPE_THRESHOLD = 50;   // px touch
-const WHEEL_THRESHOLD = 60;   // px trackpad
-const NAV_COOLDOWN    = 600;  // ms tra una navigazione e la prossima
+const DURATION        = 700;  // ms — allineato allo speed:700 dello Swiper di Groppi
+const SWIPE_THRESHOLD  = 50;   // px touch
+const WHEEL_THRESHOLD  = 60;   // px trackpad/rotellina
+const NAV_COOLDOWN     = 600;  // ms tra una navigazione e la prossima
 
 const ArrowLeft  = () => (
   <svg width="24" height="24" viewBox="0 0 24 24" fill="#000000">
@@ -27,36 +29,78 @@ const ArrowRight = () => (
 
 export default function Lightbox({ items, initialIndex, onClose }: Props) {
   const [idx, setIdx] = useState(initialIndex);
-  const imgAreaRef    = useRef<HTMLDivElement>(null);
+  const wrapperRef    = useRef<HTMLDivElement>(null); // overflow-hidden — clip del track
+  const trackRef      = useRef<HTMLDivElement>(null); // transform target — scorre fisicamente
   const closeRef      = useRef<HTMLButtonElement>(null);
   const prevRef       = useRef<HTMLButtonElement>(null);
   const nextRef       = useRef<HTMLButtonElement>(null);
 
-  // refs per wheel / drag — non servono re-render
+  // refs per wheel / drag / animazione — non servono re-render
+  const idxRef      = useRef(initialIndex);
   const wheelAccum  = useRef(0);
   const lastNav     = useRef(0);
   const wheelTimer  = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
   const dragStartX  = useRef<number | null>(null);
+  const cancelAnim  = useRef<(() => void) | null>(null);
 
-  const prev = () => setIdx((i: number) => Math.max(0, i - 1));
-  const next = () => setIdx((i: number) => Math.min(items.length - 1, i + 1));
+  useEffect(() => { idxRef.current = idx; }, [idx]);
 
   const canPrev = idx > 0;
   const canNext = idx < items.length - 1;
 
-  // helper con cooldown
+  // ── legge/imposta translateX del track (anche mid-animation) ──────────
+  const getTrackX = useCallback((): number => {
+    const t = trackRef.current;
+    if (!t) return 0;
+    const raw = window.getComputedStyle(t).transform;
+    return raw === "none" ? 0 : new DOMMatrix(raw).m41;
+  }, []);
+  const setTrackX = useCallback((x: number) => {
+    if (trackRef.current) trackRef.current.style.transform = `translate3d(${x}px, 0, 0)`;
+  }, []);
+
+  // ── goTo: anima il TRACK con rAF + curva Groppi, come lo Swiper
+  // effect:"slide" (speed:700) del loro modal-gallery ────────────────────
+  const goTo = useCallback((i: number) => {
+    const clamped = Math.max(0, Math.min(items.length - 1, i));
+    if (clamped === idxRef.current) return;
+    const width = wrapperRef.current?.clientWidth ?? 0;
+    idxRef.current = clamped;
+    setIdx(clamped);
+    const from = getTrackX();
+    const to   = -clamped * width;
+    cancelAnim.current?.();
+    cancelAnim.current = animateValue(from, to, DURATION, groppiEase, setTrackX);
+  }, [items.length, getTrackX, setTrackX]);
+
+  const prev = () => goTo(idxRef.current - 1);
+  const next = () => goTo(idxRef.current + 1);
+
+  // helper con cooldown — evita doppio trigger dalla stessa gesture
   const tryPrev = () => {
     const now = Date.now();
     if (now - lastNav.current < NAV_COOLDOWN) return;
-    if (!canPrev) return;
-    prev(); lastNav.current = now;
+    lastNav.current = now;
+    prev();
   };
   const tryNext = () => {
     const now = Date.now();
     if (now - lastNav.current < NAV_COOLDOWN) return;
-    if (!canNext) return;
-    next(); lastNav.current = now;
+    lastNav.current = now;
+    next();
   };
+
+  // Posiziona il track sull'immagine iniziale (no animazione) e riallinea al resize
+  useEffect(() => {
+    const align = () => {
+      cancelAnim.current?.();
+      const width = wrapperRef.current?.clientWidth ?? 0;
+      setTrackX(-idxRef.current * width);
+    };
+    align();
+    window.addEventListener("resize", align);
+    return () => window.removeEventListener("resize", align);
+  }, [setTrackX]);
 
   // Blocca scroll body
   useEffect(() => {
@@ -68,30 +112,35 @@ export default function Lightbox({ items, initialIndex, onClose }: Props) {
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
       if (e.key === "Escape")     onClose();
-      if (e.key === "ArrowLeft")  setIdx((i) => Math.max(0, i - 1));
-      if (e.key === "ArrowRight") setIdx((i) => Math.min(items.length - 1, i + 1));
+      if (e.key === "ArrowLeft")  tryPrev();
+      if (e.key === "ArrowRight") tryNext();
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
-  }, [onClose, items.length]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [onClose]);
 
-  // cursor-type sui bottoni — come Groppi (.btn--prev/.btn--next)
+  // cursor-type sui bottoni — come Groppi (.btn--prev/.btn--next/.btn--close)
   useEffect(() => {
     closeRef.current?.setAttribute("cursor-type", "close");
     prevRef.current?.setAttribute("cursor-type",  "prev");
     nextRef.current?.setAttribute("cursor-type",  "next");
   }, []);
 
-  // ── Trackpad horizontal scroll (wheel) ──────────────────────────────
+  // ── Wheel/trackpad — asse dominante, come Swiper mousewheel di Groppi
+  // (forceToAxis: false → usa deltaX o deltaY, quale dei due è più grande).
+  // Così la rotellina verticale normale naviga la gallery, non solo lo
+  // swipe orizzontale da trackpad.
   const onWheel = (e: React.WheelEvent<HTMLDivElement>) => {
-    // ignora scroll verticale puro
-    if (Math.abs(e.deltaX) < Math.abs(e.deltaY) * 0.5) return;
+    const absX  = Math.abs(e.deltaX);
+    const absY  = Math.abs(e.deltaY);
+    const delta = absX >= absY ? e.deltaX : e.deltaY;
 
     // resetta accumulatore se la gesture si interrompe
     clearTimeout(wheelTimer.current);
     wheelTimer.current = setTimeout(() => { wheelAccum.current = 0; }, 200);
 
-    wheelAccum.current += e.deltaX;
+    wheelAccum.current += delta;
 
     if (wheelAccum.current > WHEEL_THRESHOLD) {
       wheelAccum.current = 0;
@@ -103,9 +152,6 @@ export default function Lightbox({ items, initialIndex, onClose }: Props) {
   };
 
   // ── Drag/swipe unificato mouse + touch (Pointer Events) ──────────────
-  // Prima qui c'erano solo onTouchStart/onTouchEnd: funzionava lo swipe
-  // su mobile ma non il drag col mouse su desktop, dove restavano solo
-  // le frecce. I Pointer Events coprono entrambi gli input.
   const onPointerDown = (e: React.PointerEvent<HTMLDivElement>) => {
     dragStartX.current = e.clientX;
     try { e.currentTarget.setPointerCapture(e.pointerId); } catch { /* pointer non attivo, ignora */ }
@@ -120,10 +166,8 @@ export default function Lightbox({ items, initialIndex, onClose }: Props) {
   const onPointerCancel = () => { dragStartX.current = null; };
 
   // cursor drag sull'area immagine (desktop)
-  const onMouseEnter = () => imgAreaRef.current?.setAttribute("cursor-type", "drag");
-  const onMouseLeave = () => imgAreaRef.current?.removeAttribute("cursor-type");
-
-  const item = items[idx];
+  const onMouseEnter = () => wrapperRef.current?.setAttribute("cursor-type", "drag");
+  const onMouseLeave = () => wrapperRef.current?.removeAttribute("cursor-type");
 
   return (
     <div className="fixed inset-0 z-[9999] bg-white flex flex-col">
@@ -140,11 +184,11 @@ export default function Lightbox({ items, initialIndex, onClose }: Props) {
         </svg>
       </button>
 
-      {/* ── Area immagine ───────────────────────────────────────────── */}
+      {/* ── Area immagine — track orizzontale animato ─────────────────── */}
       <div className="flex-1 flex items-center justify-center px-[60px] md:px-[80px] py-[60px] min-h-0">
         <div
-          ref={imgAreaRef}
-          className="relative w-full h-full max-w-[960px] select-none"
+          ref={wrapperRef}
+          className="relative w-full h-full max-w-[960px] overflow-hidden select-none"
           onMouseEnter={onMouseEnter}
           onMouseLeave={onMouseLeave}
           onWheel={onWheel}
@@ -152,18 +196,21 @@ export default function Lightbox({ items, initialIndex, onClose }: Props) {
           onPointerUp={onPointerUp}
           onPointerCancel={onPointerCancel}
         >
-          {item && (
-            <Image
-              key={item.url}
-              src={item.url}
-              alt={item.caption ?? `Immagine ${idx + 1}`}
-              fill
-              className="object-contain pointer-events-none"
-              sizes="(max-width: 768px) 100vw, 960px"
-              priority
-              draggable={false}
-            />
-          )}
+          <div ref={trackRef} className="flex h-full" style={{ willChange: "transform" }}>
+            {items.map((it, i) => (
+              <div key={it.url} className="relative flex-none w-full h-full">
+                <Image
+                  src={it.url}
+                  alt={it.caption ?? `Immagine ${i + 1}`}
+                  fill
+                  className="object-contain pointer-events-none"
+                  sizes="(max-width: 768px) 100vw, 960px"
+                  priority={i === initialIndex}
+                  draggable={false}
+                />
+              </div>
+            ))}
+          </div>
         </div>
       </div>
 
@@ -172,7 +219,7 @@ export default function Lightbox({ items, initialIndex, onClose }: Props) {
 
         <button
           ref={prevRef}
-          onClick={prev}
+          onClick={tryPrev}
           aria-label="Immagine precedente"
           disabled={!canPrev}
           className="absolute left-[15px] size-[40px] flex items-center justify-center transition-opacity hover:opacity-40 disabled:opacity-20"
@@ -186,7 +233,7 @@ export default function Lightbox({ items, initialIndex, onClose }: Props) {
 
         <button
           ref={nextRef}
-          onClick={next}
+          onClick={tryNext}
           aria-label="Immagine successiva"
           disabled={!canNext}
           className="absolute right-[15px] size-[40px] flex items-center justify-center transition-opacity hover:opacity-40 disabled:opacity-20"

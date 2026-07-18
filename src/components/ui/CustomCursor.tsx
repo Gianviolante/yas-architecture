@@ -113,9 +113,14 @@ export default function CustomCursor() {
 
     function tick() {
       if (active_ && pos !== null) {
-        // Groppi segue il mouse quasi istantaneamente — lerp stretto
-        pos.x += (mouse.x - pos.x) / 2;
-        pos.y += (mouse.y - pos.y) / 2;
+        // Groppi segue il mouse quasi istantaneamente — lerp stretto.
+        // Se il target è un bottone piccolo, si aggancia al suo centro
+        // (snap magnetico) invece del punto esatto del mouse.
+        const magnet = magneticTarget();
+        const targetX = magnet ? magnet.x : mouse.x;
+        const targetY = magnet ? magnet.y : mouse.y;
+        pos.x += (targetX - pos.x) / 2;
+        pos.y += (targetY - pos.y) / 2;
         // lerpa verso 1 solo se su elemento interattivo, verso 0 altrimenti
         const target = type_ !== "idle" ? 1 : 0;
         pos.o += (target - pos.o) / 10;
@@ -135,6 +140,22 @@ export default function CustomCursor() {
 
     const registered = new WeakSet<Element>();
     let hovered: Element | null = null;
+
+    // Snap magnetico: su bottoni piccoli (frecce, chiudi — icona fissa) il
+    // follower si centra esattamente sull'elemento invece di seguire il
+    // mouse libero. È quello che permette a mix-blend-mode:difference di
+    // "cancellare" otticamente l'icona statica sotto (trucco di Groppi,
+    // verificato dal vivo: l'icona statica resta sempre opacity:1, sparisce
+    // solo per sovrapposizione pixel-perfect col cursore). Su aree grandi
+    // (immagini con cursor-type="expand"/"drag") niente snap: lì il cursore
+    // deve restare libero di seguire il mouse.
+    const MAGNETIC_MAX = 60;
+    function magneticTarget(): { x: number; y: number } | null {
+      if (!hovered) return null;
+      const r = hovered.getBoundingClientRect();
+      if (r.width > MAGNETIC_MAX || r.height > MAGNETIC_MAX) return null;
+      return { x: r.left + r.width / 2, y: r.top + r.height / 2 };
+    }
 
     // Come Groppi: il cursore custom appare SOLO su elementi marcati
     // esplicitamente con cursor-type, mai su link/bottoni generici.

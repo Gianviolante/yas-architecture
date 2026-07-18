@@ -58,7 +58,7 @@ export default async function ProgettoPageV2({ params }: { params: Promise<{ slu
       <div className="md:flex md:gap-[30px] md:px-[30px] md:mt-[72px]">
 
         {/* ── Left column: Hero image (1:1 square) ──────────────────── */}
-        <div className="flex-shrink-0 w-full md:w-[calc(50%-15px)] mx-4 md:mx-0 mt-[60px] md:mt-0 aspect-square overflow-hidden relative">
+        <div className="flex-shrink-0 w-full md:w-[480px] md:h-[480px] mx-4 md:mx-0 mt-[60px] md:mt-0 aspect-square overflow-hidden relative">
           {heroUrl ? (
             <Image src={heroUrl} alt={project.title} fill className="object-cover" priority />
           ) : (
@@ -71,7 +71,7 @@ export default async function ProgettoPageV2({ params }: { params: Promise<{ slu
 
           {/* Title */}
           <div className="page-px md:p-0 pt-[14px] md:pt-0">
-            <div className="flex flex-col md:flex-row md:items-start md:justify-between md:gap-[24px]">
+            <div className="flex flex-col md:flex-row md:items-start md:justify-between md:gap-[40px]">
               <h1
                 className="text-[48px] md:text-[60px] font-bold tracking-tight leading-[1.3] text-[#282828]"
                 style={{ fontSize: "clamp(48px, 10vw, 80px)" }}
@@ -80,7 +80,7 @@ export default async function ProgettoPageV2({ params }: { params: Promise<{ slu
               </h1>
               <Link
                 href="/progetti"
-                className="text-[12px] leading-[1.3] text-[#282828] hover:opacity-60 transition-opacity whitespace-nowrap md:mt-[8px]"
+                className="text-[12px] leading-[1.3] text-[#282828] hover:opacity-60 transition-opacity whitespace-nowrap md:mt-[12px]"
               >
                 Torna a progetti →
               </Link>
@@ -144,7 +144,7 @@ export default async function ProgettoPageV2({ params }: { params: Promise<{ slu
           {/* Description */}
           <div className="page-px md:p-0 pt-[32px] md:pt-[40px] pb-[24px] md:pb-[40px]">
             <div
-              className="text-[16px] md:text-[17.4px] leading-[1.5] md:leading-[1.5] text-[#282828]"
+              className="text-[15px] md:text-[17px] leading-[1.6] md:leading-[1.5] text-[#282828]"
               style={{ maxWidth: "798px" }}
             >
               {project.description ? (
