@@ -1,8 +1,7 @@
 "use client";
 
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import Image from "next/image";
-import { usePointerFine } from "@/lib/hooks/usePointerFine";
 
 const SLIDES = [
   "/assets/home-slide-1.jpg",
@@ -12,7 +11,11 @@ const SLIDES = [
 ];
 
 export default function HomeSlider() {
-  const isPointerFine = usePointerFine();
+  const [isPointerFine, setIsPointerFine] = useState(true);
+
+  useEffect(() => {
+    setIsPointerFine(window.matchMedia("(pointer: fine)").matches);
+  }, []);
   const [idx, setIdx] = useState(0);
   const containerRef = useRef<HTMLDivElement>(null);
 
@@ -39,7 +42,7 @@ export default function HomeSlider() {
     <div
       ref={containerRef}
       className="relative w-full overflow-hidden"
-      style={{ aspectRatio: "4/3" }}
+      style={{ aspectRatio: "16/9" }}
       onMouseMove={isPointerFine ? handleMouseMove : undefined}
       onMouseLeave={isPointerFine ? handleMouseLeave : undefined}
       onClick={isPointerFine ? handleClick : undefined}
