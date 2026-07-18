@@ -157,8 +157,17 @@ export default function CustomCursor() {
       return { x: r.left + r.width / 2, y: r.top + r.height / 2 };
     }
 
-    // Come Groppi: il cursore custom appare SOLO su elementi marcati
-    // esplicitamente con cursor-type, mai su link/bottoni generici.
+    // Aggiungi cursor-type="nav" a tutti i link che non lo hanno
+    function addCursorTypeToLinks(root: Document | Element = document) {
+      root.querySelectorAll<HTMLAnchorElement>("a").forEach((link) => {
+        if (!link.hasAttribute("cursor-type")) {
+          link.setAttribute("cursor-type", "nav");
+        }
+      });
+    }
+
+    // Come Groppi: il cursore custom appare su link e elementi marcati
+    // esplicitamente con cursor-type.
     function registerNode(node: Element) {
       const t = node.getAttribute("cursor-type");
       if (!t || !(CURSOR_TYPES as readonly string[]).includes(t)) return;
@@ -177,6 +186,7 @@ export default function CustomCursor() {
     }
 
     function scan(root: Document | Element = document) {
+      addCursorTypeToLinks(root);
       root.querySelectorAll<Element>("[cursor-type]").forEach(registerNode);
     }
 
@@ -186,6 +196,15 @@ export default function CustomCursor() {
           m.addedNodes.forEach((n) => {
             if (n.nodeType !== 1) return;
             const node = n as Element;
+            // Aggiungi cursor-type="nav" ai link se non ce l'hanno già
+            if (node.tagName === "A" && !node.hasAttribute("cursor-type")) {
+              node.setAttribute("cursor-type", "nav");
+            }
+            node.querySelectorAll<HTMLAnchorElement>("a").forEach((link) => {
+              if (!link.hasAttribute("cursor-type")) {
+                link.setAttribute("cursor-type", "nav");
+              }
+            });
             if (node.hasAttribute("cursor-type")) registerNode(node);
             node.querySelectorAll<Element>("[cursor-type]").forEach(registerNode);
           });
