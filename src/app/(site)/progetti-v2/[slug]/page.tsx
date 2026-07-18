@@ -57,8 +57,8 @@ export default async function ProgettoPageV2({ params }: { params: Promise<{ slu
       {/* ── Desktop: Side-by-side layout (hero left, content right) ──── */}
       <div className="md:flex md:gap-[30px] md:px-[30px] md:mt-[72px]">
 
-        {/* ── Left column: Hero image (1:1 square) ──────────────────── */}
-        <div className="flex-shrink-0 w-full md:w-[480px] md:h-[480px] mx-4 md:mx-0 mt-[60px] md:mt-0 aspect-square overflow-hidden relative">
+        {/* ── Left column: Hero image (1:1 square - responsive like Groppi) ──────────────────── */}
+        <div className="flex-shrink-0 w-full md:flex-1 mx-4 md:mx-0 mt-[60px] md:mt-0 aspect-square overflow-hidden relative max-w-[600px] md:max-w-none">
           {heroUrl ? (
             <Image src={heroUrl} alt={project.title} fill className="object-cover" priority />
           ) : (
