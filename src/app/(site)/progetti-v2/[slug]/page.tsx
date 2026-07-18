@@ -165,7 +165,7 @@ export default async function ProgettoPageV2({ params }: { params: Promise<{ slu
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label="Condividi su Facebook"
-                  className="text-[14px] font-semibold text-[#888] hover:text-[#282828] transition-colors"
+                  className="text-[14px] font-semibold text-[#282828] hover:opacity-60 transition-opacity"
                 >
                   f
                 </a>
@@ -174,7 +174,7 @@ export default async function ProgettoPageV2({ params }: { params: Promise<{ slu
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label="Condividi su LinkedIn"
-                  className="text-[14px] font-semibold text-[#888] hover:text-[#282828] transition-colors"
+                  className="text-[14px] font-semibold text-[#282828] hover:opacity-60 transition-opacity"
                 >
                   in
                 </a>
