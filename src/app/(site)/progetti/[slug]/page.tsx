@@ -108,14 +108,14 @@ export default async function ProgettoPage({ params }: { params: Promise<{ slug:
         {/* LEFT: meta lines + (tablet/desktop) column labels + chips + team */}
         <div className="w-full md:w-1/3 md:shrink-0 lg:w-[577px]">
           <div className="text-[12px] leading-[1.3] text-[#282828] space-y-[4px]">
-            {project.typology    && <p>Area: {project.typology}</p>}
-            {project.year        && <p>Timeline: {project.year}</p>}
-            {project.location    && <p>Location: {project.location}</p>}
-            {project.area        && <p>Superficie: {project.area} mq</p>}
-            {project.concept     && <p>Concept: {project.concept}</p>}
-            {project.projectTeam && <p>Progetto: {project.projectTeam}</p>}
-            {project.rendering   && <p>Rendering: {project.rendering}</p>}
-            {project.photographer && <p>Fotografo: {project.photographer}</p>}
+            {project.typology    && <p><strong>Area:</strong> {project.typology}</p>}
+            {project.year        && <p><strong>Timeline:</strong> {project.year}</p>}
+            {project.location    && <p><strong>Location:</strong> {project.location}</p>}
+            {project.area        && <p><strong>Superficie:</strong> {project.area} mq</p>}
+            {project.concept     && <p><strong>Concept:</strong> {project.concept}</p>}
+            {project.projectTeam && <p><strong>Progetto:</strong> {project.projectTeam}</p>}
+            {project.rendering   && <p><strong>Rendering:</strong> {project.rendering}</p>}
+            {project.photographer && <p><strong>Fotografo:</strong> {project.photographer}</p>}
           </div>
 
           {/* Desktop only: column labels + chips + team */}
