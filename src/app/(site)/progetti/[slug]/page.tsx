@@ -179,39 +179,26 @@ export default async function ProgettoPage({ params }: { params: Promise<{ slug:
 
       </div>
 
-      {/* ── Second full-width image ────────────────────────────────── */}
-      {/* Foto verticali: centrate a piena altezza senza crop (come Groppi).
-          Foto orizzontali: full-bleed con object-cover come da design.
-          16:9 come la cover — a 4:3 prendeva troppo spazio in verticale
-          rispetto alla cover più bassa, spezzando il ritmo della pagina. */}
-      <div className="relative mx-4 md:mx-[30px] aspect-[16/9]">
-        {secondImage ? (
-          secondIsPortrait ? (
-            <div className="h-full flex justify-center">
-              <div className="relative h-full" style={{ aspectRatio: String(secondImage.aspect) }}>
-                <Image
-                  src={secondImage.url}
-                  alt={secondImage.caption ?? `${project.title} — interno`}
-                  fill
-                  className="object-cover"
-                />
-              </div>
+      {/* ── Two square images (Groppi-style) ──────────────────────── */}
+      {galleryItems.length >= 2 && (
+        <div className="mx-4 md:mx-[30px] gap-[16px] md:gap-[24px] grid grid-cols-2 mt-[48px]">
+          {galleryItems.slice(0, 2).map((img, idx) => (
+            <div key={idx} className="relative aspect-square overflow-hidden bg-[#d9d9d9]">
+              <Image
+                src={img.url}
+                alt={img.caption ?? `${project.title} — ${idx + 1}`}
+                fill
+                className="object-cover"
+              />
             </div>
-          ) : (
-            <Image
-              src={secondImage.url}
-              alt={secondImage.caption ?? `${project.title} — interno`}
-              fill
-              className="object-cover"
-            />
-          )
-        ) : (
-          <div className="w-full h-full bg-[#d9d9d9]" />
-        )}
-      </div>
+          ))}
+        </div>
+      )}
 
       {/* ── Gallery slider ─────────────────────────────────────────── */}
-      <GallerySection items={sliderItems} projectTitle={project.title} />
+      {galleryItems.length > 2 && (
+        <GallerySection items={galleryItems.slice(2)} projectTitle={project.title} />
+      )}
 
       {/* ── Divider bar ────────────────────────────────────────────── */}
       <div className="w-full h-[48px] bg-white shadow-[0px_6px_8px_0px_rgba(0,0,0,0.1)] mt-[48px]" />
