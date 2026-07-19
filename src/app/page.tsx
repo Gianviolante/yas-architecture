@@ -45,24 +45,23 @@ export default async function HomePage() {
           {/* ── 1. HERO — mobile ─────────────────────────────────────── */}
           <section className="md:hidden relative h-[382px] overflow-hidden">
             {/* labels top */}
-            <div className="absolute text-[12px] leading-[1.2]" style={{ top: "8px", left: "16px", color: "#000000" }}>
+            <div className="absolute text-[12px] leading-[1.2] whitespace-nowrap" style={{ top: "8px", left: "16px", color: "#000000" }}>
               {home?.heroSubtitleLeft ? (
                 <PortableText value={home.heroSubtitleLeft as Parameters<typeof PortableText>[0]["value"]} components={ptBlock} />
               ) : (
                 <>
-                  <p>Studio architettura</p>
-                  <p>e design</p>
+                  <p>Studio architettura e design</p>
                 </>
               )}
             </div>
-            <p className="absolute text-[12px] leading-[1.2] text-right" style={{ top: "8px", right: "15px", color: "#000000" }}>
+            <p className="absolute text-[12px] leading-[1.2] text-right" style={{ top: "50px", right: "15px", color: "#000000" }}>
               {home?.heroSubtitleRight || "Apulian inspiration guide"}
             </p>
 
             {/* big title */}
             <h1
               className="absolute font-bold text-black select-none"
-              style={{ fontSize: "clamp(64px, 18vw, 120px)", lineHeight: "0.8", top: "50px", left: "12px", width: "100%", paddingRight: "16px" }}
+              style={{ fontSize: "clamp(64px, 18vw, 120px)", lineHeight: "0.8", top: "74px", left: "12px", width: "100%", paddingRight: "16px" }}
             >
               {home?.heroTitleMain || "yas-arch"}
             </h1>
@@ -92,28 +91,27 @@ export default async function HomePage() {
           {/* ── 1. HERO — tablet + desktop ───────────────────────────── */}
           <section className="relative md:h-[295px] lg:h-[439px] overflow-hidden hidden md:block">
             <h1
-              className="absolute font-bold text-black leading-none whitespace-nowrap select-none md:top-[23px] md:left-[81px] lg:top-[7px] lg:left-[198px]"
+              className="absolute font-bold text-black leading-none whitespace-nowrap select-none md:top-[47px] md:left-[81px] lg:top-[31px] lg:left-[198px]"
               style={{ fontSize: "clamp(8rem,19.8vw,285px)" }}
             >
               {home?.heroTitleMain || "yas-arch"}
             </h1>
 
             <div
-              className="absolute text-[12px] leading-[1.2] text-right md:top-[48px] md:right-[calc(100%-362px)] lg:top-[79px] lg:right-[calc(100%-499px)]"
+              className="absolute text-[12px] leading-[1.2] text-right whitespace-nowrap md:top-[48px] md:right-[calc(100%-362px)] lg:top-[79px] lg:right-[calc(100%-499px)]"
               style={{ color: "#000000" }}
             >
               {home?.heroSubtitleLeft ? (
                 <PortableText value={home.heroSubtitleLeft as Parameters<typeof PortableText>[0]["value"]} components={ptBlock} />
               ) : (
                 <>
-                  <p>Studio architettura</p>
-                  <p>e design</p>
+                  <p>Studio architettura e design</p>
                 </>
               )}
             </div>
 
             <p
-              className="absolute text-[12px] leading-[1.2] md:top-[48px] md:left-[462px] lg:top-[79px] lg:left-[765px]"
+              className="absolute text-[12px] leading-[1.2] md:top-[87px] md:left-[462px] lg:top-[71px] lg:left-[765px]"
               style={{ color: "#000000" }}
             >
               {home?.heroSubtitleRight || "Apulian inspiration guide"}
