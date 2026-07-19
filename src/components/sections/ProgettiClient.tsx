@@ -130,15 +130,17 @@ export default function ProgettiClient({ projects, initialTypology }: Props) {
             className="w-full flex items-center justify-between px-[15px] py-[10px] mb-[8px]"
           >
             <span className="text-[16px] leading-normal text-[#1a1a1a]">Filtra</span>
-            <svg
-              width="12"
-              height="12"
-              viewBox="0 0 12 12"
-              fill="none"
-              className={`transition-transform duration-200 ${filtersOpen ? "rotate-180" : ""}`}
-            >
-              <path d="M6 0V12M0 6H12" stroke="#1a1a1a" strokeWidth="1.5" strokeLinecap="round" />
-            </svg>
+            <div className={`transition-transform duration-500 ${filtersOpen ? "rotate-180" : "rotate-0"}`}>
+              {filtersOpen ? (
+                <svg width="16" height="16" viewBox="0 0 12 2" fill="none">
+                  <path d="M0 1H12" stroke="#1a1a1a" strokeWidth="1.5" strokeLinecap="round" />
+                </svg>
+              ) : (
+                <svg width="16" height="16" viewBox="0 0 12 12" fill="none">
+                  <path d="M6 0V12M0 6H12" stroke="#1a1a1a" strokeWidth="1.5" strokeLinecap="round" />
+                </svg>
+              )}
+            </div>
           </button>
 
           {/* Filter groups (hidden when collapsed) */}

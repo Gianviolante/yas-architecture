@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import Image from "next/image";
+import { motion, AnimatePresence } from "framer-motion";
 import { cn } from "@/lib/utils/cn";
 
 const navLinks = [
@@ -16,6 +17,11 @@ const progettiSubLinks = [
   { href: "/progetti?tipologia=Residenziale",    label: "Residenziali" },
   { href: "/progetti?tipologia=Commerciale",     label: "Commerciali" },
   { href: "/progetti",                           label: "Tutti i progetti" },
+];
+
+const studioSubLinks = [
+  { href: "/studio",    label: "Studio" },
+  { href: "/team",      label: "Designers" },
 ];
 
 /** Circular chip with + or − */
@@ -39,6 +45,7 @@ export default function Navbar() {
   const [scrolled, setScrolled]         = useState(false);
   const [menuOpen, setMenuOpen]         = useState(false);
   const [progettiOpen, setProgettiOpen] = useState(true);
+  const [studioOpen, setStudioOpen]     = useState(false);
   const pathname = usePathname();
 
   useEffect(() => {
@@ -106,12 +113,14 @@ export default function Navbar() {
             aria-label={menuOpen ? "Chiudi menu" : "Apri menu"}
           >
             {menuOpen ? (
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="#000000">
-                <path fillRule="evenodd" clipRule="evenodd" d="M12,11.3L22.3,1L23,1.7L12.7,12L23,22.3L22.3,23L12,12.7L1.7,23L1,22.3L11.3,12L1,1.7L1.7,1C1.7,1,12,11.3,12,11.3z"/>
+              <svg width="48" height="48" viewBox="0 0 49 49" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M16 33.1421L34.1421 15" stroke="black" strokeWidth="1.5" strokeLinejoin="round"/>
+                <path d="M16 15L34.1421 33.1421" stroke="black" strokeWidth="1.5" strokeLinejoin="round"/>
               </svg>
             ) : (
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="#000000">
-                <path fillRule="evenodd" clipRule="evenodd" d="M24,18v1H0v-1H24z M24,12v1H0v-1H24z M24,6v1H0V6H24z"/>
+              <svg width="48" height="48" viewBox="0 0 49 49" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M15 21H35" stroke="black" strokeWidth="1.5" strokeLinejoin="round"/>
+                <path d="M15 28H35" stroke="black" strokeWidth="1.5" strokeLinejoin="round"/>
               </svg>
             )}
           </button>
@@ -145,12 +154,13 @@ export default function Navbar() {
       {/* z-50: sopra qualsiasi barra sticky di pagina (Team/Studio z-40,
           filtri Progetti z-40) — il menu di navigazione deve sempre
           restare in primo piano, come su qualsiasi sito. */}
-      <div
+      <motion.div
+        initial={{ opacity: 0, y: -10 }}
+        animate={menuOpen ? { opacity: 1, y: 0 } : { opacity: 0, y: -10 }}
+        transition={{ duration: 0.2, ease: "easeOut" }}
         className={cn(
-          "fixed top-[60px] left-0 right-0 z-50 bg-white md:hidden transition-all duration-300 ease-out",
-          menuOpen
-            ? "opacity-100 translate-y-0 pointer-events-auto drop-shadow-[0px_6px_4px_rgba(0,0,0,0.2)]"
-            : "opacity-0 -translate-y-2 pointer-events-none"
+          "fixed top-[60px] left-0 right-0 z-50 bg-white md:hidden drop-shadow-[0px_6px_4px_rgba(0,0,0,0.2)]",
+          menuOpen ? "pointer-events-auto" : "pointer-events-none"
         )}
       >
         <nav>
@@ -167,11 +177,11 @@ export default function Navbar() {
             </button>
 
             {/* Sub-items */}
-            <div
-              className={cn(
-                "overflow-hidden transition-[max-height] duration-200 ease-out",
-                progettiOpen ? "max-h-[240px]" : "max-h-0"
-              )}
+            <motion.div
+              initial={false}
+              animate={{ height: progettiOpen ? "auto" : 0 }}
+              transition={{ duration: 0.25, ease: "easeInOut" }}
+              className="overflow-hidden"
             >
               {progettiSubLinks.map(({ href, label }) => (
                 <Link
@@ -185,17 +195,38 @@ export default function Navbar() {
               <p className="px-5 pb-4 pt-[6px] text-[12px] text-[#1a1a1a]/60 italic">
                 Filtra ricerca
               </p>
-            </div>
+            </motion.div>
           </div>
 
-          {/* Studio — chip icon, navigates on click */}
-          <Link
-            href="/studio"
-            className="flex items-center justify-between border-b border-black px-[10px] py-[10px]"
-          >
-            <span className="text-[22px] leading-normal text-[#1a1a1a]">Studio</span>
-            <AccordionChip open={false} />
-          </Link>
+          {/* Studio — accordion */}
+          <div className="border-b border-black">
+            <button
+              className="w-full flex items-center justify-between px-[10px] py-[10px]"
+              onClick={() => setStudioOpen((v) => !v)}
+              aria-expanded={studioOpen}
+            >
+              <span className="text-[22px] leading-normal text-[#1a1a1a] px-0">Studio</span>
+              <AccordionChip open={studioOpen} />
+            </button>
+
+            {/* Sub-items */}
+            <motion.div
+              initial={false}
+              animate={{ height: studioOpen ? "auto" : 0 }}
+              transition={{ duration: 0.25, ease: "easeInOut" }}
+              className="overflow-hidden"
+            >
+              {studioSubLinks.map(({ href, label }) => (
+                <Link
+                  key={label}
+                  href={href}
+                  className="block px-5 py-[9px] text-[17px] text-[#1a1a1a] hover:opacity-60 transition-opacity"
+                >
+                  {label}
+                </Link>
+              ))}
+            </motion.div>
+          </div>
 
           {/* Team — plain link, no icon */}
           {[
@@ -216,7 +247,8 @@ export default function Navbar() {
           </Link>
 
         </nav>
-      </div>
+      </motion.div>
     </>
   );
 }
+
