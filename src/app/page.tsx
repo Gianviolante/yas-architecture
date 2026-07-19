@@ -97,7 +97,7 @@ export default async function HomePage() {
             />
 
             <div
-              className="absolute text-[12px] leading-[1.2] text-right whitespace-nowrap md:top-[48px] md:right-[calc(100%-362px)] lg:top-[79px] lg:right-[calc(100%-499px)]"
+              className="absolute text-[12px] leading-[1.2] text-right whitespace-nowrap md:top-[47px] md:right-[calc(100%-362px)] lg:top-[31px] lg:right-[calc(100%-499px)]"
               style={{ color: "#000000" }}
             >
               {home?.heroSubtitleLeft ? (
@@ -110,7 +110,7 @@ export default async function HomePage() {
             </div>
 
             <p
-              className="absolute text-[12px] leading-[1.2] md:top-[87px] md:left-[462px] lg:top-[71px] lg:left-[765px]"
+              className="absolute text-[12px] leading-[1.2] md:top-[47px] md:left-[462px] lg:top-[31px] lg:left-[765px]"
               style={{ color: "#000000" }}
             >
               {home?.heroSubtitleRight || "Apulian inspiration guide"}
