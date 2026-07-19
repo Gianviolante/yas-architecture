@@ -174,15 +174,14 @@ export default async function HomePage() {
 
           {/* ── 3. APULIA — tablet + desktop ─────────────────────────── */}
           <section className="relative md:h-[206px] lg:h-[345px] overflow-hidden hidden md:block">
-            <h2
+            <AnimatedTitle
+              text="Apulia"
               className="absolute font-bold text-black leading-none whitespace-nowrap select-none"
               style={{ fontSize: "clamp(8rem,19.8vw,285px)", top: 0, left: "29px" }}
-            >
-              Apulia
-            </h2>
+            />
 
             <p
-              className="absolute text-[12px] leading-[1.2] text-[#282828] md:top-[45px] md:left-[136px] lg:top-[78px] lg:left-[755px]"
+              className="absolute text-[12px] leading-[1.2] text-[#282828] md:top-[45px] md:left-[136px] lg:top-[78px] lg:left-[755px] ml-8 md:ml-0"
             >
               Apulian inspiration guide
             </p>
