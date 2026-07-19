@@ -134,7 +134,7 @@ export default async function HomePage() {
 
           {/* ── 2. LINKS ─────────────────────────────────────────────── */}
           <section className="px-[15px] lg:px-[30px]">
-            <div className="flex flex-col gap-[25px] md:flex-row md:gap-[15px] md:h-[225px] lg:h-[371px]">
+            <div className="flex flex-col gap-[25px] md:flex-row md:gap-[15px] md:h-[225px] lg:h-[371px] max-w-[1440px] mx-auto overflow-hidden">
               {NAV_LINKS.map(({ href, label, img, flexGrow, mobileH }) => (
                 <Link
                   key={href}
