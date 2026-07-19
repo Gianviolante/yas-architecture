@@ -4,6 +4,7 @@ import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import HomeSlider from "@/components/sections/HomeSlider";
 import HomeProjectsCarousel from "@/components/sections/HomeProjectsCarousel";
+import AnimatedTitle from "@/components/ui/AnimatedTitle";
 import { PortableText } from "@portabletext/react";
 import { sanityClient } from "@/lib/sanity/client";
 import { allProjectsQuery, homeQuery } from "@/lib/sanity/queries";
@@ -59,12 +60,11 @@ export default async function HomePage() {
             </p>
 
             {/* big title */}
-            <h1
+            <AnimatedTitle
+              text={home?.heroTitleMain || "yas-arch"}
               className="absolute font-bold text-black select-none"
               style={{ fontSize: "clamp(64px, 18vw, 120px)", lineHeight: "0.8", top: "74px", left: "12px", width: "100%", paddingRight: "16px" }}
-            >
-              {home?.heroTitleMain || "yas-arch"}
-            </h1>
+            />
 
             {/* address bottom-left */}
             <div className="absolute text-[12px] leading-[1.2] text-black" style={{ top: "254px", left: "16px" }}>
@@ -90,12 +90,11 @@ export default async function HomePage() {
 
           {/* ── 1. HERO — tablet + desktop ───────────────────────────── */}
           <section className="relative md:h-[295px] lg:h-[439px] overflow-hidden hidden md:block">
-            <h1
+            <AnimatedTitle
+              text={home?.heroTitleMain || "yas-arch"}
               className="absolute font-bold text-black leading-none whitespace-nowrap select-none md:top-[47px] md:left-[81px] lg:top-[31px] lg:left-[198px]"
               style={{ fontSize: "clamp(8rem,19.8vw,285px)" }}
-            >
-              {home?.heroTitleMain || "yas-arch"}
-            </h1>
+            />
 
             <div
               className="absolute text-[12px] leading-[1.2] text-right whitespace-nowrap md:top-[48px] md:right-[calc(100%-362px)] lg:top-[79px] lg:right-[calc(100%-499px)]"
