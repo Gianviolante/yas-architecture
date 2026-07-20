@@ -101,13 +101,13 @@ export default function ProgettiClient({ projects, initialTypology }: Props) {
     }`;
 
   return (
-    <div className="pt-[60px] md:pt-[80px]">
+    <div className="pt-15 md:pt-20">
 
       {/* ── Intro text ─────────────────────────────────────────────── */}
       {/* page-px (cap 1440px): a piena larghezza le righe di testo diventano
           troppo lunghe da leggere sui monitor ultra-wide. Griglia/index
           restano piena larghezza — le immagini ne beneficiano, il testo no. */}
-      <div className="page-px pt-[30px] pb-[20px] md:pt-[37px] md:pb-[26px]">
+      <div className="page-px pt-8 pb-5 md:pt-9 md:pb-7">
         <p className="text-[16px] md:text-[24px] leading-normal text-black">
           I benefici derivanti dall&apos;utilizzo di una griglia sono evidenti: chiarezza, efficienza, economia, continuità.
           Prima di ogni altra cosa, una griglia introduce ordine sistematico a una struttura visiva, facilitando la
@@ -119,7 +119,7 @@ export default function ProgettiClient({ projects, initialTypology }: Props) {
       <div className="sticky top-[60px] md:top-[80px] z-40 bg-white shadow-[0px_6px_4px_rgba(0,0,0,0.1)]">
 
         {/* ── Mobile filter (collapsible accordion) ─────────────────── */}
-        <div className="md:hidden pt-[16px] pb-[10px]">
+        <div className="md:hidden pt-4 pb-3">
 
           {/* Filter toggle button */}
           <button
@@ -127,7 +127,7 @@ export default function ProgettiClient({ projects, initialTypology }: Props) {
               lastClickRef.current = Date.now();
               setFiltersOpen(!filtersOpen);
             }}
-            className="w-full flex items-center justify-between px-[15px] py-[10px] mb-[8px]"
+            className="w-full flex items-center justify-between px-[15px] py-3 mb-2"
           >
             <span className="text-[16px] leading-normal text-[#1a1a1a]">Filtra</span>
             <div className={`transition-transform duration-500 ${filtersOpen ? "rotate-180" : "rotate-0"}`}>
@@ -145,11 +145,11 @@ export default function ProgettiClient({ projects, initialTypology }: Props) {
 
           {/* Filter groups (hidden when collapsed) */}
           {filtersOpen && (
-            <div className="border-t border-black pt-[12px] animate-in fade-in duration-300">
+            <div className="border-t border-black pt-3 animate-in fade-in duration-300">
               {/* Area */}
               <p className="text-[12px] leading-[1.5] text-[#282828] px-[15px]">Area</p>
               <div className="overflow-x-auto">
-                <div className="flex gap-[8px] px-[15px] py-[11px]">
+                <div className="flex gap-2 px-[15px] py-3">
                   <button onClick={() => setTypologyFilters(new Set())} className={chipMb(typologyFilters.size === 0)}>
                     Tutti i progetti
                   </button>
@@ -164,7 +164,7 @@ export default function ProgettiClient({ projects, initialTypology }: Props) {
               {/* Categoria */}
               <p className="text-[12px] leading-[1.5] text-[#282828] px-[15px]">Categoria</p>
               <div className="overflow-x-auto">
-                <div className="flex gap-[8px] px-[15px] py-[11px]">
+                <div className="flex gap-2 px-[15px] py-3">
                   {CAT_FILTERS.map(({ label, value }) => (
                     <button key={value} onClick={() => toggleTypology(value)} className={chipMb(typologyFilters.has(value))}>
                       {label}
@@ -186,13 +186,13 @@ export default function ProgettiClient({ projects, initialTypology }: Props) {
               </div>
 
               {/* Active filters summary */}
-              <div className="flex items-center justify-between px-[15px] min-h-[22px] pb-[8px]">
+              <div className="flex items-center justify-between px-[15px] min-h-[22px] pb-2">
                 <p className="text-[12px] leading-[22px] text-[#282828]">
                   <span>Filtra per: </span>
                   {hasFilters && <span className="text-[#d9d9d9]">{activeLabel}</span>}
                 </p>
                 {hasFilters && (
-                  <button onClick={reset} className="flex items-center gap-[6px] text-[12px] leading-[22px] text-[#282828]">
+                  <button onClick={reset} className="flex items-center gap-1 text-[12px] leading-[22px] text-[#282828]">
                     Reset
                     <Image src="/assets/icon-reset.svg" alt="" width={10} height={8} />
                   </button>
@@ -203,10 +203,10 @@ export default function ProgettiClient({ projects, initialTypology }: Props) {
         </div>
 
         {/* ── Tablet filter (Area full row, Categoria|Stato 2-col) ────── */}
-        <div className="hidden md:block lg:hidden page-px pt-[16px] pb-[10px]">
+        <div className="hidden md:block lg:hidden page-px pt-4 pb-3">
           {/* Row 1: Area */}
-          <p className="text-[12px] leading-[22px] text-[#282828] mb-[4px]">Area</p>
-          <div className="flex flex-wrap gap-[8px] mb-[12px]">
+          <p className="text-[12px] leading-[22px] text-[#282828] mb-1">Area</p>
+          <div className="flex flex-wrap gap-2 mb-3">
             <button onClick={() => setTypologyFilters(new Set())} className={chipDt(typologyFilters.size === 0)}>
               Tutti i progetti
             </button>
@@ -217,19 +217,19 @@ export default function ProgettiClient({ projects, initialTypology }: Props) {
             ))}
           </div>
           {/* Row 2: Categoria | Stato side-by-side */}
-          <div className="grid grid-cols-2 gap-[14px] mb-[4px]">
+          <div className="grid grid-cols-2 gap-4 mb-1">
             <p className="text-[12px] leading-[22px] text-[#282828]">Categoria</p>
             <p className="text-[12px] leading-[22px] text-[#282828]">Stato</p>
           </div>
-          <div className="grid grid-cols-2 gap-[14px]">
-            <div className="flex flex-wrap gap-[8px]">
+          <div className="grid grid-cols-2 gap-4">
+            <div className="flex flex-wrap gap-2">
               {CAT_FILTERS.map(({ label, value }) => (
                 <button key={value} onClick={() => toggleTypology(value)} className={chipDt(typologyFilters.has(value))}>
                   {label}
                 </button>
               ))}
             </div>
-            <div className="flex flex-wrap gap-[8px]">
+            <div className="flex flex-wrap gap-2">
               {STATO_FILTERS.map(({ label, value }) => (
                 <button key={value} onClick={() => toggleStato(value)} className={chipDt(statoFilters.has(value))}>
                   {label}
@@ -237,13 +237,13 @@ export default function ProgettiClient({ projects, initialTypology }: Props) {
               ))}
             </div>
           </div>
-          <div className="flex items-center justify-between mt-[10px] min-h-[22px]">
+          <div className="flex items-center justify-between mt-3 min-h-[22px]">
             <p className="text-[12px] leading-[22px] text-[#282828]">
               <span>Filtra per: </span>
               {hasFilters && <span className="text-[#d9d9d9]">{activeLabel}</span>}
             </p>
             {hasFilters && (
-              <button onClick={reset} className="flex items-center gap-[6px] text-[12px] leading-[22px] text-[#282828] hover:opacity-50 transition-opacity">
+              <button onClick={reset} className="flex items-center gap-1 text-[12px] leading-[22px] text-[#282828] hover:opacity-50 transition-opacity">
                 Reset
                 <Image src="/assets/icon-reset.svg" alt="" width={10} height={8} />
               </button>
@@ -252,14 +252,14 @@ export default function ProgettiClient({ projects, initialTypology }: Props) {
         </div>
 
         {/* ── Desktop filter (3-col grid) ────────────────────────────── */}
-        <div className="hidden lg:block page-px pt-[16px] pb-[10px]">
-          <div className="grid grid-cols-3 gap-[8px] mb-[4px]">
+        <div className="hidden lg:block page-px pt-4 pb-3">
+          <div className="grid grid-cols-3 gap-2 mb-1">
             <p className="text-[12px] leading-[22px] text-[#282828]">Area</p>
             <p className="text-[12px] leading-[22px] text-[#282828]">Categoria</p>
             <p className="text-[12px] leading-[22px] text-[#282828]">Stato</p>
           </div>
-          <div className="grid grid-cols-3 gap-[8px]">
-            <div className="flex flex-wrap gap-[8px]">
+          <div className="grid grid-cols-3 gap-2">
+            <div className="flex flex-wrap gap-2">
               <button onClick={() => setTypologyFilters(new Set())} className={chipDt(typologyFilters.size === 0)}>
                 Tutti i progetti
               </button>
@@ -269,14 +269,14 @@ export default function ProgettiClient({ projects, initialTypology }: Props) {
                 </button>
               ))}
             </div>
-            <div className="flex flex-wrap gap-[8px]">
+            <div className="flex flex-wrap gap-2">
               {CAT_FILTERS.map(({ label, value }) => (
                 <button key={value} onClick={() => toggleTypology(value)} className={chipDt(typologyFilters.has(value))}>
                   {label}
                 </button>
               ))}
             </div>
-            <div className="flex flex-wrap gap-[8px]">
+            <div className="flex flex-wrap gap-2">
               {STATO_FILTERS.map(({ label, value }) => (
                 <button key={value} onClick={() => toggleStato(value)} className={chipDt(statoFilters.has(value))}>
                   {label}
@@ -284,13 +284,13 @@ export default function ProgettiClient({ projects, initialTypology }: Props) {
               ))}
             </div>
           </div>
-          <div className="flex items-center justify-between mt-[10px] min-h-[22px]">
+          <div className="flex items-center justify-between mt-3 min-h-[22px]">
             <p className="text-[12px] leading-[22px] text-[#282828]">
               <span>Filtra per: </span>
               {hasFilters && <span className="text-[#d9d9d9]">{activeLabel}</span>}
             </p>
             {hasFilters && (
-              <button onClick={reset} className="flex items-center gap-[6px] text-[12px] leading-[22px] text-[#282828] hover:opacity-50 transition-opacity">
+              <button onClick={reset} className="flex items-center gap-1 text-[12px] leading-[22px] text-[#282828] hover:opacity-50 transition-opacity">
                 Reset
                 <Image src="/assets/icon-reset.svg" alt="" width={10} height={8} />
               </button>
@@ -303,7 +303,7 @@ export default function ProgettiClient({ projects, initialTypology }: Props) {
       <div className="pb-16">
 
         {/* View toggle */}
-        <div className="page-px flex items-baseline justify-between py-[8px] mb-[21px]">
+        <div className="page-px flex items-baseline justify-between py-2 mb-5">
           <p className={`hidden md:block text-[24px] font-bold leading-normal text-black ${view === "grid" ? "invisible" : ""}`}>
             Yas-arch progetti index
           </p>
