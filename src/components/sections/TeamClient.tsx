@@ -123,11 +123,21 @@ function MemberCard({
         </div>
         <button
           onClick={onToggle}
-          className="text-[#282828] text-[28px] font-light leading-none shrink-0 hover:opacity-50 transition-all duration-300"
-          style={{ transform: expanded ? "rotate(45deg)" : "rotate(0deg)" }}
+          className="shrink-0 hover:opacity-50 transition-transform duration-300"
+          style={{ transform: expanded ? "rotate(180deg)" : "rotate(0deg)" }}
           aria-label={expanded ? "Chiudi bio" : "Apri bio"}
         >
-          +
+          <div className="w-4 h-4 flex items-center justify-center">
+            {expanded ? (
+              <svg width="16" height="16" viewBox="0 0 12 2" fill="none">
+                <path d="M0 1H12" stroke="#282828" strokeWidth="1.5" strokeLinecap="round" />
+              </svg>
+            ) : (
+              <svg width="16" height="16" viewBox="0 0 12 12" fill="none">
+                <path d="M6 0V12M0 6H12" stroke="#282828" strokeWidth="1.5" strokeLinecap="round" />
+              </svg>
+            )}
+          </div>
         </button>
       </div>
 
