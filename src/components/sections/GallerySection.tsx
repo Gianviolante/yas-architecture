@@ -51,7 +51,13 @@ export default function GallerySection({ items, projectTitle, allGalleryItems, o
       >
         {compact ? "Visualizza come slider" : "Visualizza come miniature"}
       </button>
-      <GallerySlider items={items} projectTitle={projectTitle} compact={compact} initialLightboxIndex={lightboxIndex} />
+      <GallerySlider
+        items={items}
+        projectTitle={projectTitle}
+        compact={compact}
+        initialLightboxIndex={lightboxIndex}
+        allItems={allGalleryItems}
+      />
     </div>
   );
 }

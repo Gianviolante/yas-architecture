@@ -16,6 +16,7 @@ interface Props {
   projectTitle: string;
   compact?: boolean;
   initialLightboxIndex?: number | null;
+  allItems?: GalleryItem[]; // Tutte le immagini della gallery (incluse le prime 2)
 }
 
 const DURATION      = 700;
@@ -35,7 +36,7 @@ const getBreakpoint = (): "mobile" | "tablet" | "desktop" => {
   return w < 768 ? "mobile" : w < 1024 ? "tablet" : "desktop";
 };
 
-export default function GallerySlider({ items, projectTitle, compact = false, initialLightboxIndex }: Props) {
+export default function GallerySlider({ items, projectTitle, compact = false, initialLightboxIndex, allItems }: Props) {
   const wrapperRef = useRef<HTMLDivElement>(null); // overflow:hidden — clip
   const trackRef   = useRef<HTMLDivElement>(null); // transform target — si muove fisicamente
 
@@ -208,7 +209,9 @@ export default function GallerySlider({ items, projectTitle, compact = false, in
         if (contentX < accum + cardW(i)) { idx = i; break; }
         accum += cardW(i) + gap;
       }
-      setLightboxIndex(idx);
+      // Se allItems è fornito, l'indice deve contare anche le prime 2 foto quadrate
+      const lightboxIdx = allItems ? idx + 2 : idx;
+      setLightboxIndex(lightboxIdx);
       return;
     }
 
@@ -373,7 +376,7 @@ export default function GallerySlider({ items, projectTitle, compact = false, in
 
       {lightboxIndex !== null && (
         <Lightbox
-          items={items}
+          items={allItems || items}
           initialIndex={lightboxIndex}
           onClose={() => setLightboxIndex(null)}
         />
