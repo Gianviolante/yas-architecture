@@ -30,11 +30,15 @@ const CURSOR_CSS = `
     height: 60px;
     overflow: hidden;
     pointer-events: none;
-    animation: cursor-twinkle 1s ease-in-out infinite alternate both;
+    /* Ottimizzazione performance: animazione solo al hover + durata ridotta */
+    animation: none;
+  }
+  [data-cursor-el].over .circle {
+    animation: cursor-twinkle 0.5s ease-in-out infinite alternate both;
   }
   @keyframes cursor-twinkle {
-    0%  { transform: translateX(-50%) translateY(-50%) scale(.9); }
-    to  { transform: translateX(-50%) translateY(-50%) scale(1); }
+    0%  { transform: translateX(-50%) translateY(-50%) scale(.95); }
+    to  { transform: translateX(-50%) translateY(-50%) scale(1.05); }
   }
   [data-cursor-el] .circle::before {
     content: "";
