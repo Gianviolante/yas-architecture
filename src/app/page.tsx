@@ -88,14 +88,14 @@ export default async function HomePage() {
           </section>
 
           {/* ── 1. HERO — tablet + desktop ───────────────────────────── */}
-          <section className="hidden md:grid grid-cols-3 grid-rows-3 gap-[32px] md:gap-[48px] lg:gap-[64px] md:h-[295px] lg:h-[439px] overflow-hidden page-px md:py-[24px] lg:py-[32px]">
+          <section className="hidden md:grid grid-cols-3 grid-rows-3 gap-y-[8px] gap-x-[32px] md:gap-x-[48px] lg:gap-x-[64px] md:h-[380px] lg:h-[520px] overflow-hidden page-px md:py-[24px] lg:py-[32px]">
             {/* Row 1 - Top-left: Subtitle left (Inspired by Apulian tradition) */}
-            <div className="col-start-1 row-start-1 text-[10px] leading-[0.8] text-black flex items-start">
+            <div className="col-start-1 row-start-1 text-[10px] leading-[0.8] text-black flex items-end">
               <p>{home?.heroSubtitleRight || "Inspired by Apulian tradition"}</p>
             </div>
 
             {/* Row 1 - Top-right: Subtitle right (Studio architettura e design) */}
-            <div className="col-start-3 row-start-1 text-[10px] leading-[0.8] text-right flex items-start">
+            <div className="col-start-3 row-start-1 text-[10px] leading-[0.8] text-right flex items-end">
               {home?.heroSubtitleLeft ? (
                 <PortableText value={home.heroSubtitleLeft as Parameters<typeof PortableText>[0]["value"]} components={ptBlock} />
               ) : (
