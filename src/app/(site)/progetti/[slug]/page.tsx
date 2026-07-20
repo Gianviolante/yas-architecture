@@ -76,7 +76,7 @@ export default async function ProgettoPage({ params }: { params: Promise<{ slug:
           meta+descrizione lasciava un vuoto enorme a destra (la descrizione
           ha un max-width fisso), le immagini invece restano piena larghezza. */}
       <div className="md:hidden page-px pt-[14px]">
-        <h1 className="text-[48px] font-bold tracking-tight leading-[1.3] text-[#282828]">
+        <h1 className="text-[48px] font-bold tracking-tight leading-[1.3] text-black">
           {project.title}
         </h1>
       </div>
@@ -84,14 +84,14 @@ export default async function ProgettoPage({ params }: { params: Promise<{ slug:
       {/* Desktop: title + back link */}
       <div className="hidden md:flex items-start justify-between page-px pt-[20px]">
         <h1
-          className="font-bold tracking-tight leading-[1.3] text-[#282828]"
+          className="font-bold tracking-tight leading-[1.3] text-black"
           style={{ fontSize: "clamp(60px, 14.4vw, 120px)" }}
         >
           {project.title}
         </h1>
         <Link
           href="/progetti"
-          className="text-[12px] leading-[1.3] text-[#282828] hover:opacity-60 transition-opacity whitespace-nowrap mt-[16px] shrink-0"
+          className="text-[12px] leading-[1.3] text-black hover:opacity-60 transition-opacity whitespace-nowrap mt-[16px] shrink-0"
         >
           Torna a progetti →
         </Link>
@@ -107,7 +107,7 @@ export default async function ProgettoPage({ params }: { params: Promise<{ slug:
 
         {/* LEFT: meta lines + (tablet/desktop) column labels + chips + team */}
         <div className="w-full md:w-1/3 md:shrink-0 lg:w-[577px]">
-          <div className="text-[12px] leading-[1.3] text-[#282828] space-y-[4px]">
+          <div className="text-[12px] leading-[1.3] text-black space-y-[4px]">
             {project.typology    && <p><strong>Area:</strong> {project.typology}</p>}
             {project.year        && <p><strong>Timeline:</strong> {project.year}</p>}
             {project.location    && <p><strong>Location:</strong> {project.location}</p>}
@@ -123,25 +123,25 @@ export default async function ProgettoPage({ params }: { params: Promise<{ slug:
             <div className="flex gap-[8px] mt-[24px]">
               {/* Area column */}
               <div className="flex flex-col gap-[6px]">
-                <p className="text-[12px] leading-[1.3] text-[#282828]">Area</p>
-                <span className="inline-flex items-center border-[1.179px] border-[#333] rounded-[100px] px-[14px] py-[6px] text-[9.44px] text-[#333] leading-[1.4] whitespace-nowrap">
+                <p className="text-[12px] leading-[1.3] text-black">Area</p>
+                <span className="inline-flex items-center border-[1.179px] border-black rounded-[100px] px-[14px] py-[6px] text-[9.44px] text-black leading-[1.4] whitespace-nowrap">
                   {project.typology}
                 </span>
               </div>
               {/* Stato column */}
               <div className="flex flex-col gap-[6px]">
-                <p className="text-[12px] leading-[1.3] text-[#282828]">Stato</p>
-                <span className="inline-flex items-center border-[1.179px] border-[#333] rounded-[100px] px-[14px] py-[6px] text-[9.44px] text-[#333] leading-[1.4] whitespace-nowrap">
+                <p className="text-[12px] leading-[1.3] text-black">Stato</p>
+                <span className="inline-flex items-center border-[1.179px] border-black rounded-[100px] px-[14px] py-[6px] text-[9.44px] text-black leading-[1.4] whitespace-nowrap">
                   {project.status}
                 </span>
               </div>
             </div>
             {project.teamMembers && project.teamMembers.length > 0 && (
               <div className="mt-[24px]">
-                <p className="text-[12px] leading-[1.3] text-[#282828] mb-[6px]">Team</p>
+                <p className="text-[12px] leading-[1.3] text-black mb-[6px]">Team</p>
                 <div className="flex flex-wrap gap-[8px]">
                   {project.teamMembers.map((m) => (
-                    <span key={m._id} className="text-[12px] leading-[1.3] text-[#282828]/60">{m.name}</span>
+                    <span key={m._id} className="text-[12px] leading-[1.3] text-black/60">{m.name}</span>
                   ))}
                 </div>
               </div>
@@ -151,7 +151,7 @@ export default async function ProgettoPage({ params }: { params: Promise<{ slug:
 
         {/* RIGHT: description */}
         <div
-          className="flex-1 text-[16px] md:text-[17.4px] leading-[1.4] md:leading-[1.2] text-[#282828] mt-[16px] md:mt-0"
+          className="flex-1 text-[16px] md:text-[17.4px] leading-[1.4] md:leading-[1.2] text-black mt-[16px] md:mt-0"
           style={{ maxWidth: "798px" }}
         >
           {project.description ? (
@@ -164,14 +164,14 @@ export default async function ProgettoPage({ params }: { params: Promise<{ slug:
         {/* MOBILE ONLY: chips below description */}
         <div className="md:hidden mt-[20px]">
           <div className="flex gap-[8px] mb-[8px]">
-            <p className="text-[12px] leading-[1.3] text-[#282828] w-[94px]">Area</p>
-            <p className="text-[12px] leading-[1.3] text-[#282828]">Stato</p>
+            <p className="text-[12px] leading-[1.3] text-black w-[94px]">Area</p>
+            <p className="text-[12px] leading-[1.3] text-black">Stato</p>
           </div>
           <div className="flex items-center gap-[8px]">
-            <span className="inline-flex items-center border-[1.179px] border-[#333] rounded-[100px] px-[14px] py-[6px] text-[9.44px] text-[#333] leading-[1.4] whitespace-nowrap">
+            <span className="inline-flex items-center border-[1.179px] border-black rounded-[100px] px-[14px] py-[6px] text-[9.44px] text-black leading-[1.4] whitespace-nowrap">
               {project.typology}
             </span>
-            <span className="inline-flex items-center border-[1.179px] border-[#333] rounded-[100px] px-[14px] py-[6px] text-[9.44px] text-[#333] leading-[1.4] whitespace-nowrap">
+            <span className="inline-flex items-center border-[1.179px] border-black rounded-[100px] px-[14px] py-[6px] text-[9.44px] text-black leading-[1.4] whitespace-nowrap">
               {project.status}
             </span>
           </div>
@@ -202,7 +202,7 @@ export default async function ProgettoPage({ params }: { params: Promise<{ slug:
       <div className="page-px pb-12 pt-4 md:pt-0 md:flex md:justify-center">
         <Link
           href="/progetti"
-          className="flex items-center justify-center w-full md:w-auto border-2 border-[#333] rounded-[100px] px-[24px] py-[10px] text-[16px] text-[#333] leading-[22px] hover:bg-[#333] hover:text-white transition-colors duration-200"
+          className="flex items-center justify-center w-full md:w-auto border-2 border-black rounded-[100px] px-[24px] py-[10px] text-[16px] text-black leading-[22px] hover:bg-black hover:text-white transition-colors duration-200"
         >
           Vai a tutti i progetti
         </Link>
