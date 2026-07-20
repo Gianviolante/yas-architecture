@@ -90,6 +90,19 @@ export default function Footer() {
               </a>
             </div>
           </div>
+
+          {/* Credits */}
+          <div className={`${txt} text-[11px] leading-[1.4] text-black/40 mt-12 md:mt-16 pt-8 md:pt-0 border-t border-black/10 md:border-t-0`}>
+            <p>Design & Development</p>
+            <a
+              href="https://www.linkedin.com/in/gianmarcoviolante/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hover:text-black/60 transition-colors"
+            >
+              Violante Studio
+            </a>
+          </div>
         </div>
 
         {/* ── Right block — Contatti (490px) ─────────────────────── */}
