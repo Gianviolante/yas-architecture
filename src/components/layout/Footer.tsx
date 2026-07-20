@@ -87,7 +87,7 @@ export default function Footer() {
                 href="https://maps.google.com/?q=Piazza+Marco+Antonio+Cavalerio+21+72100+Brindisi+BR+Italia"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-[12px] leading-[22px] text-[--foreground] border-2 border-[--foreground] px-[24px] py-[10px] rounded-[100px] hover:bg-[#333] hover:text-white transition-colors duration-200 whitespace-nowrap"
+                className="text-[12px] leading-[22px] text-[--foreground] border-2 border-[--foreground] px-[20px] py-[10px] rounded-[100px] hover:bg-[#333] hover:text-white transition-colors duration-200 whitespace-nowrap"
               >
                 Google Maps
               </a>
