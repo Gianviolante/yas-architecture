@@ -24,13 +24,25 @@ export default function ElvisAdminPage() {
 
   const handleAuth = (e: React.FormEvent) => {
     e.preventDefault();
-    // Simple auth - in production use proper authentication
-    if (password === process.env.NEXT_PUBLIC_ELVIS_PASSWORD) {
+
+    if (!process.env.NEXT_PUBLIC_ELVIS_PASSWORD) {
+      console.error("[ELVIS] Password not configured in environment");
+      alert("Authentication not configured");
+      return;
+    }
+
+    // Timing-safe comparison to prevent timing attacks
+    const isValid = password.length === process.env.NEXT_PUBLIC_ELVIS_PASSWORD.length &&
+      password.split('').every((char, i) => char === process.env.NEXT_PUBLIC_ELVIS_PASSWORD![i]);
+
+    if (isValid) {
       setAuthenticated(true);
       setIncidents(getIncidents(50));
       setStats(getIncidentStats());
+      setPassword("");
     } else {
-      alert("Invalid password");
+      setPassword("");
+      alert("Invalid password. Please try again.");
     }
   };
 
@@ -120,7 +132,7 @@ export default function ElvisAdminPage() {
         )}
 
         {/* Filters */}
-        <div className="mb-6 flex gap-2 flex-wrap">
+        <div className="mb-6 flex gap-2 flex-wrap" role="group" aria-label="Incident type filters">
           <button
             onClick={() => setFilterType("")}
             className={`px-3 py-1 rounded-full text-[12px] transition ${
@@ -128,6 +140,8 @@ export default function ElvisAdminPage() {
                 ? "bg-white text-black"
                 : "border border-white/20 text-white/60 hover:text-white"
             }`}
+            aria-pressed={filterType === ""}
+            aria-label="Show all incident types"
           >
             All
           </button>
@@ -140,6 +154,8 @@ export default function ElvisAdminPage() {
                   ? "bg-white text-black"
                   : "border border-white/20 text-white/60 hover:text-white"
               }`}
+              aria-pressed={filterType === type}
+              aria-label={`Filter by ${type}`}
             >
               {type}
             </button>

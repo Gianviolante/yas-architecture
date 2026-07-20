@@ -2,18 +2,21 @@
 
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { getCsrfToken } from "@/lib/utils/csrf";
 
 const SOCIAL = [
   { label: "Fb", href: "https://www.facebook.com/p/Y-A-S-architecture-100063041749591" },
   { label: "Ig", href: "https://www.instagram.com/yas_architecture_/" },
 ];
 
+const INITIAL_FORM_STATE = {
+  nome: "", cognome: "", indirizzo: "", paese: "",
+  citta: "", cap: "", email: "", telefono: "",
+  messaggio: "", privacy: "",
+};
+
 export default function ContattiClient() {
-  const [form, setForm] = useState({
-    nome: "", cognome: "", indirizzo: "", paese: "",
-    citta: "", cap: "", email: "", telefono: "",
-    messaggio: "", privacy: "",
-  });
+  const [form, setForm] = useState(INITIAL_FORM_STATE);
   const [status, setStatus] = useState<"idle" | "sending" | "sent" | "error">("idle");
 
   const set = (k: keyof typeof form) =>
@@ -30,17 +33,6 @@ export default function ContattiClient() {
     }
   }, [status]);
 
-  const getCsrfToken = (): string => {
-    const cookies = document.cookie.split(";");
-    for (const cookie of cookies) {
-      const [name, value] = cookie.trim().split("=");
-      if (name === "csrf-token") {
-        return decodeURIComponent(value);
-      }
-    }
-    return "";
-  };
-
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (privacyBlocked) return;
@@ -55,7 +47,7 @@ export default function ContattiClient() {
       });
       setStatus(res.ok ? "sent" : "error");
       if (res.ok) {
-        setForm({ nome: "", cognome: "", indirizzo: "", paese: "", citta: "", cap: "", email: "", telefono: "", messaggio: "", privacy: "" });
+        setForm(INITIAL_FORM_STATE);
       }
     } catch {
       setStatus("error");
