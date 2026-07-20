@@ -76,44 +76,12 @@ export default async function StudioPage() {
             : <p>{INTRO_FALLBACK}</p>}
         </div>
 
-        {/* Hero image — mobile: full-width 245px | tablet: centered 668×410 | desktop: clamp-padded 631px */}
-        {/* Mobile & tablet */}
-        <div className="lg:hidden relative overflow-hidden mx-[15px] md:mx-auto md:max-w-[668px] aspect-[16/9]">
+        {/* Hero image — full-width */}
+        <div className="relative overflow-hidden aspect-[16/9]">
           {heroUrl
             ? <Image src={heroUrl} alt="Studio" fill className="object-cover" />
             : <PlaceholderImg className="absolute inset-0" />}
         </div>
-
-        {/* Desktop */}
-        <div
-          className="hidden lg:block relative"
-          style={{ paddingLeft: "clamp(16px, 12.6vw, 182px)", paddingRight: "clamp(16px, 16vw, 231px)" }}
-        >
-          <div className="relative overflow-hidden" style={{ height: "631px" }}>
-            {heroUrl
-              ? <Image src={heroUrl} alt="Studio" fill className="object-cover" />
-              : <PlaceholderImg className="absolute inset-0" />}
-          </div>
-          {/* Right arrow — mix-blend-difference */}
-          <div className="absolute right-[183px] top-1/2 -translate-y-1/2 size-[48px] mix-blend-difference pointer-events-none">
-            <Image src="/assets/nav-circle.svg" alt="" fill className="absolute inset-0" />
-            <div className="absolute inset-0 flex items-center justify-center">
-              <Image src="/assets/nav-arrow-right.svg" alt="" width={20} height={20} />
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <Divider />
-
-      <Divider />
-
-      {/* Full-width separator image
-          mobile: 245px | tablet: 410px | desktop: 718px  */}
-      <div className="relative mx-[15px] aspect-[16/9]">
-        {mainImageUrl
-          ? <Image src={mainImageUrl} alt="Studio" fill className="object-cover" />
-          : <PlaceholderImg className="absolute inset-0" />}
       </div>
 
       <Divider />
