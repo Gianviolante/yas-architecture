@@ -44,7 +44,7 @@ export default async function StudioPage() {
   const mainImageUrl    = studio?.mainImage     ? urlFor(studio.mainImage).width(2000).auto('format').quality(90).url()       : null;
   const teamPortraitUrl = studio?.teamPortrait  ? urlFor(studio.teamPortrait).width(1200).auto('format').quality(90).url()     : null;
   const spaziUrls       = (studio?.spaziImages ?? []).map((img) => ({
-    url: urlFor(img).width(700).url(), caption: img.caption,
+    url: urlFor(img).width(700).auto('format').quality(90).url(), caption: img.caption,
   }));
 
   return (
