@@ -47,16 +47,16 @@ export default async function HomePage() {
           <section className="md:hidden relative h-[382px] overflow-hidden">
             {/* labels top */}
             <div className="absolute text-[12px] leading-[1.2] whitespace-nowrap" style={{ top: "8px", left: "16px", color: "#000000" }}>
-              {home?.heroSubtitleLeft ? (
-                <PortableText value={home.heroSubtitleLeft as Parameters<typeof PortableText>[0]["value"]} components={ptBlock} />
+              {home?.heroSubtitleRight ? (
+                <PortableText value={home.heroSubtitleRight as Parameters<typeof PortableText>[0]["value"]} components={ptBlock} />
               ) : (
                 <>
-                  <p>Studio architettura e design</p>
+                  <p>Inspired by Apulian tradition</p>
                 </>
               )}
             </div>
             <p className="absolute text-[12px] leading-[1.2] text-right" style={{ top: "50px", right: "15px", color: "#000000" }}>
-              {home?.heroSubtitleRight || "Apulian inspiration guide"}
+              {home?.heroSubtitleLeft || "Studio architettura e design"}
             </p>
 
             {/* big title */}
@@ -72,10 +72,9 @@ export default async function HomePage() {
                 <PortableText value={home.heroAddress as Parameters<typeof PortableText>[0]["value"]} components={ptBlock} />
               ) : (
                 <>
-                  <p>Via Dè Gracchi, 47</p>
+                  <p>Piazza Marco Antonio Cavalerio, 21</p>
                   <p>72100 Brindisi (BR) Italia</p>
-                  <p>T +39 351 531 7762</p>
-                  <p>info@yas-arch.com</p>
+                  <p>studio@yas-arc.com</p>
                 </>
               )}
             </div>
