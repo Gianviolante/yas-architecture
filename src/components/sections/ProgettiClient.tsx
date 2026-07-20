@@ -318,11 +318,11 @@ export default function ProgettiClient({ projects, initialTypology }: Props) {
         {filtered.length === 0 ? (
           <p className="page-px text-[12px] text-[#282828]/40 py-16 text-center">Nessun progetto trovato.</p>
         ) : view === "grid" ? (
-          <div className="px-4 md:px-[30px]">
+          <div className="page-px">
             <GridView largeRows={largeRows} small={small} />
           </div>
         ) : (
-          <div className="px-4 md:px-[30px]">
+          <div className="page-px">
             <IndexView
               projects={filtered}
               onHover={setHoveredId}
