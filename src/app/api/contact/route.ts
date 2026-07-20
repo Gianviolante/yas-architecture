@@ -76,10 +76,10 @@ function checkRateLimit(ip: string): boolean {
 }
 
 export async function POST(req: NextRequest) {
-  // Get client IP for rate limiting
+  // Get client IP for rate limiting (trim whitespace from split)
   const ip =
-    req.headers.get("x-forwarded-for")?.split(",")[0] ||
-    req.headers.get("x-real-ip") ||
+    req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ||
+    req.headers.get("x-real-ip")?.trim() ||
     "unknown";
 
   // Check rate limit
@@ -93,7 +93,7 @@ export async function POST(req: NextRequest) {
       userAgent: req.headers.get("user-agent") || undefined,
     });
     return NextResponse.json(
-      { error: "Troppi tentativi. Riprova più tardi." },
+      { error: "Troppi tentativi. Riprova più tardi.", code: "RATE_LIMIT_EXCEEDED" },
       { status: 429 }
     );
   }
@@ -113,7 +113,7 @@ export async function POST(req: NextRequest) {
       userAgent: req.headers.get("user-agent") || undefined,
     });
     return NextResponse.json(
-      { error: "Validazione sessione fallita. Ricarica la pagina." },
+      { error: "Validazione sessione fallita. Ricarica la pagina.", code: "CSRF_VALIDATION_FAILED" },
       { status: 403 }
     );
   }
@@ -129,7 +129,7 @@ export async function POST(req: NextRequest) {
       endpoint: "/api/contact",
       userAgent: req.headers.get("user-agent") || undefined,
     });
-    return NextResponse.json({ error: validation.error }, { status: 400 });
+    return NextResponse.json({ error: validation.error, code: "VALIDATION_FAILED" }, { status: 400 });
   }
 
   // Sanitize input to prevent XSS
@@ -163,10 +163,10 @@ export async function POST(req: NextRequest) {
       }),
     });
     if (!res.ok) {
-      return NextResponse.json({ error: "Errore invio email" }, { status: 500 });
+      return NextResponse.json({ error: "Errore invio email", code: "EMAIL_SEND_FAILED" }, { status: 500 });
     }
-  } else {
-    // Development: log the submission
+  } else if (process.env.NODE_ENV === "development") {
+    // Development only: log the submission
     console.log("Contact form submission (no RESEND_API_KEY):", {
       nome: safeNome,
       cognome: safeCognome,
