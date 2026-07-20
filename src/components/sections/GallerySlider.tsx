@@ -157,6 +157,14 @@ export default function GallerySlider({ items, projectTitle, compact = false }: 
 
   // ── drag ──────────────────────────────────────────────────────────────
   const onPointerDown = (e: React.PointerEvent<HTMLDivElement>) => {
+    // Se il click è nella zona edge (transparent button), ignora: lascia che il
+    // button gestisca il click (goTo)
+    const rect = e.currentTarget.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    if ((x < EDGE_ZONE && current > 0) || (x > rect.width - EDGE_ZONE && current < items.length - 1)) {
+      return;
+    }
+
     cancelAnim.current?.();              // ferma animazione: prende posizione visiva corrente
     isDragging.current  = true;
     hasDragged.current  = false;
