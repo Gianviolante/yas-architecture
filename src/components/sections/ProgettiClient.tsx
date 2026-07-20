@@ -128,6 +128,8 @@ export default function ProgettiClient({ projects, initialTypology }: Props) {
               setFiltersOpen(!filtersOpen);
             }}
             className="w-full flex items-center justify-between px-[15px] py-3 mb-2"
+            aria-label={filtersOpen ? "Chiudi filtri" : "Apri filtri"}
+            aria-expanded={filtersOpen}
           >
             <span className="text-[16px] leading-normal text-[--foreground]">Filtra</span>
             <div className={`transition-transform duration-500 ${filtersOpen ? "rotate-180" : "rotate-0"}`}>
@@ -150,11 +152,22 @@ export default function ProgettiClient({ projects, initialTypology }: Props) {
               <p className="text-[12px] leading-[1.5] text-[--foreground] px-[15px]">Area</p>
               <div className="overflow-x-auto">
                 <div className="flex gap-2 px-[15px] py-3">
-                  <button onClick={() => setTypologyFilters(new Set())} className={chipMb(typologyFilters.size === 0)}>
+                  <button
+                    onClick={() => setTypologyFilters(new Set())}
+                    className={chipMb(typologyFilters.size === 0)}
+                    aria-label="Mostra tutti i progetti"
+                    aria-pressed={typologyFilters.size === 0}
+                  >
                     Tutti i progetti
                   </button>
                   {AREA_FILTERS.slice(1).map(({ label, value }) => (
-                    <button key={value} onClick={() => toggleTypology(value as Typology)} className={chipMb(typologyFilters.has(value as Typology))}>
+                    <button
+                      key={value}
+                      onClick={() => toggleTypology(value as Typology)}
+                      className={chipMb(typologyFilters.has(value as Typology))}
+                      aria-label={`Filtra per ${label}`}
+                      aria-pressed={typologyFilters.has(value as Typology)}
+                    >
                       {label}
                     </button>
                   ))}
@@ -166,7 +179,13 @@ export default function ProgettiClient({ projects, initialTypology }: Props) {
               <div className="overflow-x-auto">
                 <div className="flex gap-2 px-[15px] py-3">
                   {CAT_FILTERS.map(({ label, value }) => (
-                    <button key={value} onClick={() => toggleTypology(value)} className={chipMb(typologyFilters.has(value))}>
+                    <button
+                      key={value}
+                      onClick={() => toggleTypology(value)}
+                      className={chipMb(typologyFilters.has(value))}
+                      aria-label={`Filtra per ${label}`}
+                      aria-pressed={typologyFilters.has(value)}
+                    >
                       {label}
                     </button>
                   ))}
@@ -178,7 +197,13 @@ export default function ProgettiClient({ projects, initialTypology }: Props) {
               <div className="overflow-x-auto">
                 <div className="flex gap-[8px] px-[15px] py-[11px]">
                   {STATO_FILTERS.map(({ label, value }) => (
-                    <button key={value} onClick={() => toggleStato(value)} className={chipMb(statoFilters.has(value))}>
+                    <button
+                      key={value}
+                      onClick={() => toggleStato(value)}
+                      className={chipMb(statoFilters.has(value))}
+                      aria-label={`Filtra per ${label}`}
+                      aria-pressed={statoFilters.has(value)}
+                    >
                       {label}
                     </button>
                   ))}
@@ -192,7 +217,11 @@ export default function ProgettiClient({ projects, initialTypology }: Props) {
                   {hasFilters && <span className="text-[--foreground-muted]">{activeLabel}</span>}
                 </p>
                 {hasFilters && (
-                  <button onClick={reset} className="flex items-center gap-1 text-[12px] leading-[22px] text-[--foreground]">
+                  <button
+                    onClick={reset}
+                    className="flex items-center gap-1 text-[12px] leading-[22px] text-[--foreground]"
+                    aria-label="Ripristina tutti i filtri"
+                  >
                     Reset
                     <Image src="/assets/icon-reset.svg" alt="" width={10} height={8} />
                   </button>
@@ -309,6 +338,8 @@ export default function ProgettiClient({ projects, initialTypology }: Props) {
           </p>
           <button
             onClick={() => setView(v => v === "grid" ? "index" : "grid")}
+            aria-label={`Cambia a vista ${view === "grid" ? "indice" : "griglia"}`}
+            aria-pressed={view === "grid"}
             className="ml-auto text-[16px] md:text-[17.5px] leading-[1.5] text-[--foreground] hover:opacity-60 transition-opacity"
           >
             {view === "grid" ? "Visualizza come index" : "Visualizza come griglia"}
