@@ -100,12 +100,6 @@ export default function Navbar() {
 
           {/* Desktop left nav */}
           <div className="hidden md:flex items-center gap-[20px]">
-            {/* Título dinámico: YAS Architecture | Página */}
-            {pageName && (
-              <span className="text-[12px] leading-normal text-[#1a1a1a]">
-                YAS Architecture <span className="text-[#d9d9d9]">|</span> {pageName}
-              </span>
-            )}
             {navLinks.map(({ href, label }) => (
               <Link
                 key={href}
