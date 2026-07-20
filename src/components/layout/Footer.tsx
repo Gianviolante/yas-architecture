@@ -17,7 +17,7 @@ export default function Footer() {
 
   return (
     <footer>
-      <div className="px-4 md:px-[30px] py-10 flex flex-col lg:flex-row justify-between gap-8">
+      <div className="page-px py-10 flex flex-col lg:flex-row justify-between gap-8">
 
         {/* ── Left block — Info (≈681px) ────────────────────────────── */}
         <div className="flex flex-col flex-1 min-w-0">
