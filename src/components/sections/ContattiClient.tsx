@@ -241,7 +241,7 @@ export default function ContattiClient() {
                   <button
                     type="submit"
                     disabled={status === "sending" || privacyBlocked}
-                    className="w-full md:w-auto text-[16px] leading-[22px] text-[#333] px-[24px] py-[10px] rounded-[100px] bg-[#e9ebed] hover:bg-[#d9dadb] transition-colors duration-200 disabled:opacity-40 disabled:cursor-not-allowed"
+                    className="w-full md:w-auto text-[16px] leading-[22px] text-[--foreground] px-[24px] py-[10px] rounded-[100px] bg-[--surface-muted] hover:bg-[--border] transition-colors duration-200 disabled:opacity-40 disabled:cursor-not-allowed"
                   >
                     {status === "sending" ? "Invio…" : "Invia richiesta"}
                   </button>

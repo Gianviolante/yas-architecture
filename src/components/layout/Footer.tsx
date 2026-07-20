@@ -77,7 +77,7 @@ export default function Footer() {
                 href="https://maps.google.com/?q=Piazza+Marco+Antonio+Cavalerio+21+72100+Brindisi+BR+Italia"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-[12px] leading-[22px] text-[#333] border-2 border-[#333] px-[24px] py-[10px] rounded-[100px] hover:bg-[#333] hover:text-white transition-colors duration-200 whitespace-nowrap"
+                className="text-[12px] leading-[22px] text-[--foreground] border-2 border-[--foreground] px-[24px] py-[10px] rounded-[100px] hover:bg-[#333] hover:text-white transition-colors duration-200 whitespace-nowrap"
               >
                 Google Maps
               </a>
@@ -168,7 +168,7 @@ export default function Footer() {
                 <div className="flex justify-end">
                   <button
                     type="submit"
-                    className="text-[16px] leading-[22px] text-[#333] px-[24px] py-[10px] rounded-[100px] bg-[#e9ebed] hover:bg-[#d9dadb] transition-colors duration-200"
+                    className="text-[16px] leading-[22px] text-[--foreground] px-[24px] py-[10px] rounded-[100px] bg-[--surface-muted] hover:bg-[--border] transition-colors duration-200"
                   >
                     Invia
                   </button>

@@ -22,7 +22,13 @@
 @theme inline {
   --font-sans: "Neue Haas Grotesk", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
 
-  /* YAS Brand Colors */
+  /* Semantic text & UI colors */
+  --foreground: #000;            /* primary text — full black */
+  --foreground-muted: #d9d9d9;   /* secondary text, disabled state */
+  --surface-muted: #e9ebed;      /* light backgrounds, placeholder bg */
+  --border: #d9dadb;             /* border, divider colors */
+
+  /* YAS Brand Colors (unused — TODO: decide to adopt or delete) */
   --color-palatinate: #2D2A6E;
   --color-maya: #4A90D9;
   --color-sky: #87CEEB;
