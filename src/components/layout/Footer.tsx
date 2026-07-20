@@ -38,14 +38,22 @@ export default function Footer() {
               <p>Codice univoco: M5UXCR1</p>
             </div>
 
-            {/* Col 2 — Contatti */}
-            <div className={`${txt} w-full md:w-[232px] md:shrink-0 mb-4 md:mb-0`}>
-              <p>Contatti</p>
-              <a href="mailto:studio@yas-arc.com" className="block hover:underline">studio@yas-arc.com</a>
+            {/* Col 2 — Contatti + links (lg only) */}
+            <div className={`${txt} w-full md:w-[232px] md:shrink-0 mb-4 md:mb-0 flex flex-col`}>
+              <div>
+                <p>Contatti</p>
+                <a href="mailto:studio@yas-arc.com" className="block hover:underline">studio@yas-arc.com</a>
+              </div>
+              <div className="hidden md:hidden lg:block xl:hidden">
+                <p>&nbsp;</p>
+                <Link href="/studio" className="block hover:underline">Studio</Link>
+                <Link href="/team" className="block hover:underline">Team</Link>
+                <Link href="/progetti" className="block hover:underline">Progetti</Link>
+              </div>
             </div>
 
-            {/* Col 3 — Studio links */}
-            <div className={`${txt}`}>
+            {/* Col 3 — Studio links (hidden on lg, shown on xl+) */}
+            <div className={`${txt} hidden lg:hidden xl:block`}>
               <Link href="/studio" className="block hover:underline">Studio</Link>
               <Link href="/team" className="block hover:underline">Team</Link>
               <Link href="/progetti" className="block hover:underline">Progetti</Link>

@@ -57,7 +57,7 @@ export default async function StudioPage() {
         </span>
         <Link
           href="/team"
-          className="inline-flex items-center border-2 border-[#333] rounded-[100px] px-[24px] py-[10px] text-[16px] text-[#333] leading-[22px] hover:bg-black hover:border-black hover:text-white transition-colors duration-200"
+          className="inline-flex items-center border-2 border-black rounded-[100px] px-[24px] py-[10px] text-[16px] text-[#333] leading-[22px] hover:bg-black hover:border-black hover:text-white transition-colors duration-200"
         >
           Designer
         </Link>
@@ -77,10 +77,12 @@ export default async function StudioPage() {
         </div>
 
         {/* Hero image — full-width with page margins */}
-        <div className="page-px relative overflow-hidden aspect-[16/9]">
-          {heroUrl
-            ? <Image src={heroUrl} alt="Studio" fill sizes="(max-width: 768px) 100vw, 90vw" className="object-cover" />
-            : <PlaceholderImg className="absolute inset-0" />}
+        <div className="page-px">
+          <div className="relative overflow-hidden aspect-[16/9]">
+            {heroUrl
+              ? <Image src={heroUrl} alt="Studio" fill sizes="(max-width: 768px) 100vw, 90vw" className="object-cover" />
+              : <PlaceholderImg className="absolute inset-0" />}
+          </div>
         </div>
       </div>
 
@@ -113,7 +115,7 @@ export default async function StudioPage() {
         <div className="flex justify-center px-[15px] md:px-0">
           <Link
             href="/team"
-            className="flex items-center justify-center w-full md:w-auto border-2 border-[#333] rounded-[100px] px-[24px] py-[10px] text-[16px] text-[#333] leading-[22px] hover:bg-[#333] hover:text-white transition-colors duration-200"
+            className="flex items-center justify-center w-full md:w-auto border-2 border-black rounded-[100px] px-[24px] py-[10px] text-[16px] text-[#333] leading-[22px] hover:bg-black hover:text-white transition-colors duration-200"
           >
             Conosci il team
           </Link>
@@ -149,7 +151,7 @@ export default async function StudioPage() {
                   <p className="text-[17.5px] leading-[1.5] text-[#282828] mb-[6px]">
                     {p.title}{p.location ? `, ${p.location}` : ""}
                   </p>
-                  <span className="inline-flex items-center border-2 border-[#333] rounded-[100px] px-[14px] py-[4px] text-[12px] text-[#333] leading-[1.4]">
+                  <span className="inline-flex items-center border-2 border-black rounded-[100px] px-[14px] py-[4px] text-[12px] text-[#333] leading-[1.4]">
                     {p.typology}
                   </span>
                 </Link>
@@ -164,7 +166,7 @@ export default async function StudioPage() {
         <div className="flex justify-center px-[15px] md:px-0 mt-[16px]">
           <Link
             href="/progetti"
-            className="flex items-center justify-center w-full md:w-auto border-2 border-[#333] rounded-[100px] px-[24px] py-[10px] text-[16px] text-[#333] leading-[22px] hover:bg-[#333] hover:text-white transition-colors duration-200"
+            className="flex items-center justify-center w-full md:w-auto border-2 border-black rounded-[100px] px-[24px] py-[10px] text-[16px] text-[#333] leading-[22px] hover:bg-black hover:text-white transition-colors duration-200"
           >
             Vai a tutti i progetti
           </Link>
