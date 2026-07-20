@@ -33,7 +33,7 @@ export default async function ProgettoPage({ params }: { params: Promise<{ slug:
 
   const otherProjects = allProjects.filter((p) => p.slug.current !== slug);
 
-  const heroUrl = project.heroImage ? urlFor(project.heroImage).width(1440).auto('format').quality(90).url() : null;
+  const heroUrl = project.heroImage ? urlFor(project.heroImage).width(2400).auto('format').quality(90).url() : null;
 
   // Gallery: first image → full-bleed block, rest → slider
   // L'aspect ratio è codificato nell'asset _ref ("...-6732x4490-jpg"):
