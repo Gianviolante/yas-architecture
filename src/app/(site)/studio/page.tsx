@@ -40,11 +40,11 @@ export default async function StudioPage() {
 
   const featuredProjects = allProjects.filter((p) => p.featured).slice(0, 2);
 
-  const heroUrl         = studio?.heroImage     ? urlFor(studio.heroImage).width(2000).auto('format').quality(90).url()      : null;
-  const mainImageUrl    = studio?.mainImage     ? urlFor(studio.mainImage).width(2000).auto('format').quality(90).url()       : null;
-  const teamPortraitUrl = studio?.teamPortrait  ? urlFor(studio.teamPortrait).width(1200).auto('format').quality(90).url()     : null;
+  const heroUrl         = studio?.heroImage     ? urlFor(studio.heroImage).width(2880).auto('format').quality(100).url()      : null;
+  const mainImageUrl    = studio?.mainImage     ? urlFor(studio.mainImage).width(2880).auto('format').quality(100).url()       : null;
+  const teamPortraitUrl = studio?.teamPortrait  ? urlFor(studio.teamPortrait).width(1200).auto('format').quality(100).url()     : null;
   const spaziUrls       = (studio?.spaziImages ?? []).map((img) => ({
-    url: urlFor(img).width(700).auto('format').quality(90).url(), caption: img.caption,
+    url: urlFor(img).width(2400).auto('format').quality(100).url(), caption: img.caption,
   }));
 
   return (

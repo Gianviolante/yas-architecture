@@ -33,14 +33,14 @@ export default async function ProgettoPageV2({ params }: { params: Promise<{ slu
 
   const otherProjects = allProjects.filter((p) => p.slug.current !== slug);
 
-  const heroUrl = project.heroImage ? urlFor(project.heroImage).width(1440).url() : null;
+  const heroUrl = project.heroImage ? urlFor(project.heroImage).width(2400).auto('format').quality(100).url() : null;
 
   const parseAspect = (img: SanityImage): number | null => {
     const m = img.asset?._ref?.match(/-(\d+)x(\d+)-/);
     return m ? Number(m[1]) / Number(m[2]) : null;
   };
   const galleryItems = (project.gallery ?? []).map((img: SanityImage) => ({
-    url: urlFor(img).width(1200).url(),
+    url: urlFor(img).width(2400).auto('format').quality(100).url(),
     caption: img.caption,
     aspect: parseAspect(img),
   }));

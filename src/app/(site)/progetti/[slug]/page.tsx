@@ -33,7 +33,7 @@ export default async function ProgettoPage({ params }: { params: Promise<{ slug:
 
   const otherProjects = allProjects.filter((p) => p.slug.current !== slug);
 
-  const heroUrl = project.heroImage ? urlFor(project.heroImage).width(2400).auto('format').quality(90).url() : null;
+  const heroUrl = project.heroImage ? urlFor(project.heroImage).width(2880).auto('format').quality(100).url() : null;
 
   // Gallery: first image → full-bleed block, rest → slider
   // L'aspect ratio è codificato nell'asset _ref ("...-6732x4490-jpg"):
@@ -43,7 +43,7 @@ export default async function ProgettoPage({ params }: { params: Promise<{ slug:
     return m ? Number(m[1]) / Number(m[2]) : null;
   };
   const galleryItems = (project.gallery ?? []).map((img: SanityImage) => ({
-    url: urlFor(img).width(1200).auto('format').quality(90).url(),
+    url: urlFor(img).width(2400).auto('format').quality(100).url(),
     caption: img.caption,
     aspect: parseAspect(img),
   }));
