@@ -103,6 +103,7 @@ export default function GallerySlider({ items, projectTitle, compact = false, in
   // ── goTo: anima il TRACK (il div fisico) con rAF + curva Groppi ───────
   // Il track si muove fisicamente verso sinistra/destra portando con sé
   // tutte le card — esattamente come fa Groppi con il suo SwiperComponent.
+  // DURATION è proporzionale alla distanza per mantenere velocità costante su tutti i breakpoint.
   const goTo = useCallback((idx: number) => {
     const snapPos = getSnapPositions();
     const clamped = Math.max(0, Math.min(Math.max(0, items.length - 1), idx));
@@ -110,8 +111,11 @@ export default function GallerySlider({ items, projectTitle, compact = false, in
     setCurrent(clamped);
     const from = getTrackX();       // posizione visiva attuale
     const to   = -snapPos[clamped]; // posizione target
+    const distance = Math.abs(to - from);
+    // Velocità costante: ~0.5 pixel/ms → 700ms per ~350px (larghezza desktop)
+    const duration = Math.max(DURATION * (distance / 350), 300); // min 300ms
     cancelAnim.current?.();         // ferma eventuale animazione in corso
-    cancelAnim.current = animateValue(from, to, DURATION, groppiEase, setTrackX);
+    cancelAnim.current = animateValue(from, to, duration, groppiEase, setTrackX);
   }, [getSnapPositions, items.length, getTrackX, setTrackX]);
 
   // ── reset su cambio items/compact — adjust-during-render (solo state, no ref)
