@@ -69,7 +69,7 @@ export default function Footer() {
                 <Link href="/coockie-solution" className="block hover:opacity-60 transition-opacity">Coockie Solution</Link>
                 <Link href="/coockie-settings" className="block hover:opacity-60 transition-opacity">Coockie Settings</Link>
               </div>
-              <p className="mt-4">Design: <a href="https://www.linkedin.com/in/gianmarcoviolante/" target="_blank" rel="noopener noreferrer" className="hover:opacity-60 transition-opacity">G. Violante</a></p>
+              <p className="mt-4">Design & Development: <a href="https://www.linkedin.com/in/gianmarcoviolante/" target="_blank" rel="noopener noreferrer" className="hover:opacity-60 transition-opacity">G. Violante</a></p>
             </div>
 
             {/* Col 2 — Seguici su + social icons */}
