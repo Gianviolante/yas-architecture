@@ -56,6 +56,12 @@ export default function GallerySlider({ items, projectTitle, compact = false, in
 
   useEffect(() => { currentRef.current = current; }, [current]);
 
+  useEffect(() => {
+    if (initialLightboxIndex !== undefined && initialLightboxIndex !== null) {
+      setLightboxIndex(initialLightboxIndex);
+    }
+  }, [initialLightboxIndex]);
+
   const isMobile = breakpoint === "mobile";
   const isTablet = breakpoint === "tablet";
 
