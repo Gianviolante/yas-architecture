@@ -89,45 +89,41 @@ export default async function HomePage() {
           </section>
 
           {/* ── 1. HERO — tablet + desktop ───────────────────────────── */}
-          <section className="relative md:h-[295px] lg:h-[439px] overflow-hidden hidden md:block">
-            <AnimatedTitle
-              text={home?.heroTitleMain || "yas-arch"}
-              className="absolute font-bold text-black leading-none whitespace-nowrap select-none md:top-[47px] md:left-[81px] lg:top-[31px] lg:left-[198px]"
-              style={{ fontSize: "clamp(8rem,19.8vw,285px)" }}
-            />
+          <section className="hidden md:grid grid-cols-3 gap-[32px] md:gap-[48px] lg:gap-[64px] md:h-[295px] lg:h-[439px] overflow-hidden md:px-[32px] lg:px-[64px] md:py-[24px] lg:py-[32px]">
+            {/* Top-left: Title */}
+            <div className="col-start-1 row-start-1">
+              <AnimatedTitle
+                text={home?.heroTitleMain || "yas-arch"}
+                className="font-bold text-black leading-none whitespace-nowrap select-none"
+                style={{ fontSize: "clamp(8rem,19.8vw,285px)" }}
+              />
+            </div>
 
-            <div
-              className="absolute text-[12px] leading-[1.2] text-right whitespace-nowrap md:top-[47px] md:right-[calc(100%-362px)] lg:top-[31px] lg:right-[calc(100%-499px)]"
-              style={{ color: "#000000" }}
-            >
+            {/* Top-middle: Subtitle right */}
+            <div className="col-start-2 row-start-1 text-[12px] leading-[1.2] text-black flex items-start">
+              <p>{home?.heroSubtitleRight || "Apulian inspiration guide"}</p>
+            </div>
+
+            {/* Top-right: Subtitle left */}
+            <div className="col-start-3 row-start-1 text-[12px] leading-[1.2] text-right">
               {home?.heroSubtitleLeft ? (
                 <PortableText value={home.heroSubtitleLeft as Parameters<typeof PortableText>[0]["value"]} components={ptBlock} />
               ) : (
-                <>
-                  <p>Studio architettura e design</p>
-                </>
+                <p>Studio architettura e design</p>
               )}
             </div>
 
-            <p
-              className="absolute text-[12px] leading-[1.2] md:top-[47px] md:left-[462px] lg:top-[31px] lg:left-[765px]"
-              style={{ color: "#000000" }}
-            >
-              {home?.heroSubtitleRight || "Apulian inspiration guide"}
-            </p>
-
-            <div
-              className="absolute text-[12px] leading-[1.2] text-black text-right md:top-[221px] md:right-[calc(100%-545px)] lg:top-[327px] lg:right-[calc(100%-972px)]"
-            >
+            {/* Bottom-left: Address */}
+            <div className="col-start-1 row-start-2 text-[12px] leading-[1.2] text-black flex items-end">
               {home?.heroAddress ? (
                 <PortableText value={home.heroAddress as Parameters<typeof PortableText>[0]["value"]} components={ptBlock} />
               ) : (
-                <>
+                <div>
                   <p>Via Dè Gracchi, 47</p>
                   <p>72100 Brindisi (BR) Italia</p>
                   <p>T +39 351 531 7762</p>
                   <p>info@yas-arch.com</p>
-                </>
+                </div>
               )}
             </div>
           </section>
