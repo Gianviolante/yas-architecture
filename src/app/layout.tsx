@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import CustomCursor from "@/components/ui/CustomCursor";
 import PageTransition from "@/components/ui/PageTransition";
+import CookieBanner from "@/components/CookieBanner";
 
 export const metadata: Metadata = {
   title: "YAS Architecture",
@@ -18,6 +19,7 @@ export default function RootLayout({
       <body className="min-h-full flex flex-col font-sans" suppressHydrationWarning>
         <CustomCursor />
         <PageTransition>{children}</PageTransition>
+        <CookieBanner />
       </body>
     </html>
   );
