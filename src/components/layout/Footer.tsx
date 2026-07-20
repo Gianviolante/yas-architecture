@@ -64,10 +64,10 @@ export default function Footer() {
           <div className="flex flex-col md:flex-row items-start md:items-end mt-10 gap-4 md:gap-0">
             {/* Col 1 — Privacy */}
             <div className={`${txt} w-full md:w-[232px] md:shrink-0`}>
+              <p>Design: G. Violante</p>
               <p>Privacy Policy</p>
               <p>Coockie Solution</p>
               <p>Coockie Settings</p>
-              <p>Design: G. Violante</p>
             </div>
 
             {/* Col 2 — Seguici su + social icons */}
