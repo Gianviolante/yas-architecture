@@ -78,7 +78,7 @@ export default async function StudioPage() {
 
         {/* Hero image — mobile: full-width 245px | tablet: centered 668×410 | desktop: clamp-padded 631px */}
         {/* Mobile & tablet */}
-        <div className="lg:hidden relative overflow-hidden mx-[15px] md:mx-auto md:max-w-[668px] h-[245px] md:h-[410px]">
+        <div className="lg:hidden relative overflow-hidden mx-[15px] md:mx-auto md:max-w-[668px] aspect-[16/9]">
           {heroUrl
             ? <Image src={heroUrl} alt="Studio" fill className="object-cover" />
             : <PlaceholderImg className="absolute inset-0" />}
@@ -123,7 +123,7 @@ export default async function StudioPage() {
         <div className="flex flex-col md:flex-row gap-[15px] md:gap-[12px] page-px">
           {[0, 1].map((i) => (
             <div key={i} className="flex-1">
-              <div className="relative overflow-hidden mb-[8px] md:mb-[12px] h-[245px] md:h-[361px] lg:h-[632px]">
+              <div className="relative overflow-hidden mb-[8px] md:mb-[12px] aspect-[16/9]">
                 {spaziUrls[i]
                   ? <Image src={spaziUrls[i].url} alt={spaziUrls[i].caption ?? `Spazio ${i + 1}`} fill className="object-cover" />
                   : <PlaceholderImg className="absolute inset-0" />}
@@ -211,7 +211,7 @@ export default async function StudioPage() {
 
       {/* Full-width separator image
           mobile: 245px | tablet: 410px | desktop: 718px  */}
-      <div className="relative mx-[15px] h-[245px] md:h-[410px] lg:h-[718px]">
+      <div className="relative mx-[15px] aspect-[16/9]">
         {mainImageUrl
           ? <Image src={mainImageUrl} alt="Studio" fill className="object-cover" />
           : <PlaceholderImg className="absolute inset-0" />}
@@ -235,7 +235,7 @@ export default async function StudioPage() {
         {/* Portrait — full-width on mobile, centered on tablet/desktop
             mobile: 372px | tablet: 500px | desktop: up to 908px  */}
         <div className="flex justify-center mb-[32px] md:mb-[40px] px-[15px] md:px-0">
-          <div className="relative overflow-hidden w-full md:max-w-[705px] h-[372px] md:h-[500px] lg:h-[908px]">
+          <div className="relative overflow-hidden w-full md:max-w-[705px] aspect-[16/9]">
             {teamPortraitUrl
               ? <Image src={teamPortraitUrl} alt="Team YAS Architecture" fill className="object-cover" />
               : <PlaceholderImg className="absolute inset-0" />}
@@ -274,7 +274,7 @@ export default async function StudioPage() {
             <div key={p._id ?? i} className="flex-1">
               {p._id ? (
                 <Link href={`/progetti/${p.slug.current}`} className="block group">
-                  <div className="relative overflow-hidden mb-[8px] h-[256px] md:h-[335px] lg:h-[550px]">
+                  <div className="relative overflow-hidden mb-[8px] aspect-[16/9]">
                     {p.coverImageUrl
                       ? <Image src={p.coverImageUrl} alt={p.title} fill className="object-cover transition-transform duration-500 group-hover:scale-[1.03]" />
                       : <PlaceholderImg className="absolute inset-0" />}
@@ -287,7 +287,7 @@ export default async function StudioPage() {
                   </span>
                 </Link>
               ) : (
-                <div className="bg-[#d9d9d9] mb-[8px] h-[256px] md:h-[335px] lg:h-[550px]" />
+                <div className="bg-[#d9d9d9] mb-[8px] aspect-[16/9]" />
               )}
             </div>
           ))}
