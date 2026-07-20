@@ -152,7 +152,7 @@ export default function HomeProjectsCarousel({ projects }: Props) {
                         className="block group"
                       >
                         {/* immagine senza frecce (frecce sono fisse sul carousel esterno) */}
-                        <div className="relative h-[376px] md:h-[322px] lg:h-[550px] overflow-hidden mb-4">
+                        <div className="relative aspect-[16/10] overflow-hidden mb-4">
                           {p.coverImageUrl
                             ? <Image src={p.coverImageUrl} alt={p.title} fill className="object-cover transition-transform duration-500 group-hover:scale-[1.03]" priority={idx < 3} />
                             : <div className="w-full h-full bg-[#d9d9d9]" />}
@@ -168,7 +168,7 @@ export default function HomeProjectsCarousel({ projects }: Props) {
                   ))
                 : PLACEHOLDERS.map((p, idx) => (
                     <div key={p.id} className="w-full md:w-[calc(50%-7px)] shrink-0">
-                      <div className="relative h-[376px] md:h-[322px] lg:h-[550px] overflow-hidden mb-4">
+                      <div className="relative aspect-[16/10] overflow-hidden mb-4">
                         <Image src={p.img} alt="" fill className="object-cover" priority={idx < 3} />
                       </div>
                       <p className="text-[17.5px] leading-[1.5] text-[#282828] mb-2 truncate">{p.label}</p>
