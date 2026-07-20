@@ -1,11 +1,13 @@
 import { NextRequest, NextResponse } from "next/server";
-import { randomBytes } from "crypto";
 
 export function middleware(request: NextRequest) {
   const response = NextResponse.next();
 
   // Generate CSRF token if not present
-  const csrfToken = request.cookies.get("csrf-token")?.value || randomBytes(32).toString("hex");
+  const csrfToken = request.cookies.get("csrf-token")?.value ||
+    Array.from(crypto.getRandomValues(new Uint8Array(32)))
+      .map(b => b.toString(16).padStart(2, '0'))
+      .join('');
 
   response.cookies.set("csrf-token", csrfToken, {
     httpOnly: true,

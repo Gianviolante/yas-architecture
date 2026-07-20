@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import { logIncident } from "@/lib/elvis";
 
 // Sanitize HTML to prevent XSS
 function escapeHtml(text: string): string {
@@ -83,6 +84,14 @@ export async function POST(req: NextRequest) {
 
   // Check rate limit
   if (!checkRateLimit(ip)) {
+    logIncident({
+      type: "RATE_LIMIT",
+      severity: "high",
+      ip,
+      details: `Rate limit exceeded (5 requests/hour) from IP ${ip}`,
+      endpoint: "/api/contact",
+      userAgent: req.headers.get("user-agent") || undefined,
+    });
     return NextResponse.json(
       { error: "Troppi tentativi. Riprova più tardi." },
       { status: 429 }
@@ -95,6 +104,14 @@ export async function POST(req: NextRequest) {
   const { nome, cognome, email, messaggio, telefono, csrfToken } = body;
 
   if (!csrfTokenCookie || csrfToken !== csrfTokenCookie) {
+    logIncident({
+      type: "CSRF_FAIL",
+      severity: "critical",
+      ip,
+      details: `CSRF token validation failed - possible CSRF attack attempt`,
+      endpoint: "/api/contact",
+      userAgent: req.headers.get("user-agent") || undefined,
+    });
     return NextResponse.json(
       { error: "Validazione sessione fallita. Ricarica la pagina." },
       { status: 403 }
@@ -104,6 +121,14 @@ export async function POST(req: NextRequest) {
   // Validate input
   const validation = validateInput(nome, cognome, email, messaggio, telefono);
   if (!validation.valid) {
+    logIncident({
+      type: "VALIDATION_FAIL",
+      severity: "low",
+      ip,
+      details: `Validation error: ${validation.error}`,
+      endpoint: "/api/contact",
+      userAgent: req.headers.get("user-agent") || undefined,
+    });
     return NextResponse.json({ error: validation.error }, { status: 400 });
   }
 
