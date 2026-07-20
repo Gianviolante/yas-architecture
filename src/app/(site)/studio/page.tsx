@@ -40,9 +40,9 @@ export default async function StudioPage() {
 
   const featuredProjects = allProjects.filter((p) => p.featured).slice(0, 2);
 
-  const heroUrl         = studio?.heroImage     ? urlFor(studio.heroImage).width(1440).url()      : null;
-  const mainImageUrl    = studio?.mainImage     ? urlFor(studio.mainImage).width(1440).url()       : null;
-  const teamPortraitUrl = studio?.teamPortrait  ? urlFor(studio.teamPortrait).width(800).url()     : null;
+  const heroUrl         = studio?.heroImage     ? urlFor(studio.heroImage).width(2000).auto('format').quality(90).url()      : null;
+  const mainImageUrl    = studio?.mainImage     ? urlFor(studio.mainImage).width(2000).auto('format').quality(90).url()       : null;
+  const teamPortraitUrl = studio?.teamPortrait  ? urlFor(studio.teamPortrait).width(1200).auto('format').quality(90).url()     : null;
   const spaziUrls       = (studio?.spaziImages ?? []).map((img) => ({
     url: urlFor(img).width(700).url(), caption: img.caption,
   }));
@@ -79,7 +79,7 @@ export default async function StudioPage() {
         {/* Hero image — full-width with page margins */}
         <div className="page-px relative overflow-hidden aspect-[16/9]">
           {heroUrl
-            ? <Image src={heroUrl} alt="Studio" fill className="object-cover" />
+            ? <Image src={heroUrl} alt="Studio" fill sizes="(max-width: 768px) 100vw, 90vw" className="object-cover" />
             : <PlaceholderImg className="absolute inset-0" />}
         </div>
       </div>
@@ -104,7 +104,7 @@ export default async function StudioPage() {
         <div className="flex justify-center mb-[32px] md:mb-[40px] px-[15px] md:px-0">
           <div className="relative overflow-hidden w-full md:max-w-[705px] aspect-[16/9]">
             {teamPortraitUrl
-              ? <Image src={teamPortraitUrl} alt="Team YAS Architecture" fill className="object-cover" />
+              ? <Image src={teamPortraitUrl} alt="Team YAS Architecture" fill sizes="(max-width: 768px) 100vw, 705px" className="object-cover" />
               : <PlaceholderImg className="absolute inset-0" />}
           </div>
         </div>
@@ -143,7 +143,7 @@ export default async function StudioPage() {
                 <Link href={`/progetti/${p.slug.current}`} className="block group">
                   <div className="relative overflow-hidden mb-[8px] aspect-[16/9]">
                     {p.coverImageUrl
-                      ? <Image src={p.coverImageUrl} alt={p.title} fill className="object-cover transition-transform duration-500 group-hover:scale-[1.03]" />
+                      ? <Image src={p.coverImageUrl} alt={p.title} fill sizes="(max-width: 768px) 100vw, 50vw" className="object-cover transition-transform duration-500 group-hover:scale-[1.03]" />
                       : <PlaceholderImg className="absolute inset-0" />}
                   </div>
                   <p className="text-[17.5px] leading-[1.5] text-[#282828] mb-[6px]">
