@@ -74,6 +74,18 @@ export default function Navbar() {
   /** Link disabilitato (già sulla pagina esatta, non sulle sotto-pagine) */
   const isDisabled = (href: string) => pathname === href;
 
+  // Mappa pathname a nome pagina per il titolo
+  const getPageName = () => {
+    if (pathname === "/" || pathname === "") return "";
+    if (pathname.startsWith("/progetti")) return "Progetti";
+    if (pathname.startsWith("/studio")) return "Studio";
+    if (pathname.startsWith("/team")) return "Team";
+    if (pathname.startsWith("/contatti")) return "Contatti";
+    return "";
+  };
+
+  const pageName = getPageName();
+
   return (
     <>
       <header
@@ -87,7 +99,13 @@ export default function Navbar() {
         <nav className="page-px h-full flex items-center justify-between">
 
           {/* Desktop left nav */}
-          <div className="hidden md:flex items-center gap-[10px]">
+          <div className="hidden md:flex items-center gap-[20px]">
+            {/* Título dinámico: YAS Architecture | Página */}
+            {pageName && (
+              <span className="text-[12px] leading-normal text-[#1a1a1a]">
+                YAS Architecture <span className="text-[#d9d9d9]">|</span> {pageName}
+              </span>
+            )}
             {navLinks.map(({ href, label }) => (
               <Link
                 key={href}
