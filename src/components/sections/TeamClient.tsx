@@ -98,7 +98,7 @@ function MemberCard({
       <div className="relative w-full overflow-hidden mb-[12px] aspect-[3/4]">
         {member?.photo ? (
           <Image
-            src={urlFor(member.photo).width(449).auto('format').quality(100).url()}
+            src={urlFor(member.photo).width(800).auto('format').quality(100).url()}
             alt={member.name}
             fill
             className="object-cover object-top"
