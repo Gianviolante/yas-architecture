@@ -49,7 +49,6 @@ export default function Footer() {
               <Link href="/studio" className="block hover:underline">Studio</Link>
               <Link href="/team" className="block hover:underline">Team</Link>
               <Link href="/progetti" className="block hover:underline">Progetti</Link>
-              <Link href="/press" className="block hover:underline">Press</Link>
             </div>
           </div>
 
