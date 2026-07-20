@@ -88,14 +88,14 @@ export default async function HomePage() {
           </section>
 
           {/* ── 1. HERO — tablet + desktop ───────────────────────────── */}
-          <section className="hidden md:grid grid-cols-3 grid-rows-3 gap-y-[8px] gap-x-[32px] md:gap-x-[48px] lg:gap-x-[64px] md:h-[380px] lg:h-[520px] overflow-hidden page-px md:py-[24px] lg:py-[32px]">
+          <section className="hidden md:grid grid-cols-3 grid-rows-[48px_minmax(auto,280px)_minmax(80px,auto)] gap-y-[8px] gap-x-[32px] md:gap-x-[48px] lg:gap-x-[64px] overflow-hidden page-px md:py-[24px] lg:py-[32px]">
             {/* Row 1 - Top-left: Subtitle left (Inspired by Apulian tradition) */}
-            <div className="col-start-1 row-start-1 text-[10px] leading-[0.8] text-black flex items-end">
+            <div className="col-start-1 row-start-1 text-[12px] leading-[0.8] text-black flex items-end">
               <p>{home?.heroSubtitleRight || "Inspired by Apulian tradition"}</p>
             </div>
 
-            {/* Row 1 - Top-right: Subtitle right (Studio architettura e design) */}
-            <div className="col-start-3 row-start-1 text-[10px] leading-[0.8] text-right flex items-end">
+            {/* Row 1 - Top-center: Subtitle (Studio architettura e design) */}
+            <div className="col-start-2 row-start-1 text-[12px] leading-[0.8] text-left flex items-end">
               {home?.heroSubtitleLeft ? (
                 <PortableText value={home.heroSubtitleLeft as Parameters<typeof PortableText>[0]["value"]} components={ptBlock} />
               ) : (
@@ -127,8 +127,8 @@ export default async function HomePage() {
           </section>
 
           {/* ── 2. LINKS ─────────────────────────────────────────────── */}
-          <section className="page-px mt-[60px] md:mt-[80px] lg:mt-[100px]">
-            <div className="flex flex-col gap-[25px] md:flex-row md:gap-[15px] md:h-[225px] lg:h-[371px] max-w-[1440px] mx-auto overflow-hidden">
+          <section className="page-px mt-[40px] md:mt-[60px] lg:mt-[80px]">
+            <div className="flex flex-col gap-[25px] md:flex-row md:gap-[15px] md:h-[225px] lg:h-[371px] overflow-hidden">
               {NAV_LINKS.map(({ href, label, img, flexGrow, mobileH }) => (
                 <Link
                   key={href}
@@ -167,25 +167,28 @@ export default async function HomePage() {
           </section>
 
           {/* ── 3. APULIA — tablet + desktop ─────────────────────────── */}
-          <section className="relative md:h-[206px] lg:h-[345px] overflow-hidden hidden md:block">
-            <AnimatedTitle
-              text="Apulia"
-              className="absolute font-bold text-black leading-none whitespace-nowrap select-none"
-              style={{ fontSize: "clamp(8rem,19.8vw,285px)", top: 0, left: "29px" }}
-            />
+          <section className="hidden md:grid grid-cols-3 grid-rows-[48px_minmax(auto,280px)] gap-y-[8px] gap-x-[32px] md:gap-x-[48px] lg:gap-x-[64px] overflow-hidden page-px md:py-[24px] lg:py-[32px]">
+            {/* Row 1 - Top-left: Subtitle (Apulian inspiration guide) */}
+            <div className="col-start-1 row-start-1 text-[12px] leading-[0.8] text-[#282828] flex items-end">
+              <p>Apulian inspiration guide</p>
+            </div>
 
-            <p
-              className="absolute text-[12px] leading-[1.2] text-[#282828] md:top-[45px] md:left-[136px] lg:top-[78px] lg:left-[755px] ml-8 md:ml-0"
-            >
-              Apulian inspiration guide
-            </p>
+            {/* Row 2 - Title (Apulia) left */}
+            <div className="col-start-1 row-start-2 flex items-center">
+              <AnimatedTitle
+                text="Apulia"
+                className="font-bold text-black leading-none whitespace-nowrap select-none"
+                style={{ fontSize: "clamp(8rem,19.8vw,285px)" }}
+              />
+            </div>
 
-            <div
-              className="absolute text-[12px] leading-[1.2] text-[#282828] text-right right-[32px] md:top-[70px] lg:top-[123px]"
-            >
-              <Link href="/progetti?tipologia=Interior Design" className="block hover:opacity-60 transition-opacity">Interior design→</Link>
-              <Link href="/progetti?tipologia=Architettura"    className="block hover:opacity-60 transition-opacity">Architecture →</Link>
-              <Link href="/progetti"                           className="block hover:opacity-60 transition-opacity">Tutti i progetti→</Link>
+            {/* Row 1 - Project links right */}
+            <div className="col-start-3 row-start-1 text-[12px] leading-[1.2] text-[#282828] flex items-end justify-end">
+              <div>
+                <Link href="/progetti?tipologia=Interior Design" className="block hover:opacity-60 transition-opacity">Interior design→</Link>
+                <Link href="/progetti?tipologia=Architettura"    className="block hover:opacity-60 transition-opacity">Architecture →</Link>
+                <Link href="/progetti"                           className="block hover:opacity-60 transition-opacity">Tutti i progetti→</Link>
+              </div>
             </div>
           </section>
 
