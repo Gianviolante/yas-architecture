@@ -61,18 +61,15 @@ body {
 @layer utilities {
   .no-scrollbar::-webkit-scrollbar { display: none; }
 
-  /* Padding orizzontale universale — si allinea a max-w-[1440px] mx-auto px-[32px]
-     a qualsiasi larghezza del viewport, inclusi i MacBook > 1440px */
+  /* Padding orizzontale universale */
   .page-px {
-    padding-left: 1rem;
+    padding-left: 1rem;    /* 16px mobile */
     padding-right: 1rem;
   }
   @media (min-width: 768px) {
     .page-px {
-      /* max(32px, (50vw - 688px)) replica esattamente (viewport - 1440) / 2 + 32px
-         — identico al margine auto di max-w-[1440px] mx-auto + px-[32px] */
-      padding-left:  max(2rem, calc(50vw - 688px));
-      padding-right: max(2rem, calc(50vw - 688px));
+      padding-left: 2rem;   /* 32px fisso tablet+ */
+      padding-right: 2rem;
     }
   }
 }

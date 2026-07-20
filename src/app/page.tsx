@@ -89,23 +89,14 @@ export default async function HomePage() {
           </section>
 
           {/* ── 1. HERO — tablet + desktop ───────────────────────────── */}
-          <section className="hidden md:grid grid-cols-3 gap-[32px] md:gap-[48px] lg:gap-[64px] md:h-[295px] lg:h-[439px] overflow-hidden md:px-[32px] lg:px-[64px] md:py-[24px] lg:py-[32px]">
-            {/* Top-left: Title */}
-            <div className="col-start-1 row-start-1">
-              <AnimatedTitle
-                text={home?.heroTitleMain || "yas-arch"}
-                className="font-bold text-black leading-none whitespace-nowrap select-none"
-                style={{ fontSize: "clamp(8rem,19.8vw,285px)" }}
-              />
-            </div>
-
-            {/* Top-middle: Subtitle right */}
-            <div className="col-start-2 row-start-1 text-[12px] leading-[1.2] text-black flex items-start">
+          <section className="hidden md:grid grid-cols-3 grid-rows-3 gap-[32px] md:gap-[48px] lg:gap-[64px] md:h-[295px] lg:h-[439px] overflow-hidden page-px md:py-[24px] lg:py-[32px]">
+            {/* Row 1 - Top-left: Subtitle left (Inspired by Apulian tradition) */}
+            <div className="col-start-1 row-start-1 text-[10px] leading-[0.8] text-black flex items-start">
               <p>{home?.heroSubtitleRight || "Inspired by Apulian tradition"}</p>
             </div>
 
-            {/* Top-right: Subtitle left */}
-            <div className="col-start-3 row-start-1 text-[12px] leading-[1.2] text-right">
+            {/* Row 1 - Top-right: Subtitle right (Studio architettura e design) */}
+            <div className="col-start-3 row-start-1 text-[10px] leading-[0.8] text-right flex items-start">
               {home?.heroSubtitleLeft ? (
                 <PortableText value={home.heroSubtitleLeft as Parameters<typeof PortableText>[0]["value"]} components={ptBlock} />
               ) : (
@@ -113,8 +104,17 @@ export default async function HomePage() {
               )}
             </div>
 
-            {/* Bottom-left: Address */}
-            <div className="col-start-1 row-start-2 text-[12px] leading-[1.2] text-black flex items-end">
+            {/* Row 2 - Title (left aligned) */}
+            <div className="col-start-1 row-start-2 flex items-center">
+              <AnimatedTitle
+                text={home?.heroTitleMain || "yas-arch"}
+                className="font-bold text-black leading-none whitespace-nowrap select-none"
+                style={{ fontSize: "clamp(8rem,19.8vw,285px)" }}
+              />
+            </div>
+
+            {/* Row 3 - Bottom-left: Address */}
+            <div className="col-start-1 row-start-3 text-[12px] leading-[1.2] text-black flex items-end">
               {home?.heroAddress ? (
                 <PortableText value={home.heroAddress as Parameters<typeof PortableText>[0]["value"]} components={ptBlock} />
               ) : (
@@ -128,7 +128,7 @@ export default async function HomePage() {
           </section>
 
           {/* ── 2. LINKS ─────────────────────────────────────────────── */}
-          <section className="px-[15px] lg:px-[30px] mt-[60px] md:mt-[80px] lg:mt-[100px]">
+          <section className="page-px mt-[60px] md:mt-[80px] lg:mt-[100px]">
             <div className="flex flex-col gap-[25px] md:flex-row md:gap-[15px] md:h-[225px] lg:h-[371px] max-w-[1440px] mx-auto overflow-hidden">
               {NAV_LINKS.map(({ href, label, img, flexGrow, mobileH }) => (
                 <Link
@@ -191,7 +191,7 @@ export default async function HomePage() {
           </section>
 
           {/* ── 4. DESCRIPTION + slider ──────────────────────────────── */}
-          <section className="px-[15px] md:page-px pt-[40px]">
+          <section className="page-px pt-[40px]">
             <div className="text-[16px] md:text-[24px] leading-normal text-black mb-6 md:mb-14">
               {home?.introDescription
                 ? <PortableText value={home.introDescription as Parameters<typeof PortableText>[0]["value"]} components={ptBlock} />
@@ -212,7 +212,7 @@ export default async function HomePage() {
             </div>
           </section>
 
-          <div className="mx-[15px]">
+          <div className="page-px">
             <HomeSlider />
           </div>
 
@@ -220,7 +220,7 @@ export default async function HomePage() {
           <HomeProjectsCarousel projects={projects} />
 
           {/* ── 6. STUDIO BLOCK ──────────────────────────────────────── */}
-          <section className="px-[15px] md:page-px py-10">
+          <section className="page-px py-10">
             <p className="text-[16px] leading-normal text-black text-center mb-6">Lo studio</p>
             <div className="text-[24px] leading-normal text-black mb-6 md:mb-10">
               {home?.studioDescription
