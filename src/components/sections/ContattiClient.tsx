@@ -30,15 +30,28 @@ export default function ContattiClient() {
     }
   }, [status]);
 
+  const getCsrfToken = (): string => {
+    const cookies = document.cookie.split(";");
+    for (const cookie of cookies) {
+      const [name, value] = cookie.trim().split("=");
+      if (name === "csrf-token") {
+        return decodeURIComponent(value);
+      }
+    }
+    return "";
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (privacyBlocked) return;
     setStatus("sending");
     try {
+      const csrfToken = getCsrfToken();
       const res = await fetch("/api/contact", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(form),
+        body: JSON.stringify({ ...form, csrfToken }),
+        credentials: "include", // Include cookies in request
       });
       setStatus(res.ok ? "sent" : "error");
       if (res.ok) {
