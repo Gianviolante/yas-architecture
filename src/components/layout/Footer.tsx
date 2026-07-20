@@ -23,30 +23,25 @@ export default function Footer() {
         <div className="flex flex-col flex-1 min-w-0">
 
           {/* Title */}
-          <p className={`${txt} mb-[17px]`}>YAS Architecture srl</p>
+          <p className={`${txt} mb-[17px]`}>YAS Architecture Associati</p>
 
           {/* 3 columns — grow to fill space */}
           <div className="flex flex-col md:flex-row flex-1">
             {/* Col 1 — Company address */}
             <div className={`${txt} w-full md:w-[232px] md:shrink-0 mb-4 md:mb-0 space-y-0`}>
-              <p>Via Dè Gracchi, 47</p>
+              <p>Piazza Marco Antonio Cavalerio, 21</p>
               <p>72100 Brindisi (BR) Italia</p>
-              <p>T +39 351 531 7762</p>
-              <p>info@yas-arch.com</p>
+              <p>studio@yas-arc.com</p>
               <p>&nbsp;</p>
-              <p>© YAS Architecture Srl</p>
-              <p>Cap.Soc. i.v. € 100.000,00</p>
-              <p>P.I./C.F./Iscr. Reg. Imp. 01250700789</p>
-              <p>Bari REA PN 87998</p>
+              <p>© YAS Architecture Associati</p>
+              <p>P.I. 02690340746</p>
+              <p>Codice univoco: M5UXCR1</p>
             </div>
 
             {/* Col 2 — Contatti */}
             <div className={`${txt} w-full md:w-[232px] md:shrink-0 mb-4 md:mb-0`}>
               <p>Contatti</p>
-              <p>informazioni generali</p>
-              <a href="mailto:info@yas-arch.com" className="block hover:underline">info@yas-arch.com</a>
-              <p>informazioni commerciali</p>
-              <a href="mailto:sales@yas-arch.org" className="block hover:underline">sales@yas-arch.org</a>
+              <a href="mailto:studio@yas-arc.com" className="block hover:underline">studio@yas-arc.com</a>
             </div>
 
             {/* Col 3 — Studio links */}
@@ -73,14 +68,13 @@ export default function Footer() {
               <div className="flex items-center gap-[12px]">
                 <SocialIcon href="https://facebook.com" label="Facebook" icon="/assets/icon-facebook-v.svg" />
                 <SocialIcon href="https://instagram.com" label="Instagram" icon="/assets/icon-instagram-v.svg" />
-                <SocialIcon href="https://linkedin.com" label="LinkedIn" icon="/assets/icon-linkedin-1.svg" />
               </div>
             </div>
 
             {/* Col 3 — Google Maps */}
             <div>
               <a
-                href="https://maps.google.com/?q=Via+De+Gracchi+47+Brindisi"
+                href="https://maps.google.com/?q=Piazza+Marco+Antonio+Cavalerio+21+72100+Brindisi+BR+Italia"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-[12px] leading-[22px] text-[#333] border-2 border-[#333] px-[24px] py-[10px] rounded-[100px] hover:bg-[#333] hover:text-white transition-colors duration-200 whitespace-nowrap"

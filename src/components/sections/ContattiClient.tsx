@@ -1,12 +1,11 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 
 const SOCIAL = [
   { label: "Fb", href: "https://facebook.com" },
   { label: "Ig", href: "https://instagram.com" },
-  { label: "Be", href: "https://behance.net" },
-  { label: "Pi", href: "https://pinterest.com" },
 ];
 
 export default function ContattiClient() {
@@ -23,6 +22,14 @@ export default function ContattiClient() {
 
   const privacyBlocked = form.privacy === "non-acconsento";
 
+  // Auto-dismiss toast after 3.5 seconds
+  useEffect(() => {
+    if (status === "sent") {
+      const timer = setTimeout(() => setStatus("idle"), 3500);
+      return () => clearTimeout(timer);
+    }
+  }, [status]);
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (privacyBlocked) return;
@@ -34,6 +41,9 @@ export default function ContattiClient() {
         body: JSON.stringify(form),
       });
       setStatus(res.ok ? "sent" : "error");
+      if (res.ok) {
+        setForm({ nome: "", cognome: "", indirizzo: "", paese: "", citta: "", cap: "", email: "", telefono: "", messaggio: "", privacy: "" });
+      }
     } catch {
       setStatus("error");
     }
@@ -47,10 +57,10 @@ export default function ContattiClient() {
         <div>
           <p className="text-[16px] leading-[1.2] text-black mb-2">Get in touch</p>
           <a
-            href="mailto:info@yas-arch.com"
+            href="mailto:studio@yas-arc.com"
             className="text-[28px] md:text-[36px] leading-[1.2] text-black hover:opacity-60 transition-opacity break-all"
           >
-            info@yas-arch.com
+            studio@yas-arc.com
           </a>
         </div>
 
@@ -96,54 +106,91 @@ export default function ContattiClient() {
           <div className="space-y-[24px] md:space-y-8">
             <div>
               <p className="text-[12px] leading-normal text-black mb-1">Office</p>
-              <p className="text-[16px] leading-[1.2] text-black">Via Dè Gracchi, 47</p>
+              <p className="text-[16px] leading-[1.2] text-black">Piazza Marco Antonio Cavalerio, 21</p>
               <p className="text-[16px] leading-[1.2] text-black">72100 Brindisi (BR) Italia</p>
             </div>
             <div>
-              <p className="text-[12px] leading-normal text-black mb-1">Careers</p>
-              <a href="mailto:hr@yas-arch.com" className="text-[16px] leading-[1.2] text-black hover:opacity-60 transition-opacity">
-                hr@yas-arch.com
-              </a>
-            </div>
-            <div>
-              <p className="text-[12px] leading-normal text-black mb-1">PR&amp;Collaborations</p>
-              <a href="mailto:public@yas-arch.com" className="text-[16px] leading-[1.2] text-black hover:opacity-60 transition-opacity">
-                public@yas-arch.com
+              <p className="text-[12px] leading-normal text-black mb-1">Contact</p>
+              <a href="mailto:studio@yas-arc.com" className="text-[16px] leading-[1.2] text-black hover:opacity-60 transition-opacity">
+                studio@yas-arc.com
               </a>
             </div>
           </div>
 
-          {/* Right — form */}
-          {status === "sent" ? (
-            <div className="py-20">
-              <p className="text-[16px] text-black mb-1">Messaggio inviato!</p>
-              <p className="text-[12px] text-black/50">Ti risponderemo al più presto.</p>
-            </div>
-          ) : (
+          {/* Right — form + toast */}
+          <div className="relative">
+            {/* Toast notification */}
+            <AnimatePresence>
+              {status === "sent" && (
+                <motion.div
+                  initial={{ opacity: 0, y: 20, x: 0 }}
+                  animate={{ opacity: 1, y: 0, x: 0 }}
+                  exit={{ opacity: 0, y: 20, x: 0 }}
+                  transition={{ duration: 0.3, ease: "easeOut" }}
+                  className="fixed bottom-8 right-8 z-50"
+                >
+                  <div className="flex items-center gap-3 bg-black text-white px-6 py-4 rounded-lg shadow-lg">
+                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" className="flex-shrink-0">
+                      <path d="M16.5 5L8.5 15L3.5 10" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                    </svg>
+                    <div>
+                      <p className="text-[14px] font-medium leading-[1.2]">Richiesta inviata</p>
+                      <p className="text-[12px] text-white/70 leading-[1.2]">Ti risponderemo presto</p>
+                    </div>
+                  </div>
+                </motion.div>
+              )}
+            </AnimatePresence>
+
+            {/* Form */}
             <form onSubmit={handleSubmit}>
 
-              {/* Row 1: Nome | Cognome — stacked mobile, side-by-side md+ */}
-              <div className="grid grid-cols-1 md:grid-cols-[2fr_3fr] border-t border-black">
-                <Field label="Nome" value={form.nome} onChange={set("nome")} autoComplete="given-name" borderRight />
-                <Field label="Cognome" value={form.cognome} onChange={set("cognome")} autoComplete="family-name" />
+              {/* Row 1: Nome | Cognome */}
+              <div className="grid grid-cols-2 md:grid-cols-[2fr_3fr] border-t border-black">
+                <div className="py-3 px-1 border-r border-black">
+                  <input type="text" placeholder="Nome" value={form.nome} onChange={set("nome")} autoComplete="given-name" className="w-full bg-transparent text-[12px] leading-[1.2] text-black outline-none placeholder:text-black" />
+                </div>
+                <div className="py-3 px-1">
+                  <input type="text" placeholder="Cognome" value={form.cognome} onChange={set("cognome")} autoComplete="family-name" className="w-full bg-transparent text-[12px] leading-[1.2] text-black outline-none placeholder:text-black" />
+                </div>
               </div>
 
-              {/* Row 2: Indirizzo | Paese */}
-              <div className="grid grid-cols-1 md:grid-cols-[3fr_2fr] border-t border-black">
-                <Field label="Indirizzo *" value={form.indirizzo} onChange={set("indirizzo")} autoComplete="street-address" required borderRight />
-                <Field label="Paese" value={form.paese} onChange={set("paese")} autoComplete="country-name" />
+              {/* Row 2: Indirizzo (full width) */}
+              <div className="border-t border-black">
+                <div className="py-3 px-1">
+                  <input type="text" placeholder="Indirizzo *" value={form.indirizzo} onChange={set("indirizzo")} autoComplete="street-address" required className="w-full bg-transparent text-[12px] leading-[1.2] text-black outline-none placeholder:text-black" />
+                </div>
               </div>
 
-              {/* Row 3: Città | CAP */}
-              <div className="grid grid-cols-1 md:grid-cols-[3fr_2fr] border-t border-black">
-                <Field label="Città *" value={form.citta} onChange={set("citta")} autoComplete="address-level2" required borderRight />
-                <Field label="CAP" value={form.cap} onChange={set("cap")} autoComplete="postal-code" />
+              {/* Row 3: Città (full width) */}
+              <div className="border-t border-black">
+                <div className="py-3 px-1">
+                  <input type="text" placeholder="Città *" value={form.citta} onChange={set("citta")} autoComplete="address-level2" required className="w-full bg-transparent text-[12px] leading-[1.2] text-black outline-none placeholder:text-black" />
+                </div>
               </div>
 
-              {/* Row 4: e-mail | Telefono */}
-              <div className="grid grid-cols-1 md:grid-cols-[3fr_2fr] border-t border-b border-black">
-                <Field label="e-mail *" value={form.email} onChange={set("email")} type="email" autoComplete="email" required borderRight />
-                <Field label="Telefono" value={form.telefono} onChange={set("telefono")} type="tel" autoComplete="tel" />
+              {/* Row 4: Paese | CAP */}
+              <div className="grid grid-cols-[2fr_1fr] md:grid-cols-[3fr_2fr] border-t border-black">
+                <div className="py-3 px-1 border-r border-black">
+                  <input type="text" placeholder="Paese" value={form.paese} onChange={set("paese")} autoComplete="country-name" className="w-full bg-transparent text-[12px] leading-[1.2] text-black outline-none placeholder:text-black" />
+                </div>
+                <div className="py-3 px-1">
+                  <input type="text" placeholder="CAP" value={form.cap} onChange={set("cap")} autoComplete="postal-code" className="w-full bg-transparent text-[12px] leading-[1.2] text-black outline-none placeholder:text-black" />
+                </div>
+              </div>
+
+              {/* Row 5: Telefono (full width) */}
+              <div className="border-t border-black">
+                <div className="py-3 px-1">
+                  <input type="tel" placeholder="Telefono" value={form.telefono} onChange={set("telefono")} autoComplete="tel" className="w-full bg-transparent text-[12px] leading-[1.2] text-black outline-none placeholder:text-black" />
+                </div>
+              </div>
+
+              {/* Row 6: E-mail (full width) */}
+              <div className="border-t border-b border-black">
+                <div className="py-3 px-1">
+                  <input type="email" placeholder="e-mail *" value={form.email} onChange={set("email")} autoComplete="email" required className="w-full bg-transparent text-[12px] leading-[1.2] text-black outline-none placeholder:text-black" />
+                </div>
               </div>
 
               {/* Row 5: Messaggio */}
@@ -186,7 +233,7 @@ export default function ContattiClient() {
 
                 {status === "error" && (
                   <p className="text-[12px] text-red-600">
-                    Errore nell&apos;invio. Riprova o scrivi a info@yas-arch.com
+                    Errore nell&apos;invio. Riprova o scrivi a studio@yas-arc.com
                   </p>
                 )}
 
@@ -201,7 +248,7 @@ export default function ContattiClient() {
                 </div>
               </div>
             </form>
-          )}
+          </div>
         </div>
       </div>
     </div>
