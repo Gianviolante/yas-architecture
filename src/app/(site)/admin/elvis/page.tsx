@@ -39,8 +39,7 @@ export default function ElvisAdminPage() {
       <div className="min-h-screen flex items-center justify-center bg-black p-4">
         <form onSubmit={handleAuth} className="w-full max-w-md">
           <div className="space-y-4">
-            <h1 className="text-[32px] font-bold text-white mb-6">🎸 ELVIS</h1>
-            <p className="text-white/60 text-[14px]">The King of Security</p>
+            <h1 className="text-[32px] font-bold text-white mb-6">ELVIS</h1>
 
             <input
               type="password"
@@ -73,7 +72,7 @@ export default function ElvisAdminPage() {
         <div className="page-px py-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
-              <h1 className="text-[28px] font-bold">🎸 ELVIS Dashboard</h1>
+              <h1 className="text-[28px] font-bold">ELVIS Dashboard</h1>
               <span className="text-[12px] text-green-400">● Live</span>
             </div>
             <button
@@ -216,7 +215,7 @@ export default function ElvisAdminPage() {
 
         {/* Footer */}
         <p className="text-[11px] text-white/40 mt-6">
-          ELVIS • The King of Security • Real-time Monitoring for YAS Architecture
+          ELVIS • Real-time Monitoring for YAS Architecture
         </p>
       </div>
     </div>
