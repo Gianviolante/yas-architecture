@@ -119,17 +119,16 @@ export default async function HomePage() {
                 <PortableText value={home.heroAddress as Parameters<typeof PortableText>[0]["value"]} components={ptBlock} />
               ) : (
                 <div>
-                  <p>Via Dè Gracchi, 47</p>
+                  <p>Piazza Marco Antonio Cavalerio, 21</p>
                   <p>72100 Brindisi (BR) Italia</p>
-                  <p>T +39 351 531 7762</p>
-                  <p>info@yas-arch.com</p>
+                  <p>studio@yas-arc.com</p>
                 </div>
               )}
             </div>
           </section>
 
           {/* ── 2. LINKS ─────────────────────────────────────────────── */}
-          <section className="px-[15px] lg:px-[30px]">
+          <section className="px-[15px] lg:px-[30px] mt-[60px] md:mt-[80px] lg:mt-[100px]">
             <div className="flex flex-col gap-[25px] md:flex-row md:gap-[15px] md:h-[225px] lg:h-[371px] max-w-[1440px] mx-auto overflow-hidden">
               {NAV_LINKS.map(({ href, label, img, flexGrow, mobileH }) => (
                 <Link
