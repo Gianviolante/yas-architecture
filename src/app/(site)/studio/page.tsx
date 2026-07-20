@@ -76,8 +76,8 @@ export default async function StudioPage() {
             : <p>{INTRO_FALLBACK}</p>}
         </div>
 
-        {/* Hero image — full-width */}
-        <div className="relative overflow-hidden aspect-[16/9]">
+        {/* Hero image — full-width with page margins */}
+        <div className="page-px relative overflow-hidden aspect-[16/9]">
           {heroUrl
             ? <Image src={heroUrl} alt="Studio" fill className="object-cover" />
             : <PlaceholderImg className="absolute inset-0" />}
