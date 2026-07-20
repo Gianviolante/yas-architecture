@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
 const SOCIAL = [
-  { label: "Fb", href: "https://facebook.com" },
+  { label: "Fb", href: "https://www.facebook.com/p/Y-A-S-architecture-100063041749591" },
   { label: "Ig", href: "https://instagram.com" },
 ];
 

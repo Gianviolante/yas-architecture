@@ -76,7 +76,7 @@ export default function Footer() {
             <div className="w-full md:w-[232px] md:shrink-0">
               <p className={`${txt} mb-[7px]`}>Seguici su</p>
               <div className="flex items-center gap-[12px]">
-                <SocialIcon href="https://facebook.com" label="Facebook" icon="/assets/icon-facebook-v.svg" />
+                <SocialIcon href="https://www.facebook.com/p/Y-A-S-architecture-100063041749591" label="Facebook" icon="/assets/icon-facebook-v.svg" />
                 <SocialIcon href="https://instagram.com" label="Instagram" icon="/assets/icon-instagram-v.svg" />
               </div>
             </div>
