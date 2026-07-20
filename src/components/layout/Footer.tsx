@@ -64,7 +64,7 @@ export default function Footer() {
           <div className="flex flex-col md:flex-row items-start md:items-end mt-10 gap-4 md:gap-0">
             {/* Col 1 — Privacy */}
             <div className={`${txt} w-full md:w-[232px] md:shrink-0`}>
-              <p>Design: G. Violante</p>
+              <p>Design: <a href="https://www.linkedin.com/in/gianmarcoviolante/" target="_blank" rel="noopener noreferrer" className="hover:opacity-60 transition-opacity">G. Violante</a></p>
               <p>Privacy Policy</p>
               <p>Coockie Solution</p>
               <p>Coockie Settings</p>
