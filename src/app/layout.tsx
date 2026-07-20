@@ -1,16 +1,7 @@
 import type { Metadata } from "next";
 import Script from "next/script";
 import "./globals.css";
-import dynamic from "next/dynamic";
-import PageTransition from "@/components/ui/PageTransition";
-import CookieBanner from "@/components/CookieBanner";
-
-// Lazy load CustomCursor client-side only (skip mobile + SSR)
-// This reduces FCP by ~1.5s on initial load
-const CustomCursor = dynamic(() => import("@/components/ui/CustomCursor"), {
-  ssr: false,
-  loading: () => null,
-});
+import ClientLayout from "@/components/ClientLayout";
 
 export const metadata: Metadata = {
   title: "YAS Architecture | Studio di Architettura a Brindisi",
@@ -96,9 +87,7 @@ export default function RootLayout({
         />
       </head>
       <body className="min-h-full flex flex-col font-sans" suppressHydrationWarning>
-        <CustomCursor />
-        <PageTransition>{children}</PageTransition>
-        <CookieBanner />
+        <ClientLayout>{children}</ClientLayout>
       </body>
     </html>
   );
