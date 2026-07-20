@@ -223,23 +223,36 @@ export default function GallerySlider({ items, projectTitle, compact = false }: 
     if (isDragging.current || items.length === 0) return;
     const wrapper = wrapperRef.current;
     if (!wrapper) return;
-    const snapPos  = getSnapPositions();
-    const cur      = currentRef.current;
-    const wLeft    = wrapper.getBoundingClientRect().left;
-    // usa la posizione snap (non quella mid-animation) per il cursore
-    const contentX = e.clientX - wLeft - pl + snapPos[cur];
-    let over = false; let accum = 0;
-    for (let i = 0; i < items.length; i++) {
-      const w = cardW(i);
-      if (contentX >= accum && contentX < accum + w) { over = true; break; }
-      accum += w + gap;
+
+    const rect = wrapper.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+
+    // Determina il tipo di cursore: prev/next (edge zones) o expand (cards)
+    let wantedType: string | null = null;
+    if (x < EDGE_ZONE && current > 0) {
+      wantedType = "prev";
+    } else if (x > rect.width - EDGE_ZONE && current < items.length - 1) {
+      wantedType = "next";
+    } else {
+      // Calcola se il cursore è sopra una card
+      const snapPos  = getSnapPositions();
+      const cur      = currentRef.current;
+      const wLeft    = rect.left;
+      const contentX = e.clientX - wLeft - pl + snapPos[cur];
+      let over = false; let accum = 0;
+      for (let i = 0; i < items.length; i++) {
+        const w = cardW(i);
+        if (contentX >= accum && contentX < accum + w) { over = true; break; }
+        accum += w + gap;
+      }
+      wantedType = over ? "expand" : null;
     }
+
     // Scrivi l'attributo solo se cambia davvero: settarlo ad ogni mousemove
     // (anche con lo stesso valore) genera una raffica di mutation events per
     // il MutationObserver del cursore, che per ognuna fa un
     // getBoundingClientRect() — con il mouse in movimento veloce la coda si
     // accumula e il cursore custom resta "indietro" per un po'.
-    const wantedType = over ? "expand" : null;
     if (wrapper.getAttribute("cursor-type") === wantedType) return;
     if (wantedType) wrapper.setAttribute("cursor-type", wantedType);
     else            wrapper.removeAttribute("cursor-type");
