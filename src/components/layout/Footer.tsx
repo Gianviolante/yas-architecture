@@ -167,7 +167,7 @@ export default function Footer() {
                 <div className="flex justify-end">
                   <button
                     type="submit"
-                    className="text-[16px] leading-[22px] text-[--foreground] px-[24px] py-[10px] rounded-[100px] bg-[--surface-muted] hover:bg-[--border] transition-colors duration-200"
+                    className="text-[16px] leading-[22px] text-[--foreground] px-[24px] py-[10px] rounded-[100px] bg-[var(--surface-muted)] hover:bg-[--border] transition-colors duration-200"
                   >
                     Invia
                   </button>
