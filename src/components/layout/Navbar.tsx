@@ -138,7 +138,7 @@ export default function Navbar() {
                 "text-[11.82px] leading-normal px-[17.727px] py-[7.386px] rounded-[100px] transition-colors duration-200 whitespace-nowrap",
                 pathname === "/contatti"
                   ? "bg-[#333] text-white"
-                  : "bg-[#e9ebed] text-[#333] hover:bg-[#d9dadb]"
+                  : "bg-[--surface-muted] text-[--foreground] hover:bg-[--border]"
               )}
             >
               Contatti
