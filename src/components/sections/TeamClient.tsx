@@ -95,7 +95,7 @@ function MemberCard({
   return (
     <div className="mb-[40px]">
       {/* Photo */}
-      <div className="relative w-full overflow-hidden mb-[12px] h-[300px] md:h-[261px] lg:h-[451px]">
+      <div className="relative w-full overflow-hidden mb-[12px] aspect-[3/4]">
         {member?.photo ? (
           <Image
             src={urlFor(member.photo).width(449).url()}
