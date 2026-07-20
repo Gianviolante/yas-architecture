@@ -64,10 +64,10 @@ export default function Footer() {
           <div className="flex flex-col md:flex-row items-start md:items-end mt-10 gap-4 md:gap-0">
             {/* Col 1 — Privacy */}
             <div className={`${txt} w-full md:w-[232px] md:shrink-0 flex flex-col`}>
-              <div>
-                <p>Privacy Policy</p>
-                <p>Coockie Solution</p>
-                <p>Coockie Settings</p>
+              <div className="space-y-0">
+                <Link href="/privacy-policy" className="block hover:opacity-60 transition-opacity">Privacy Policy</Link>
+                <Link href="/coockie-solution" className="block hover:opacity-60 transition-opacity">Coockie Solution</Link>
+                <Link href="/coockie-settings" className="block hover:opacity-60 transition-opacity">Coockie Settings</Link>
               </div>
               <p className="mt-4">Design: <a href="https://www.linkedin.com/in/gianmarcoviolante/" target="_blank" rel="noopener noreferrer" className="hover:opacity-60 transition-opacity">G. Violante</a></p>
             </div>
