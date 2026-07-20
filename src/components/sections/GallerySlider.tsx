@@ -22,6 +22,7 @@ const NAV_THRESHOLD = 0.25;
 const DRAG_MIN      = 5;
 const RUBBER        = 0.25;
 const WHEEL_WAIT    = DURATION + 80;
+const EDGE_ZONE     = 140; // px per i button trasparenti ai lati
 
 // Store esterno per breakpoint — pattern useSyncExternalStore, niente setState in effect
 function subscribeResize(cb: () => void) {
@@ -297,6 +298,38 @@ export default function GallerySlider({ items, projectTitle, compact = false }: 
             </div>
           ))}
         </div>
+
+        {/* Transparent edge zones for carousel navigation (desktop only) */}
+        {isPointerFine && (
+          <>
+            <button
+              onClick={() => goTo(current - 1)}
+              className="absolute inset-y-0 left-0 z-10"
+              style={{
+                width: `${EDGE_ZONE}px`,
+                cursor: "none",
+                pointerEvents: current > 0 ? "auto" : "none",
+                background: "transparent",
+                border: "none",
+                padding: 0,
+              }}
+              aria-label="Scroll gallery left"
+            />
+            <button
+              onClick={() => goTo(current + 1)}
+              className="absolute inset-y-0 right-0 z-10"
+              style={{
+                width: `${EDGE_ZONE}px`,
+                cursor: "none",
+                pointerEvents: current < items.length - 1 ? "auto" : "none",
+                background: "transparent",
+                border: "none",
+                padding: 0,
+              }}
+              aria-label="Scroll gallery right"
+            />
+          </>
+        )}
       </div>
 
       {/* Navigation arrows disabled for now */}
