@@ -101,7 +101,7 @@ export default async function HomePage() {
 
             {/* Top-middle: Subtitle right */}
             <div className="col-start-2 row-start-1 text-[12px] leading-[1.2] text-black flex items-start">
-              <p>{home?.heroSubtitleRight || "Apulian inspiration guide"}</p>
+              <p>{home?.heroSubtitleRight || "Inspired by Apulian tradition"}</p>
             </div>
 
             {/* Top-right: Subtitle left */}
