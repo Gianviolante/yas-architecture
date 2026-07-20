@@ -154,7 +154,15 @@ export default function Lightbox({ items, initialIndex, onClose }: Props) {
   // ── Drag/swipe unificato mouse + touch (Pointer Events) ──────────────
   const onPointerDown = (e: React.PointerEvent<HTMLDivElement>) => {
     dragStartX.current = e.clientX;
+    cancelAnim.current?.();
     try { e.currentTarget.setPointerCapture(e.pointerId); } catch { /* pointer non attivo, ignora */ }
+  };
+  const onPointerMove = (e: React.PointerEvent<HTMLDivElement>) => {
+    if (dragStartX.current === null) return;
+    const delta = e.clientX - dragStartX.current;
+    const width = wrapperRef.current?.clientWidth ?? 0;
+    const from = -idxRef.current * width;
+    setTrackX(from + delta);
   };
   const onPointerUp = (e: React.PointerEvent<HTMLDivElement>) => {
     if (dragStartX.current === null) return;
@@ -162,6 +170,7 @@ export default function Lightbox({ items, initialIndex, onClose }: Props) {
     dragStartX.current = null;
     if (delta < -SWIPE_THRESHOLD) tryNext();
     else if (delta > SWIPE_THRESHOLD) tryPrev();
+    else goTo(idxRef.current); // Ritorna alla posizione originale se il drag è troppo piccolo
   };
   const onPointerCancel = () => { dragStartX.current = null; };
 
@@ -201,6 +210,7 @@ export default function Lightbox({ items, initialIndex, onClose }: Props) {
           onMouseLeave={onMouseLeave}
           onWheel={onWheel}
           onPointerDown={onPointerDown}
+          onPointerMove={onPointerMove}
           onPointerUp={onPointerUp}
           onPointerCancel={onPointerCancel}
         >
