@@ -15,6 +15,7 @@ interface Props {
   items: GalleryItem[];
   projectTitle: string;
   compact?: boolean;
+  initialLightboxIndex?: number | null;
 }
 
 const DURATION      = 700;
@@ -34,7 +35,7 @@ const getBreakpoint = (): "mobile" | "tablet" | "desktop" => {
   return w < 768 ? "mobile" : w < 1024 ? "tablet" : "desktop";
 };
 
-export default function GallerySlider({ items, projectTitle, compact = false }: Props) {
+export default function GallerySlider({ items, projectTitle, compact = false, initialLightboxIndex }: Props) {
   const wrapperRef = useRef<HTMLDivElement>(null); // overflow:hidden — clip
   const trackRef   = useRef<HTMLDivElement>(null); // transform target — si muove fisicamente
 
@@ -42,7 +43,7 @@ export default function GallerySlider({ items, projectTitle, compact = false }: 
   const breakpoint    = useSyncExternalStore(subscribeResize, getBreakpoint, () => "mobile" as const);
 
   const [current,       setCurrent]       = useState(0);
-  const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
+  const [lightboxIndex, setLightboxIndex] = useState<number | null>(initialLightboxIndex ?? null);
 
   const isDragging      = useRef(false);
   const hasDragged      = useRef(false);
