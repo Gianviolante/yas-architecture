@@ -18,9 +18,9 @@ export function middleware(request: NextRequest) {
       .map(b => b.toString(16).padStart(2, '0'))
       .join('');
 
-  // Set CSRF token in HttpOnly cookie with strict security settings
+  // Set CSRF token cookie (not HttpOnly so JavaScript can read it for form submission)
   response.cookies.set("csrf-token", csrfToken, {
-    httpOnly: true, // Prevent access from JavaScript
+    httpOnly: false, // Allow JavaScript access for form CSRF protection
     secure: process.env.NODE_ENV === "production", // HTTPS only in production
     sameSite: "strict", // Strict same-site policy
     maxAge: CSRF_TOKEN_MAX_AGE,
