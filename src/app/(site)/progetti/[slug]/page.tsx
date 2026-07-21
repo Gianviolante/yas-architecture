@@ -68,7 +68,7 @@ export default async function ProgettoPage({ params }: { params: Promise<{ slug:
 
       {/* ── Hero image ─────────────────────────────────────────────── */}
       {/* Mobile: aspect-square fullwidth | Desktop: aspect-[16/9] with margins */}
-      <div className="relative md:mx-[30px] md:mt-[72px] overflow-hidden md:rounded-lg">
+      <div className="relative md:mx-[30px] md:mt-[72px] overflow-hidden">
         {/* Mobile fullwidth square */}
         <div className="md:hidden relative w-full aspect-square bg-[#d9d9d9]">
           {heroUrl ? (
