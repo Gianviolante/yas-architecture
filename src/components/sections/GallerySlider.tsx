@@ -17,6 +17,7 @@ interface Props {
   compact?: boolean;
   initialLightboxIndex?: number | null;
   allItems?: GalleryItem[]; // Tutte le immagini della gallery (incluse le prime 2)
+  onImageClick?: (index: number) => void; // Callback when carousel image clicked
 }
 
 const DURATION      = 700;
@@ -36,7 +37,7 @@ const getBreakpoint = (): "mobile" | "tablet" | "desktop" => {
   return w < 768 ? "mobile" : w < 1024 ? "tablet" : "desktop";
 };
 
-export default function GallerySlider({ items, projectTitle, compact = false, initialLightboxIndex, allItems }: Props) {
+export default function GallerySlider({ items, projectTitle, compact = false, initialLightboxIndex, allItems, onImageClick }: Props) {
   const wrapperRef = useRef<HTMLDivElement>(null); // overflow:hidden — clip
   const trackRef   = useRef<HTMLDivElement>(null); // transform target — si muove fisicamente
 
@@ -311,15 +312,20 @@ export default function GallerySlider({ items, projectTitle, compact = false, in
               : { scrollbarWidth: "none" }),
           }}
         >
-          {Array.from({ length: displayCount }).map((_, i) => (
+          {Array.from({ length: displayCount }).map((_, i) => {
+            // Calculate actual index in allItems (carousel items start at index 2)
+            const allItemsIndex = allItems ? i + 2 : i;
+
+            return (
             <div
               key={i}
-              className="flex-none relative overflow-hidden bg-[#d9d9d9]"
+              className="flex-none relative overflow-hidden bg-[#d9d9d9] cursor-pointer hover:opacity-90 transition-opacity"
               style={{
                 width:      `${cardW(i)}px`,
                 height:     `${cardH}px`,
                 transition: "width 300ms ease, height 300ms ease",
               }}
+              onClick={() => onImageClick?.(allItemsIndex)}
             >
               {hasImages && items[i]?.url && (
                 <Image
@@ -331,7 +337,8 @@ export default function GallerySlider({ items, projectTitle, compact = false, in
                 />
               )}
             </div>
-          ))}
+          );
+          })}
         </div>
 
         {/* Transparent edge zones for carousel navigation (desktop only) */}

@@ -57,6 +57,7 @@ export default function GallerySection({ items, projectTitle, allGalleryItems, o
         compact={compact}
         initialLightboxIndex={lightboxIndex}
         allItems={allGalleryItems}
+        onImageClick={(index) => setLightboxIndex(index)}
       />
     </div>
   );
