@@ -165,7 +165,19 @@ export default function Navbar() {
           </div>
 
           {/* Mobile right controls */}
-          <div className="md:hidden flex items-center gap-2" />
+          <div className="md:hidden flex items-center gap-2 shrink-0">
+            <Link
+              href="/contatti"
+              className={cn(
+                "text-[11.82px] leading-normal px-[13px] py-[6px] rounded-[100px] transition-colors duration-200 whitespace-nowrap",
+                pathname === "/contatti"
+                  ? "bg-[#333] text-white"
+                  : "bg-[var(--surface-muted)] text-[--foreground] hover:bg-[--border]"
+              )}
+            >
+              Contatti
+            </Link>
+          </div>
         </nav>
       </header>
 
