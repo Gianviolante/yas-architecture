@@ -485,7 +485,7 @@ function IndexView({
                 {p.location && (
                   <p className="text-[12px] text-[--foreground] leading-[1.5]">{p.location}</p>
                 )}
-                <p className="text-[24px] text-[--foreground] leading-[1.3] mt-[0]">{p.title}</p>
+                <p className="text-[24px] text-[--foreground] leading-[1.3] mt-[0] truncate">{p.title}</p>
                 <p className="text-[12px] text-[--foreground] leading-[1.5]">{p.status}</p>
               </div>
               {/* Right: year top, typology chip bottom */}
