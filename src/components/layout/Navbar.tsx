@@ -29,15 +29,20 @@ const studioSubLinks = [
 function AccordionChip({ open }: { open: boolean }) {
   return (
     <div className="size-[26px] rounded-full border border-[#1a1a1a] flex items-center justify-center shrink-0">
-      {open ? (
-        <svg width="12" height="2" viewBox="0 0 12 2" fill="none">
-          <path d="M0 1H12" stroke="#1a1a1a" strokeWidth="1.5" strokeLinecap="round" />
-        </svg>
-      ) : (
-        <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
-          <path d="M6 0V12M0 6H12" stroke="#1a1a1a" strokeWidth="1.5" strokeLinecap="round" />
-        </svg>
-      )}
+      <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+        {/* Horizontal line (always visible) */}
+        <path d="M0 6H12" stroke="#1a1a1a" strokeWidth="1.5" strokeLinecap="round" />
+
+        {/* Vertical line (fades when open) */}
+        <motion.path
+          d="M6 0V12"
+          stroke="#1a1a1a"
+          strokeWidth="1.5"
+          strokeLinecap="round"
+          animate={{ opacity: open ? 0 : 1 }}
+          transition={{ duration: 0.25, ease: "easeInOut" }}
+        />
+      </svg>
     </div>
   );
 }
