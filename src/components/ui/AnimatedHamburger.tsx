@@ -17,9 +17,9 @@ export default function AnimatedHamburger({ isOpen, onClick }: Props) {
         {/* Top line → diagonal top-left to bottom-right of X */}
         <motion.line
           x1="8"
-          y1="16"
+          y1="18"
           x2="40"
-          y2="16"
+          y2="18"
           stroke="black"
           strokeWidth="2"
           strokeLinecap="round"
@@ -36,9 +36,9 @@ export default function AnimatedHamburger({ isOpen, onClick }: Props) {
         {/* Bottom line → diagonal top-right to bottom-left of X */}
         <motion.line
           x1="8"
-          y1="30"
+          y1="28"
           x2="40"
-          y2="30"
+          y2="28"
           stroke="black"
           strokeWidth="2"
           strokeLinecap="round"
