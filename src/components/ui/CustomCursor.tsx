@@ -166,6 +166,7 @@ export default function CustomCursor() {
     const MAGNETIC_MAX = 60;
     function magneticTarget(): { x: number; y: number } | null {
       if (!hovered || !hoveredRect) return null;
+      if (hovered.hasAttribute("cursor-no-snap")) return null;
       if (hoveredRect.width > MAGNETIC_MAX || hoveredRect.height > MAGNETIC_MAX) return null;
       return { x: hoveredRect.left + hoveredRect.width / 2, y: hoveredRect.top + hoveredRect.height / 2 };
     }

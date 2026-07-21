@@ -121,6 +121,7 @@ export default function Lightbox({ items, initialIndex, onClose }: Props) {
   }, []);
 
   const onWheel = (e: React.WheelEvent<HTMLDivElement>) => {
+    e.preventDefault();
     const absX = Math.abs(e.deltaX);
     const absY = Math.abs(e.deltaY);
     const delta = absX >= absY ? e.deltaX : e.deltaY;
@@ -174,6 +175,7 @@ export default function Lightbox({ items, initialIndex, onClose }: Props) {
         ref={closeRef}
         onClick={onClose}
         aria-label="Chiudi"
+        cursor-no-snap=""
         className="absolute top-[15px] right-[15px] z-10 size-[40px] flex items-center justify-center hover:opacity-40 transition-opacity"
       >
         <svg width="24" height="24" viewBox="0 0 24 24" fill="#000000">
@@ -217,6 +219,7 @@ export default function Lightbox({ items, initialIndex, onClose }: Props) {
           onClick={tryPrev}
           aria-label="Immagine precedente"
           disabled={!canPrev}
+          cursor-no-snap=""
           className="arrow-nav absolute left-[15px] size-[40px] flex items-center justify-center transition-opacity hover:opacity-0"
         >
           <ArrowLeft />
@@ -231,6 +234,7 @@ export default function Lightbox({ items, initialIndex, onClose }: Props) {
           onClick={tryNext}
           aria-label="Immagine successiva"
           disabled={!canNext}
+          cursor-no-snap=""
           className="arrow-nav absolute right-[15px] size-[40px] flex items-center justify-center transition-opacity hover:opacity-0"
         >
           <ArrowRight />
