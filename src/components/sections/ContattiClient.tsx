@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import { getCsrfToken } from "@/lib/utils/csrf";
 
@@ -151,11 +152,11 @@ export default function ContattiClient() {
             <form onSubmit={handleSubmit}>
 
               {/* Row 1: Nome | Cognome */}
-              <div className="grid grid-cols-2 md:grid-cols-[2fr_3fr] border-t border-black">
-                <div className="py-3 px-1 border-r border-black">
+              <div className="grid grid-cols-1 md:grid-cols-[2fr_3fr] border-t border-black">
+                <div className="py-3 px-1 md:border-r border-black">
                   <input type="text" placeholder="Nome" value={form.nome} onChange={set("nome")} autoComplete="given-name" className="w-full bg-transparent text-[16px] md:text-[12px] leading-[1.2] text-black outline-none placeholder:text-black" />
                 </div>
-                <div className="py-3 px-1">
+                <div className="py-3 px-1 border-t md:border-t-0 border-black">
                   <input type="text" placeholder="Cognome" value={form.cognome} onChange={set("cognome")} autoComplete="family-name" className="w-full bg-transparent text-[16px] md:text-[12px] leading-[1.2] text-black outline-none placeholder:text-black" />
                 </div>
               </div>
@@ -215,7 +216,10 @@ export default function ContattiClient() {
               {/* Privacy + submit */}
               <div className="mt-6 space-y-4">
                 <p className="text-[12px] leading-[1.2] text-black max-w-xl">
-                  Cliccando su &ldquo;Invia&rdquo; dichiaro di aver letto e accettato l&apos;informativa Privacy
+                  Cliccando su &ldquo;Invia&rdquo; dichiaro di aver letto e accettato l&apos;informativa{" "}
+                  <Link href="/privacy-policy" className="underline hover:opacity-60 transition-opacity">
+                    Privacy
+                  </Link>
                 </p>
                 <div className="flex items-center gap-6">
                   <label className="flex items-center gap-[11px] cursor-pointer">
