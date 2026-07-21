@@ -101,9 +101,9 @@ export default function GallerySlider({ items, projectTitle, compact = false, in
     if (t) t.style.transform = `translate3d(${x}px, 0, 0)`;
   }, []);
 
-  // ── goTo: anima il TRACK (il div fisico) con rAF + curva Groppi ───────
+  // ── goTo: anima il TRACK (il div fisico) con rAF + cubic-bezier easing ───────
   // Il track si muove fisicamente verso sinistra/destra portando con sé
-  // tutte le card — esattamente come fa Groppi con il suo SwiperComponent.
+  // tutte le card — esattamente come fa YAS con il suo SwiperComponent.
   // DURATION è proporzionale alla distanza per mantenere velocità costante su tutti i breakpoint.
   const goTo = useCallback((idx: number) => {
     const snapPos = getSnapPositions();

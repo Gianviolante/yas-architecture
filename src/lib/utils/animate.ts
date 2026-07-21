@@ -1,4 +1,4 @@
-// Groppi easing: cubic-bezier(0.77, 0, 0.18, 1) — Newton-Raphson identico ai browser.
+// YAS easing: cubic-bezier(0.77, 0, 0.18, 1) — Newton-Raphson identico ai browser.
 export function makeCubicBezier(x1: number, y1: number, x2: number, y2: number) {
   const sX  = (t: number) => 3*t*(1-t)*(1-t)*x1 + 3*t*t*(1-t)*x2 + t*t*t;
   const sY  = (t: number) => 3*t*(1-t)*(1-t)*y1 + 3*t*t*(1-t)*y2 + t*t*t;

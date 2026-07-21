@@ -118,7 +118,7 @@ export default function CustomCursor() {
 
     function tick() {
       if (active_) {
-        // Groppi segue il mouse quasi istantaneamente — lerp stretto.
+        // Custom cursor follows il mouse quasi istantaneamente — lerp stretto.
         // Se il target è un bottone piccolo, si aggancia al suo centro
         // (snap magnetico) invece del punto esatto del mouse.
         const magnet = magneticTarget();
@@ -158,7 +158,7 @@ export default function CustomCursor() {
     // Snap magnetico: su bottoni piccoli (frecce, chiudi — icona fissa) il
     // follower si centra esattamente sull'elemento invece di seguire il
     // mouse libero. È quello che permette a mix-blend-mode:difference di
-    // "cancellare" otticamente l'icona statica sotto (trucco di Groppi,
+    // "cancellare" otticamente l'icona statica sotto (optical cancellation technique,
     // verificato dal vivo: l'icona statica resta sempre opacity:1, sparisce
     // solo per sovrapposizione pixel-perfect col cursore). Su aree grandi
     // (immagini con cursor-type="expand"/"drag") niente snap: lì il cursore
@@ -180,7 +180,7 @@ export default function CustomCursor() {
       });
     }
 
-    // Come Groppi: il cursore custom appare su link e elementi marcati
+    // YAS custom cursor appare su link e elementi marcati
     // esplicitamente con cursor-type.
     function registerNode(node: Element) {
       const t = node.getAttribute("cursor-type");

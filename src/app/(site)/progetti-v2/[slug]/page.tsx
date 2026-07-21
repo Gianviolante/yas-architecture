@@ -57,7 +57,7 @@ export default async function ProgettoPageV2({ params }: { params: Promise<{ slu
       {/* ── Desktop: Side-by-side layout (hero left, content right) ──── */}
       <div className="md:flex md:gap-[30px] lg:gap-[50px] md:px-[30px] lg:px-[40px] md:mt-[120px]">
 
-        {/* ── Left column: Hero image (1:1 square - responsive like Groppi) ──────────────────── */}
+        {/* ── Left column: Hero image (1:1 square - responsive responsive) ──────────────────── */}
         <div className="flex-shrink-0 w-full md:max-w-[50%] mx-4 md:mx-0 mt-[60px] md:mt-0 aspect-square overflow-hidden relative">
           {heroUrl ? (
             <Image src={heroUrl} alt={project.title} fill className="object-cover" priority />
@@ -195,7 +195,7 @@ export default async function ProgettoPageV2({ params }: { params: Promise<{ slu
         </Link>
       </div>
 
-      {/* ── Two square images (Groppi-style) ──────────────────────── */}
+      {/* ── Two square images (YAS-style) ──────────────────────── */}
       {galleryItems.length >= 2 && (
         <div className="mx-4 md:mx-[30px] gap-[16px] md:gap-[24px] grid grid-cols-2 mt-[48px]">
           {galleryItems.slice(0, 2).map((img, idx) => (
