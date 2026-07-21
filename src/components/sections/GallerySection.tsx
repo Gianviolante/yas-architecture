@@ -25,7 +25,7 @@ export default function GallerySection({ items, projectTitle, allGalleryItems, o
 
   return (
     <div className="mt-[26px]">
-      {/* Two square images (Groppi-style) - clickable on mobile */}
+      {/* Two square images (YAS-style) - clickable on mobile */}
       {showSquareImages && (
         <div className="mx-4 md:mx-[30px] gap-[16px] md:gap-[24px] grid grid-cols-1 md:grid-cols-2 mb-[48px]">
           {allGalleryItems!.slice(0, 2).map((img, idx) => (
