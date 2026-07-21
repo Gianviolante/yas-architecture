@@ -76,7 +76,7 @@ export default function GallerySlider({ items, projectTitle, compact = false, in
 
   const cardH = compact ? 202 : (isMobile ? 242 : isTablet ? 335 : 633);
   const gap   = compact ? 15  : (isMobile ? 30  : isTablet ? 40  : 77);
-  const pl    = isMobile ? 0 : 30;  // 0 on mobile for full-width scroll (like Groppi)
+  const pl    = isMobile ? 15 : 30;
 
   const getSnapPositions = useCallback(() => {
     const n = Math.max(items.length, 1);
@@ -293,7 +293,7 @@ export default function GallerySlider({ items, projectTitle, compact = false, in
       {/* Track:   transform       → il DIV fisico scorre orizzontalmente con smooth transition */}
       <div
         ref={wrapperRef}
-        className={`select-none relative -mx-4 md:-mx-[30px]${isPointerFine ? " overflow-hidden" : ""}`}
+        className={`select-none relative w-screen -mx-[calc((100vw-100%)/2)]${isPointerFine ? " overflow-hidden" : ""}`}
         onMouseMove={isPointerFine ? onMouseMove : undefined}
         onMouseLeave={isPointerFine ? onMouseLeave : undefined}
         onPointerDown={isPointerFine ? onPointerDown : undefined}
