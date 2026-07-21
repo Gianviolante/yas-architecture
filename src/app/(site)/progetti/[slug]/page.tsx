@@ -179,6 +179,34 @@ export default async function ProgettoPage({ params }: { params: Promise<{ slug:
 
       </div>
 
+
+      {/* ── Condividi (Share) Section ──────────────────────────────── */}
+      <div className="page-px md:p-0 pb-[40px] md:pb-0 md:pt-[24px] lg:pt-[40px] pt-[24px] md:mt-[40px] lg:mt-[60px]">
+        <div className="flex items-center gap-[12px]">
+          <p className="text-[12px] font-semibold leading-[1.3] text-[#282828]">Condividi</p>
+          <div className="flex gap-[12px]">
+            <a
+              href={`https://www.facebook.com/sharer/sharer.php?u=${typeof window !== 'undefined' ? window.location.href : ''}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Condividi su Facebook"
+              className="text-[16px] font-bold text-[#282828] hover:opacity-60 transition-opacity"
+            >
+              f
+            </a>
+            <a
+              href={`https://www.linkedin.com/sharing/share-offsite/?url=${typeof window !== 'undefined' ? window.location.href : ''}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Condividi su LinkedIn"
+              className="text-[16px] font-bold text-[#282828] hover:opacity-60 transition-opacity"
+            >
+              in
+            </a>
+          </div>
+        </div>
+      </div>
+
       {/* ── Gallery slider (includes two square images on mobile) ────── */}
       {galleryItems.length > 0 && (
         <GallerySection
