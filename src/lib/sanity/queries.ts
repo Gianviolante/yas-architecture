@@ -60,3 +60,9 @@ export const studioQuery = `
     spaziImages[]{ ..., caption }
   }
 `;
+
+export const progettiIntroQuery = `
+  *[_type == "progettiIntro"][0] {
+    _id, text
+  }
+`;

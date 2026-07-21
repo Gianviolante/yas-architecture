@@ -1,6 +1,6 @@
 import { sanityClient } from "@/lib/sanity/client";
-import { allProjectsQuery } from "@/lib/sanity/queries";
-import type { Project } from "@/lib/sanity/types";
+import { allProjectsQuery, progettiIntroQuery } from "@/lib/sanity/queries";
+import type { Project, ProgettiIntro } from "@/lib/sanity/types";
 import ProgettiClient from "@/components/sections/ProgettiClient";
 
 export const revalidate = 60;
@@ -14,10 +14,11 @@ export default async function ProgettiPage({
 }: {
   searchParams: Promise<{ tipologia?: string }>;
 }) {
-  const [projects, params] = await Promise.all([
+  const [projects, progettiIntro, params] = await Promise.all([
     sanityClient.fetch(allProjectsQuery) as Promise<Project[]>,
+    sanityClient.fetch(progettiIntroQuery) as Promise<ProgettiIntro | null>,
     searchParams,
   ]);
 
-  return <ProgettiClient projects={projects} initialTypology={params.tipologia} />;
+  return <ProgettiClient projects={projects} progettiIntro={progettiIntro} initialTypology={params.tipologia} />;
 }

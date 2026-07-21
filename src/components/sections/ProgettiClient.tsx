@@ -3,7 +3,8 @@
 import { useState, useMemo, useEffect, useRef } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import type { Project, Typology, ProjectStatus } from "@/lib/sanity/types";
+import { PortableText } from "@portabletext/react";
+import type { Project, Typology, ProjectStatus, ProgettiIntro } from "@/lib/sanity/types";
 import ProjectsSlider from "@/components/sections/ProjectsSlider";
 
 const AREA_FILTERS: { label: string; value: Typology | "all" }[] = [
@@ -22,9 +23,15 @@ const STATO_FILTERS: { label: string; value: ProjectStatus }[] = [
   { label: "Realizzato", value: "Realizzato" },
 ];
 
-interface Props { projects: Project[]; initialTypology?: string; }
+const DEFAULT_INTRO = `I benefici derivanti dall'utilizzo di una griglia sono evidenti: chiarezza, efficienza, economia, continuità. Prima di ogni altra cosa, una griglia introduce ordine sistematico a una struttura visiva, facilitando la distinzione delle diverse categorie informative e indirizzando lo spostamento dell'occhio del lettore tra di esse.`;
 
-export default function ProgettiClient({ projects, initialTypology }: Props) {
+interface Props {
+  projects: Project[];
+  progettiIntro?: ProgettiIntro | null;
+  initialTypology?: string;
+}
+
+export default function ProgettiClient({ projects, progettiIntro, initialTypology }: Props) {
   const [view,            setView]            = useState<"grid" | "index">("grid");
   const [filtersOpen,     setFiltersOpen]     = useState(false);
   const [typologyFilters, setTypologyFilters] = useState<Set<Typology>>(() => {
@@ -108,11 +115,13 @@ export default function ProgettiClient({ projects, initialTypology }: Props) {
           troppo lunghe da leggere sui monitor ultra-wide. Griglia/index
           restano piena larghezza — le immagini ne beneficiano, il testo no. */}
       <div className="page-px pt-8 pb-5 md:pt-9 md:pb-7">
-        <p className="text-[16px] md:text-[24px] leading-normal text-black">
-          I benefici derivanti dall&apos;utilizzo di una griglia sono evidenti: chiarezza, efficienza, economia, continuità.
-          Prima di ogni altra cosa, una griglia introduce ordine sistematico a una struttura visiva, facilitando la
-          distinzione delle diverse categorie informative e indirizzando lo spostamento dell&apos;occhio del lettore tra di esse.
-        </p>
+        <div className="text-[16px] md:text-[24px] leading-normal text-black">
+          {progettiIntro?.text ? (
+            <PortableText value={progettiIntro.text as any} />
+          ) : (
+            <p>{DEFAULT_INTRO}</p>
+          )}
+        </div>
       </div>
 
       {/* ── Sticky filter bar ──────────────────────────────────────── */}
