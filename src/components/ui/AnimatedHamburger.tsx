@@ -14,7 +14,7 @@ export default function AnimatedHamburger({ isOpen, onClick }: Props) {
       type="button"
     >
       <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-        {/* Top line → top-left of X */}
+        {/* Top line → diagonal top-left to bottom-right of X */}
         <motion.line
           x1="12"
           y1="15"
@@ -24,17 +24,16 @@ export default function AnimatedHamburger({ isOpen, onClick }: Props) {
           strokeWidth="1.5"
           strokeLinecap="round"
           animate={{
-            x1: isOpen ? 14 : 12,
-            y1: isOpen ? 24 : 15,
-            x2: isOpen ? 34 : 36,
-            y2: isOpen ? 24 : 15,
-            rotate: isOpen ? 45 : 0,
+            x1: isOpen ? 10 : 12,
+            y1: isOpen ? 10 : 15,
+            x2: isOpen ? 38 : 36,
+            y2: isOpen ? 38 : 15,
           }}
           transition={{ duration: 0.3, ease: "easeInOut" }}
           style={{ originX: "50%", originY: "50%" }}
         />
 
-        {/* Bottom line → bottom-right of X */}
+        {/* Bottom line → diagonal top-right to bottom-left of X */}
         <motion.line
           x1="12"
           y1="33"
@@ -44,11 +43,10 @@ export default function AnimatedHamburger({ isOpen, onClick }: Props) {
           strokeWidth="1.5"
           strokeLinecap="round"
           animate={{
-            x1: isOpen ? 34 : 12,
-            y1: isOpen ? 24 : 33,
-            x2: isOpen ? 14 : 36,
-            y2: isOpen ? 24 : 33,
-            rotate: isOpen ? -45 : 0,
+            x1: isOpen ? 38 : 12,
+            y1: isOpen ? 10 : 33,
+            x2: isOpen ? 10 : 36,
+            y2: isOpen ? 38 : 33,
           }}
           transition={{ duration: 0.3, ease: "easeInOut" }}
           style={{ originX: "50%", originY: "50%" }}
