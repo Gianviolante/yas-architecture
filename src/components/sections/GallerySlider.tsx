@@ -325,7 +325,12 @@ export default function GallerySlider({ items, projectTitle, compact = false, in
                 height:     `${cardH}px`,
                 transition: "width 300ms ease, height 300ms ease",
               }}
-              onClick={() => onImageClick?.(allItemsIndex)}
+              onClick={() => {
+                // Only open lightbox if this was a click, not a drag
+                if (!hasDragged.current) {
+                  onImageClick?.(allItemsIndex);
+                }
+              }}
             >
               {hasImages && items[i]?.url && (
                 <Image
