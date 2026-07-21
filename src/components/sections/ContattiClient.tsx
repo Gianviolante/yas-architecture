@@ -181,7 +181,7 @@ export default function ContattiClient() {
                   <input type="text" placeholder="Paese" value={form.paese} onChange={set("paese")} autoComplete="country-name" className="w-full bg-transparent text-[16px] md:text-[12px] leading-[1.2] text-black outline-none placeholder:text-black" />
                 </div>
                 <div className="py-3 px-1">
-                  <input type="text" placeholder="CAP" value={form.cap} onChange={set("cap")} autoComplete="postal-code" className="w-full bg-transparent text-[16px] md:text-[12px] leading-[1.2] text-black outline-none placeholder:text-black" />
+                  <input type="text" placeholder="CAP *" value={form.cap} onChange={set("cap")} autoComplete="postal-code" required className="w-full bg-transparent text-[16px] md:text-[12px] leading-[1.2] text-black outline-none placeholder:text-black" />
                 </div>
               </div>
 
