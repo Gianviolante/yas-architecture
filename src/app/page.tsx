@@ -5,6 +5,7 @@ import Footer from "@/components/layout/Footer";
 import HomeSlider from "@/components/sections/HomeSlider";
 import HomeProjectsCarousel from "@/components/sections/HomeProjectsCarousel";
 import AnimatedTitle from "@/components/ui/AnimatedTitle";
+import ArrowLink from "@/components/ui/ArrowLink";
 import { PortableText } from "@portabletext/react";
 import { sanityClient } from "@/lib/sanity/client";
 import { allProjectsQuery, homeQuery } from "@/lib/sanity/queries";
@@ -79,9 +80,9 @@ export default async function HomePage() {
 
             {/* links bottom-right */}
             <div className="absolute text-[12px] leading-[1.2] text-[#282828] text-right" style={{ top: "301px", right: "15px" }}>
-              <Link href="/progetti?tipologia=Interior Design" className="block hover:opacity-60 transition-opacity">Interior design→</Link>
-              <Link href="/progetti?tipologia=Architettura"    className="block hover:opacity-60 transition-opacity">Architecture →</Link>
-              <Link href="/progetti"                           className="block hover:opacity-60 transition-opacity">Tutti i progetti→</Link>
+              <ArrowLink href="/progetti?tipologia=Interior Design">Interior design→</ArrowLink>
+              <ArrowLink href="/progetti?tipologia=Architettura">Architecture →</ArrowLink>
+              <ArrowLink href="/progetti">Tutti i progetti→</ArrowLink>
             </div>
           </section>
 
@@ -158,9 +159,9 @@ export default async function HomePage() {
               Inspired by
             </p>
             <div className="absolute text-[12px] leading-[1.2] text-[#282828] text-right" style={{ top: "162px", right: "15px" }}>
-              <Link href="/progetti?tipologia=Interior Design" className="block hover:opacity-60 transition-opacity">Interior design→</Link>
-              <Link href="/progetti?tipologia=Architettura"    className="block hover:opacity-60 transition-opacity">Architecture →</Link>
-              <Link href="/progetti"                           className="block hover:opacity-60 transition-opacity">Tutti i progetti→</Link>
+              <ArrowLink href="/progetti?tipologia=Interior Design">Interior design→</ArrowLink>
+              <ArrowLink href="/progetti?tipologia=Architettura">Architecture →</ArrowLink>
+              <ArrowLink href="/progetti">Tutti i progetti→</ArrowLink>
             </div>
           </section>
 
@@ -183,9 +184,9 @@ export default async function HomePage() {
             {/* Row 1 - Project links right */}
             <div className="col-start-3 row-start-1 text-[12px] leading-[1.2] text-[#282828] flex items-end justify-end">
               <div>
-                <Link href="/progetti?tipologia=Interior Design" className="block hover:opacity-60 transition-opacity">Interior design→</Link>
-                <Link href="/progetti?tipologia=Architettura"    className="block hover:opacity-60 transition-opacity">Architecture →</Link>
-                <Link href="/progetti"                           className="block hover:opacity-60 transition-opacity">Tutti i progetti→</Link>
+                <ArrowLink href="/progetti?tipologia=Interior Design">Interior design→</ArrowLink>
+                <ArrowLink href="/progetti?tipologia=Architettura">Architecture →</ArrowLink>
+                <ArrowLink href="/progetti">Tutti i progetti→</ArrowLink>
               </div>
             </div>
           </section>
