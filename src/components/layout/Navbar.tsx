@@ -137,10 +137,17 @@ export default function Navbar() {
           {/* Mobile hamburger — animated lines */}
           <AnimatedHamburger isOpen={menuOpen} onClick={() => setMenuOpen((v) => !v)} />
 
-          {/* Logo — center absolute */}
-          <Link href="/" className="absolute left-1/2 -translate-x-1/2" aria-label="YAS Architecture — Home">
-            <Image src="/assets/logo-yas.svg" alt="YAS Architecture" width={102} height={31} priority />
-          </Link>
+          {/* Logo — center absolute with micro bounce */}
+          <motion.div
+            className="absolute left-1/2 -translate-x-1/2"
+            whileHover={{ scale: 1.08 }}
+            whileTap={{ scale: 0.95 }}
+            transition={{ duration: 0.3, ease: "easeOut" }}
+          >
+            <Link href="/" aria-label="YAS Architecture — Home">
+              <Image src="/assets/logo-yas.svg" alt="YAS Architecture" width={102} height={31} priority />
+            </Link>
+          </motion.div>
 
           {/* Desktop right nav */}
           <div className="hidden md:flex items-center gap-[15px]">
