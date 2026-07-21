@@ -166,7 +166,7 @@ export default async function HomePage() {
           </section>
 
           {/* ── 3. APULIA — tablet + desktop ─────────────────────────── */}
-          <section className="hidden md:grid grid-cols-3 grid-rows-[48px_minmax(auto,280px)] gap-y-[8px] gap-x-[32px] md:gap-x-[48px] lg:gap-x-[64px] overflow-hidden page-px md:py-[24px] lg:py-[32px] mt-[60px] lg:mt-[80px]">
+          <section className="hidden md:grid grid-cols-3 grid-rows-[48px_minmax(auto,280px)] gap-y-[8px] gap-x-[32px] md:gap-x-[48px] lg:gap-x-[64px] overflow-hidden page-px md:py-[24px] lg:py-[32px] mt-[24px] lg:mt-[32px]">
             {/* Row 1 - Top-left: Subtitle (Inspired by) */}
             <div className="col-start-1 row-start-1 text-[12px] leading-[0.8] text-[#282828] flex items-end">
               <p>Inspired by</p>
