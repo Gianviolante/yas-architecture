@@ -41,44 +41,44 @@ export default async function HomePage() {
     <>
       <Navbar />
       <main className="flex-1">
-        <div className="pt-[60px] md:pt-[80px]">
+        <div className="pt-[100px] md:pt-[120px]">
 
           {/* ── 1. HERO — mobile ─────────────────────────────────────── */}
-          <section className="md:hidden relative h-[382px] overflow-hidden">
+          <section className="md:hidden relative h-[360px] overflow-hidden">
             {/* labels top */}
-            <div className="absolute text-[12px] leading-[1.2] whitespace-nowrap" style={{ top: "8px", left: "16px", color: "#000000" }}>
-              <p>{home?.heroSubtitleRight || "Inspired by Apulian tradition"}</p>
-            </div>
-            <div className="absolute text-[12px] leading-[1.2] text-right" style={{ top: "50px", right: "15px", color: "#000000" }}>
+            <div className="absolute text-[12px] leading-[1.2]" style={{ top: "8px", left: "16px", color: "#000000" }}>
               {home?.heroSubtitleLeft ? (
                 <PortableText value={home.heroSubtitleLeft as Parameters<typeof PortableText>[0]["value"]} components={ptBlock} />
               ) : (
                 <p>Studio architettura e design</p>
               )}
             </div>
+            <div className="absolute text-[12px] leading-[1.2] text-right whitespace-nowrap" style={{ top: "8px", right: "15px", color: "#000000" }}>
+              <p>{home?.heroSubtitleRight || "Inspired by Apulian tradition"}</p>
+            </div>
 
             {/* big title */}
             <AnimatedTitle
               text={home?.heroTitleMain || "yas-arch"}
               className="absolute font-bold text-black select-none"
-              style={{ fontSize: "clamp(64px, 18vw, 120px)", lineHeight: "0.8", top: "74px", left: "12px", width: "100%", paddingRight: "16px" }}
+              style={{ fontSize: "clamp(85px, 42vw, 160px)", lineHeight: "0.8", top: "28px", left: "12px", width: "100%", paddingRight: "16px" }}
             />
 
             {/* address bottom-left */}
-            <div className="absolute text-[12px] leading-[1.2] text-black" style={{ top: "254px", left: "16px" }}>
+            <div className="absolute text-[12px] leading-[1.2] text-black" style={{ top: "299px", left: "16px" }}>
               {home?.heroAddress ? (
                 <PortableText value={home.heroAddress as Parameters<typeof PortableText>[0]["value"]} components={ptBlock} />
               ) : (
                 <>
                   <p>Piazza Marco Antonio Cavalerio, 21</p>
-                  <p>72100 Brindisi (BR) Italia</p>
+                  <p>72100 Brindisi, Italia</p>
                   <p>studio@yas-arc.com</p>
                 </>
               )}
             </div>
 
             {/* links bottom-right */}
-            <div className="absolute text-[12px] leading-[1.2] text-[#282828] text-right" style={{ top: "256px", right: "15px" }}>
+            <div className="absolute text-[12px] leading-[1.2] text-[#282828] text-right" style={{ top: "301px", right: "15px" }}>
               <Link href="/progetti?tipologia=Interior Design" className="block hover:opacity-60 transition-opacity">Interior design→</Link>
               <Link href="/progetti?tipologia=Architettura"    className="block hover:opacity-60 transition-opacity">Architecture →</Link>
               <Link href="/progetti"                           className="block hover:opacity-60 transition-opacity">Tutti i progetti→</Link>
@@ -87,18 +87,18 @@ export default async function HomePage() {
 
           {/* ── 1. HERO — tablet + desktop ───────────────────────────── */}
           <section className="hidden md:grid grid-cols-3 grid-rows-[48px_minmax(auto,280px)_minmax(80px,auto)] gap-y-[8px] gap-x-[32px] md:gap-x-[48px] lg:gap-x-[64px] overflow-hidden page-px md:py-[24px] lg:py-[32px]">
-            {/* Row 1 - Top-left: Subtitle left (Inspired by Apulian tradition) */}
+            {/* Row 1 - Top-left: Subtitle (Studio architettura e design) */}
             <div className="col-start-1 row-start-1 text-[12px] leading-[0.8] text-black flex items-end">
-              <p>{home?.heroSubtitleRight || "Inspired by Apulian tradition"}</p>
-            </div>
-
-            {/* Row 1 - Top-center: Subtitle (Studio architettura e design) */}
-            <div className="col-start-2 row-start-1 text-[12px] leading-[0.8] text-left flex items-end">
               {home?.heroSubtitleLeft ? (
                 <PortableText value={home.heroSubtitleLeft as Parameters<typeof PortableText>[0]["value"]} components={ptBlock} />
               ) : (
                 <p>Studio architettura e design</p>
               )}
+            </div>
+
+            {/* Row 1 - Top-center: Subtitle (Inspired by Apulian tradition) */}
+            <div className="col-start-2 row-start-1 text-[12px] leading-[0.8] text-left flex items-end">
+              <p>{home?.heroSubtitleRight || "Inspired by Apulian tradition"}</p>
             </div>
 
             {/* Row 2 - Title (left aligned) */}
@@ -117,7 +117,7 @@ export default async function HomePage() {
               ) : (
                 <div>
                   <p>Piazza Marco Antonio Cavalerio, 21</p>
-                  <p>72100 Brindisi (BR) Italia</p>
+                  <p>72100 Brindisi, Italia</p>
                   <p>studio@yas-arc.com</p>
                 </div>
               )}
@@ -125,7 +125,7 @@ export default async function HomePage() {
           </section>
 
           {/* ── 2. LINKS ─────────────────────────────────────────────── */}
-          <section className="page-px mt-[40px] md:mt-[60px] lg:mt-[80px]">
+          <section className="page-px mt-[80px] md:mt-[120px] lg:mt-[160px]">
             <div className="flex flex-col gap-[25px] md:flex-row md:gap-[15px] md:h-[225px] lg:h-[371px] overflow-hidden">
               {NAV_LINKS.map(({ href, label, img, flexGrow, mobileH }) => (
                 <Link
@@ -147,15 +147,15 @@ export default async function HomePage() {
           </section>
 
           {/* ── 3. APULIA — mobile ───────────────────────────────────── */}
-          <section className="md:hidden relative h-[208px] overflow-hidden">
+          <section className="md:hidden relative h-[208px] overflow-hidden mt-[40px]">
             <h2
               className="absolute font-bold text-black select-none"
-              style={{ fontSize: "128px", lineHeight: "0.67", top: 0, left: "6px", width: "363px" }}
+              style={{ fontSize: "128px", lineHeight: "0.8", top: 0, left: "6px", width: "363px" }}
             >
               Apulia
             </h2>
             <p className="absolute text-[12px] leading-[1.2] text-[#282828]" style={{ top: "3px", left: "109px" }}>
-              Apulian inspiration guide
+              Inspired by
             </p>
             <div className="absolute text-[12px] leading-[1.2] text-[#282828] text-right" style={{ top: "162px", right: "15px" }}>
               <Link href="/progetti?tipologia=Interior Design" className="block hover:opacity-60 transition-opacity">Interior design→</Link>
@@ -165,10 +165,10 @@ export default async function HomePage() {
           </section>
 
           {/* ── 3. APULIA — tablet + desktop ─────────────────────────── */}
-          <section className="hidden md:grid grid-cols-3 grid-rows-[48px_minmax(auto,280px)] gap-y-[8px] gap-x-[32px] md:gap-x-[48px] lg:gap-x-[64px] overflow-hidden page-px md:py-[24px] lg:py-[32px]">
-            {/* Row 1 - Top-left: Subtitle (Apulian inspiration guide) */}
+          <section className="hidden md:grid grid-cols-3 grid-rows-[48px_minmax(auto,280px)] gap-y-[8px] gap-x-[32px] md:gap-x-[48px] lg:gap-x-[64px] overflow-hidden page-px md:py-[24px] lg:py-[32px] mt-[60px] lg:mt-[80px]">
+            {/* Row 1 - Top-left: Subtitle (Inspired by) */}
             <div className="col-start-1 row-start-1 text-[12px] leading-[0.8] text-[#282828] flex items-end">
-              <p>Apulian inspiration guide</p>
+              <p>Inspired by</p>
             </div>
 
             {/* Row 2 - Title (Apulia) left */}
