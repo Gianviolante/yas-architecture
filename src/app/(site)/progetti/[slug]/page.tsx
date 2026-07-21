@@ -57,17 +57,37 @@ export default async function ProgettoPage({ params }: { params: Promise<{ slug:
   return (
     <div className="bg-white">
 
+      {/* ── Breadcrumb ─────────────────────────────────────────────── */}
+      <div className="page-px pt-[84px] md:pt-[104px] pb-[16px]">
+        <div className="flex items-center gap-[8px] text-[12px] leading-[1.2] text-black/60">
+          <Link href="/" className="hover:opacity-100 transition-opacity">Home</Link>
+          <span>/</span>
+          <Link href="/progetti" className="hover:opacity-100 transition-opacity">Progetti</Link>
+          <span>/</span>
+          <span className="text-black">{project.title}</span>
+        </div>
+      </div>
+
       {/* ── Hero image ─────────────────────────────────────────────── */}
-      {/* aspect-ratio invece di altezze fisse per breakpoint: cosí il
-          rapporto resta costante a qualsiasi larghezza (prima diventava
-          molto più larga/bassa sui monitor ultra-wide perché la larghezza
-          cresceva ma l'altezza restava fissa). */}
-      <div className="relative mx-4 md:mx-[30px] mt-[60px] md:mt-[72px] aspect-[16/9] overflow-hidden">
-        {heroUrl ? (
-          <Image src={heroUrl} alt={project.title} fill className="object-cover" priority />
-        ) : (
-          <div className="w-full h-full bg-[#d9d9d9]" />
-        )}
+      {/* Mobile: aspect-square fullwidth | Desktop: aspect-[16/9] with margins */}
+      <div className="relative md:mx-[30px] md:mt-[72px] overflow-hidden md:rounded-lg">
+        {/* Mobile fullwidth square */}
+        <div className="md:hidden relative w-full aspect-square bg-[#d9d9d9]">
+          {heroUrl ? (
+            <Image src={heroUrl} alt={project.title} fill className="object-cover" priority />
+          ) : (
+            <div className="w-full h-full bg-[#d9d9d9]" />
+          )}
+        </div>
+
+        {/* Desktop: standard aspect-[16/9] with margins */}
+        <div className="hidden md:block relative aspect-[16/9]">
+          {heroUrl ? (
+            <Image src={heroUrl} alt={project.title} fill className="object-cover" priority />
+          ) : (
+            <div className="w-full h-full bg-[#d9d9d9]" />
+          )}
+        </div>
       </div>
 
       {/* ── Title ──────────────────────────────────────────────────── */}
