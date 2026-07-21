@@ -1,18 +1,28 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import { motion, AnimatePresence } from "framer-motion";
 
 const txt = "text-[16px] md:text-[12px] leading-[1.2] text-black font-normal";
 
 export default function Footer() {
   const [form, setForm] = useState({ nome: "", cognome: "", email: "", paese: "", privacy: "" });
-  const [sent, setSent] = useState(false);
+  const [showToast, setShowToast] = useState(false);
+
+  // Auto-dismiss toast after 3.5 seconds
+  useEffect(() => {
+    if (showToast) {
+      const timer = setTimeout(() => setShowToast(false), 3500);
+      return () => clearTimeout(timer);
+    }
+  }, [showToast]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setSent(true);
+    setShowToast(true);
+    setForm({ nome: "", cognome: "", email: "", paese: "", privacy: "" });
   };
 
   return (
@@ -96,13 +106,33 @@ export default function Footer() {
         </div>
 
         {/* ── Right block — Contatti (490px) ─────────────────────── */}
-        <div className="w-full lg:w-[490px] lg:shrink-0">
+        <div className="w-full lg:w-[490px] lg:shrink-0 relative">
+          {/* Toast notification */}
+          <AnimatePresence>
+            {showToast && (
+              <motion.div
+                initial={{ opacity: 0, y: 20, x: 0 }}
+                animate={{ opacity: 1, y: 0, x: 0 }}
+                exit={{ opacity: 0, y: 20, x: 0 }}
+                transition={{ duration: 0.3, ease: "easeOut" }}
+                className="fixed bottom-8 right-8 z-50"
+              >
+                <div className="flex items-center gap-3 bg-black text-white px-6 py-4 rounded-lg shadow-lg">
+                  <svg width="20" height="20" viewBox="0 0 20 20" fill="none" className="flex-shrink-0">
+                    <path d="M16.5 5L8.5 15L3.5 10" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                  </svg>
+                  <div>
+                    <p className="text-[14px] font-medium leading-[1.2]">Richiesta inviata</p>
+                    <p className="text-[12px] text-white/70 leading-[1.2]">Ti risponderemo presto</p>
+                  </div>
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
+
           <p className={`${txt} mb-[17px]`}>Contatti</p>
 
-          {sent ? (
-            <p className={`${txt} text-black/50`}>Grazie, ti risponderemo il prima possibile!</p>
-          ) : (
-            <form onSubmit={handleSubmit}>
+          <form onSubmit={handleSubmit}>
               {/* Row 1: Nome (40%) | Cognome (60%) */}
               <div className="border-t border-black flex">
                 <label className="flex-[196] border-r border-black py-[14px] px-1 cursor-text">
@@ -185,7 +215,6 @@ export default function Footer() {
                 </div>
               </div>
             </form>
-          )}
         </div>
       </div>
     </footer>
