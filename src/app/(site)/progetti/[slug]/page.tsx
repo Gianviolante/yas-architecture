@@ -58,8 +58,8 @@ export default async function ProgettoPage({ params }: { params: Promise<{ slug:
     <div className="bg-white">
 
       {/* ── Breadcrumb ─────────────────────────────────────────────── */}
-      <div className="page-px pt-[60px] md:pt-[80px] pb-[16px]">
-        <div className="h-[32px] md:h-auto flex items-start justify-start text-[12px] md:text-[14px] leading-none text-black tracking-wide uppercase mt-[8px] md:mt-0">
+      <div className="page-px pt-[68px] md:pt-[80px] pb-[16px]">
+        <div className="h-[32px] md:h-auto flex items-center justify-start text-[12px] md:text-[14px] leading-none text-black tracking-wide uppercase">
           <Link href="/progetti" className="font-light hover:opacity-60 transition-opacity">Progetti</Link>
           <span className="mx-[8px] font-light">–</span>
           <span className="font-medium">{project.title}</span>
