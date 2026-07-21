@@ -87,3 +87,8 @@ export interface Studio {
   mainImage?:           SanityImage;
   spaziImages?:         SanityImage[];
 }
+
+export interface ProgettiIntro {
+  _id: string;
+  text?: unknown; // PortableText
+}
