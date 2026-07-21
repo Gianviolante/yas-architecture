@@ -462,16 +462,21 @@ function IndexView({
             href={`/progetti/${p.slug.current}`}
             className="block border-b border-black"
           >
-            <div className="flex px-[15px] py-[18px] gap-[8px]">
-              {/* Left: location, title, typology desc, status */}
+            <div className="flex px-[15px] py-[18px] gap-[12px]">
+              {/* Thumbnail */}
+              <div className="relative w-[60px] h-[60px] md:w-[80px] md:h-[80px] shrink-0 overflow-hidden bg-[#d9d9d9]">
+                {p.coverImageUrl ? (
+                  <Image src={p.coverImageUrl} alt={p.title} fill className="object-cover" />
+                ) : (
+                  <div className="w-full h-full bg-[#d9d9d9]" />
+                )}
+              </div>
+              {/* Left: location, title, status */}
               <div className="flex-1 min-w-0">
                 {p.location && (
                   <p className="text-[12px] text-[--foreground] leading-[1.5]">{p.location}</p>
                 )}
                 <p className="text-[24px] text-[--foreground] leading-[1.3] mt-[0]">{p.title}</p>
-                {p.typology && (
-                  <p className="text-[12px] text-[--foreground]/70 leading-[1.5]">{p.typology}</p>
-                )}
                 <p className="text-[12px] text-[--foreground] leading-[1.5]">{p.status}</p>
               </div>
               {/* Right: year top, typology chip bottom */}
