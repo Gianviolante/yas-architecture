@@ -89,7 +89,7 @@ export default async function HomePage() {
           {/* ── 1. HERO — tablet + desktop ───────────────────────────── */}
           <section className="hidden md:grid grid-cols-3 grid-rows-[auto_auto_minmax(80px,auto)] gap-y-[8px] lg:gap-y-[32px] gap-x-[32px] md:gap-x-[48px] lg:gap-x-[64px] overflow-hidden page-px md:py-[24px] lg:py-[32px]">
             {/* Row 1 - Top-left: Subtitle (Studio architettura e design) */}
-            <div className="col-start-1 row-start-1 text-[12px] leading-[0.8] text-black flex items-end">
+            <div className="col-start-1 row-start-1 text-[12px] md:text-[16px] leading-[0.8] text-black flex items-end">
               {home?.heroSubtitleLeft ? (
                 <PortableText value={home.heroSubtitleLeft as Parameters<typeof PortableText>[0]["value"]} components={ptBlock} />
               ) : (
@@ -98,7 +98,7 @@ export default async function HomePage() {
             </div>
 
             {/* Row 1 - Top-center: Subtitle (Inspired by Apulian tradition) */}
-            <div className="col-start-2 row-start-1 text-[12px] leading-[0.8] text-left flex items-end">
+            <div className="col-start-2 row-start-1 text-[12px] md:text-[16px] leading-[0.8] text-left flex items-end">
               <p>{home?.heroSubtitleRight || "Inspired by Apulian tradition"}</p>
             </div>
 
@@ -112,7 +112,7 @@ export default async function HomePage() {
             </div>
 
             {/* Row 3 - Bottom-left: Address */}
-            <div className="col-start-1 row-start-3 text-[12px] leading-[1.2] text-black flex items-end">
+            <div className="col-start-1 row-start-3 text-[12px] md:text-[16px] leading-[1.2] text-black flex items-end">
               {home?.heroAddress ? (
                 <PortableText value={home.heroAddress as Parameters<typeof PortableText>[0]["value"]} components={ptBlock} />
               ) : (
@@ -168,7 +168,7 @@ export default async function HomePage() {
           {/* ── 3. APULIA — tablet + desktop ─────────────────────────── */}
           <section className="hidden md:grid grid-cols-3 grid-rows-[48px_minmax(auto,280px)] gap-y-[8px] gap-x-[32px] md:gap-x-[48px] lg:gap-x-[64px] overflow-hidden page-px md:py-[24px] lg:py-[32px] mt-[24px] lg:mt-[32px]">
             {/* Row 1 - Top-left: Subtitle (Inspired by) */}
-            <div className="col-start-1 row-start-1 text-[12px] leading-[0.8] text-[#282828] flex items-end">
+            <div className="col-start-1 row-start-1 text-[12px] md:text-[16px] leading-[0.8] text-[#282828] flex items-end">
               <p>Inspired by</p>
             </div>
 
@@ -181,8 +181,8 @@ export default async function HomePage() {
               />
             </div>
 
-            {/* Row 1 - Project links right */}
-            <div className="col-start-3 row-start-1 text-[12px] leading-[1.2] text-[#282828] flex items-end justify-end">
+            {/* Row 2 - Project links right */}
+            <div className="col-start-3 row-start-2 text-[12px] md:text-[16px] leading-[1.2] text-[#282828] flex items-start justify-end">
               <div>
                 <ArrowLink href="/progetti?tipologia=Interior Design">Interior design→</ArrowLink>
                 <ArrowLink href="/progetti?tipologia=Architettura">Architecture →</ArrowLink>
