@@ -21,7 +21,7 @@ export default function AnimatedHamburger({ isOpen, onClick }: Props) {
           x2="36"
           y2="15"
           stroke="black"
-          strokeWidth="1.5"
+          strokeWidth="2"
           strokeLinecap="round"
           animate={{
             x1: isOpen ? 10 : 12,
@@ -40,7 +40,7 @@ export default function AnimatedHamburger({ isOpen, onClick }: Props) {
           x2="36"
           y2="33"
           stroke="black"
-          strokeWidth="1.5"
+          strokeWidth="2"
           strokeLinecap="round"
           animate={{
             x1: isOpen ? 38 : 12,
