@@ -4,7 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 
-const txt = "text-[12px] leading-[1.2] text-black font-normal";
+const txt = "text-[16px] md:text-[12px] leading-[1.2] text-black font-normal";
 
 export default function Footer() {
   const [form, setForm] = useState({ nome: "", cognome: "", email: "", paese: "", privacy: "" });
