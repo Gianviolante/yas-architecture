@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState, useCallback } from "react";
 import Image from "next/image";
 import type { GalleryItem } from "@/components/sections/GallerySlider";
-import { animateValue, groppiEase } from "@/lib/utils/animate";
+import { animateValue, groppiEase, easeLinear } from "@/lib/utils/animate";
 
 interface Props {
   items: GalleryItem[];
@@ -70,7 +70,7 @@ export default function Lightbox({ items, initialIndex, onClose }: Props) {
     const from = getTrackX();
     const to   = -clamped * width;
     cancelAnim.current?.();
-    cancelAnim.current = animateValue(from, to, DURATION, groppiEase, setTrackX);
+    cancelAnim.current = animateValue(from, to, DURATION, easeLinear, setTrackX);
   }, [items.length, getTrackX, setTrackX]);
 
   const prev = () => goTo(idxRef.current - 1);
@@ -159,6 +159,7 @@ export default function Lightbox({ items, initialIndex, onClose }: Props) {
   };
   const onPointerMove = (e: React.PointerEvent<HTMLDivElement>) => {
     if (dragStartX.current === null) return;
+    e.preventDefault(); // Block browser back-swipe
     const delta = e.clientX - dragStartX.current;
     const width = wrapperRef.current?.clientWidth ?? 0;
     const from = -idxRef.current * width;
@@ -202,7 +203,7 @@ export default function Lightbox({ items, initialIndex, onClose }: Props) {
       </button>
 
       {/* ── Area immagine — track orizzontale animato ─────────────────── */}
-      <div className="flex-1 flex items-center justify-center px-[60px] md:px-[80px] py-[60px] min-h-0">
+      <div className="flex-1 flex items-center justify-center px-0 md:px-[80px] py-[60px] min-h-0">
         <div
           ref={wrapperRef}
           className="relative w-full h-full max-w-[960px] overflow-hidden select-none"
@@ -242,7 +243,7 @@ export default function Lightbox({ items, initialIndex, onClose }: Props) {
           onMouseLeave={onArrowMouseLeave}
           aria-label="Immagine precedente"
           disabled={!canPrev}
-          className="arrow-nav absolute left-[15px] size-[40px] flex items-center justify-center transition-opacity hover:opacity-0 disabled:opacity-20"
+          className="arrow-nav absolute left-[15px] size-[40px] flex items-center justify-center transition-opacity hover:opacity-0"
         >
           <ArrowLeft />
         </button>
@@ -258,7 +259,7 @@ export default function Lightbox({ items, initialIndex, onClose }: Props) {
           onMouseLeave={onArrowMouseLeave}
           aria-label="Immagine successiva"
           disabled={!canNext}
-          className="arrow-nav absolute right-[15px] size-[40px] flex items-center justify-center transition-opacity hover:opacity-0 disabled:opacity-20"
+          className="arrow-nav absolute right-[15px] size-[40px] flex items-center justify-center transition-opacity hover:opacity-0"
         >
           <ArrowRight />
         </button>
