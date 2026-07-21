@@ -6,6 +6,7 @@ import { usePathname } from "next/navigation";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import { cn } from "@/lib/utils/cn";
+import AnimatedHamburger from "@/components/ui/AnimatedHamburger";
 
 const navLinks = [
   { href: "/progetti", label: "Progetti" },
@@ -118,24 +119,8 @@ export default function Navbar() {
             ))}
           </div>
 
-          {/* Mobile hamburger — icone esatte davidegroppi.com */}
-          <button
-            className="md:hidden p-2 -ml-2 flex items-center justify-center"
-            onClick={() => setMenuOpen((v) => !v)}
-            aria-label={menuOpen ? "Chiudi menu" : "Apri menu"}
-          >
-            {menuOpen ? (
-              <svg width="48" height="48" viewBox="0 0 49 49" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M16 33.1421L34.1421 15" stroke="black" strokeWidth="1.5" strokeLinejoin="round"/>
-                <path d="M16 15L34.1421 33.1421" stroke="black" strokeWidth="1.5" strokeLinejoin="round"/>
-              </svg>
-            ) : (
-              <svg width="48" height="48" viewBox="0 0 49 49" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M15 21H35" stroke="black" strokeWidth="1.5" strokeLinejoin="round"/>
-                <path d="M15 28H35" stroke="black" strokeWidth="1.5" strokeLinejoin="round"/>
-              </svg>
-            )}
-          </button>
+          {/* Mobile hamburger — animated lines */}
+          <AnimatedHamburger isOpen={menuOpen} onClick={() => setMenuOpen((v) => !v)} />
 
           {/* Logo — center absolute */}
           <Link href="/" className="absolute left-1/2 -translate-x-1/2" aria-label="YAS Architecture — Home">
