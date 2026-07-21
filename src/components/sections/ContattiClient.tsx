@@ -153,48 +153,48 @@ export default function ContattiClient() {
               {/* Row 1: Nome | Cognome */}
               <div className="grid grid-cols-2 md:grid-cols-[2fr_3fr] border-t border-black">
                 <div className="py-3 px-1 border-r border-black">
-                  <input type="text" placeholder="Nome" value={form.nome} onChange={set("nome")} autoComplete="given-name" className="w-full bg-transparent text-[12px] leading-[1.2] text-black outline-none placeholder:text-black" />
+                  <input type="text" placeholder="Nome" value={form.nome} onChange={set("nome")} autoComplete="given-name" className="w-full bg-transparent text-[16px] md:text-[12px] leading-[1.2] text-black outline-none placeholder:text-black" />
                 </div>
                 <div className="py-3 px-1">
-                  <input type="text" placeholder="Cognome" value={form.cognome} onChange={set("cognome")} autoComplete="family-name" className="w-full bg-transparent text-[12px] leading-[1.2] text-black outline-none placeholder:text-black" />
+                  <input type="text" placeholder="Cognome" value={form.cognome} onChange={set("cognome")} autoComplete="family-name" className="w-full bg-transparent text-[16px] md:text-[12px] leading-[1.2] text-black outline-none placeholder:text-black" />
                 </div>
               </div>
 
               {/* Row 2: Indirizzo (full width) */}
               <div className="border-t border-black">
                 <div className="py-3 px-1">
-                  <input type="text" placeholder="Indirizzo *" value={form.indirizzo} onChange={set("indirizzo")} autoComplete="street-address" required className="w-full bg-transparent text-[12px] leading-[1.2] text-black outline-none placeholder:text-black" />
+                  <input type="text" placeholder="Indirizzo *" value={form.indirizzo} onChange={set("indirizzo")} autoComplete="street-address" required className="w-full bg-transparent text-[16px] md:text-[12px] leading-[1.2] text-black outline-none placeholder:text-black" />
                 </div>
               </div>
 
               {/* Row 3: Città (full width) */}
               <div className="border-t border-black">
                 <div className="py-3 px-1">
-                  <input type="text" placeholder="Città *" value={form.citta} onChange={set("citta")} autoComplete="address-level2" required className="w-full bg-transparent text-[12px] leading-[1.2] text-black outline-none placeholder:text-black" />
+                  <input type="text" placeholder="Città *" value={form.citta} onChange={set("citta")} autoComplete="address-level2" required className="w-full bg-transparent text-[16px] md:text-[12px] leading-[1.2] text-black outline-none placeholder:text-black" />
                 </div>
               </div>
 
               {/* Row 4: Paese | CAP */}
               <div className="grid grid-cols-[2fr_1fr] md:grid-cols-[3fr_2fr] border-t border-black">
                 <div className="py-3 px-1 border-r border-black">
-                  <input type="text" placeholder="Paese" value={form.paese} onChange={set("paese")} autoComplete="country-name" className="w-full bg-transparent text-[12px] leading-[1.2] text-black outline-none placeholder:text-black" />
+                  <input type="text" placeholder="Paese" value={form.paese} onChange={set("paese")} autoComplete="country-name" className="w-full bg-transparent text-[16px] md:text-[12px] leading-[1.2] text-black outline-none placeholder:text-black" />
                 </div>
                 <div className="py-3 px-1">
-                  <input type="text" placeholder="CAP" value={form.cap} onChange={set("cap")} autoComplete="postal-code" className="w-full bg-transparent text-[12px] leading-[1.2] text-black outline-none placeholder:text-black" />
+                  <input type="text" placeholder="CAP" value={form.cap} onChange={set("cap")} autoComplete="postal-code" className="w-full bg-transparent text-[16px] md:text-[12px] leading-[1.2] text-black outline-none placeholder:text-black" />
                 </div>
               </div>
 
               {/* Row 5: Telefono (full width) */}
               <div className="border-t border-black">
                 <div className="py-3 px-1">
-                  <input type="tel" placeholder="Telefono" value={form.telefono} onChange={set("telefono")} autoComplete="tel" className="w-full bg-transparent text-[12px] leading-[1.2] text-black outline-none placeholder:text-black" />
+                  <input type="tel" placeholder="Telefono" value={form.telefono} onChange={set("telefono")} autoComplete="tel" className="w-full bg-transparent text-[16px] md:text-[12px] leading-[1.2] text-black outline-none placeholder:text-black" />
                 </div>
               </div>
 
               {/* Row 6: E-mail (full width) */}
               <div className="border-t border-b border-black">
                 <div className="py-3 px-1">
-                  <input type="email" placeholder="e-mail *" value={form.email} onChange={set("email")} autoComplete="email" required className="w-full bg-transparent text-[12px] leading-[1.2] text-black outline-none placeholder:text-black" />
+                  <input type="email" placeholder="e-mail *" value={form.email} onChange={set("email")} autoComplete="email" required className="w-full bg-transparent text-[16px] md:text-[12px] leading-[1.2] text-black outline-none placeholder:text-black" />
                 </div>
               </div>
 
@@ -207,7 +207,7 @@ export default function ContattiClient() {
                     value={form.messaggio}
                     onChange={set("messaggio")}
                     rows={4}
-                    className="w-full bg-transparent text-[12px] leading-[1.2] text-black outline-none placeholder:text-black resize-none"
+                    className="w-full bg-transparent text-[16px] md:text-[12px] leading-[1.2] text-black outline-none placeholder:text-black resize-none"
                   />
                 </label>
               </div>
@@ -282,7 +282,7 @@ function Field({
         onChange={onChange}
         required={required}
         autoComplete={autoComplete}
-        className="w-full bg-transparent text-[12px] leading-[1.2] text-black outline-none placeholder:text-black"
+        className="w-full bg-transparent text-[16px] md:text-[12px] leading-[1.2] text-black outline-none placeholder:text-black"
       />
     </label>
   );
