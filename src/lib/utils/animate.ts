@@ -14,6 +14,7 @@ export function makeCubicBezier(x1: number, y1: number, x2: number, y2: number) 
   return (x: number) => sY(solve(x));
 }
 export const groppiEase = makeCubicBezier(0.77, 0, 0.18, 1);
+export const easeLinear = (t: number) => t; // Simple linear easing
 
 // Anima `from → to` chiamando onUpdate ad ogni frame via rAF. Restituisce una funzione cancel.
 export function animateValue(
