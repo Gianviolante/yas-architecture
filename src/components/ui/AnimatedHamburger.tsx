@@ -16,10 +16,10 @@ export default function AnimatedHamburger({ isOpen, onClick }: Props) {
       <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
         {/* Top line → diagonal top-left to bottom-right of X */}
         <motion.line
-          x1="12"
-          y1="15"
-          x2="36"
-          y2="15"
+          x1="8"
+          y1="16"
+          x2="40"
+          y2="16"
           stroke="black"
           strokeWidth="2"
           strokeLinecap="round"
@@ -35,10 +35,10 @@ export default function AnimatedHamburger({ isOpen, onClick }: Props) {
 
         {/* Bottom line → diagonal top-right to bottom-left of X */}
         <motion.line
-          x1="12"
-          y1="33"
-          x2="36"
-          y2="33"
+          x1="8"
+          y1="30"
+          x2="40"
+          y2="30"
           stroke="black"
           strokeWidth="2"
           strokeLinecap="round"
