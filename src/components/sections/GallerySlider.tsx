@@ -289,11 +289,11 @@ export default function GallerySlider({ items, projectTitle, compact = false, in
 
   return (
     <div>
-      {/* Wrapper: overflow-hidden → taglia il track fuori viewport */}
-      {/* Track:   transform       → il DIV fisico scorre orizzontalmente */}
+      {/* Wrapper: overflow-hidden → taglia il track fuori viewport, full width on mobile */}
+      {/* Track:   transform       → il DIV fisico scorre orizzontalmente con smooth transition */}
       <div
         ref={wrapperRef}
-        className={`select-none relative${isPointerFine ? " overflow-hidden" : ""}`}
+        className={`select-none relative w-screen -mx-[calc((100vw-100%)/2)]${isPointerFine ? " overflow-hidden" : ""}`}
         onMouseMove={isPointerFine ? onMouseMove : undefined}
         onMouseLeave={isPointerFine ? onMouseLeave : undefined}
         onPointerDown={isPointerFine ? onPointerDown : undefined}
@@ -306,7 +306,9 @@ export default function GallerySlider({ items, projectTitle, compact = false, in
           className={`flex${!isPointerFine ? " overflow-x-auto no-scrollbar" : ""}`}
           style={{
             paddingLeft: `${pl}px`,
+            paddingRight: `${pl}px`,
             gap: `${gap}px`,
+            transition: "transform 300ms cubic-bezier(0.25, 0.46, 0.45, 0.94)",
             ...(isPointerFine
               ? { willChange: "transform" }
               : { scrollbarWidth: "none" }),
