@@ -3,6 +3,7 @@
 import { useState, useMemo, useEffect, useRef } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import { motion } from "framer-motion";
 import { PortableText } from "@portabletext/react";
 import type { Project, Typology, ProjectStatus, ProgettiIntro } from "@/lib/sanity/types";
 import ProjectsSlider from "@/components/sections/ProjectsSlider";
@@ -472,14 +473,27 @@ function IndexView({
             className="block border-b border-black"
           >
             <div className="flex px-[15px] py-[18px] gap-[12px]">
-              {/* Thumbnail */}
-              <div className="relative w-[60px] h-[60px] md:w-[80px] md:h-[80px] shrink-0 overflow-hidden bg-[#d9d9d9]">
+              {/* Thumbnail with shine + zoom effect */}
+              <motion.div
+                className="relative w-[60px] h-[60px] md:w-[80px] md:h-[80px] shrink-0 overflow-hidden bg-[#d9d9d9] cursor-pointer group"
+                whileHover={{ scale: 1.08 }}
+                whileTap={{ scale: 1.08 }}
+                transition={{ duration: 0.3, ease: "easeOut" }}
+              >
                 {p.coverImageUrl ? (
                   <Image src={p.coverImageUrl} alt={p.title} fill className="object-cover" />
                 ) : (
                   <div className="w-full h-full bg-[#d9d9d9]" />
                 )}
-              </div>
+                {/* Shine effect overlay */}
+                <motion.div
+                  className="absolute inset-0 bg-gradient-to-r from-transparent via-white to-transparent opacity-0 group-hover:opacity-30 group-active:opacity-30"
+                  initial={{ x: "-100%" }}
+                  whileHover={{ x: "100%" }}
+                  whileTap={{ x: "100%" }}
+                  transition={{ duration: 0.6, ease: "easeInOut" }}
+                />
+              </motion.div>
               {/* Left: location, title, status */}
               <div className="flex-1 min-w-0">
                 {p.location && (
