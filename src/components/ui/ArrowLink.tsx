@@ -12,12 +12,11 @@ interface Props {
 
 export default function ArrowLink({ href, children, className = "" }: Props) {
   return (
-    <Link href={href} className={`group block hover:opacity-60 transition-opacity ${className}`}>
+    <Link href={href} className={`block ${className}`}>
       <motion.span
-        initial={{ opacity: 0.6 }}
-        whileHover={{ opacity: 1, x: 2 }}
+        whileHover={{ x: 2 }}
         transition={{ duration: 0.3, ease: "easeOut" }}
-        className="inline-block"
+        className="inline-block text-black"
       >
         {children}
       </motion.span>
