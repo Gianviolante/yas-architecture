@@ -107,20 +107,30 @@ export default function Navbar() {
           {/* Desktop left nav */}
           <div className="hidden md:flex items-center gap-[20px]">
             {navLinks.map(({ href, label }) => (
-              <Link
-                key={href}
-                href={href}
-                className={cn(
-                  "text-[14px] leading-normal transition-colors duration-200",
-                  isDisabled(href)
-                    ? "text-[#d9d9d9] cursor-default pointer-events-none"
-                    : isActive(href)
-                      ? "text-[#d9d9d9] hover:text-[#1a1a1a]"
-                      : "text-[#1a1a1a] hover:text-[#d9d9d9]"
+              <motion.div key={href} className="relative">
+                <Link
+                  href={href}
+                  className={cn(
+                    "text-[14px] leading-normal transition-colors duration-200 block py-1",
+                    isDisabled(href)
+                      ? "text-[#d9d9d9] cursor-default pointer-events-none"
+                      : isActive(href)
+                        ? "text-[#d9d9d9] hover:text-[#1a1a1a]"
+                        : "text-[#1a1a1a] hover:text-[#d9d9d9]"
+                  )}
+                >
+                  {label}
+                </Link>
+                {/* Underline animation */}
+                {!isDisabled(href) && (
+                  <motion.div
+                    className="absolute bottom-0 left-0 h-[1px] bg-current"
+                    initial={{ width: "0%" }}
+                    whileHover={{ width: "100%" }}
+                    transition={{ duration: 0.3, ease: "easeOut" }}
+                  />
                 )}
-              >
-                {label}
-              </Link>
+              </motion.div>
             ))}
           </div>
 
