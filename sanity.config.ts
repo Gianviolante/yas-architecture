@@ -1,6 +1,7 @@
 import { defineConfig } from "sanity";
 import { structureTool } from "sanity/structure";
 import { visionTool } from "@sanity/vision";
+import { vercelProtectionBypass } from "@sanity/vercel-protection-bypass";
 import { schemaTypes } from "./src/sanity/schemas";
 
 export default defineConfig({
@@ -10,6 +11,7 @@ export default defineConfig({
   projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID!,
   dataset: process.env.NEXT_PUBLIC_SANITY_DATASET ?? "production",
   plugins: [
+    vercelProtectionBypass(),
     structureTool({
       structure: (S) =>
         S.list()
