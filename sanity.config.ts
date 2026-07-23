@@ -29,6 +29,9 @@ export default defineConfig({
             S.listItem().title("Home (contenuti)").schemaType("home").child(
               S.document().schemaType("home").documentId("home-singleton")
             ),
+            S.listItem().title("Progetti — Intro").schemaType("progettiIntro").child(
+              S.document().schemaType("progettiIntro").documentId("progetti-intro")
+            ),
             S.listItem().title("Eventi").schemaType("event").child(S.documentTypeList("event")),
           ]),
     }),
