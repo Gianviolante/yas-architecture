@@ -222,9 +222,9 @@ export default function ProgettiClient({ projects, progettiIntro, initialTypolog
 
               {/* Active filters summary */}
               <div className="flex items-center justify-between px-[15px] min-h-[22px] pb-2">
-                <p className="text-[12px] leading-[22px] text-[--foreground]">
-                  <span>Filtra per: </span>
-                  {hasFilters && <span className="text-[--foreground-muted]">{activeLabel}</span>}
+                <p className="text-[12px] leading-[22px]">
+                  <span className="text-[--foreground]">Filtra per: </span>
+                  {hasFilters && <span className="text-[#D9D9D9]">{activeLabel}</span>}
                 </p>
                 {hasFilters && (
                   <button
@@ -277,9 +277,9 @@ export default function ProgettiClient({ projects, progettiIntro, initialTypolog
             </div>
           </div>
           <div className="flex items-center justify-between mt-3 min-h-[22px]">
-            <p className="text-[12px] leading-[22px] text-[--foreground]">
+            <p className="text-[12px] leading-[22px] text-[#D9D9D9]">
               <span>Filtra per: </span>
-              {hasFilters && <span className="text-[--foreground-muted]">{activeLabel}</span>}
+              {hasFilters && <span className="text-[#D9D9D9]">{activeLabel}</span>}
             </p>
             {hasFilters && (
               <button onClick={reset} className="flex items-center gap-1 text-[12px] leading-[22px] text-[--foreground] hover:opacity-50 transition-opacity">
@@ -324,9 +324,9 @@ export default function ProgettiClient({ projects, progettiIntro, initialTypolog
             </div>
           </div>
           <div className="flex items-center justify-between mt-3 min-h-[22px]">
-            <p className="text-[12px] leading-[22px] text-[--foreground]">
+            <p className="text-[12px] leading-[22px] text-[#D9D9D9]">
               <span>Filtra per: </span>
-              {hasFilters && <span className="text-[--foreground-muted]">{activeLabel}</span>}
+              {hasFilters && <span className="text-[#D9D9D9]">{activeLabel}</span>}
             </p>
             {hasFilters && (
               <button onClick={reset} className="flex items-center gap-1 text-[12px] leading-[22px] text-[--foreground] hover:opacity-50 transition-opacity">
