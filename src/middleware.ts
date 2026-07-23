@@ -26,6 +26,14 @@ export function middleware(request: NextRequest) {
     maxAge: CSRF_TOKEN_MAX_AGE,
   });
 
+  // Allow Sanity Studio on /admin path
+  if (request.nextUrl.pathname.startsWith("/admin")) {
+    response.headers.set(
+      "Content-Security-Policy",
+      "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://core.sanity.com https://cdn.sanity.io; connect-src 'self' https://*.sanity.io https://api.sanity.io; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://fonts.gstatic.com; img-src 'self' data: https:; font-src 'self' https://fonts.gstatic.com;"
+    );
+  }
+
   return response;
 }
 
