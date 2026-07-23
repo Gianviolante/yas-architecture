@@ -166,28 +166,28 @@ export default async function HomePage() {
           </section>
 
           {/* ── 3. APULIA — tablet + desktop ─────────────────────────── */}
-          <section className="hidden md:grid grid-cols-3 grid-rows-[48px_minmax(auto,280px)] gap-y-[8px] gap-x-[32px] md:gap-x-[48px] lg:gap-x-[64px] overflow-hidden page-px md:py-[24px] lg:py-[32px] mt-[24px] lg:mt-[32px]">
+          <section className="hidden md:grid grid-cols-2 gap-[153px] page-px py-[32px] overflow-hidden mt-[24px] lg:mt-[32px]">
             {/* Row 1 - Top-left: Subtitle (Inspired by) */}
-            <div className="col-start-1 row-start-1 text-[12px] md:text-[16px] leading-[0.8] text-[#282828] flex items-end">
+            <div className="col-start-1 row-start-1 text-[12px] leading-[0.8] text-gray-900">
               <p>Inspired by</p>
             </div>
 
-            {/* Row 2 - Title (Apulia) left */}
-            <div className="col-start-1 row-start-2 flex items-center">
-              <AnimatedTitle
-                text="Apulia"
-                className="font-bold text-black leading-none whitespace-nowrap select-none"
-                style={{ fontSize: "clamp(8rem,19.8vw,285px)" }}
-              />
-            </div>
-
-            {/* Row 2 - Project links right */}
-            <div className="col-start-3 row-start-2 text-[12px] md:text-[16px] leading-[1.2] text-[#282828] flex items-start justify-end">
+            {/* Row 1-2 - Right: Project links (starts at row 1) */}
+            <div className="col-start-2 row-start-1 text-[12px] leading-[1.2] text-gray-900 flex flex-col justify-start">
               <div>
                 <ArrowLink href="/progetti?tipologia=Interior Design">Interior design→</ArrowLink>
                 <ArrowLink href="/progetti?tipologia=Architettura">Architecture →</ArrowLink>
                 <ArrowLink href="/progetti">Tutti i progetti→</ArrowLink>
               </div>
+            </div>
+
+            {/* Row 2 - Title (Apulia) left */}
+            <div className="col-start-1 row-start-2">
+              <AnimatedTitle
+                text="Apulia"
+                className="font-bold text-black leading-none whitespace-nowrap select-none"
+                style={{ fontSize: "clamp(8rem,19.8vw,285px)" }}
+              />
             </div>
           </section>
 
