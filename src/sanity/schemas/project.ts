@@ -11,7 +11,8 @@ export const projectSchema = defineType({
     defineField({ name: "year", title: "Anno", type: "number" }),
     defineField({ name: "area", title: "Area (mq)", type: "number" }),
     defineField({
-      name: "typology", title: "Tipologia", type: "string",
+      name: "typology", title: "Tipologia", type: "array",
+      of: [{ type: "string" }],
       options: { list: ["Architettura", "Interior Design", "Residenziale", "Commerciale", "Altro"] },
       validation: (r) => r.required(),
     }),
