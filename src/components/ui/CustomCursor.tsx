@@ -85,6 +85,9 @@ export default function CustomCursor() {
   const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    // Disable custom cursor on /admin (Sanity Studio)
+    if (window.location.pathname.startsWith("/admin")) return;
+
     const _el = ref.current;
     if (!_el || !window.matchMedia("(pointer: fine)").matches) return;
     const el = _el;
