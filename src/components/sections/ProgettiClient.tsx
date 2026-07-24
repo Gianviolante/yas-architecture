@@ -12,7 +12,6 @@ const AREA_FILTERS: { label: string; value: Typology | "all" }[] = [
   { label: "Tutti i progetti", value: "all" },
   { label: "Architettura",     value: "Architettura" },
   { label: "Interior design",  value: "Interior Design" },
-  { label: "Opere pubbliche",  value: "Opere pubbliche" },
 ];
 const CAT_FILTERS: { label: string; value: Typology }[] = [
   { label: "Residenziali", value: "Residenziale" },
