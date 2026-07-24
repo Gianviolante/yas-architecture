@@ -120,7 +120,7 @@ export default function Lightbox({ items, initialIndex, onClose }: Props) {
     nextRef.current?.setAttribute("cursor-type", "next");
   }, []);
 
-  const onWheel = (e: React.WheelEvent<HTMLDivElement>) => {
+  const onWheelNative = (e: WheelEvent) => {
     e.preventDefault();
     const absX = Math.abs(e.deltaX);
     const absY = Math.abs(e.deltaY);
@@ -139,6 +139,14 @@ export default function Lightbox({ items, initialIndex, onClose }: Props) {
       tryPrev();
     }
   };
+
+  // Listener manuale con {passive: false} per catturare wheel prima del browser
+  useEffect(() => {
+    const wrapper = wrapperRef.current;
+    if (!wrapper) return;
+    wrapper.addEventListener("wheel", onWheelNative, { passive: false });
+    return () => wrapper.removeEventListener("wheel", onWheelNative);
+  }, []);
 
   const onPointerDown = (e: React.PointerEvent<HTMLDivElement>) => {
     dragStartX.current = e.clientX;
@@ -187,10 +195,8 @@ export default function Lightbox({ items, initialIndex, onClose }: Props) {
         <div
           ref={wrapperRef}
           className="relative w-full h-full max-w-[960px] overflow-hidden select-none"
-          style={{ touchAction: "manipulation" }}
           onMouseEnter={onMouseEnter}
           onMouseLeave={onMouseLeave}
-          onWheel={onWheel}
           onPointerDown={onPointerDown}
           onPointerMove={onPointerMove}
           onPointerUp={onPointerUp}

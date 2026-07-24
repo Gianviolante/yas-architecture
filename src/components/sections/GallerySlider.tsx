@@ -284,6 +284,34 @@ export default function GallerySlider({ items, projectTitle, compact = false, in
 
   const onMouseLeave = () => wrapperRef.current?.removeAttribute("cursor-type");
 
+  // Listener manuale con {passive: false} per catturare wheel prima del browser
+  useEffect(() => {
+    const wrapper = wrapperRef.current;
+    if (!wrapper || !isPointerFine) return;
+
+    const onWheelNative = (e: WheelEvent) => {
+      if (wheelActive.current || isDragging.current) return;
+      const absX  = Math.abs(e.deltaX);
+      const absY  = Math.abs(e.deltaY);
+      const delta = absX >= absY ? e.deltaX : e.deltaY;
+      const cur   = currentRef.current;
+
+      e.preventDefault();
+      clearTimeout(wheelTimer.current);
+      wheelTimer.current = setTimeout(() => { wheelActive.current = false; }, WHEEL_WAIT);
+
+      if (wheelActive.current) return;
+      wheelActive.current = true;
+
+      if (Math.abs(delta) < 10) return;
+      if (delta < 0) goTo(cur + 1);
+      else           goTo(cur - 1);
+    };
+
+    wrapper.addEventListener("wheel", onWheelNative, { passive: false });
+    return () => wrapper.removeEventListener("wheel", onWheelNative);
+  }, [goTo, isPointerFine]);
+
   const hasImages     = items.length > 0;
   const displayCount  = hasImages ? items.length : 3;
   const activeCaption = hasImages ? items[current]?.caption : undefined;
@@ -295,7 +323,6 @@ export default function GallerySlider({ items, projectTitle, compact = false, in
       <div
         ref={wrapperRef}
         className={`select-none relative w-screen -mx-[calc((100vw-100%)/2)]${isPointerFine ? " overflow-hidden" : ""}`}
-        style={{ touchAction: "manipulation" }}
         onMouseMove={isPointerFine ? onMouseMove : undefined}
         onMouseLeave={isPointerFine ? onMouseLeave : undefined}
         onPointerDown={isPointerFine ? onPointerDown : undefined}
