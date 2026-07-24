@@ -16,8 +16,8 @@ const AREA_FILTERS: { label: string; value: Typology | "all" }[] = [
 const CAT_FILTERS: { label: string; value: Typology }[] = [
   { label: "Residenziali", value: "Residenziale" },
   { label: "Commerciali",  value: "Commerciale" },
-  { label: "Altro",        value: "Altro" },
   { label: "Opere pubbliche", value: "Opere pubbliche" },
+  { label: "Altro",        value: "Altro" },
 ];
 const STATO_FILTERS: { label: string; value: ProjectStatus }[] = [
   { label: "In corso",   value: "In corso" },
