@@ -60,7 +60,7 @@ export default async function HomePage() {
 
             {/* big title */}
             <AnimatedTitle
-              text={home?.heroTitleMain || "yas-arch"}
+              text={home?.heroTitleMain || "yas-arc"}
               className="absolute font-bold text-black select-none"
               style={{ fontSize: "clamp(85px, 42vw, 160px)", lineHeight: "0.8", top: "28px", left: "12px", width: "100%", paddingRight: "16px" }}
             />
@@ -105,7 +105,7 @@ export default async function HomePage() {
             {/* Row 2 - Title (left aligned) */}
             <div className="col-start-1 row-start-2 flex items-center">
               <AnimatedTitle
-                text={home?.heroTitleMain || "yas-arch"}
+                text={home?.heroTitleMain || "yas-arc"}
                 className="font-bold text-black leading-none whitespace-nowrap select-none"
                 style={{ fontSize: "clamp(8rem,19.8vw,285px)" }}
               />

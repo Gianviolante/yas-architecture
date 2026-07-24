@@ -72,7 +72,7 @@ export interface HomeNavLink {
 
 export interface Home {
   // Hero section
-  heroTitleMain?:     string;  // "yas-arch"
+  heroTitleMain?:     string;  // "yas-arc"
   heroSubtitleLeft?:  unknown; // PortableText "Studio architettura e design"
   heroSubtitleRight?: string;  // "Apulian inspiration guide"
   heroAddress?:       unknown; // PortableText (Via Dè Gracchi, 47, ecc.)

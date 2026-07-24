@@ -16,7 +16,7 @@ export const homeSchema = defineType({
     defineField({
       name: "heroTitleMain",
       title: "Hero: Titolo principale",
-      description: "Es. 'yas-arch' — testo grande della sezione hero",
+      description: "Es. 'yas-arc' — testo grande della sezione hero",
       type: "string",
     }),
     defineField({

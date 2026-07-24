@@ -123,7 +123,7 @@ export async function sendEmailNotification(incident: SecurityIncident, emails: 
 
   try {
     await resend.emails.send({
-      from: 'ELVIS Security <security@yas-arch.com>',
+      from: 'ELVIS Security <security@yas-arc.com>',
       to: emails,
       subject: `${severityEmoji[incident.severity]} [ELVIS] ${incident.type} - ${incident.severity.toUpperCase()}`,
       html: `
