@@ -5,25 +5,67 @@ import Link from "next/link";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import Button from "@/components/ui/Button";
+import { getCsrfToken } from "@/lib/utils/csrf";
 
 const txt = "text-[16px] md:text-[12px] leading-[1.2] text-black font-normal";
 
 export default function Footer() {
-  const [form, setForm] = useState({ nome: "", cognome: "", email: "", paese: "", privacy: "" });
+  const [form, setForm] = useState({ nome: "", cognome: "", email: "", messaggio: "", paese: "", privacy: "", telefono: "" });
   const [showToast, setShowToast] = useState(false);
+  const [toastError, setToastError] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   // Auto-dismiss toast after 3.5 seconds
   useEffect(() => {
-    if (showToast) {
-      const timer = setTimeout(() => setShowToast(false), 3500);
+    if (showToast || toastError) {
+      const timer = setTimeout(() => {
+        setShowToast(false);
+        setToastError(false);
+      }, 3500);
       return () => clearTimeout(timer);
     }
-  }, [showToast]);
+  }, [showToast, toastError]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setShowToast(true);
-    setForm({ nome: "", cognome: "", email: "", paese: "", privacy: "" });
+    if (!form.email || !form.messaggio) {
+      setToastError(true);
+      return;
+    }
+    if (form.privacy !== "acconsento") {
+      setToastError(true);
+      return;
+    }
+
+    setIsLoading(true);
+    try {
+      const csrfToken = getCsrfToken();
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          nome: form.nome,
+          cognome: form.cognome,
+          email: form.email,
+          messaggio: form.messaggio,
+          telefono: form.telefono,
+          csrfToken,
+        }),
+      });
+
+      if (!res.ok) {
+        const error = await res.json();
+        setToastError(true);
+        return;
+      }
+
+      setShowToast(true);
+      setForm({ nome: "", cognome: "", email: "", messaggio: "", paese: "", privacy: "", telefono: "" });
+    } catch {
+      setToastError(true);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -130,6 +172,25 @@ export default function Footer() {
                 </div>
               </motion.div>
             )}
+            {toastError && (
+              <motion.div
+                initial={{ opacity: 0, y: 20, x: 0 }}
+                animate={{ opacity: 1, y: 0, x: 0 }}
+                exit={{ opacity: 0, y: 20, x: 0 }}
+                transition={{ duration: 0.3, ease: "easeOut" }}
+                className="fixed bottom-8 right-8 z-50"
+              >
+                <div className="flex items-center gap-3 bg-red-600 text-white px-6 py-4 rounded-lg shadow-lg">
+                  <svg width="20" height="20" viewBox="0 0 20 20" fill="none" className="flex-shrink-0">
+                    <path d="M10 4v6m0 4v.01" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                  </svg>
+                  <div>
+                    <p className="text-[14px] font-medium leading-[1.2]">Errore invio</p>
+                    <p className="text-[12px] text-white/70 leading-[1.2]">Controlla i dati e riprova</p>
+                  </div>
+                </div>
+              </motion.div>
+            )}
           </AnimatePresence>
 
           <p className={`${txt} mb-[17px]`}>Contatti</p>
@@ -159,8 +220,8 @@ export default function Footer() {
                 </label>
               </div>
 
-              {/* Row 2: e-mail (60%) | Paese (40%) */}
-              <div className="border-t border-b border-black flex">
+              {/* Row 2: e-mail (60%) | Telefono (40%) */}
+              <div className="border-t border-black flex">
                 <label className="flex-[294] border-r border-black py-[14px] px-1 cursor-text">
                   <input
                     type="email"
@@ -174,12 +235,26 @@ export default function Footer() {
                 </label>
                 <label className="flex-[196] py-[14px] px-1 cursor-text">
                   <input
-                    type="text"
-                    placeholder="Paese"
-                    value={form.paese}
-                    onChange={(e) => setForm({ ...form, paese: e.target.value })}
-                    autoComplete="country-name"
+                    type="tel"
+                    placeholder="Telefono"
+                    value={form.telefono}
+                    onChange={(e) => setForm({ ...form, telefono: e.target.value })}
+                    autoComplete="tel"
                     className={`${txt} w-full bg-transparent outline-none placeholder:text-black`}
+                  />
+                </label>
+              </div>
+
+              {/* Row 3: Messaggio textarea */}
+              <div className="border-t border-b border-black">
+                <label className="block py-[14px] px-1 cursor-text">
+                  <textarea
+                    placeholder="Messaggio*"
+                    required
+                    value={form.messaggio}
+                    onChange={(e) => setForm({ ...form, messaggio: e.target.value })}
+                    className={`${txt} w-full bg-transparent outline-none placeholder:text-black resize-none`}
+                    rows={4}
                   />
                 </label>
               </div>
@@ -210,9 +285,10 @@ export default function Footer() {
                 <div className="flex justify-end">
                   <button
                     type="submit"
-                    className="text-[16px] leading-[22px] text-[--foreground] px-[24px] py-[10px] rounded-[100px] bg-[var(--surface-muted)] hover:bg-[--border] transition-colors duration-200"
+                    disabled={isLoading}
+                    className="text-[16px] leading-[22px] text-[--foreground] px-[24px] py-[10px] rounded-[100px] bg-[var(--surface-muted)] hover:bg-[--border] transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
                   >
-                    Invia
+                    {isLoading ? "Invio in corso..." : "Invia"}
                   </button>
                 </div>
               </div>
