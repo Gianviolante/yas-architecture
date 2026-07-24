@@ -12,6 +12,7 @@ const AREA_FILTERS: { label: string; value: Typology | "all" }[] = [
   { label: "Tutti i progetti", value: "all" },
   { label: "Architettura",     value: "Architettura" },
   { label: "Interior design",  value: "Interior Design" },
+  { label: "Opere pubbliche",  value: "Opere pubbliche" },
 ];
 const CAT_FILTERS: { label: string; value: Typology }[] = [
   { label: "Residenziali", value: "Residenziale" },
@@ -224,8 +225,8 @@ export default function ProgettiClient({ projects, progettiIntro, initialTypolog
               {/* Active filters summary */}
               <div className="flex items-center justify-between px-[15px] min-h-[22px] pb-2">
                 <p className="text-[12px] leading-[22px]">
-                  <span className="text-[--foreground]">Filtra per: </span>
-                  {hasFilters && <span className="text-[#D9D9D9]">{activeLabel}</span>}
+                  <span className="text-black">Filtra per: </span>
+                  {hasFilters && <span className="text-black">{activeLabel}</span>}
                 </p>
                 {hasFilters && (
                   <button
@@ -278,9 +279,9 @@ export default function ProgettiClient({ projects, progettiIntro, initialTypolog
             </div>
           </div>
           <div className="flex items-center justify-between mt-3 min-h-[22px]">
-            <p className="text-[12px] leading-[22px] text-[#D9D9D9]">
+            <p className="text-[12px] leading-[22px] text-black">
               <span>Filtra per: </span>
-              {hasFilters && <span className="text-[#D9D9D9]">{activeLabel}</span>}
+              {hasFilters && <span className="text-black">{activeLabel}</span>}
             </p>
             {hasFilters && (
               <button onClick={reset} className="flex items-center gap-1 text-[12px] leading-[22px] text-[--foreground] hover:opacity-50 transition-opacity">
@@ -325,9 +326,9 @@ export default function ProgettiClient({ projects, progettiIntro, initialTypolog
             </div>
           </div>
           <div className="flex items-center justify-between mt-3 min-h-[22px]">
-            <p className="text-[12px] leading-[22px] text-[#D9D9D9]">
+            <p className="text-[12px] leading-[22px] text-black">
               <span>Filtra per: </span>
-              {hasFilters && <span className="text-[#D9D9D9]">{activeLabel}</span>}
+              {hasFilters && <span className="text-black">{activeLabel}</span>}
             </p>
             {hasFilters && (
               <button onClick={reset} className="flex items-center gap-1 text-[12px] leading-[22px] text-[--foreground] hover:opacity-50 transition-opacity">
