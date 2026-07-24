@@ -69,12 +69,16 @@ export default function ContattiClient() {
     }, 300);
   };
 
-  // Autocomplete indirizzo via Nominatim (filtrato per paese selezionato)
+  // Store full address data for autocomplete matching
+  const [indirizzoData, setIndirizzoData] = useState<any[]>([]);
+
+  // Autocomplete indirizzo via Nominatim con geolocalizzazione intelligente
   const handleIndirizzoChange = (value: string) => {
     setForm((f) => ({ ...f, indirizzo: value }));
 
     if (!value.trim()) {
       setIndirizzoOptions([]);
+      setIndirizzoData([]);
       setShowIndirizzoDropdown(false);
       return;
     }
@@ -96,11 +100,30 @@ export default function ContattiClient() {
         const data = await res.json();
         const options = data.map((item: any) => item.address?.road || item.name || item.display_name).filter((n: any) => n).slice(0, 5);
         setIndirizzoOptions([...new Set(options)]);
+        setIndirizzoData(data.slice(0, 5)); // Store full data for autocomplete
         setShowIndirizzoDropdown(true);
       } catch {
         setIndirizzoOptions([]);
+        setIndirizzoData([]);
       }
     }, 300);
+  };
+
+  // Autocomplete indirizzo con auto-fill città, CAP, paese
+  const handleSelectIndirizzo = (idx: number) => {
+    const selectedData = indirizzoData[idx];
+    if (!selectedData) return;
+
+    const address = selectedData.address || {};
+    setForm((f) => ({
+      ...f,
+      indirizzo: selectedData.address?.road || selectedData.name || selectedData.display_name,
+      citta: address.city || address.town || f.citta,
+      cap: address.postcode || f.cap,
+      paese: address.country || f.paese,
+    }));
+    setShowIndirizzoDropdown(false);
+    setIndirizzoOptions([]);
   };
 
   // Autocomplete città via Nominatim (filtrato per paese selezionato)
@@ -320,11 +343,7 @@ export default function ContattiClient() {
                       {indirizzoOptions.map((option, idx) => (
                         <div
                           key={idx}
-                          onClick={() => {
-                            setForm((f) => ({ ...f, indirizzo: option }));
-                            setShowIndirizzoDropdown(false);
-                            setIndirizzoOptions([]);
-                          }}
+                          onClick={() => handleSelectIndirizzo(idx)}
                           className="px-2 py-2 text-[16px] md:text-[12px] leading-[1.2] text-black cursor-pointer hover:bg-gray-100 border-b border-gray-200 last:border-b-0"
                         >
                           {option}
