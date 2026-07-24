@@ -11,8 +11,8 @@ const SOCIAL = [
 ];
 
 const INITIAL_FORM_STATE = {
-  nome: "", cognome: "", indirizzo: "", paese: "",
-  citta: "", cap: "", email: "", telefono: "",
+  nome: "", cognome: "", paese: "",
+  citta: "", email: "", telefono: "",
   messaggio: "", privacy: "",
 };
 
@@ -23,14 +23,8 @@ export default function ContattiClient() {
   const [paeseOptions, setPaeseOptions] = useState<string[]>([]);
   const [showPaeseDropdown, setShowPaeseDropdown] = useState(false);
 
-  const [indirizzoOptions, setIndirizzoOptions] = useState<string[]>([]);
-  const [showIndirizzoDropdown, setShowIndirizzoDropdown] = useState(false);
-
   const [cittaOptions, setCittaOptions] = useState<string[]>([]);
   const [showCittaDropdown, setShowCittaDropdown] = useState(false);
-
-  const [capOptions, setCapOptions] = useState<string[]>([]);
-  const [showCapDropdown, setShowCapDropdown] = useState(false);
 
   const autocompleteTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
@@ -69,64 +63,6 @@ export default function ContattiClient() {
     }, 300);
   };
 
-  // Store full address data for autocomplete matching
-  const [indirizzoData, setIndirizzoData] = useState<any[]>([]);
-
-  // Autocomplete indirizzo via Nominatim con geolocalizzazione intelligente
-  const handleIndirizzoChange = (value: string) => {
-    setForm((f) => ({ ...f, indirizzo: value }));
-
-    if (!value.trim()) {
-      setIndirizzoOptions([]);
-      setIndirizzoData([]);
-      setShowIndirizzoDropdown(false);
-      return;
-    }
-
-    if (autocompleteTimeoutRef.current) {
-      clearTimeout(autocompleteTimeoutRef.current);
-    }
-
-    autocompleteTimeoutRef.current = setTimeout(async () => {
-      try {
-        const parts = [value];
-        if (form.citta) parts.push(form.citta);
-        if (form.paese) parts.push(form.paese);
-        const query = parts.join(", ");
-
-        const res = await fetch(
-          `https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(query)}&format=json&limit=5`
-        );
-        const data = await res.json().then(d => d.slice(0, 5));
-        const options = data.map((item: any) => item.address?.road || item.name || item.display_name).filter((n: any) => n);
-        // Keep data and options in sync - no deduplication
-        setIndirizzoOptions(options);
-        setIndirizzoData(data);
-        setShowIndirizzoDropdown(true);
-      } catch {
-        setIndirizzoOptions([]);
-        setIndirizzoData([]);
-      }
-    }, 300);
-  };
-
-  // Autocomplete indirizzo con auto-fill città, CAP, paese
-  const handleSelectIndirizzo = (idx: number) => {
-    const selectedData = indirizzoData[idx];
-    if (!selectedData) return;
-
-    const address = selectedData.address || {};
-    setForm((f) => ({
-      ...f,
-      indirizzo: selectedData.address?.road || selectedData.name || selectedData.display_name,
-      citta: address.city || address.town || f.citta,
-      cap: address.postcode || f.cap,
-      paese: address.country || f.paese,
-    }));
-    setShowIndirizzoDropdown(false);
-    setIndirizzoOptions([]);
-  };
-
   // Autocomplete città via Nominatim (filtrato per paese selezionato)
   const handleCittaChange = (value: string) => {
     setForm((f) => ({ ...f, citta: value }));
@@ -153,40 +89,6 @@ export default function ContattiClient() {
         setShowCittaDropdown(true);
       } catch {
         setCittaOptions([]);
-      }
-    }, 300);
-  };
-
-  // Autocomplete CAP via Nominatim (basato su città e paese selezionati)
-  const handleCapChange = (value: string) => {
-    setForm((f) => ({ ...f, cap: value }));
-
-    if (!value.trim()) {
-      setCapOptions([]);
-      setShowCapDropdown(false);
-      return;
-    }
-
-    if (autocompleteTimeoutRef.current) {
-      clearTimeout(autocompleteTimeoutRef.current);
-    }
-
-    autocompleteTimeoutRef.current = setTimeout(async () => {
-      try {
-        const parts = [];
-        if (form.citta) parts.push(form.citta);
-        if (form.paese) parts.push(form.paese);
-        const query = parts.length > 0 ? parts.join(", ") : value;
-
-        const res = await fetch(
-          `https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(query)}&format=json&limit=1`
-        );
-        const data = await res.json();
-        const options = data.map((item: any) => item.address?.postcode || "").filter((p: string) => p).slice(0, 5);
-        setCapOptions(options);
-        if (options.length > 0) setShowCapDropdown(true);
-      } catch {
-        setCapOptions([]);
       }
     }, 300);
   };
@@ -326,36 +228,7 @@ export default function ContattiClient() {
                 </div>
               </div>
 
-              {/* Row 2: Indirizzo (full width) */}
-              <div className="border-t border-black relative">
-                <div className="py-3 px-1 relative">
-                  <input
-                    type="text"
-                    placeholder="Indirizzo *"
-                    value={form.indirizzo}
-                    onChange={(e) => handleIndirizzoChange(e.target.value)}
-                    onFocus={() => form.indirizzo && setShowIndirizzoDropdown(true)}
-                    autoComplete="street-address"
-                    required
-                    className="w-full bg-transparent text-[16px] md:text-[12px] leading-[1.2] text-black outline-none placeholder:text-black"
-                  />
-                  {showIndirizzoDropdown && indirizzoOptions.length > 0 && (
-                    <div className="absolute top-full left-0 right-0 bg-white border border-black border-t-0 z-10 max-h-[150px] overflow-y-auto">
-                      {indirizzoOptions.map((option, idx) => (
-                        <div
-                          key={idx}
-                          onClick={() => handleSelectIndirizzo(idx)}
-                          className="px-2 py-2 text-[16px] md:text-[12px] leading-[1.2] text-black cursor-pointer hover:bg-gray-100 border-b border-gray-200 last:border-b-0"
-                        >
-                          {option}
-                        </div>
-                      ))}
-                    </div>
-                  )}
-                </div>
-              </div>
-
-              {/* Row 3: Città (full width) */}
+              {/* Row 2: Città (full width) */}
               <div className="border-t border-black relative">
                 <div className="py-3 px-1 relative">
                   <input
@@ -388,9 +261,9 @@ export default function ContattiClient() {
                 </div>
               </div>
 
-              {/* Row 4: Paese | CAP */}
-              <div className="grid grid-cols-[2fr_1fr] md:grid-cols-[3fr_2fr] border-t border-black relative">
-                <div className="py-3 px-1 border-r border-black relative">
+              {/* Row 3: Paese (full width) */}
+              <div className="border-t border-black relative">
+                <div className="py-3 px-1 relative">
                   <input
                     type="text"
                     placeholder="Paese"
@@ -418,52 +291,23 @@ export default function ContattiClient() {
                     </div>
                   )}
                 </div>
-                <div className="py-3 px-1 relative">
-                  <input
-                    type="text"
-                    placeholder="CAP *"
-                    value={form.cap}
-                    onChange={(e) => handleCapChange(e.target.value)}
-                    onFocus={() => form.cap && setShowCapDropdown(true)}
-                    autoComplete="postal-code"
-                    required
-                    className="w-full bg-transparent text-[16px] md:text-[12px] leading-[1.2] text-black outline-none placeholder:text-black"
-                  />
-                  {showCapDropdown && capOptions.length > 0 && (
-                    <div className="absolute top-full left-0 right-0 bg-white border border-black border-t-0 z-10 max-h-[150px] overflow-y-auto">
-                      {capOptions.map((option, idx) => (
-                        <div
-                          key={idx}
-                          onClick={() => {
-                            setForm((f) => ({ ...f, cap: option }));
-                            setShowCapDropdown(false);
-                            setCapOptions([]);
-                          }}
-                          className="px-2 py-2 text-[16px] md:text-[12px] leading-[1.2] text-black cursor-pointer hover:bg-gray-100 border-b border-gray-200 last:border-b-0"
-                        >
-                          {option}
-                        </div>
-                      ))}
-                    </div>
-                  )}
-                </div>
               </div>
 
-              {/* Row 5: Telefono (full width) */}
+              {/* Row 4: Telefono (full width) */}
               <div className="border-t border-black">
                 <div className="py-3 px-1">
                   <input type="tel" placeholder="Telefono" value={form.telefono} onChange={set("telefono")} autoComplete="tel" className="w-full bg-transparent text-[16px] md:text-[12px] leading-[1.2] text-black outline-none placeholder:text-black" />
                 </div>
               </div>
 
-              {/* Row 6: E-mail (full width) */}
+              {/* Row 5: E-mail (full width) */}
               <div className="border-t border-b border-black">
                 <div className="py-3 px-1">
                   <input type="email" placeholder="e-mail *" value={form.email} onChange={set("email")} autoComplete="email" required className="w-full bg-transparent text-[16px] md:text-[12px] leading-[1.2] text-black outline-none placeholder:text-black" />
                 </div>
               </div>
 
-              {/* Row 5: Messaggio */}
+              {/* Row 6: Messaggio */}
               <div className="border-b border-black">
                 <label className="px-1 py-3 block cursor-text min-h-[120px]">
                   <textarea

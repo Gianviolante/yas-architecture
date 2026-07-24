@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
@@ -15,6 +15,10 @@ export default function Footer() {
   const [toastError, setToastError] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
+  const [paeseOptions, setPaeseOptions] = useState<string[]>([]);
+  const [showPaeseDropdown, setShowPaeseDropdown] = useState(false);
+  const autocompleteTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+
   // Auto-dismiss toast after 3.5 seconds
   useEffect(() => {
     if (showToast || toastError) {
@@ -25,6 +29,35 @@ export default function Footer() {
       return () => clearTimeout(timer);
     }
   }, [showToast, toastError]);
+
+  // Autocomplete paese via Nominatim
+  const handlePaeseChange = (value: string) => {
+    setForm({ ...form, paese: value });
+
+    if (!value.trim()) {
+      setPaeseOptions([]);
+      setShowPaeseDropdown(false);
+      return;
+    }
+
+    if (autocompleteTimeoutRef.current) {
+      clearTimeout(autocompleteTimeoutRef.current);
+    }
+
+    autocompleteTimeoutRef.current = setTimeout(async () => {
+      try {
+        const res = await fetch(
+          `https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(value)}&format=json&limit=5`
+        );
+        const data = await res.json();
+        const options = data.map((item: any) => item.name || item.display_name).slice(0, 5);
+        setPaeseOptions(options);
+        setShowPaeseDropdown(true);
+      } catch {
+        setPaeseOptions([]);
+      }
+    }, 300);
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
