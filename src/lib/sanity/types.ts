@@ -62,6 +62,14 @@ export interface Event {
   gallery?: (SanityImage & { url?: string })[];
 }
 
+export interface HomeNavLink {
+  href: string;
+  label: string;
+  image: SanityImage & { url?: string };
+  flexGrow?: number;
+  mobileHeight?: number;
+}
+
 export interface Home {
   // Hero section
   heroTitleMain?:     string;  // "yas-arch"
@@ -75,6 +83,9 @@ export interface Home {
   // Studio section
   studioDescription?: unknown; // PortableText
   studioImage?:       SanityImage & { url?: string };
+  // Slider & Nav Links
+  sliderImages?:      (SanityImage & { url?: string })[];
+  navLinks?:          HomeNavLink[];
 }
 
 export interface Studio {

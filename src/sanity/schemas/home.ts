@@ -71,6 +71,70 @@ export const homeSchema = defineType({
         hotspot: true,
       },
     }),
+    // ── SLIDER IMAGES ────────────────────────────────────
+    defineField({
+      name: "sliderImages",
+      title: "Sezione Slider: Immagini",
+      description: "Immagini dello slider (aspect ratio 16:9)",
+      type: "array",
+      of: [
+        {
+          type: "image",
+          options: { hotspot: true },
+        },
+      ],
+    }),
+    // ── NAV LINKS ────────────────────────────────────────
+    defineField({
+      name: "navLinks",
+      title: "Sezione Link: Progetti/Studio/Team",
+      description: "Link e immagini per i tre link principali",
+      type: "array",
+      of: [
+        {
+          type: "object",
+          fields: [
+            defineField({
+              name: "href",
+              title: "URL",
+              type: "string",
+              description: "Es. /progetti, /studio, /team",
+            }),
+            defineField({
+              name: "label",
+              title: "Label",
+              type: "string",
+              description: "Es. Progetti, Studio, Team",
+            }),
+            defineField({
+              name: "image",
+              title: "Immagine",
+              type: "image",
+              options: { hotspot: true },
+            }),
+            defineField({
+              name: "flexGrow",
+              title: "Flex Grow (desktop)",
+              type: "number",
+              description: "Proporzione della larghezza — Es. 449, 333",
+            }),
+            defineField({
+              name: "mobileHeight",
+              title: "Mobile Height (px)",
+              type: "number",
+              description: "Altezza mobile in pixel — Es. 268, 361",
+            }),
+          ],
+          preview: {
+            select: {
+              title: "label",
+              subtitle: "href",
+              media: "image",
+            },
+          },
+        },
+      ],
+    }),
   ],
   preview: {
     prepare: () => ({ title: "Home — contenuti editabili" }),

@@ -18,7 +18,7 @@ export const metadata = {
   description: "Studio di architettura e design — Brindisi, Italia",
 };
 
-const NAV_LINKS = [
+const DEFAULT_NAV_LINKS = [
   { href: "/progetti", label: "Progetti", img: "/assets/home-link-1.jpg", flexGrow: 449, mobileH: 268 },
   { href: "/studio",   label: "Studio",   img: "/assets/home-studio.jpg", flexGrow: 333, mobileH: 361 },
   { href: "/team",     label: "Team",     img: "/assets/home-link-2.jpg", flexGrow: 333, mobileH: 361 },
@@ -128,22 +128,26 @@ export default async function HomePage() {
           {/* ── 2. LINKS ─────────────────────────────────────────────── */}
           <section className="page-px mt-[32px] md:mt-[48px] lg:mt-[64px]">
             <div className="flex flex-col gap-[25px] md:flex-row md:gap-[15px] md:h-[225px] lg:h-[371px] overflow-hidden">
-              {NAV_LINKS.map(({ href, label, img, flexGrow, mobileH }) => (
-                <Link
-                  key={href}
-                  href={href}
-                  style={{ flexGrow, flexShrink: 1, flexBasis: 0 }}
-                  className="flex flex-col group"
-                >
-                  <p className="text-[12px] leading-[1.5] text-[#282828] shrink-0">{label}</p>
-                  <div
-                    className="relative flex-1 overflow-hidden bg-[#d9d9d9] md:min-h-0"
-                    style={{ minHeight: `${mobileH}px` }}
+              {(home?.navLinks || DEFAULT_NAV_LINKS).map(({ href, label, image, img, flexGrow, mobileHeight, mobileH }) => {
+                const imageUrl = (image as any)?.url || img;
+                const height = mobileHeight || mobileH;
+                return (
+                  <Link
+                    key={href}
+                    href={href}
+                    style={{ flexGrow, flexShrink: 1, flexBasis: 0 }}
+                    className="flex flex-col group"
                   >
-                    <Image src={img} alt={label} fill className="object-cover transition-transform duration-500 group-hover:scale-[1.03]" priority />
-                  </div>
-                </Link>
-              ))}
+                    <p className="text-[12px] leading-[1.5] text-[#282828] shrink-0">{label}</p>
+                    <div
+                      className="relative flex-1 overflow-hidden bg-[#d9d9d9] md:min-h-0"
+                      style={{ minHeight: `${height}px` }}
+                    >
+                      <Image src={imageUrl} alt={label} fill className="object-cover transition-transform duration-500 group-hover:scale-[1.03]" priority />
+                    </div>
+                  </Link>
+                );
+              })}
             </div>
           </section>
 
@@ -214,7 +218,7 @@ export default async function HomePage() {
           </section>
 
           <div className="page-px">
-            <HomeSlider />
+            <HomeSlider slides={home?.sliderImages?.map((img: any) => img.url || img) || undefined} />
           </div>
 
           {/* ── 5. PROJECT BLOCK ─────────────────────────────────────── */}

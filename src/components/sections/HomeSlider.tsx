@@ -3,14 +3,18 @@
 import { useState, useRef, useEffect } from "react";
 import Image from "next/image";
 
-const SLIDES = [
+const DEFAULT_SLIDES = [
   "/assets/home-slide-1.jpg",
   "/assets/home-slide-2.jpg",
   "/assets/home-studio.jpg",
   "/assets/home-link-1.jpg",
 ];
 
-export default function HomeSlider() {
+interface Props {
+  slides?: string[];
+}
+
+export default function HomeSlider({ slides = DEFAULT_SLIDES }: Props) {
   const [isPointerFine, setIsPointerFine] = useState(true);
 
   useEffect(() => {
@@ -19,8 +23,8 @@ export default function HomeSlider() {
   const [idx, setIdx] = useState(0);
   const containerRef = useRef<HTMLDivElement>(null);
 
-  const prev = () => setIdx((i) => (i - 1 + SLIDES.length) % SLIDES.length);
-  const next = () => setIdx((i) => (i + 1) % SLIDES.length);
+  const prev = () => setIdx((i) => (i - 1 + slides.length) % slides.length);
+  const next = () => setIdx((i) => (i + 1) % slides.length);
 
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
@@ -51,7 +55,7 @@ export default function HomeSlider() {
         className="flex h-full transition-transform duration-500 ease-out"
         style={{ transform: `translateX(-${idx * 100}%)` }}
       >
-        {SLIDES.map((src, i) => (
+        {slides.map((src, i) => (
           <div key={i} className="relative w-full h-full shrink-0">
             <Image src={src} alt="" fill className="object-cover" priority={i === 0} />
           </div>
@@ -59,7 +63,7 @@ export default function HomeSlider() {
       </div>
 
       <p className="absolute bottom-4 right-[29px] text-[12px] leading-[1.5] text-[#282828] text-right pointer-events-none">
-        {idx + 1} / {SLIDES.length}
+        {idx + 1} / {slides.length}
       </p>
 
       {!isPointerFine && (
