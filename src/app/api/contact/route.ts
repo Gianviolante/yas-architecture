@@ -150,7 +150,7 @@ export async function POST(req: NextRequest) {
       },
       body: JSON.stringify({
         from: "YAS Architecture <noreply@yas-arc.com>",
-        to: ["info@yas-arc.com"],
+        to: ["studio@yas-arc.com"],
         reply_to: safeEmail,
         subject: `Nuovo messaggio da ${safeNome} ${safeCognome}`.trim(),
         html: `
