@@ -156,7 +156,7 @@ export default function Navbar() {
               className={cn(
                 "text-[11.82px] leading-normal px-[17.727px] py-[7.386px] rounded-[100px] transition-colors duration-200 whitespace-nowrap",
                 pathname === "/contatti"
-                  ? "bg-[#333] text-white"
+                  ? "bg-[#000] text-white"
                   : "bg-[var(--surface-muted)] text-[--foreground] hover:bg-[--border]"
               )}
             >
@@ -171,7 +171,7 @@ export default function Navbar() {
               className={cn(
                 "text-[11.82px] leading-normal px-[13px] py-[6px] rounded-[100px] transition-colors duration-200 whitespace-nowrap",
                 pathname === "/contatti"
-                  ? "bg-[#333] text-white"
+                  ? "bg-[#000] text-white"
                   : "bg-[var(--surface-muted)] text-[--foreground] hover:bg-[--border]"
               )}
             >
