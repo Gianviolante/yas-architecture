@@ -183,6 +183,7 @@ export default function Lightbox({ items, initialIndex, onClose }: Props) {
         ref={closeRef}
         onClick={onClose}
         aria-label="Chiudi"
+        cursor-type="close"
         cursor-no-snap=""
         className="absolute top-[15px] right-[15px] z-10 size-[40px] flex items-center justify-center hover:opacity-40 transition-opacity"
       >
@@ -226,6 +227,7 @@ export default function Lightbox({ items, initialIndex, onClose }: Props) {
           onClick={tryPrev}
           aria-label="Immagine precedente"
           disabled={!canPrev}
+          cursor-type="prev"
           cursor-no-snap=""
           className="arrow-nav absolute left-[15px] size-[40px] flex items-center justify-center transition-opacity hover:opacity-0"
         >
@@ -241,6 +243,7 @@ export default function Lightbox({ items, initialIndex, onClose }: Props) {
           onClick={tryNext}
           aria-label="Immagine successiva"
           disabled={!canNext}
+          cursor-type="next"
           cursor-no-snap=""
           className="arrow-nav absolute right-[15px] size-[40px] flex items-center justify-center transition-opacity hover:opacity-0"
         >
