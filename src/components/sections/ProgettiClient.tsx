@@ -427,7 +427,7 @@ function ProjectCard({ project: p, size }: { project: Project; size: "large" | "
             src={p.coverImageUrl}
             alt={p.title}
             fill
-            className="object-cover transition-all duration-1000 group-hover:opacity-0 group-hover:scale-[1.03]"
+            className="object-cover transition-all duration-700 group-hover:opacity-0 group-hover:scale-[1.03]"
           />
         )}
 
@@ -437,10 +437,10 @@ function ProjectCard({ project: p, size }: { project: Project; size: "large" | "
             src={p.hoverImageUrl}
             alt={p.title}
             fill
-            className="object-cover absolute inset-0 transition-all duration-1000 opacity-0 group-hover:opacity-100 group-hover:scale-[1.03]"
+            className="object-cover absolute inset-0 transition-all duration-700 opacity-0 group-hover:opacity-100 group-hover:scale-[1.03]"
           />
         ) : p.coverImageUrl ? (
-          <div className="absolute inset-0 transition-all duration-1000 opacity-0 group-hover:opacity-100 group-hover:scale-[1.03] bg-[#d9d9d9]" />
+          <div className="absolute inset-0 transition-all duration-700 opacity-0 group-hover:opacity-100 group-hover:scale-[1.03] bg-[#d9d9d9]" />
         ) : null}
       </div>
       {/* Una riga, troncata con ellissi: chip allineato tra le card della
