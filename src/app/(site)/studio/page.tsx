@@ -46,6 +46,9 @@ export default async function StudioPage() {
   const spaziUrls       = (studio?.spaziImages ?? []).map((img) => ({
     url: urlFor(img).width(2400).auto('format').quality(100).url(), caption: img.caption,
   }));
+  const crescitaUrls    = (studio?.crescitaImages ?? []).map((img) => ({
+    url: urlFor(img).width(2400).auto('format').quality(100).url(),
+  }));
 
   return (
     <div className="bg-white">
@@ -87,6 +90,68 @@ export default async function StudioPage() {
       </div>
 
       <Divider />
+
+      {/* ══════════════════════════════════════════════════════════════
+          SEZIONE 2 — Lo spazio
+      ══════════════════════════════════════════════════════════════ */}
+      <div className="pt-[26px] md:pt-[37px] pb-[40px]">
+        <SectionLabel>Lo spazio</SectionLabel>
+
+        {/* Intro */}
+        <div className="page-px mb-[24px] md:mb-[40px] text-[24px] leading-normal text-black">
+          {studio?.spaziDescription
+            ? <PortableText value={studio.spaziDescription as Parameters<typeof PortableText>[0]["value"]} components={ptComponents} />
+            : <p>{INTRO_FALLBACK}</p>}
+        </div>
+
+        {/* Gallery grid — 2 columns on desktop, 1 on mobile */}
+        <div className="page-px">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-[15px]">
+            {spaziUrls.map((img, i) => (
+              <div key={i} className="relative overflow-hidden aspect-[16/9]">
+                <Image src={img.url} alt={img.caption || `Spazio ${i + 1}`} fill sizes="(max-width: 768px) 100vw, 50vw" className="object-cover" />
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      <Divider />
+
+      {/* ══════════════════════════════════════════════════════════════
+          SEZIONE 3 — Crescita
+      ══════════════════════════════════════════════════════════════ */}
+      {(studio?.crescitaImages?.length ?? 0) > 0 && (
+        <>
+          <div className="pt-[26px] md:pt-[37px] pb-[40px]">
+            <SectionLabel>Crescita</SectionLabel>
+
+            {/* Intro */}
+            <div className="page-px mb-[24px] md:mb-[40px] text-[24px] leading-normal text-black">
+              {studio?.crescitaDescription
+                ? <PortableText value={studio.crescitaDescription as Parameters<typeof PortableText>[0]["value"]} components={ptComponents} />
+                : <p>{INTRO_FALLBACK}</p>}
+            </div>
+
+            {/* Gallery grid — 2 columns on desktop, 1 on mobile */}
+            <div className="page-px">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-[15px]">
+                {crescitaUrls.map((img, i) => (
+                  <div key={i} className="relative overflow-hidden aspect-[16/9]">
+                    <Image src={img.url} alt={`Crescita ${i + 1}`} fill sizes="(max-width: 768px) 100vw, 50vw" className="object-cover" />
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+
+          <Divider />
+        </>
+      )}
+
+      {/* ══════════════════════════════════════════════════════════════
+          SEZIONE 4 — Il team (moved down)
+      ══════════════════════════════════════════════════════════════ */}
 
       {/* ══════════════════════════════════════════════════════════════
           SEZIONE 5 — Il team

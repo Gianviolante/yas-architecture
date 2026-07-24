@@ -90,13 +90,15 @@ export interface Home {
 
 export interface Studio {
   description?:         unknown; // PortableText
-  spaziDescription?:    unknown;
-  teamDescription?:     unknown;
-  progettiDescription?: unknown;
+  spaziDescription?:    unknown; // PortableText
+  crescitaDescription?: unknown; // PortableText
+  teamDescription?:     unknown; // PortableText
+  progettiDescription?: unknown; // PortableText
   heroImage?:           SanityImage;
   teamPortrait?:        SanityImage;
   mainImage?:           SanityImage;
   spaziImages?:         SanityImage[];
+  crescitaImages?:      SanityImage[];
 }
 
 export interface ProgettiIntro {
