@@ -233,17 +233,17 @@ export default function ContattiClient() {
 
               {/* Row 1: Nome | Cognome */}
               <div className="grid grid-cols-1 md:grid-cols-[2fr_3fr] border-t border-black">
-                <div className="py-3 md:py-6 px-1 md:border-r border-black">
+                <div className="py-3 md:py-6 px-1 md:border-r border-black flex items-center">
                   <input type="text" placeholder="Nome" value={form.nome} onChange={set("nome")} autoComplete="given-name" className="w-full bg-transparent text-[16px] md:text-[12px] leading-[1.2] text-black outline-none placeholder:text-black" />
                 </div>
-                <div className="py-3 px-1 border-t md:border-t-0 border-black">
+                <div className="py-3 md:py-6 px-1 border-t md:border-t-0 border-black flex items-center">
                   <input type="text" placeholder="Cognome" value={form.cognome} onChange={set("cognome")} autoComplete="family-name" className="w-full bg-transparent text-[16px] md:text-[12px] leading-[1.2] text-black outline-none placeholder:text-black" />
                 </div>
               </div>
 
               {/* Row 2: Città | Paese */}
               <div className="grid grid-cols-[6fr_4fr] md:grid-cols-[6fr_4fr] border-t border-black relative">
-                <div className="py-3 px-1 md:border-r border-black relative">
+                <div className="py-3 md:py-6 px-1 md:border-r border-black relative flex items-start md:items-center">
                   <input
                     type="text"
                     placeholder="Città *"
@@ -272,7 +272,7 @@ export default function ContattiClient() {
                     </div>
                   )}
                 </div>
-                <div className="py-3 px-1">
+                <div className="py-3 md:py-6 px-1 flex items-center">
                   <select
                     value={form.paese}
                     onChange={set("paese")}
@@ -290,14 +290,14 @@ export default function ContattiClient() {
 
               {/* Row 3: Telefono (full width) */}
               <div className="border-t border-black">
-                <div className="py-3 px-1">
+                <div className="py-3 md:py-6 px-1 flex items-center">
                   <input type="tel" placeholder="Telefono" value={form.telefono} onChange={set("telefono")} autoComplete="tel" className="w-full bg-transparent text-[16px] md:text-[12px] leading-[1.2] text-black outline-none placeholder:text-black" />
                 </div>
               </div>
 
               {/* Row 4: E-mail (full width) */}
               <div className="border-t border-b border-black">
-                <div className="py-3 px-1">
+                <div className="py-3 md:py-6 px-1 flex items-center">
                   <input type="email" placeholder="e-mail *" value={form.email} onChange={set("email")} autoComplete="email" required className="w-full bg-transparent text-[16px] md:text-[12px] leading-[1.2] text-black outline-none placeholder:text-black" />
                 </div>
               </div>
