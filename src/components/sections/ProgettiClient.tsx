@@ -411,8 +411,6 @@ function GridView({ largeRows, small }: { largeRows: Project[][]; small: Project
 }
 
 function ProjectCard({ project: p, size }: { project: Project; size: "large" | "small" }) {
-  const [isHovered, setIsHovered] = useState(false);
-
   // Aspect ratio al posto di altezze fisse: le card scalano in proporzione
   // alla larghezza colonna a qualsiasi viewport (stessi rapporti del design
   // ai riferimenti 375/768/1440).
@@ -420,17 +418,30 @@ function ProjectCard({ project: p, size }: { project: Project; size: "large" | "
     ? "aspect-[345/256] md:aspect-[339/280] lg:aspect-[683/484]"
     : "aspect-[345/256] md:aspect-[339/280] lg:aspect-[450/335]";
 
-  // Mostra hoverImage al hover, altrimenti coverImage
-  const displayImage = isHovered && p.hoverImageUrl ? p.hoverImageUrl : p.coverImageUrl;
-
   return (
-    <Link href={`/progetti/${p.slug.current}`} className="block group" onMouseEnter={() => setIsHovered(true)} onMouseLeave={() => setIsHovered(false)}>
-      <div className={`relative ${imgAspect} overflow-hidden mb-[6px]`}>
-        {displayImage ? (
-          <Image src={displayImage} alt={p.title} fill className="object-cover transition-transform duration-500 group-hover:scale-[1.03]" />
-        ) : (
-          <div className="w-full h-full bg-[#d9d9d9]" />
+    <Link href={`/progetti/${p.slug.current}`} className="block group">
+      <div className={`relative ${imgAspect} overflow-hidden mb-[6px] bg-[#d9d9d9]`}>
+        {/* Cover image — fades out on hover */}
+        {p.coverImageUrl && (
+          <Image
+            src={p.coverImageUrl}
+            alt={p.title}
+            fill
+            className="object-cover transition-opacity duration-300 group-hover:opacity-0"
+          />
         )}
+
+        {/* Hover image — fades in on hover (if available) */}
+        {p.hoverImageUrl ? (
+          <Image
+            src={p.hoverImageUrl}
+            alt={p.title}
+            fill
+            className="object-cover absolute inset-0 transition-opacity duration-300 opacity-0 group-hover:opacity-100"
+          />
+        ) : p.coverImageUrl ? (
+          <div className="absolute inset-0 transition-opacity duration-300 opacity-0 group-hover:opacity-100 bg-[#d9d9d9]" />
+        ) : null}
       </div>
       {/* Una riga, troncata con ellissi: chip allineato tra le card della
           griglia indipendentemente dalla lunghezza del titolo */}
