@@ -233,7 +233,7 @@ export default function ContattiClient() {
 
               {/* Row 1: Nome | Cognome */}
               <div className="grid grid-cols-1 md:grid-cols-[2fr_3fr] border-t border-black">
-                <div className="py-3 md:py-4 px-1 md:border-r border-black">
+                <div className="py-3 md:py-6 px-1 md:border-r border-black">
                   <input type="text" placeholder="Nome" value={form.nome} onChange={set("nome")} autoComplete="given-name" className="w-full bg-transparent text-[16px] md:text-[12px] leading-[1.2] text-black outline-none placeholder:text-black" />
                 </div>
                 <div className="py-3 px-1 border-t md:border-t-0 border-black">
