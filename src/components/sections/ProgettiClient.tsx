@@ -411,17 +411,23 @@ function GridView({ largeRows, small }: { largeRows: Project[][]; small: Project
 }
 
 function ProjectCard({ project: p, size }: { project: Project; size: "large" | "small" }) {
+  const [isHovered, setIsHovered] = useState(false);
+
   // Aspect ratio al posto di altezze fisse: le card scalano in proporzione
   // alla larghezza colonna a qualsiasi viewport (stessi rapporti del design
   // ai riferimenti 375/768/1440).
   const imgAspect = size === "large"
     ? "aspect-[345/256] md:aspect-[339/280] lg:aspect-[683/484]"
     : "aspect-[345/256] md:aspect-[339/280] lg:aspect-[450/335]";
+
+  // Mostra hoverImage al hover, altrimenti coverImage
+  const displayImage = isHovered && p.hoverImageUrl ? p.hoverImageUrl : p.coverImageUrl;
+
   return (
-    <Link href={`/progetti/${p.slug.current}`} className="block group">
+    <Link href={`/progetti/${p.slug.current}`} className="block group" onMouseEnter={() => setIsHovered(true)} onMouseLeave={() => setIsHovered(false)}>
       <div className={`relative ${imgAspect} overflow-hidden mb-[6px]`}>
-        {p.coverImageUrl ? (
-          <Image src={p.coverImageUrl} alt={p.title} fill className="object-cover transition-transform duration-500 group-hover:scale-[1.03]" />
+        {displayImage ? (
+          <Image src={displayImage} alt={p.title} fill className="object-cover transition-transform duration-500 group-hover:scale-[1.03]" />
         ) : (
           <div className="w-full h-full bg-[#d9d9d9]" />
         )}
@@ -566,8 +572,8 @@ function IndexView({
             transition: "opacity 200ms ease, transform 80ms ease-out",
           }}
         >
-          {(hoveredProject?.hoverImageUrl ?? hoveredProject?.coverImageUrl) ? (
-            <Image src={(hoveredProject!.hoverImageUrl ?? hoveredProject!.coverImageUrl)!} alt={hoveredProject!.title} fill className="object-cover" />
+          {hoveredProject?.coverImageUrl ? (
+            <Image src={hoveredProject!.coverImageUrl} alt={hoveredProject!.title} fill className="object-cover" />
           ) : (
             <div className="w-full h-full bg-[#d9d9d9]" />
           )}
