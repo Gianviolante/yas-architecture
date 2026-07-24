@@ -51,10 +51,9 @@ export const homeQuery = `
 
 export const studioQuery = `
   *[_type == "studio"][0] {
-    description, spaziDescription, crescitaDescription, teamDescription, progettiDescription,
-    heroImage, teamPortrait, mainImage,
-    spaziImages[]{ ..., caption },
-    crescitaImages[]{ ... }
+    description, spaziDescription, teamDescription, progettiDescription,
+    heroImage, teamPortrait,
+    spaziImages[]{ ..., caption }
   }
 `;
 
