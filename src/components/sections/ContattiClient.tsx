@@ -97,10 +97,11 @@ export default function ContattiClient() {
         const res = await fetch(
           `https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(query)}&format=json&limit=5`
         );
-        const data = await res.json();
-        const options = data.map((item: any) => item.address?.road || item.name || item.display_name).filter((n: any) => n).slice(0, 5);
-        setIndirizzoOptions([...new Set(options)]);
-        setIndirizzoData(data.slice(0, 5)); // Store full data for autocomplete
+        const data = await res.json().then(d => d.slice(0, 5));
+        const options = data.map((item: any) => item.address?.road || item.name || item.display_name).filter((n: any) => n);
+        // Keep data and options in sync - no deduplication
+        setIndirizzoOptions(options);
+        setIndirizzoData(data);
         setShowIndirizzoDropdown(true);
       } catch {
         setIndirizzoOptions([]);
