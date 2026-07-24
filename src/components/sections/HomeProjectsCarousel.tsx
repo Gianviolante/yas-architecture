@@ -5,6 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import type { Project } from "@/lib/sanity/types";
 import { usePointerFine } from "@/lib/hooks/usePointerFine";
+import Button from "@/components/ui/Button";
 
 const PLACEHOLDERS = [
   { id: "p1", img: "/assets/home-project-1.jpg", label: "Marina One Residence, Marina Way – SG", typology: "Residential" },
@@ -183,12 +184,14 @@ export default function HomeProjectsCarousel({ projects }: Props) {
 
         {/* bottone: full-width mobile, centrato desktop */}
         <div className="md:flex md:justify-center">
-          <Link
+          <Button
             href="/progetti"
-            className="flex items-center justify-center border-2 border-[#333] rounded-[100px] px-[24px] py-[10px] text-[16px] text-[#333] leading-[22px] hover:bg-[#333] hover:text-white transition-colors duration-200 w-full md:w-auto"
+            variant="outlined"
+            size="md"
+            className="w-full md:w-auto"
           >
             Vai a tutti i progetti
-          </Link>
+          </Button>
         </div>
       </div>
 

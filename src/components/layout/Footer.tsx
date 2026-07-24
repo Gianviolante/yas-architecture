@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
+import Button from "@/components/ui/Button";
 
 const txt = "text-[16px] md:text-[12px] leading-[1.2] text-black font-normal";
 
@@ -93,14 +94,15 @@ export default function Footer() {
 
             {/* Col 3 — Google Maps */}
             <div className="flex items-end">
-              <a
-                href="https://maps.google.com/?q=Piazza+Marco+Antonio+Cavalerio+21+72100+Brindisi+BR+Italia"
+              <Button
+                href="https://share.google/BSNYmdJOcLu7FA4fE"
+                variant="outlined"
+                size="sm"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-[12px] leading-[22px] text-[--foreground] border-2 border-[--foreground] px-[20px] py-[10px] rounded-[100px] hover:bg-[#333] hover:text-white transition-colors duration-200 whitespace-nowrap"
               >
                 Google Maps
-              </a>
+              </Button>
             </div>
           </div>
         </div>

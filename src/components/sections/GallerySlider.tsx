@@ -9,6 +9,7 @@ import { animateValue, groppiEase } from "@/lib/utils/animate";
 export interface GalleryItem {
   url: string;
   caption?: string;
+  hoverUrl?: string;
 }
 
 interface Props {
@@ -321,7 +322,7 @@ export default function GallerySlider({ items, projectTitle, compact = false, in
             return (
             <div
               key={i}
-              className="flex-none relative overflow-hidden bg-[#d9d9d9] cursor-pointer hover:opacity-90 transition-opacity"
+              className="flex-none relative overflow-hidden bg-[#d9d9d9] cursor-pointer"
               style={{
                 width:      `${cardW(i)}px`,
                 height:     `${cardH}px`,
@@ -335,13 +336,24 @@ export default function GallerySlider({ items, projectTitle, compact = false, in
               }}
             >
               {hasImages && items[i]?.url && (
-                <Image
-                  src={items[i].url}
-                  alt={items[i].caption ?? `${projectTitle} — ${i + 1}`}
-                  fill
-                  className="object-cover pointer-events-none"
-                  draggable={false}
-                />
+                <>
+                  <Image
+                    src={items[i].url}
+                    alt={items[i].caption ?? `${projectTitle} — ${i + 1}`}
+                    fill
+                    className="object-cover pointer-events-none transition-all duration-700 hover:opacity-0 hover:scale-[1.03]"
+                    draggable={false}
+                  />
+                  {items[i].hoverUrl && (
+                    <Image
+                      src={items[i].hoverUrl}
+                      alt={items[i].caption ?? `${projectTitle} — ${i + 1}`}
+                      fill
+                      className="object-cover pointer-events-none absolute inset-0 transition-all duration-700 opacity-0 hover:opacity-100 hover:scale-[1.03]"
+                      draggable={false}
+                    />
+                  )}
+                </>
               )}
             </div>
           );
