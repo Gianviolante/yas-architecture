@@ -295,6 +295,7 @@ export default function GallerySlider({ items, projectTitle, compact = false, in
       <div
         ref={wrapperRef}
         className={`select-none relative w-screen -mx-[calc((100vw-100%)/2)]${isPointerFine ? " overflow-hidden" : ""}`}
+        style={{ touchAction: "none" }}
         onMouseMove={isPointerFine ? onMouseMove : undefined}
         onMouseLeave={isPointerFine ? onMouseLeave : undefined}
         onPointerDown={isPointerFine ? onPointerDown : undefined}
