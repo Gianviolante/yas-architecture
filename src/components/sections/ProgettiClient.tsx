@@ -580,7 +580,7 @@ function IndexView({
             top: 0, left: 0,
             opacity: hoveredProject && inTable ? 1 : 0,
             transform: `translate(${mousePos.x + 24}px, ${Math.max(210, mousePos.y - 260)}px)`,
-            transition: "opacity 200ms ease, transform 80ms ease-out",
+            transition: "opacity 200ms ease, transform 400ms ease-out",
           }}
         >
           {hoveredProject?.coverImageUrl ? (
