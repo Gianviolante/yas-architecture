@@ -147,8 +147,6 @@ export default function CustomCursor() {
       }
       mouse.x = e.clientX;
       mouse.y = e.clientY;
-      pos.x = e.clientX;
-      pos.y = e.clientY;
     };
 
     const onResize = () => setActive(window.innerWidth >= 1024);
