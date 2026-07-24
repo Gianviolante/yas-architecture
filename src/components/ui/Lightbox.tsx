@@ -187,7 +187,7 @@ export default function Lightbox({ items, initialIndex, onClose }: Props) {
         <div
           ref={wrapperRef}
           className="relative w-full h-full max-w-[960px] overflow-hidden select-none"
-          style={{ touchAction: "none" }}
+          style={{ touchAction: "manipulation" }}
           onMouseEnter={onMouseEnter}
           onMouseLeave={onMouseLeave}
           onWheel={onWheel}
