@@ -421,26 +421,26 @@ function ProjectCard({ project: p, size }: { project: Project; size: "large" | "
   return (
     <Link href={`/progetti/${p.slug.current}`} className="block group">
       <div className={`relative ${imgAspect} overflow-hidden mb-[6px] bg-[#d9d9d9]`}>
-        {/* Cover image — fades out on hover */}
+        {/* Cover image — fades out + zooms on hover */}
         {p.coverImageUrl && (
           <Image
             src={p.coverImageUrl}
             alt={p.title}
             fill
-            className="object-cover transition-opacity duration-300 group-hover:opacity-0"
+            className="object-cover transition-all duration-300 group-hover:opacity-0 group-hover:scale-[1.03]"
           />
         )}
 
-        {/* Hover image — fades in on hover (if available) */}
+        {/* Hover image — fades in + zooms on hover (if available) */}
         {p.hoverImageUrl ? (
           <Image
             src={p.hoverImageUrl}
             alt={p.title}
             fill
-            className="object-cover absolute inset-0 transition-opacity duration-300 opacity-0 group-hover:opacity-100"
+            className="object-cover absolute inset-0 transition-all duration-300 opacity-0 group-hover:opacity-100 group-hover:scale-[1.03]"
           />
         ) : p.coverImageUrl ? (
-          <div className="absolute inset-0 transition-opacity duration-300 opacity-0 group-hover:opacity-100 bg-[#d9d9d9]" />
+          <div className="absolute inset-0 transition-all duration-300 opacity-0 group-hover:opacity-100 group-hover:scale-[1.03] bg-[#d9d9d9]" />
         ) : null}
       </div>
       {/* Una riga, troncata con ellissi: chip allineato tra le card della
