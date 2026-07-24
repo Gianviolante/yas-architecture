@@ -69,7 +69,7 @@ export default function ContattiClient() {
     }, 300);
   };
 
-  // Autocomplete indirizzo via Nominatim (filtrato per Italia)
+  // Autocomplete indirizzo via Nominatim (filtrato per paese selezionato)
   const handleIndirizzoChange = (value: string) => {
     setForm((f) => ({ ...f, indirizzo: value }));
 
@@ -85,9 +85,13 @@ export default function ContattiClient() {
 
     autocompleteTimeoutRef.current = setTimeout(async () => {
       try {
-        const query = form.citta ? `${value}, ${form.citta}, Italy` : value;
+        const parts = [value];
+        if (form.citta) parts.push(form.citta);
+        if (form.paese) parts.push(form.paese);
+        const query = parts.join(", ");
+
         const res = await fetch(
-          `https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(query)}&countrycodes=it&format=json&limit=5`
+          `https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(query)}&format=json&limit=5`
         );
         const data = await res.json();
         const options = data.map((item: any) => item.address?.road || item.name || item.display_name).filter((n: any) => n).slice(0, 5);
@@ -99,7 +103,7 @@ export default function ContattiClient() {
     }, 300);
   };
 
-  // Autocomplete città via Nominatim (filtrato per Italia)
+  // Autocomplete città via Nominatim (filtrato per paese selezionato)
   const handleCittaChange = (value: string) => {
     setForm((f) => ({ ...f, citta: value }));
 
@@ -115,8 +119,9 @@ export default function ContattiClient() {
 
     autocompleteTimeoutRef.current = setTimeout(async () => {
       try {
+        const query = form.paese ? `${value}, ${form.paese}` : value;
         const res = await fetch(
-          `https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(value)}&countrycodes=it&addresstype=city,town&format=json&limit=5`
+          `https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(query)}&addresstype=city,town&format=json&limit=5`
         );
         const data = await res.json();
         const options = data.map((item: any) => item.address?.city || item.address?.town || item.name).filter((n: any) => n).slice(0, 5);
@@ -128,7 +133,7 @@ export default function ContattiClient() {
     }, 300);
   };
 
-  // Autocomplete CAP via Nominatim (basato su città, filtrato per Italia)
+  // Autocomplete CAP via Nominatim (basato su città e paese selezionati)
   const handleCapChange = (value: string) => {
     setForm((f) => ({ ...f, cap: value }));
 
@@ -144,9 +149,13 @@ export default function ContattiClient() {
 
     autocompleteTimeoutRef.current = setTimeout(async () => {
       try {
-        const query = form.citta ? `${form.citta}, Italy` : value;
+        const parts = [];
+        if (form.citta) parts.push(form.citta);
+        if (form.paese) parts.push(form.paese);
+        const query = parts.length > 0 ? parts.join(", ") : value;
+
         const res = await fetch(
-          `https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(query)}&countrycodes=it&format=json&limit=1`
+          `https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(query)}&format=json&limit=1`
         );
         const data = await res.json();
         const options = data.map((item: any) => item.address?.postcode || "").filter((p: string) => p).slice(0, 5);
