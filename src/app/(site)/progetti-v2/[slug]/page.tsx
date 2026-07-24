@@ -195,25 +195,9 @@ export default async function ProgettoPageV2({ params }: { params: Promise<{ slu
         </Link>
       </div>
 
-      {/* ── Two square images (YAS-style) ──────────────────────── */}
-      {galleryItems.length >= 2 && (
-        <div className="mx-4 md:mx-[30px] gap-[16px] md:gap-[24px] grid grid-cols-2 mt-[48px]">
-          {galleryItems.slice(0, 2).map((img, idx) => (
-            <div key={idx} className="relative aspect-square overflow-hidden bg-[#d9d9d9]">
-              <Image
-                src={img.url}
-                alt={img.caption ?? `${project.title} — ${idx + 1}`}
-                fill
-                className="object-cover"
-              />
-            </div>
-          ))}
-        </div>
-      )}
-
-      {/* ── Gallery slider ─────────────────────────────────────────── */}
-      {galleryItems.length > 2 && (
-        <GallerySection items={galleryItems.slice(2)} projectTitle={project.title} />
+      {/* ── Gallery slider (with two square images + lightbox) ──────── */}
+      {galleryItems.length > 0 && (
+        <GallerySection items={galleryItems.slice(2)} projectTitle={project.title} allGalleryItems={galleryItems} />
       )}
 
       {/* ── Divider bar ────────────────────────────────────────────── */}
