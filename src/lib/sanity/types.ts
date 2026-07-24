@@ -1,4 +1,4 @@
-export type Typology = "Architettura" | "Interior Design" | "Residenziale" | "Commerciale" | "Altro" | "Opere pubbliche";
+export type Typology = "Architettura" | "Interior Design" | "Residenziale" | "Commerciale" | "Altro" | "Opere Pubbliche";
 export type ProjectStatus = "In corso" | "Progetti" | "Realizzato";
 export type TeamMemberType = "Studio" | "Designer" | "Partner";
 
