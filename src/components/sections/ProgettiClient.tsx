@@ -99,13 +99,13 @@ export default function ProgettiClient({ projects, progettiIntro, initialTypolog
 
   // Desktop chip (compact)
   const chipDt = (active: boolean) =>
-    `inline-flex items-center border-2 rounded-[100px] px-[16px] py-[7px] text-[12px] leading-[1.4] whitespace-nowrap transition-colors duration-200 cursor-pointer ${
+    `inline-flex items-center border-2 rounded-[100px] px-[16px] py-[7px] h-[40px] text-[12px] leading-[1.4] whitespace-nowrap transition-colors duration-200 cursor-pointer ${
       active ? "bg-black border-black text-white" : "border-[--foreground] text-[--foreground] hover:bg-black hover:border-black hover:text-white"
     }`;
 
-  // Mobile chip (larger, 42px height per Figma)
+  // Mobile chip (larger, 46px height)
   const chipMb = (active: boolean) =>
-    `inline-flex items-center border-2 rounded-[100px] px-[24px] py-[10px] text-[16px] leading-[22px] whitespace-nowrap transition-colors duration-200 cursor-pointer shrink-0 ${
+    `inline-flex items-center border-2 rounded-[100px] px-[24px] py-[10px] h-[46px] text-[16px] leading-[22px] whitespace-nowrap transition-colors duration-200 cursor-pointer shrink-0 ${
       active ? "bg-black border-black text-white" : "border-[--foreground] text-[--foreground]"
     }`;
 
