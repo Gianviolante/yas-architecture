@@ -32,7 +32,7 @@ export default function GallerySection({ items, projectTitle, allGalleryItems, o
             <button
               key={idx}
               onClick={() => handleSquareImageClick(idx)}
-              className="relative aspect-square overflow-hidden bg-[#d9d9d9] md:cursor-default md:pointer-events-none"
+              className="relative aspect-square overflow-hidden bg-[#d9d9d9] cursor-pointer hover:opacity-90 transition-opacity"
             >
               <Image
                 src={img.url}
