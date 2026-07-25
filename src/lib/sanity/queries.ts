@@ -42,7 +42,7 @@ export const eventBySlugQuery = `
 `;
 
 export const homeQuery = `
-  *[_id == "home-singleton-new"][0] {
+  *[_type == "home"][0] {
     introDescription, bodyLeft, bodyRight, studioDescription,
     heroSubtitleLeft, heroTitleMain, heroSubtitleRight, heroAddress,
     studioImage{ ..., "url": asset->url + "?w=1200&q=80&auto=format&dpr=2" },
