@@ -118,6 +118,7 @@ export default function Navbar() {
                         ? "text-[#d9d9d9] hover:text-[#1a1a1a]"
                         : "text-[#1a1a1a] hover:text-[#d9d9d9]"
                   )}
+                  cursor-type="nav"
                 >
                   {label}
                 </Link>
@@ -144,7 +145,7 @@ export default function Navbar() {
             whileTap={{ scale: 0.95 }}
             transition={{ duration: 0.3, ease: "easeOut" }}
           >
-            <Link href="/" aria-label="YAS Architecture — Home">
+            <Link href="/" aria-label="YAS Architecture — Home" cursor-type="nav">
               <Image src="/assets/logo-yas.svg" alt="YAS Architecture" width={102} height={31} priority />
             </Link>
           </motion.div>
@@ -159,6 +160,7 @@ export default function Navbar() {
                   ? "bg-[#000] text-white"
                   : "bg-[var(--surface-muted)] text-[--foreground] hover:bg-[--border]"
               )}
+              cursor-type="nav"
             >
               Contatti
             </Link>
@@ -174,6 +176,7 @@ export default function Navbar() {
                   ? "bg-[#000] text-white"
                   : "bg-[var(--surface-muted)] text-[--foreground] hover:bg-[--border]"
               )}
+              cursor-type="nav"
             >
               Contatti
             </Link>
@@ -202,6 +205,7 @@ export default function Navbar() {
               className="w-full flex items-center justify-between px-[10px] py-[10px]"
               onClick={() => setProgettiOpen((v) => !v)}
               aria-expanded={progettiOpen}
+              cursor-type="nav"
             >
               <span className="text-[22px] leading-normal text-[#1a1a1a] px-0">Progetti</span>
               <AccordionChip open={progettiOpen} />
@@ -219,6 +223,7 @@ export default function Navbar() {
                   key={label}
                   href={href}
                   className="block px-5 py-[9px] text-[17px] text-[#1a1a1a] hover:opacity-60 transition-opacity"
+                  cursor-type="nav"
                 >
                   {label}
                 </Link>
@@ -235,6 +240,7 @@ export default function Navbar() {
               className="w-full flex items-center justify-between px-[10px] py-[10px]"
               onClick={() => setStudioOpen((v) => !v)}
               aria-expanded={studioOpen}
+              cursor-type="nav"
             >
               <span className="text-[22px] leading-normal text-[#1a1a1a] px-0">Studio</span>
               <AccordionChip open={studioOpen} />
@@ -252,6 +258,7 @@ export default function Navbar() {
                   key={label}
                   href={href}
                   className="block px-5 py-[9px] text-[17px] text-[#1a1a1a] hover:opacity-60 transition-opacity"
+                  cursor-type="nav"
                 >
                   {label}
                 </Link>
@@ -267,13 +274,14 @@ export default function Navbar() {
               key={href}
               href={href}
               className="flex items-center border-b border-black px-[10px] py-[10px]"
+              cursor-type="nav"
             >
               <span className="text-[22px] leading-normal text-[#1a1a1a]">{label}</span>
             </Link>
           ))}
 
           {/* Contatti — no border-b */}
-          <Link href="/contatti" className="flex items-center px-[10px] py-[10px]">
+          <Link href="/contatti" className="flex items-center px-[10px] py-[10px]" cursor-type="nav">
             <span className="text-[22px] leading-normal text-[#1a1a1a]">Contatti</span>
           </Link>
 

@@ -244,7 +244,7 @@ export default async function HomePage() {
             <div className="md:flex md:justify-center">
               <Link
                 href="/studio"
-                className="flex items-center justify-center border-2 border-[#333] rounded-[100px] px-[24px] py-[10px] text-[16px] text-[#333] leading-[22px] hover:bg-[#333] hover:text-white transition-colors duration-200 w-full md:w-auto"
+                className="flex items-center justify-center border-2 border-[#000] rounded-[100px] px-[24px] py-[10px] text-[16px] text-[#000] leading-[22px] hover:bg-black hover:text-white transition-colors duration-200 w-full md:w-auto"
               >
                 Vedi lo studio
               </Link>

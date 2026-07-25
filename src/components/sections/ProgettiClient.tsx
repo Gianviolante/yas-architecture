@@ -168,6 +168,7 @@ export default function ProgettiClient({ projects, progettiIntro, initialTypolog
                     className={chipMb(typologyFilters.size === 0)}
                     aria-label="Mostra tutti i progetti"
                     aria-pressed={typologyFilters.size === 0}
+                    cursor-type="nav"
                   >
                     Tutti i progetti
                   </button>
@@ -178,6 +179,7 @@ export default function ProgettiClient({ projects, progettiIntro, initialTypolog
                       className={chipMb(typologyFilters.has(value as Typology))}
                       aria-label={`Filtra per ${label}`}
                       aria-pressed={typologyFilters.has(value as Typology)}
+                      cursor-type="nav"
                     >
                       {label}
                     </button>
@@ -196,6 +198,7 @@ export default function ProgettiClient({ projects, progettiIntro, initialTypolog
                       className={chipMb(typologyFilters.has(value))}
                       aria-label={`Filtra per ${label}`}
                       aria-pressed={typologyFilters.has(value)}
+                      cursor-type="nav"
                     >
                       {label}
                     </button>
@@ -214,6 +217,7 @@ export default function ProgettiClient({ projects, progettiIntro, initialTypolog
                       className={chipMb(statoFilters.has(value))}
                       aria-label={`Filtra per ${label}`}
                       aria-pressed={statoFilters.has(value)}
+                      cursor-type="nav"
                     >
                       {label}
                     </button>
@@ -232,6 +236,7 @@ export default function ProgettiClient({ projects, progettiIntro, initialTypolog
                     onClick={reset}
                     className="flex items-center gap-1 text-[12px] leading-[22px] text-[--foreground]"
                     aria-label="Ripristina tutti i filtri"
+                    cursor-type="nav"
                   >
                     Reset
                     <Image src="/assets/icon-reset.svg" alt="" width={10} height={8} />
@@ -247,11 +252,11 @@ export default function ProgettiClient({ projects, progettiIntro, initialTypolog
           {/* Row 1: Area */}
           <p className="text-[12px] leading-[22px] text-[--foreground] mb-1">Area</p>
           <div className="flex flex-wrap gap-2 mb-3">
-            <button onClick={() => setTypologyFilters(new Set())} className={chipDt(typologyFilters.size === 0)}>
+            <button onClick={() => setTypologyFilters(new Set())} className={chipDt(typologyFilters.size === 0)} cursor-type="nav">
               Tutti i progetti
             </button>
             {AREA_FILTERS.slice(1).map(({ label, value }) => (
-              <button key={value} onClick={() => toggleTypology(value as Typology)} className={chipDt(typologyFilters.has(value as Typology))}>
+              <button key={value} onClick={() => toggleTypology(value as Typology)} className={chipDt(typologyFilters.has(value as Typology))} cursor-type="nav">
                 {label}
               </button>
             ))}
@@ -264,14 +269,14 @@ export default function ProgettiClient({ projects, progettiIntro, initialTypolog
           <div className="grid grid-cols-2 gap-4">
             <div className="flex flex-wrap gap-2">
               {CAT_FILTERS.map(({ label, value }) => (
-                <button key={value} onClick={() => toggleTypology(value)} className={chipDt(typologyFilters.has(value))}>
+                <button key={value} onClick={() => toggleTypology(value)} className={chipDt(typologyFilters.has(value))} cursor-type="nav">
                   {label}
                 </button>
               ))}
             </div>
             <div className="flex flex-wrap gap-2">
               {STATO_FILTERS.map(({ label, value }) => (
-                <button key={value} onClick={() => toggleStato(value)} className={chipDt(statoFilters.has(value))}>
+                <button key={value} onClick={() => toggleStato(value)} className={chipDt(statoFilters.has(value))} cursor-type="nav">
                   {label}
                 </button>
               ))}
@@ -283,7 +288,7 @@ export default function ProgettiClient({ projects, progettiIntro, initialTypolog
               {hasFilters && <span className="text-black">{activeLabel}</span>}
             </p>
             {hasFilters && (
-              <button onClick={reset} className="flex items-center gap-1 text-[12px] leading-[22px] text-[--foreground] hover:opacity-50 transition-opacity">
+              <button onClick={reset} className="flex items-center gap-1 text-[12px] leading-[22px] text-[--foreground] hover:opacity-50 transition-opacity" cursor-type="nav">
                 Reset
                 <Image src="/assets/icon-reset.svg" alt="" width={10} height={8} />
               </button>
@@ -300,25 +305,25 @@ export default function ProgettiClient({ projects, progettiIntro, initialTypolog
           </div>
           <div className="grid grid-cols-3 gap-2">
             <div className="flex flex-wrap gap-2">
-              <button onClick={() => setTypologyFilters(new Set())} className={chipDt(typologyFilters.size === 0)}>
+              <button onClick={() => setTypologyFilters(new Set())} className={chipDt(typologyFilters.size === 0)} cursor-type="nav">
                 Tutti i progetti
               </button>
               {AREA_FILTERS.slice(1).map(({ label, value }) => (
-                <button key={value} onClick={() => toggleTypology(value as Typology)} className={chipDt(typologyFilters.has(value as Typology))}>
+                <button key={value} onClick={() => toggleTypology(value as Typology)} className={chipDt(typologyFilters.has(value as Typology))} cursor-type="nav">
                   {label}
                 </button>
               ))}
             </div>
             <div className="flex flex-wrap gap-2">
               {CAT_FILTERS.map(({ label, value }) => (
-                <button key={value} onClick={() => toggleTypology(value)} className={chipDt(typologyFilters.has(value))}>
+                <button key={value} onClick={() => toggleTypology(value)} className={chipDt(typologyFilters.has(value))} cursor-type="nav">
                   {label}
                 </button>
               ))}
             </div>
             <div className="flex flex-wrap gap-2">
               {STATO_FILTERS.map(({ label, value }) => (
-                <button key={value} onClick={() => toggleStato(value)} className={chipDt(statoFilters.has(value))}>
+                <button key={value} onClick={() => toggleStato(value)} className={chipDt(statoFilters.has(value))} cursor-type="nav">
                   {label}
                 </button>
               ))}
@@ -330,7 +335,7 @@ export default function ProgettiClient({ projects, progettiIntro, initialTypolog
               {hasFilters && <span className="text-black">{activeLabel}</span>}
             </p>
             {hasFilters && (
-              <button onClick={reset} className="flex items-center gap-1 text-[12px] leading-[22px] text-[--foreground] hover:opacity-50 transition-opacity">
+              <button onClick={reset} className="flex items-center gap-1 text-[12px] leading-[22px] text-[--foreground] hover:opacity-50 transition-opacity" cursor-type="nav">
                 Reset
                 <Image src="/assets/icon-reset.svg" alt="" width={10} height={8} />
               </button>
@@ -381,7 +386,7 @@ export default function ProgettiClient({ projects, progettiIntro, initialTypolog
       <div className="page-px pb-16 flex justify-center md:justify-end">
         <Link
           href="/contatti"
-          className="flex items-center justify-center w-full md:w-auto border-2 border-[--foreground] rounded-[100px] px-[24px] py-[10px] text-[16px] text-[--foreground] leading-[22px] hover:bg-[#333] hover:text-white transition-colors duration-200"
+          className="flex items-center justify-center w-full md:w-auto border-2 border-[--foreground] rounded-[100px] px-[24px] py-[10px] text-[16px] text-[--foreground] leading-[22px] hover:bg-black hover:text-white transition-colors duration-200"
         >
           Contattaci per un progetto
         </Link>

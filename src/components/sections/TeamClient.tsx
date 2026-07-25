@@ -41,7 +41,8 @@ export default function TeamClient({ teamMembers }: Props) {
       <div className="sticky top-[60px] md:top-[80px] z-40 bg-white shadow-[0px_6px_8px_0px_rgba(0,0,0,0.1)] h-[75px] flex items-center justify-center gap-[8px]">
         <Link
           href="/studio"
-          className="inline-flex items-center border-2 border-[#333] rounded-[100px] px-[24px] py-[10px] text-[16px] leading-[22px] text-[#333] hover:bg-black hover:border-black hover:text-white transition-colors duration-200"
+          className="inline-flex items-center border-2 border-[#000] rounded-[100px] px-[24px] py-[10px] text-[16px] leading-[22px] text-[#000] hover:bg-black hover:border-black hover:text-white transition-colors duration-200"
+          cursor-type="nav"
         >
           Lo studio
         </Link>
@@ -50,8 +51,9 @@ export default function TeamClient({ teamMembers }: Props) {
           className={`inline-flex items-center border-2 rounded-[100px] px-[24px] py-[10px] text-[16px] leading-[22px] transition-colors duration-200 ${
             activeTab === "designers"
               ? "bg-black border-black text-white"
-              : "border-[#333] text-[#333] hover:bg-black hover:border-black hover:text-white"
+              : "border-[#000] text-[#000] hover:bg-black hover:border-black hover:text-white"
           }`}
+          cursor-type="nav"
         >
           Designers
         </button>
@@ -115,7 +117,7 @@ function MemberCard({
             {member?.name ?? "Nome Cognome"}
           </p>
           <div
-            className="inline-flex items-center border-2 border-[#333] rounded-[100px] px-[24px] overflow-hidden text-[12px] text-[#333] leading-[22px]"
+            className="inline-flex items-center border-2 border-[#000] rounded-[100px] px-[24px] overflow-hidden text-[12px] text-[#000] leading-[22px]"
             style={{ height: "27px" }}
           >
             {member?.role ?? "Principal Architect"}

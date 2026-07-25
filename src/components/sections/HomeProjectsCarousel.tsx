@@ -161,7 +161,7 @@ export default function HomeProjectsCarousel({ projects }: Props) {
                         <p className="text-[17.5px] leading-[1.5] text-[#282828] mb-2 truncate group-hover:opacity-70 transition-opacity">
                           {p.title}{p.location ? `, ${p.location}` : ""}
                         </p>
-                        <span className="inline-flex items-center border-2 border-[#333] rounded-[100px] px-[10px] py-[3px] text-[11px] text-[#333] leading-[1.4] whitespace-nowrap">
+                        <span className="inline-flex items-center border-2 border-[#000] rounded-[100px] px-[10px] py-[3px] text-[11px] text-[#000] leading-[1.4] whitespace-nowrap">
                           {p.typology ?? "Residenziale"}
                         </span>
                       </Link>
@@ -173,7 +173,7 @@ export default function HomeProjectsCarousel({ projects }: Props) {
                         <Image src={p.img} alt="" fill className="object-cover" priority={idx < 3} />
                       </div>
                       <p className="text-[17.5px] leading-[1.5] text-[#282828] mb-2 truncate">{p.label}</p>
-                      <span className="inline-flex items-center border-2 border-[#333] rounded-[100px] px-[10px] py-[3px] text-[11px] text-[#333] leading-[1.4] whitespace-nowrap">
+                      <span className="inline-flex items-center border-2 border-[#000] rounded-[100px] px-[10px] py-[3px] text-[11px] text-[#000] leading-[1.4] whitespace-nowrap">
                         {p.typology}
                       </span>
                     </div>

@@ -214,7 +214,7 @@ export default async function ProgettoPageV2({ params }: { params: Promise<{ slu
       <div className="page-px pb-12 pt-4 md:pt-0 md:flex md:justify-center">
         <Link
           href="/progetti"
-          className="flex items-center justify-center w-full md:w-auto border-2 border-[#333] rounded-[100px] px-[24px] py-[10px] text-[16px] text-[#333] leading-[22px] hover:bg-[#333] hover:text-white transition-colors duration-200"
+          className="flex items-center justify-center w-full md:w-auto border-2 border-[#000] rounded-[100px] px-[24px] py-[10px] text-[16px] text-[#000] leading-[22px] hover:bg-black hover:text-white transition-colors duration-200"
         >
           Vai a tutti i progetti
         </Link>

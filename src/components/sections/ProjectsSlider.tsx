@@ -118,7 +118,7 @@ export default function ProjectsSlider({ projects, title = "Vedi altri progetti"
               <p className="text-[15px] leading-[1.5] text-[#282828] mb-[6px] truncate">
                 {p.title}{p.location ? `, ${p.location}` : ""}
               </p>
-              <span className="inline-flex items-center border-2 border-[#333] rounded-[100px] px-[14px] py-[4px] text-[12px] text-[#333] leading-[1.4] whitespace-nowrap">
+              <span className="inline-flex items-center border-2 border-[#000] rounded-[100px] px-[14px] py-[4px] text-[12px] text-[#000] leading-[1.4] whitespace-nowrap">
                 {p.typology ?? "Residenziale"}
               </span>
             </Link>

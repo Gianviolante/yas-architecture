@@ -26,7 +26,7 @@ export default function Button({
 
   const variantStyles = {
     outlined: "border-2 border-[--foreground] text-[--foreground] hover:bg-[#000] hover:text-white",
-    primary: "bg-[--foreground] text-white hover:bg-[#333]",
+    primary: "bg-[--foreground] text-white hover:bg-black",
   };
 
   const sizeStyles = {

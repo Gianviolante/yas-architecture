@@ -69,7 +69,7 @@ export default function EventiClient({ events }: Props) {
                 className={`inline-flex items-center border-2 rounded-[100px] px-[24px] py-[10px] text-[16px] leading-[22px] transition-colors duration-200 ${
                   activeFilter === type
                     ? "bg-black border-black text-white"
-                    : "border-[#333] text-[#333] hover:bg-black hover:border-black hover:text-white"
+                    : "border-[#000] text-[#000] hover:bg-black hover:border-black hover:text-white"
                 }`}
               >
                 {type === "Evento" ? "Eventi" : type}
@@ -118,7 +118,7 @@ export default function EventiClient({ events }: Props) {
         <div className="flex justify-end mt-[80px]">
           <Link
             href="/contatti"
-            className="inline-flex items-center border-2 border-[#333] rounded-[100px] px-[24px] py-[10px] text-[16px] text-[#333] leading-[22px] hover:bg-[#333] hover:text-white transition-colors duration-200"
+            className="inline-flex items-center border-2 border-[#000] rounded-[100px] px-[24px] py-[10px] text-[16px] text-[#000] leading-[22px] hover:bg-black hover:text-white transition-colors duration-200"
           >
             Contattaci per informazioni
           </Link>
