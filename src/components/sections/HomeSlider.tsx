@@ -46,7 +46,7 @@ export default function HomeSlider({ slides = DEFAULT_SLIDES }: Props) {
     <div
       ref={containerRef}
       className="relative w-full overflow-hidden"
-      style={{ aspectRatio: "16/9" }}
+      style={{ aspectRatio: "clamp(1, (100vw - 2rem) / 800, 16/9)" }}
       onMouseMove={isPointerFine ? handleMouseMove : undefined}
       onMouseLeave={isPointerFine ? handleMouseLeave : undefined}
       onClick={isPointerFine ? handleClick : undefined}
