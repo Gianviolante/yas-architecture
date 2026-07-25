@@ -26,14 +26,6 @@ export function middleware(request: NextRequest) {
     maxAge: CSRF_TOKEN_MAX_AGE,
   });
 
-  // Protect /admin/elvis route - require authentication cookie
-  if (request.nextUrl.pathname.startsWith("/(site)/admin/elvis")) {
-    const elvisAuth = request.cookies.get("elvis-auth")?.value;
-    if (!elvisAuth) {
-      return NextResponse.redirect(new URL("/(site)/admin/elvis/login", request.url));
-    }
-  }
-
   // CSP for Sanity Studio on /admin
   if (request.nextUrl.pathname.startsWith("/admin")) {
     response.headers.set(
