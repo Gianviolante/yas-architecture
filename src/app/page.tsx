@@ -232,8 +232,8 @@ export default async function HomePage() {
                 ? <PortableText value={home.studioDescription as Parameters<typeof PortableText>[0]["value"]} components={ptBlock} />
                 : <p>{FALLBACK_INTRO}</p>}
             </div>
-            {/* immagine: 245px mobile / 411px tablet / 631px desktop */}
-            <div className="relative h-[245px] md:h-[411px] lg:h-[631px] mx-auto md:max-w-[668px] lg:max-w-[1027px] mb-2 md:mb-10">
+            {/* immagine: 400px mobile / 411px tablet / 631px desktop */}
+            <div className="relative h-[400px] md:h-[411px] lg:h-[631px] mx-auto md:max-w-[668px] lg:max-w-[1027px] mb-2 md:mb-10">
               {home?.studioImage?.url ? (
                 <Image src={home.studioImage.url} alt="Lo studio" fill className="object-cover" />
               ) : (
