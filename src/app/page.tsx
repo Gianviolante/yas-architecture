@@ -240,8 +240,6 @@ export default async function HomePage() {
                 <Image src="/assets/home-studio.jpg" alt="Lo studio" fill className="object-cover" priority />
               )}
             </div>
-            {/* contatore "4 / 6" — visibile solo su mobile */}
-            <p className="md:hidden text-[12px] leading-[1.5] text-[#282828] text-right mb-6">4 / 6</p>
             {/* bottone: full-width mobile, centrato desktop */}
             <div className="md:flex md:justify-center">
               <Link
