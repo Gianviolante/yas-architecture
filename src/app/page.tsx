@@ -128,7 +128,7 @@ export default async function HomePage() {
           {/* ── 2. LINKS ─────────────────────────────────────────────── */}
           <section className="page-px mt-[32px] md:mt-[48px] lg:mt-[64px]">
             <div className="flex flex-col gap-[25px] md:flex-row md:gap-[15px] md:h-[225px] lg:h-[371px] overflow-hidden">
-              {(home?.navLinks || DEFAULT_NAV_LINKS).map(({ href, label, image, img, flexGrow, mobileHeight, mobileH }) => {
+              {(home?.navLinks?.length ? home.navLinks.filter((link: any) => link?.href) : DEFAULT_NAV_LINKS).map(({ href, label, image, img, flexGrow, mobileHeight, mobileH }: any) => {
                 const imageUrl = (image as any)?.url || img;
                 const height = mobileHeight || mobileH;
                 return (

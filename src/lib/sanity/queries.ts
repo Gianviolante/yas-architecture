@@ -42,10 +42,12 @@ export const eventBySlugQuery = `
 `;
 
 export const homeQuery = `
-  *[_type == "home"][0] {
+  *[_id == "home-singleton-new"][0] {
     introDescription, bodyLeft, bodyRight, studioDescription,
     heroSubtitleLeft, heroTitleMain, heroSubtitleRight, heroAddress,
-    studioImage{ ..., "url": asset->url + "?w=1200&q=80&auto=format&dpr=2" }
+    studioImage{ ..., "url": asset->url + "?w=1200&q=80&auto=format&dpr=2" },
+    sliderImages[]{ ..., "url": asset->url + "?w=2400&q=80&auto=format&dpr=2" },
+    navLinks[]{ href, label, image{ ..., "url": asset->url + "?w=1200&q=80&auto=format&dpr=2" }, flexGrow, mobileHeight }
   }
 `;
 
