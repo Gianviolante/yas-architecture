@@ -97,7 +97,7 @@ export default function ContattiClient() {
           `https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(query)}&addresstype=city,town&format=json&limit=5`
         );
         const data = await res.json();
-        const options = data.map((item: any) => item.address?.city || item.address?.town || item.name).filter((n: any) => n).slice(0, 5);
+        const options: string[] = data.map((item: any) => item.address?.city || item.address?.town || item.name).filter((n: any) => n).slice(0, 5);
         setCittaOptions([...new Set(options)]);
         setShowCittaDropdown(true);
       } catch {
