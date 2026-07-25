@@ -27,20 +27,7 @@ export default defineConfig({
               S.document().schemaType("studio").documentId("studio")
             ),
             S.listItem().title("Home (contenuti)").schemaType("home").child(
-              S.list()
-                .id("homeDocuments")
-                .items([
-                  S.listItem()
-                    .id("home-current")
-                    .title("Home (attuale)")
-                    .schemaType("home")
-                    .child(S.document().schemaType("home").documentId("home-singleton")),
-                  S.listItem()
-                    .id("home-new")
-                    .title("Home (nuova) — DA COMPLETARE")
-                    .schemaType("home")
-                    .child(S.document().schemaType("home").documentId("home-singleton-new")),
-                ])
+              S.document().schemaType("home").documentId("home-singleton-new")
             ),
             S.listItem().title("Progetti — Intro").schemaType("progettiIntro").child(
               S.document().schemaType("progettiIntro").documentId("progetti-intro")
