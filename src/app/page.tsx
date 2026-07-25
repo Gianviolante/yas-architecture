@@ -233,7 +233,7 @@ export default async function HomePage() {
                 : <p>{FALLBACK_INTRO}</p>}
             </div>
             {/* immagine: 400px mobile / 411px tablet / 631px desktop */}
-            <div className="relative h-[400px] md:h-[411px] lg:h-[631px] mx-auto md:max-w-[668px] lg:max-w-[1027px] mb-2 md:mb-10">
+            <div className="relative h-[400px] md:h-[411px] lg:h-[631px] mx-auto md:max-w-[668px] lg:max-w-[1027px] mb-8 md:mb-10">
               {home?.studioImage?.url ? (
                 <Image src={home.studioImage.url} alt="Lo studio" fill className="object-cover" />
               ) : (
