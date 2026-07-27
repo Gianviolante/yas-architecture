@@ -55,7 +55,7 @@ export default async function HomePage() {
               )}
             </div>
             <div className="absolute text-[12px] leading-[1.2] text-right whitespace-nowrap" style={{ top: "8px", right: "15px", color: "#000000" }}>
-              <p>{home?.heroSubtitleRight || "Inspired by Apulian tradition"}</p>
+              <p>{home?.heroSubtitleRight}</p>
             </div>
 
             {/* big title */}
@@ -99,7 +99,7 @@ export default async function HomePage() {
 
             {/* Row 1 - Top-center: Subtitle (Inspired by Apulian tradition) */}
             <div className="col-start-2 row-start-1 text-[12px] md:text-[16px] leading-[0.8] text-left flex items-end">
-              <p>{home?.heroSubtitleRight || "Inspired by Apulian tradition"}</p>
+              <p>{home?.heroSubtitleRight}</p>
             </div>
 
             {/* Row 2 - Title (left aligned) */}
@@ -151,17 +151,14 @@ export default async function HomePage() {
             </div>
           </section>
 
-          {/* ── 3. APULIA — mobile ───────────────────────────────────── */}
+          {/* ── 3. ARCHITECTURE — mobile ───────────────────────────────────── */}
           <section className="md:hidden relative h-[208px] overflow-hidden mt-[40px]">
             <h2
               className="absolute font-bold text-black select-none"
               style={{ fontSize: "128px", lineHeight: "0.8", top: 0, left: "6px", width: "363px" }}
             >
-              Apulia
+              Architecture
             </h2>
-            <p className="absolute text-[12px] leading-[1.2] text-[#282828]" style={{ top: "3px", left: "109px" }}>
-              Inspired by
-            </p>
             <div className="absolute text-[12px] leading-[1.2] text-[#282828] text-right" style={{ top: "162px", right: "15px" }}>
               <ArrowLink href="/progetti?tipologia=Interior Design">Interior design→</ArrowLink>
               <ArrowLink href="/progetti?tipologia=Architettura">Architecture →</ArrowLink>
@@ -169,20 +166,15 @@ export default async function HomePage() {
             </div>
           </section>
 
-          {/* ── 3. APULIA — tablet + desktop ─────────────────────────── */}
+          {/* ── 3. ARCHITECTURE — tablet + desktop ─────────────────────────── */}
           <section className="hidden md:grid grid-cols-2 gap-[153px] page-px py-[32px] overflow-hidden mt-[24px] lg:mt-[32px] items-baseline">
-            {/* Row 1 - Title (Apulia) left */}
+            {/* Row 1 - Title (Architecture) left */}
             <div className="col-start-1 row-start-1">
               <AnimatedTitle
-                text="Apulia"
+                text="Architecture"
                 className="font-bold text-black leading-none whitespace-nowrap select-none"
                 style={{ fontSize: "clamp(8rem,19.8vw,285px)" }}
               />
-            </div>
-
-            {/* Row 1 - Top-right: Subtitle (Inspired by) */}
-            <div className="col-start-2 row-start-1 text-[12px] leading-[0.8] text-gray-900 self-start">
-              <p>Inspired by</p>
             </div>
 
             {/* Row 1 - Bottom-right: Project links */}
