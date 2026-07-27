@@ -79,7 +79,7 @@ export default async function HomePage() {
             </div>
 
             {/* links bottom-right */}
-            <div className="absolute text-[12px] leading-[1.2] text-[#282828] text-right" style={{ top: "301px", right: "15px" }}>
+            <div className="absolute text-[12px] leading-[1.2] text-black text-right" style={{ top: "301px", right: "15px" }}>
               <ArrowLink href="/progetti?tipologia=Interior Design">Interior design→</ArrowLink>
               <ArrowLink href="/progetti?tipologia=Architettura">Architecture →</ArrowLink>
               <ArrowLink href="/progetti">Tutti i progetti→</ArrowLink>
@@ -138,7 +138,7 @@ export default async function HomePage() {
                     style={{ flexGrow, flexShrink: 1, flexBasis: 0 }}
                     className="flex flex-col group"
                   >
-                    <p className="text-[12px] leading-[1.5] text-[#282828] shrink-0">{label}</p>
+                    <p className="text-[12px] leading-[1.5] text-black shrink-0">{label}</p>
                     <div
                       className="relative flex-1 overflow-hidden bg-[#d9d9d9] md:min-h-0"
                       style={{ minHeight: `${height}px` }}
@@ -159,7 +159,7 @@ export default async function HomePage() {
             >
               Architecture
             </h2>
-            <div className="absolute text-[12px] leading-[1.2] text-[#282828] text-right" style={{ top: "162px", right: "15px" }}>
+            <div className="absolute text-[12px] leading-[1.2] text-black text-right" style={{ top: "162px", right: "15px" }}>
               <ArrowLink href="/progetti?tipologia=Interior Design">Interior design→</ArrowLink>
               <ArrowLink href="/progetti?tipologia=Architettura">Architecture →</ArrowLink>
               <ArrowLink href="/progetti">Tutti i progetti→</ArrowLink>
@@ -178,7 +178,7 @@ export default async function HomePage() {
             </div>
 
             {/* Row 1 - Bottom-right: Project links */}
-            <div className="col-start-2 row-start-1 text-[12px] leading-[1.2] text-gray-900 flex flex-col justify-start self-start text-right" style={{ paddingTop: "24px" }}>
+            <div className="col-start-2 row-start-1 text-[12px] leading-[1.2] text-black flex flex-col justify-start self-start text-right" style={{ paddingTop: "24px" }}>
               <div>
                 <ArrowLink href="/progetti?tipologia=Interior Design">Interior design→</ArrowLink>
                 <ArrowLink href="/progetti?tipologia=Architettura">Architecture →</ArrowLink>
@@ -195,13 +195,13 @@ export default async function HomePage() {
                 : <p>{FALLBACK_INTRO}</p>}
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8 md:mb-12">
-              <div className="text-[16px] md:text-[17.5px] leading-[1.5] text-[#282828]">
+              <div className="text-[16px] md:text-[17.5px] leading-[1.5] text-black">
                 {home?.bodyLeft
                   ? <PortableText value={home.bodyLeft as Parameters<typeof PortableText>[0]["value"]} components={ptBlock} />
                   : <p>{FALLBACK_BODY_LEFT}</p>}
               </div>
               {/* bodyRight hidden on mobile — Figma shows single column */}
-              <div className="hidden md:block text-[17.5px] leading-[1.2] text-[#282828]">
+              <div className="hidden md:block text-[17.5px] leading-[1.2] text-black">
                 {home?.bodyRight
                   ? <PortableText value={home.bodyRight as Parameters<typeof PortableText>[0]["value"]} components={ptBlock} />
                   : <p>{FALLBACK_BODY_RIGHT}</p>}
