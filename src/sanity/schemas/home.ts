@@ -54,6 +54,14 @@ export const homeSchema = defineType({
       type: "array",
       of: [{ type: "block" }],
     }),
+    // ── PROGETTI SECTION ──────────────────────────────────
+    defineField({
+      name: "progettiDescription",
+      title: "Sezione Progetti: Testo descrizione",
+      description: "Testo grande 24px nella sezione Progetti (carousel)",
+      type: "array",
+      of: [{ type: "block" }],
+    }),
     // ── STUDIO SECTION ───────────────────────────────────
     defineField({
       name: "studioDescription",

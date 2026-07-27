@@ -43,7 +43,7 @@ export const eventBySlugQuery = `
 
 export const homeQuery = `
   *[_id == "home-singleton-new"][0] {
-    introDescription, bodyLeft, bodyRight, studioDescription,
+    introDescription, bodyLeft, bodyRight, progettiDescription, studioDescription,
     heroSubtitleLeft, heroTitleMain, heroSubtitleRight, heroAddress,
     studioImage{ ..., "url": asset->url + "?w=1200&q=80&auto=format&dpr=2" },
     sliderImages[]{ ..., "url": asset->url + "?w=2400&q=80&auto=format&dpr=2" },

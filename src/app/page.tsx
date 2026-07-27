@@ -222,7 +222,7 @@ export default async function HomePage() {
           </div>
 
           {/* ── 5. PROJECT BLOCK ─────────────────────────────────────── */}
-          <HomeProjectsCarousel projects={projects} />
+          <HomeProjectsCarousel projects={projects} progettiDescription={home?.progettiDescription} />
 
           {/* ── 6. STUDIO BLOCK ──────────────────────────────────────── */}
           <section className="page-px py-10">

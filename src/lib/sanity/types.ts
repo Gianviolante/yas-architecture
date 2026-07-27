@@ -80,6 +80,8 @@ export interface Home {
   introDescription?:  unknown; // PortableText
   bodyLeft?:          unknown; // PortableText
   bodyRight?:         unknown; // PortableText
+  // Progetti section
+  progettiDescription?: unknown; // PortableText
   // Studio section
   studioDescription?: unknown; // PortableText
   studioImage?:       SanityImage & { url?: string };

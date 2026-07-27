@@ -3,9 +3,16 @@
 import { useState, useRef, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { PortableText } from "@portabletext/react";
 import type { Project } from "@/lib/sanity/types";
 import { usePointerFine } from "@/lib/hooks/usePointerFine";
 import Button from "@/components/ui/Button";
+
+const ptBlock = {
+  block: { normal: ({ children }: { children?: React.ReactNode }) => <p>{children}</p> },
+};
+
+const FALLBACK_PROGETTI_DESCRIPTION = `It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use…`;
 
 const PLACEHOLDERS = [
   { id: "p1", img: "/assets/home-project-1.jpg", label: "Marina One Residence, Marina Way – SG", typology: "Residential" },
@@ -16,9 +23,9 @@ const PLACEHOLDERS = [
 
 const EDGE_ZONE = 140;
 
-interface Props { projects: Project[]; }
+interface Props { projects: Project[]; progettiDescription?: unknown; }
 
-export default function HomeProjectsCarousel({ projects }: Props) {
+export default function HomeProjectsCarousel({ projects, progettiDescription }: Props) {
   const isPointerFine = usePointerFine();
   const [idx, setIdx]             = useState(0);
   const [stepPx, setStepPx]       = useState(0);
@@ -81,11 +88,11 @@ export default function HomeProjectsCarousel({ projects }: Props) {
 
       <div className="px-[15px] md:px-[32px] pt-8 pb-16">
         <p className="text-[16px] leading-normal text-black text-center mb-6">Progetti</p>
-        <p className="text-[16px] md:text-[24px] font-medium leading-[1.2] text-[#282828] mb-10">
-          It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.
-          The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using
-          &lsquo;Content here, content here&rsquo;, making it look like readable English. Many desktop publishing packages and web page editors now use…
-        </p>
+        <div className="text-[16px] md:text-[24px] font-medium leading-[1.2] text-[#282828] mb-10">
+          {progettiDescription
+            ? <PortableText value={progettiDescription as Parameters<typeof PortableText>[0]["value"]} components={ptBlock} />
+            : <p>{FALLBACK_PROGETTI_DESCRIPTION}</p>}
+        </div>
 
         <div
           ref={containerRef}
