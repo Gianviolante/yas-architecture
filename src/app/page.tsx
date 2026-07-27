@@ -181,7 +181,7 @@ export default async function HomePage() {
             </div>
 
             {/* Row 1 - Top-right: Subtitle (Inspired by) */}
-            <div className="col-start-2 row-start-1 text-[12px] leading-[0.8] text-gray-900 self-start text-right">
+            <div className="col-start-2 row-start-1 text-[12px] leading-[0.8] text-gray-900 self-start">
               <p>Inspired by</p>
             </div>
 
