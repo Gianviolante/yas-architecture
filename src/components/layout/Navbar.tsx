@@ -28,15 +28,15 @@ const studioSubLinks = [
 /** Circular chip with + or − */
 function AccordionChip({ open }: { open: boolean }) {
   return (
-    <div className="size-[26px] rounded-full border border-[#1a1a1a] flex items-center justify-center shrink-0">
+    <div className="size-[26px] rounded-full border border-primary flex items-center justify-center shrink-0">
       <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
         {/* Horizontal line (always visible) */}
-        <path d="M0 6H12" stroke="#1a1a1a" strokeWidth="1.5" strokeLinecap="round" />
+        <path d="M0 6H12" stroke="var(--text-primary)" strokeWidth="1.5" strokeLinecap="round" />
 
         {/* Vertical line (fades when open) */}
         <motion.path
           d="M6 0V12"
-          stroke="#1a1a1a"
+          stroke="var(--text-primary)"
           strokeWidth="1.5"
           strokeLinecap="round"
           animate={{ opacity: open ? 0 : 1 }}
@@ -115,8 +115,8 @@ export default function Navbar() {
                     isDisabled(href)
                       ? "text-[#d9d9d9] cursor-default pointer-events-none"
                       : isActive(href)
-                        ? "text-[#d9d9d9] hover:text-[#1a1a1a]"
-                        : "text-[#1a1a1a] hover:text-[#d9d9d9]"
+                        ? "text-[#d9d9d9] hover:text-primary"
+                        : "text-primary hover:text-[#d9d9d9]"
                   )}
                   cursor-type="nav"
                 >
@@ -207,7 +207,7 @@ export default function Navbar() {
               aria-expanded={progettiOpen}
               cursor-type="nav"
             >
-              <span className="text-[22px] leading-normal text-[#1a1a1a] px-0">Progetti</span>
+              <span className="text-[22px] leading-normal text-primary px-0">Progetti</span>
               <AccordionChip open={progettiOpen} />
             </button>
 
@@ -222,13 +222,13 @@ export default function Navbar() {
                 <Link
                   key={label}
                   href={href}
-                  className="block px-5 py-[9px] text-[17px] text-[#1a1a1a] hover:opacity-60 transition-opacity"
+                  className="block px-5 py-[9px] text-[17px] text-primary hover:opacity-60 transition-opacity"
                   cursor-type="nav"
                 >
                   {label}
                 </Link>
               ))}
-              <p className="px-5 pb-4 pt-[6px] text-[12px] text-[#1a1a1a]/60 italic">
+              <p className="px-5 pb-4 pt-[6px] text-[12px] text-primary/60 italic">
                 Filtra ricerca
               </p>
             </motion.div>
@@ -242,7 +242,7 @@ export default function Navbar() {
               aria-expanded={studioOpen}
               cursor-type="nav"
             >
-              <span className="text-[22px] leading-normal text-[#1a1a1a] px-0">Studio</span>
+              <span className="text-[22px] leading-normal text-primary px-0">Studio</span>
               <AccordionChip open={studioOpen} />
             </button>
 
@@ -257,7 +257,7 @@ export default function Navbar() {
                 <Link
                   key={label}
                   href={href}
-                  className="block px-5 py-[9px] text-[17px] text-[#1a1a1a] hover:opacity-60 transition-opacity"
+                  className="block px-5 py-[9px] text-[17px] text-primary hover:opacity-60 transition-opacity"
                   cursor-type="nav"
                 >
                   {label}
@@ -276,13 +276,13 @@ export default function Navbar() {
               className="flex items-center border-b border-black px-[10px] py-[10px]"
               cursor-type="nav"
             >
-              <span className="text-[22px] leading-normal text-[#1a1a1a]">{label}</span>
+              <span className="text-[22px] leading-normal text-primary">{label}</span>
             </Link>
           ))}
 
           {/* Contatti — no border-b */}
           <Link href="/contatti" className="flex items-center px-[10px] py-[10px]" cursor-type="nav">
-            <span className="text-[22px] leading-normal text-[#1a1a1a]">Contatti</span>
+            <span className="text-[22px] leading-normal text-primary">Contatti</span>
           </Link>
 
         </nav>

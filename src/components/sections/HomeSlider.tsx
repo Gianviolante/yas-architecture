@@ -62,7 +62,7 @@ export default function HomeSlider({ slides = DEFAULT_SLIDES }: Props) {
         ))}
       </div>
 
-      <p className="absolute bottom-4 right-[29px] text-[12px] leading-[1.5] text-[#282828] text-right pointer-events-none">
+      <p className="absolute bottom-4 right-[29px] text-[12px] leading-[1.5] text-primary text-right pointer-events-none">
         {idx + 1} / {slides.length}
       </p>
 

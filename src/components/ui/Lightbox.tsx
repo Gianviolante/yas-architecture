@@ -234,7 +234,7 @@ export default function Lightbox({ items, initialIndex, onClose }: Props) {
           <ArrowLeft />
         </button>
 
-        <p className="text-[16px] leading-[1.5] text-[#282828]">
+        <p className="text-[16px] leading-[1.5] text-primary">
           {idx + 1} / {items.length}
         </p>
 

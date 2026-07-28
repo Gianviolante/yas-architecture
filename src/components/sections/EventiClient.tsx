@@ -58,7 +58,7 @@ export default function EventiClient({ events }: Props) {
         <div className="page-px h-full flex flex-col justify-start">
 
           {/* Row 1 — Area label */}
-          <p className="text-[12px] leading-[1.5] text-[#282828] pt-[8px]">Area</p>
+          <p className="text-[12px] leading-[1.5] text-primary pt-[8px]">Area</p>
 
           {/* Row 2 — Filter chips */}
           <div className="flex gap-[8px] mt-[8px]">
@@ -79,7 +79,7 @@ export default function EventiClient({ events }: Props) {
 
           {/* Row 3 — Active filter status + reset */}
           <div className="flex items-center justify-between mt-[16px]">
-            <p className="text-[12px] leading-[1.5] text-[#282828]">
+            <p className="text-[12px] leading-[1.5] text-primary">
               {filterLabel ? (
                 <>
                   <span>Filtra per: </span>
@@ -92,7 +92,7 @@ export default function EventiClient({ events }: Props) {
             {activeFilter && (
               <button
                 onClick={() => setActiveFilter(null)}
-                className="flex items-center gap-[4px] text-[12px] leading-[1.5] text-[#282828] hover:opacity-60 transition-opacity"
+                className="flex items-center gap-[4px] text-[12px] leading-[1.5] text-primary hover:opacity-60 transition-opacity"
               >
                 <span>↺</span>
                 <span>Reset</span>
@@ -144,7 +144,7 @@ function EventCard({ event }: { event: Event }) {
           <div className="absolute inset-0 bg-[#d9d9d9]" />
         )}
       </div>
-      <p className="text-[17.5px] leading-[1.5] text-[#282828]">{event.title}</p>
+      <p className="text-[17.5px] leading-[1.5] text-primary">{event.title}</p>
     </>
   );
 
@@ -163,7 +163,7 @@ function PlaceholderCard({ title }: { title: string }) {
   return (
     <div>
       <div className="w-full bg-[#d9d9d9] mb-[7px]" style={{ height: "319px" }} />
-      <p className="text-[17.5px] leading-[1.5] text-[#282828]">{title}</p>
+      <p className="text-[17.5px] leading-[1.5] text-primary">{title}</p>
     </div>
   );
 }

@@ -55,7 +55,7 @@ export default async function EventoPage({ params }: { params: Promise<{ slug: s
       {/* ── Intro description ──────────────────────────────────────── */}
       <div className="page-px pt-[32px] pb-[8px]">
         {event.description ? (
-          <div className="text-[24px] leading-normal text-[#282828]">
+          <div className="text-[24px] leading-normal text-primary">
             <PortableText
               value={event.description as Parameters<typeof PortableText>[0]["value"]}
               components={{
@@ -77,7 +77,7 @@ export default async function EventoPage({ params }: { params: Promise<{ slug: s
 
         {/* Left: meta info */}
         <div className="w-full lg:w-[577px] lg:shrink-0">
-          <div className="text-[12px] leading-[1.5] text-[#282828] space-y-[4px]">
+          <div className="text-[12px] leading-[1.5] text-primary space-y-[4px]">
             {event.typology && (
               <p>
                 <span className="text-[#9d9d9d]">Tipologia: </span>
@@ -118,7 +118,7 @@ export default async function EventoPage({ params }: { params: Promise<{ slug: s
         </div>
 
         {/* Right: body text */}
-        <div className="flex-1 text-[17.4px] leading-[1.2] text-[#282828]">
+        <div className="flex-1 text-[17.4px] leading-[1.2] text-primary">
           {event.body ? (
             <PortableText
               value={event.body as Parameters<typeof PortableText>[0]["value"]}

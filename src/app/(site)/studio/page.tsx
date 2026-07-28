@@ -177,7 +177,7 @@ export default async function StudioPage() {
                       ? <Image src={p.coverImageUrl} alt={p.title} fill sizes="(max-width: 768px) 100vw, 50vw" className="object-cover transition-transform duration-500 group-hover:scale-[1.03]" />
                       : <PlaceholderImg className="absolute inset-0" />}
                   </div>
-                  <p className="text-[17.5px] leading-[1.5] text-[#282828] mb-[6px]">
+                  <p className="text-[17.5px] leading-[1.5] text-primary mb-[6px]">
                     {p.title}{p.location ? `, ${p.location}` : ""}
                   </p>
                   <span className="inline-flex items-center border-2 border-black rounded-[100px] px-[14px] py-[4px] text-[12px] text-[#333] leading-[1.4]">

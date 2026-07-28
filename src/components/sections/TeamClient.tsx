@@ -113,7 +113,7 @@ function MemberCard({
       {/* Name + toggle button */}
       <div className="flex items-start justify-between">
         <div>
-          <p className="text-[17.5px] leading-[1.5] text-[#282828]">
+          <p className="text-[17.5px] leading-[1.5] text-primary">
             {member?.name ?? "Nome Cognome"}
           </p>
           <div
@@ -132,11 +132,11 @@ function MemberCard({
           <div className="w-4 h-4 flex items-center justify-center">
             {expanded ? (
               <svg width="16" height="16" viewBox="0 0 12 2" fill="none">
-                <path d="M0 1H12" stroke="#282828" strokeWidth="1.5" strokeLinecap="round" />
+                <path d="M0 1H12" stroke="var(--text-primary)" strokeWidth="1.5" strokeLinecap="round" />
               </svg>
             ) : (
               <svg width="16" height="16" viewBox="0 0 12 12" fill="none">
-                <path d="M6 0V12M0 6H12" stroke="#282828" strokeWidth="1.5" strokeLinecap="round" />
+                <path d="M6 0V12M0 6H12" stroke="var(--text-primary)" strokeWidth="1.5" strokeLinecap="round" />
               </svg>
             )}
           </div>
@@ -148,7 +148,7 @@ function MemberCard({
         className="overflow-hidden transition-all duration-300 ease-out"
         style={{ maxHeight: expanded ? "600px" : "0px", opacity: expanded ? 1 : 0 }}
       >
-        <div className="mt-[12px] text-[17.5px] leading-[1.5] text-[#282828]">
+        <div className="mt-[12px] text-[17.5px] leading-[1.5] text-primary">
           {member?.bio ? (
             <PortableText
               value={member.bio as Parameters<typeof PortableText>[0]["value"]}
