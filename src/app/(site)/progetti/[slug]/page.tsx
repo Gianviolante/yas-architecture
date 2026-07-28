@@ -116,15 +116,12 @@ export default async function ProgettoPage({ params }: { params: Promise<{ slug:
       </div>
 
       {/* ── Meta + description + chips ─────────────────────────────── */}
-      {/*
-          DOM order: [meta] [description] [mobile-chips]
-          Mobile (flex-col): meta → description → chips ✓
-          Desktop (flex-row lg): left(meta+chips) | right(description) ✓
-      */}
-      <div className="flex flex-col md:flex-row gap-x-[32px] page-px pt-[16px] md:pt-[24px] pb-[24px] md:pb-[40px]">
+      {/* Regular grid: mobile 1-col, desktop 2-col equal width */}
+      {/* Row 1: Info Panel | Description (aligned columns) */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-x-[32px] gap-y-[24px] page-px pt-[16px] md:pt-[24px] pb-[24px] md:pb-[40px]">
 
-        {/* LEFT: meta lines + (tablet/desktop) column labels + chips + team */}
-        <div className="w-full md:w-1/3 md:shrink-0 lg:w-[577px]">
+        {/* LEFT (Col 1): meta lines + (tablet/desktop) column labels + chips + team */}
+        <div>
           <div className="text-[12px] leading-[1.3] text-black space-y-[4px]">
             {project.typology    && <p><strong>Area:</strong> {project.typology}</p>}
             {project.year        && <p><strong>Timeline:</strong> {project.year}</p>}
@@ -138,20 +135,26 @@ export default async function ProgettoPage({ params }: { params: Promise<{ slug:
 
           {/* Desktop only: column labels + chips + team */}
           <div className="hidden md:block">
-            <div className="flex gap-[8px] mt-[24px]">
+            <div className="grid grid-cols-2 gap-[8px] mt-[24px] w-fit">
               {/* Area column */}
               <div className="flex flex-col gap-[6px]">
                 <p className="text-[12px] leading-[1.3] text-black">Area</p>
-                <span className="inline-flex items-center border-[1.179px] border-black rounded-[100px] px-[14px] py-[6px] text-[9.44px] text-black leading-[1.4] whitespace-nowrap">
-                  {project.typology}
-                </span>
+                <div className="flex flex-wrap gap-[8px]">
+                  {project.typology?.map((type) => (
+                    <span key={type} className="inline-flex items-center border-[1.179px] border-black rounded-[100px] px-[14px] py-[6px] text-[9.44px] text-black leading-[1.4] whitespace-nowrap">
+                      {type}
+                    </span>
+                  ))}
+                </div>
               </div>
               {/* Stato column */}
               <div className="flex flex-col gap-[6px]">
                 <p className="text-[12px] leading-[1.3] text-black">Stato</p>
-                <span className="inline-flex items-center border-[1.179px] border-black rounded-[100px] px-[14px] py-[6px] text-[9.44px] text-black leading-[1.4] whitespace-nowrap">
-                  {project.status}
-                </span>
+                <div className="flex flex-wrap gap-[8px]">
+                  <span className="inline-flex items-center border-[1.179px] border-black rounded-[100px] px-[14px] py-[6px] text-[9.44px] text-black leading-[1.4] whitespace-nowrap">
+                    {project.status}
+                  </span>
+                </div>
               </div>
             </div>
             {project.teamMembers && project.teamMembers.length > 0 && (
@@ -167,11 +170,8 @@ export default async function ProgettoPage({ params }: { params: Promise<{ slug:
           </div>
         </div>
 
-        {/* RIGHT: description */}
-        <div
-          className="flex-1 text-[16px] md:text-[17.4px] leading-[1.4] md:leading-[1.2] text-black mt-[16px] md:mt-0"
-          style={{ maxWidth: "798px" }}
-        >
+        {/* RIGHT (Col 2): description */}
+        <div className="text-[16px] md:text-[17.4px] leading-[1.4] md:leading-[1.2] text-black">
           {project.description ? (
             <PortableText value={project.description as Parameters<typeof PortableText>[0]["value"]} components={ptComponents} />
           ) : (
@@ -179,50 +179,53 @@ export default async function ProgettoPage({ params }: { params: Promise<{ slug:
           )}
         </div>
 
-        {/* MOBILE ONLY: chips below description */}
-        <div className="md:hidden mt-[20px]">
+        {/* MOBILE ONLY: chips below description (Col 1-2) */}
+        <div className="md:hidden col-span-1">
           <div className="flex gap-[8px] mb-[8px]">
             <p className="text-[12px] leading-[1.3] text-black w-[94px]">Area</p>
             <p className="text-[12px] leading-[1.3] text-black">Stato</p>
           </div>
-          <div className="flex items-center gap-[8px]">
-            <span className="inline-flex items-center border-[1.179px] border-black rounded-[100px] px-[14px] py-[6px] text-[9.44px] text-black leading-[1.4] whitespace-nowrap">
-              {project.typology}
-            </span>
+          <div className="flex flex-wrap gap-[8px] items-start">
+            <div className="flex flex-wrap gap-[8px]">
+              {project.typology?.map((type) => (
+                <span key={type} className="inline-flex items-center border-[1.179px] border-black rounded-[100px] px-[14px] py-[6px] text-[9.44px] text-black leading-[1.4] whitespace-nowrap">
+                  {type}
+                </span>
+              ))}
+            </div>
             <span className="inline-flex items-center border-[1.179px] border-black rounded-[100px] px-[14px] py-[6px] text-[9.44px] text-black leading-[1.4] whitespace-nowrap">
               {project.status}
             </span>
           </div>
         </div>
 
-      </div>
-
-
-      {/* ── Condividi (Share) Section ──────────────────────────────── */}
-      <div className="page-px md:p-0 pb-[40px] md:pb-0 md:pt-[24px] lg:pt-[40px] pt-[24px] md:mt-[40px] lg:mt-[60px]">
-        <div className="flex items-center gap-[12px]">
-          <p className="text-[12px] font-semibold leading-[1.3] text-primary">Condividi</p>
-          <div className="flex gap-[12px]">
-            <a
-              href={`https://www.facebook.com/sharer/sharer.php?u=${typeof window !== 'undefined' ? window.location.href : ''}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="Condividi su Facebook"
-              className="text-[16px] font-bold text-primary hover:opacity-60 transition-opacity"
-            >
-              f
-            </a>
-            <a
-              href={`https://www.linkedin.com/sharing/share-offsite/?url=${typeof window !== 'undefined' ? window.location.href : ''}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="Condividi su LinkedIn"
-              className="text-[16px] font-bold text-primary hover:opacity-60 transition-opacity"
-            >
-              in
-            </a>
+        {/* Condividi (Share) - spans both columns on mobile, only col 1 on desktop */}
+        <div className="col-span-1 md:col-start-1 md:row-auto">
+          <div className="flex items-center gap-[12px] pt-[24px] md:pt-[32px]">
+            <p className="text-[12px] font-semibold leading-[1.3] text-black">Condividi</p>
+            <div className="flex gap-[12px]">
+              <a
+                href={`https://www.facebook.com/sharer/sharer.php?u=${typeof window !== 'undefined' ? window.location.href : ''}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Condividi su Facebook"
+                className="text-[16px] font-bold text-black hover:opacity-60 transition-opacity"
+              >
+                f
+              </a>
+              <a
+                href={`https://www.linkedin.com/sharing/share-offsite/?url=${typeof window !== 'undefined' ? window.location.href : ''}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Condividi su LinkedIn"
+                className="text-[16px] font-bold text-black hover:opacity-60 transition-opacity"
+              >
+                in
+              </a>
+            </div>
           </div>
         </div>
+
       </div>
 
       {/* ── Gallery slider (includes two square images on mobile) ────── */}

@@ -16,7 +16,7 @@ export interface Project {
   location: string;
   year: number;
   area?: number;
-  typology: Typology;
+  typology: Typology[];
   status: ProjectStatus;
   concept?: string;
   projectTeam?: string;

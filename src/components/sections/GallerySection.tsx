@@ -25,9 +25,9 @@ export default function GallerySection({ items, projectTitle, allGalleryItems, o
 
   return (
     <div className="mt-[26px]">
-      {/* Two square images (YAS-style) - clickable on mobile */}
+      {/* Two square images (YAS-style) - clickable on mobile - grid aligned */}
       {showSquareImages && (
-        <div className="mx-4 md:mx-[30px] gap-[16px] md:gap-[24px] grid grid-cols-1 md:grid-cols-2 mb-[48px]">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-[16px] md:gap-[24px] page-px mb-[48px]">
           {allGalleryItems!.slice(0, 2).map((img, idx) => (
             <button
               key={idx}
@@ -48,7 +48,7 @@ export default function GallerySection({ items, projectTitle, allGalleryItems, o
 
       <button
         onClick={() => setCompact((v) => !v)}
-        className="hidden md:block px-[47px] text-[12px] leading-[1.2] text-primary mb-[16px] hover:opacity-60 transition-opacity"
+        className="hidden md:block page-px text-[12px] leading-[1.2] text-primary mb-[16px] hover:opacity-60 transition-opacity"
       >
         {compact ? "Visualizza come slider" : "Visualizza come miniature"}
       </button>
