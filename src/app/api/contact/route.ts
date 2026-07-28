@@ -114,11 +114,84 @@ export async function POST(req: NextRequest) {
   const safeMessaggio = escapeHtml(messaggio.trim());
   const safeTelefono = escapeHtml(telefono?.trim() || "");
 
+  // Generate confirmation email HTML
+  const confirmationEmailHtml = `<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Richiesta ricevuta — YAS Architecture</title>
+</head>
+<body style="margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background-color: #f9f9f9;">
+  <div style="max-width: 600px; margin: 0 auto; background-color: #ffffff;">
+    <!-- Logo -->
+    <div style="padding: 60px 40px 40px; text-align: center; border-bottom: 1px solid #e5e5e5;">
+      <img src="https://yas-architecture.vercel.app/logo.png" alt="YAS Architecture" style="max-width: 120px; height: auto; margin-bottom: 20px; display: block; margin-left: auto; margin-right: auto;">
+    </div>
+    <!-- Contenuto -->
+    <div style="padding: 60px 40px;">
+      <h1 style="margin: 0 0 20px; font-size: 36px; font-weight: 300; text-align: center;">Grazie</h1>
+      <p style="margin: 0 0 40px; font-size: 16px; text-align: center; color: #666; line-height: 1.8;">
+        Abbiamo ricevuto la tua richiesta.<br>
+        Ti risponderemo al più presto.
+      </p>
+      <div style="background-color: #f5f5f5; padding: 30px; margin: 0 0 40px; text-align: center;">
+        <div style="margin-bottom: 25px;">
+          <div style="font-size: 12px; text-transform: uppercase; letter-spacing: 0.8px; color: #999; margin-bottom: 8px;">Nome</div>
+          <div style="font-size: 16px; color: #000;">${safeNome} ${safeCognome}</div>
+        </div>
+        <div style="margin-bottom: 25px;">
+          <div style="font-size: 12px; text-transform: uppercase; letter-spacing: 0.8px; color: #999; margin-bottom: 8px;">Email</div>
+          <div style="font-size: 16px; color: #000;">${safeEmail}</div>
+        </div>
+        <div style="margin-bottom: 0;">
+          <div style="font-size: 12px; text-transform: uppercase; letter-spacing: 0.8px; color: #999; margin-bottom: 8px;">Messaggio</div>
+          <div style="font-size: 16px; color: #000;">${safeMessaggio.replace(/\n/g, "<br>")}</div>
+        </div>
+      </div>
+    </div>
+    <!-- Footer -->
+    <div style="padding: 40px; text-align: center; border-top: 1px solid #e5e5e5; font-size: 13px; color: #999;">
+      <p style="margin: 0 0 15px;">
+        <a href="https://yas-arc.com" style="color: #000; text-decoration: none; border-bottom: 1px solid #000;">yas-arc.com</a>
+      </p>
+      <p style="margin: 0 0 20px; line-height: 1.6;">
+        Piazza Marco Antonio Cavalerio, 21<br>
+        72100 Brindisi, Italia
+      </p>
+      <div style="margin-bottom: 20px;">
+        <a href="https://www.facebook.com/p/Y-A-S-architecture-100063041749591" style="display: inline-block; margin: 0 12px; color: #000; text-decoration: none; font-size: 12px;">Facebook</a>
+        <a href="https://www.instagram.com/yas_architecture_/" style="display: inline-block; margin: 0 12px; color: #000; text-decoration: none; font-size: 12px;">Instagram</a>
+      </div>
+      <p style="margin: 0; color: #ccc;">
+        © YAS Architecture Associati
+      </p>
+    </div>
+  </div>
+</body>
+</html>`;
+
   // Send via Resend when API key is configured
   const resendKey = process.env.RESEND_API_KEY;
   if (resendKey) {
     try {
-      const res = await fetch("https://api.resend.com/emails", {
+      // Send confirmation email to customer
+      await fetch("https://api.resend.com/emails", {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${resendKey}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          from: "YAS Architecture <studio@yas-arc.com>",
+          to: [safeEmail],
+          subject: "Richiesta ricevuta — YAS Architecture",
+          html: confirmationEmailHtml,
+        }),
+      });
+
+      // Send notification to team
+      const teamRes = await fetch("https://api.resend.com/emails", {
         method: "POST",
         headers: {
           Authorization: `Bearer ${resendKey}`,
@@ -138,8 +211,9 @@ export async function POST(req: NextRequest) {
           `,
         }),
       });
-      if (!res.ok) {
-        const errorData = await res.json();
+
+      if (!teamRes.ok) {
+        const errorData = await teamRes.json();
         console.error("Resend error:", errorData);
         return NextResponse.json({ error: "Errore invio email", code: "EMAIL_SEND_FAILED" }, { status: 500 });
       }
