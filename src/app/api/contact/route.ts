@@ -117,27 +117,34 @@ export async function POST(req: NextRequest) {
   // Send via Resend when API key is configured
   const resendKey = process.env.RESEND_API_KEY;
   if (resendKey) {
-    const res = await fetch("https://api.resend.com/emails", {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${resendKey}`,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        from: "YAS Architecture <noreply@yas-arc.com>",
-        to: ["studio@yas-arc.com"],
-        reply_to: safeEmail,
-        subject: `Nuovo messaggio da ${safeNome} ${safeCognome}`.trim(),
-        html: `
-          <p><strong>Nome:</strong> ${safeNome} ${safeCognome}</p>
-          <p><strong>Email:</strong> ${safeEmail}</p>
-          ${safeTelefono ? `<p><strong>Telefono:</strong> ${safeTelefono}</p>` : ""}
-          <p><strong>Messaggio:</strong></p>
-          <p>${safeMessaggio.replace(/\n/g, "<br>")}</p>
-        `,
-      }),
-    });
-    if (!res.ok) {
+    try {
+      const res = await fetch("https://api.resend.com/emails", {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${resendKey}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          from: "YAS Architecture <studio@yas-arc.com>",
+          to: ["studio@yas-arc.com"],
+          reply_to: safeEmail,
+          subject: `Nuovo messaggio da ${safeNome} ${safeCognome}`.trim(),
+          html: `
+            <p><strong>Nome:</strong> ${safeNome} ${safeCognome}</p>
+            <p><strong>Email:</strong> ${safeEmail}</p>
+            ${safeTelefono ? `<p><strong>Telefono:</strong> ${safeTelefono}</p>` : ""}
+            <p><strong>Messaggio:</strong></p>
+            <p>${safeMessaggio.replace(/\n/g, "<br>")}</p>
+          `,
+        }),
+      });
+      if (!res.ok) {
+        const errorData = await res.json();
+        console.error("Resend error:", errorData);
+        return NextResponse.json({ error: "Errore invio email", code: "EMAIL_SEND_FAILED" }, { status: 500 });
+      }
+    } catch (error) {
+      console.error("Resend fetch error:", error);
       return NextResponse.json({ error: "Errore invio email", code: "EMAIL_SEND_FAILED" }, { status: 500 });
     }
   } else if (process.env.NODE_ENV === "development") {
