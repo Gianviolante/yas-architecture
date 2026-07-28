@@ -64,7 +64,7 @@ export default function ProgettiClient({ projects, progettiIntro, initialTypolog
   }, []);
 
   const filtered = useMemo(() => projects.filter((p) => {
-    const matchType  = typologyFilters.size === 0 || typologyFilters.has(p.typology);
+    const matchType  = typologyFilters.size === 0 || p.typology.some(t => typologyFilters.has(t));
     const matchStato = statoFilters.size    === 0 || statoFilters.has(p.status);
     return matchType && matchStato;
   }), [projects, typologyFilters, statoFilters]);
