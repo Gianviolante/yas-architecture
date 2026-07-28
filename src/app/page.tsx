@@ -155,7 +155,7 @@ export default async function HomePage() {
           <section className="md:hidden relative h-[208px] overflow-hidden mt-[40px]">
             <h2
               className="absolute font-bold text-black select-none"
-              style={{ fontSize: "128px", lineHeight: "0.8", top: 0, left: "6px", width: "363px" }}
+              style={{ fontSize: "clamp(60px, 30vw, 85px)", lineHeight: "0.8", top: 0, left: "16px", width: "100%", paddingRight: "16px" }}
             >
               Architecture
             </h2>
@@ -173,7 +173,7 @@ export default async function HomePage() {
               <AnimatedTitle
                 text="Architecture"
                 className="font-bold text-black leading-none whitespace-nowrap select-none"
-                style={{ fontSize: "clamp(8rem,19.8vw,220px)" }}
+                style={{ fontSize: "clamp(8rem,19.8vw,160px)" }}
               />
             </div>
 

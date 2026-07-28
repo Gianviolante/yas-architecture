@@ -22,15 +22,15 @@ export default function AnimatedTitle({ text, className = "", style }: AnimatedT
       letters,
       {
         opacity: 0,
-        filter: "blur(10px)",
+        filter: "blur(18px)",
       },
       {
         opacity: 1,
         filter: "blur(0px)",
-        duration: 0.9,
+        duration: 1.6,
         ease: "power2.out",
         stagger: {
-          amount: 0.45,
+          amount: 0.7,
           from: "start",
         },
       }
