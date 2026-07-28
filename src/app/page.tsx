@@ -87,7 +87,7 @@ export default async function HomePage() {
           </section>
 
           {/* ── 1. HERO — tablet + desktop ───────────────────────────── */}
-          <section className="hidden md:grid grid-cols-3 grid-rows-[auto_auto_minmax(80px,auto)] gap-y-[8px] lg:gap-y-[32px] gap-x-[32px] md:gap-x-[48px] lg:gap-x-[64px] overflow-hidden page-px md:py-[24px] lg:py-[32px]">
+          <section className="hidden md:grid grid-cols-3 grid-rows-[auto_auto_minmax(80px,auto)] gap-y-[8px] lg:gap-y-[4px] gap-x-[32px] md:gap-x-[48px] lg:gap-x-[64px] overflow-hidden page-px md:py-[24px] lg:pt-[8px] lg:pb-[32px]">
             {/* Row 1 - Top-left: Subtitle (Studio architettura e design) */}
             <div className="col-start-1 row-start-1 text-[12px] md:text-[16px] leading-[0.8] text-black flex items-end">
               {home?.heroSubtitleLeft ? (
@@ -103,7 +103,7 @@ export default async function HomePage() {
             </div>
 
             {/* Row 2 - Title (left aligned) */}
-            <div className="col-start-1 row-start-2 flex items-center">
+            <div className="col-start-1 row-start-2 flex items-start">
               <AnimatedTitle
                 text={home?.heroTitleMain || "yas-arc"}
                 className="font-bold text-black leading-none whitespace-nowrap select-none"
@@ -173,7 +173,7 @@ export default async function HomePage() {
               <AnimatedTitle
                 text="Architecture"
                 className="font-bold text-black leading-none whitespace-nowrap select-none"
-                style={{ fontSize: "clamp(8rem,19.8vw,285px)" }}
+                style={{ fontSize: "clamp(8rem,19.8vw,220px)" }}
               />
             </div>
 

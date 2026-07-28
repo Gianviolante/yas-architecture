@@ -61,7 +61,7 @@ html {
 
 body {
   background: #ffffff;
-  color: #171717;
+  color: var(--foreground);
 }
 
 @keyframes fadeIn {
@@ -101,5 +101,10 @@ body {
   ::-moz-selection {
     background-color: #171717;
     color: #ffffff;
+  }
+
+  /* Uniform line-height for body text */
+  p {
+    @apply leading-[1.7];
   }
 }
