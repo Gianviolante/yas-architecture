@@ -170,22 +170,45 @@ export default async function ProgettoPage({ params }: { params: Promise<{ slug:
           </div>
         </div>
 
-        {/* RIGHT (Col 2): description */}
-        <div className="text-[16px] md:text-[17.4px] leading-[1.4] md:leading-[1.2] text-black">
-          {project.description ? (
-            <PortableText value={project.description as Parameters<typeof PortableText>[0]["value"]} components={ptComponents} />
-          ) : (
-            <p className="text-[#d9d9d9]">Nessuna descrizione disponibile.</p>
-          )}
+        {/* RIGHT (Col 2): description + condividi */}
+        <div>
+          <div className="text-[16px] md:text-[17.4px] leading-[1.4] md:leading-[1.2] text-black">
+            {project.description ? (
+              <PortableText value={project.description as Parameters<typeof PortableText>[0]["value"]} components={ptComponents} />
+            ) : (
+              <p className="text-[#d9d9d9]">Nessuna descrizione disponibile.</p>
+            )}
+          </div>
+          {/* Desktop: Condividi below description */}
+          <div className="hidden md:flex items-center gap-[12px] pt-[32px]">
+            <p className="text-[12px] font-semibold leading-[1.3] text-black">Condividi</p>
+            <div className="flex gap-[12px]">
+              <a
+                href={`https://www.facebook.com/sharer/sharer.php?u=${typeof window !== 'undefined' ? window.location.href : ''}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Condividi su Facebook"
+                className="text-[16px] font-bold text-black hover:opacity-60 transition-opacity"
+              >
+                f
+              </a>
+              <a
+                href={`https://www.linkedin.com/sharing/share-offsite/?url=${typeof window !== 'undefined' ? window.location.href : ''}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Condividi su LinkedIn"
+                className="text-[16px] font-bold text-black hover:opacity-60 transition-opacity"
+              >
+                in
+              </a>
+            </div>
+          </div>
         </div>
 
-        {/* MOBILE ONLY: chips below description (Col 1-2) */}
+        {/* MOBILE ONLY: chips stack below description (Col 1-2) */}
         <div className="md:hidden col-span-1">
-          <div className="flex gap-[8px] mb-[8px]">
-            <p className="text-[12px] leading-[1.3] text-black w-[94px]">Area</p>
-            <p className="text-[12px] leading-[1.3] text-black">Stato</p>
-          </div>
-          <div className="flex flex-wrap gap-[8px] items-start">
+          <div className="mb-[16px]">
+            <p className="text-[12px] leading-[1.3] text-black mb-[8px]">Area</p>
             <div className="flex flex-wrap gap-[8px]">
               {project.typology?.map((type) => (
                 <span key={type} className="inline-flex items-center border-[1.179px] border-black rounded-[100px] px-[14px] py-[6px] text-[9.44px] text-black leading-[1.4] whitespace-nowrap">
@@ -193,14 +216,19 @@ export default async function ProgettoPage({ params }: { params: Promise<{ slug:
                 </span>
               ))}
             </div>
-            <span className="inline-flex items-center border-[1.179px] border-black rounded-[100px] px-[14px] py-[6px] text-[9.44px] text-black leading-[1.4] whitespace-nowrap">
-              {project.status}
-            </span>
+          </div>
+          <div>
+            <p className="text-[12px] leading-[1.3] text-black mb-[8px]">Stato</p>
+            <div className="flex flex-wrap gap-[8px]">
+              <span className="inline-flex items-center border-[1.179px] border-black rounded-[100px] px-[14px] py-[6px] text-[9.44px] text-black leading-[1.4] whitespace-nowrap">
+                {project.status}
+              </span>
+            </div>
           </div>
         </div>
 
-        {/* Condividi (Share) - spans both columns on mobile, only col 1 on desktop */}
-        <div className="col-span-1 md:col-start-1 md:row-auto">
+        {/* Condividi (Share) - mobile only (desktop version is inside description) */}
+        <div className="col-span-1 md:hidden">
           <div className="flex items-center gap-[12px] pt-[24px] md:pt-[32px]">
             <p className="text-[12px] font-semibold leading-[1.3] text-black">Condividi</p>
             <div className="flex gap-[12px]">
