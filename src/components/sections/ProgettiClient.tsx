@@ -7,6 +7,7 @@ import { motion } from "framer-motion";
 import { PortableText } from "@portabletext/react";
 import type { Project, Typology, ProjectStatus, ProgettiIntro } from "@/lib/sanity/types";
 import { FALLBACK_INTRO } from "@/lib/constants";
+import Chip from "@/components/ui/Chip";
 import ProjectsSlider from "@/components/sections/ProjectsSlider";
 
 const AREA_FILTERS: { label: string; value: Typology | "all" }[] = [
@@ -455,9 +456,7 @@ function ProjectCard({ project: p, size }: { project: Project; size: "large" | "
       </p>
       <div className="flex flex-wrap gap-[6px]">
         {(p.typology && p.typology.length > 0 ? p.typology : ["Residenziale"]).map((t) => (
-          <span key={t} className="inline-flex items-center border-2 border-[--foreground] rounded-[100px] px-[14px] py-[4px] text-[12px] text-[--foreground] leading-[1.4]">
-            {t}
-          </span>
+          <Chip key={t}>{t}</Chip>
         ))}
       </div>
     </Link>

@@ -5,6 +5,7 @@ import Link from "next/link";
 import Image from "next/image";
 import type { Project } from "@/lib/sanity/types";
 import { usePointerFine } from "@/lib/hooks/usePointerFine";
+import Chip from "@/components/ui/Chip";
 
 const CARD_STEP = 263 + 15;
 const EDGE_ZONE = 140; // px dal bordo
@@ -120,9 +121,7 @@ export default function ProjectsSlider({ projects, title = "Vedi altri progetti"
               </p>
               <div className="flex flex-wrap gap-[6px]">
                 {(p.typology && p.typology.length > 0 ? p.typology : ["Residenziale"]).slice(0, 2).map((t) => (
-                  <span key={t} className="inline-flex items-center border-2 border-[#000] rounded-[100px] px-[14px] py-[4px] text-[12px] text-[#000] leading-[1.4] whitespace-nowrap">
-                    {t}
-                  </span>
+                  <Chip key={t}>{t}</Chip>
                 ))}
               </div>
             </Link>

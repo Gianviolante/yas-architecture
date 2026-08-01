@@ -23,6 +23,7 @@
   --font-sans: "Neue Haas Grotesk", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
 
   /* Semantic text colors */
+  --foreground: #000;            /* primary text (alias for --text-primary) */
   --text-primary: #000;          /* primary text — full black */
   --text-secondary: #d9d9d9;     /* secondary text, disabled state */
   --text-muted: #999;            /* muted text */
@@ -30,6 +31,7 @@
   /* Semantic surface colors */
   --surface-primary: #ffffff;    /* primary background */
   --surface-secondary: #d9d9d9;  /* secondary background, light surfaces */
+  --surface-muted: #d9d9d9;      /* muted surface (alias for --surface-secondary) */
 
   /* Semantic border */
   --border: #000;                /* border, divider colors */
@@ -56,15 +58,13 @@
 
 html {
   max-width: 100%;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 body {
   max-width: 100%;
-}
-
-html {
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
 }
 
 body {

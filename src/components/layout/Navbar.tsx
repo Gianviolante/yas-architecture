@@ -113,10 +113,10 @@ export default function Navbar() {
                   className={cn(
                     "text-[14px] leading-normal transition-colors duration-200 block py-1",
                     isDisabled(href)
-                      ? "text-[#d9d9d9] cursor-default pointer-events-none"
+                      ? "text-[--text-secondary] cursor-default pointer-events-none"
                       : isActive(href)
-                        ? "text-[#d9d9d9] hover:text-primary"
-                        : "text-primary hover:text-[#d9d9d9]"
+                        ? "text-[--text-secondary] hover:text-primary"
+                        : "text-primary hover:text-[--text-secondary]"
                   )}
                   cursor-type="nav"
                 >
@@ -157,7 +157,7 @@ export default function Navbar() {
               className={cn(
                 "text-[11.82px] leading-normal px-[17.727px] py-[7.386px] rounded-[100px] transition-colors duration-200 whitespace-nowrap",
                 pathname === "/contatti"
-                  ? "bg-[#000] text-white"
+                  ? "bg-[--border] text-white"
                   : "bg-[#E5E7EB] text-[--foreground] hover:bg-[--border]"
               )}
               cursor-type="nav"
@@ -173,7 +173,7 @@ export default function Navbar() {
               className={cn(
                 "text-[11.82px] leading-normal px-[13px] py-[6px] rounded-[100px] transition-colors duration-200 whitespace-nowrap",
                 pathname === "/contatti"
-                  ? "bg-[#000] text-white"
+                  ? "bg-[--border] text-white"
                   : "bg-[#E5E7EB] text-[--foreground] hover:bg-[--border]"
               )}
               cursor-type="nav"

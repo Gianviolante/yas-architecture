@@ -5,6 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import type { Event, EventType } from "@/lib/sanity/types";
 import { FALLBACK_INTRO } from "@/lib/constants";
+import Chip from "@/components/ui/Chip";
 
 interface Props {
   events: Event[];
@@ -62,17 +63,14 @@ export default function EventiClient({ events }: Props) {
           {/* Row 2 — Filter chips */}
           <div className="flex gap-[8px] mt-[8px]">
             {(["News", "Evento"] as EventType[]).map((type) => (
-              <button
+              <Chip
                 key={type}
+                variant="toggle"
+                isActive={activeFilter === type}
                 onClick={() => setActiveFilter(activeFilter === type ? null : type)}
-                className={`inline-flex items-center border-2 rounded-[100px] px-[24px] py-[10px] text-[16px] leading-[22px] transition-colors duration-200 ${
-                  activeFilter === type
-                    ? "bg-black border-black text-white"
-                    : "border-[#000] text-[#000] hover:bg-black hover:border-black hover:text-white"
-                }`}
               >
                 {type === "Evento" ? "Eventi" : type}
-              </button>
+              </Chip>
             ))}
           </div>
 
@@ -82,10 +80,10 @@ export default function EventiClient({ events }: Props) {
               {filterLabel ? (
                 <>
                   <span>Filtra per: </span>
-                  <span className="text-[#d9d9d9]">{filterLabel}</span>
+                  <span className="text-[--text-secondary]">{filterLabel}</span>
                 </>
               ) : (
-                <span className="text-[#d9d9d9]">Nessun filtro attivo</span>
+                <span className="text-[--text-secondary]">Nessun filtro attivo</span>
               )}
             </p>
             {activeFilter && (
