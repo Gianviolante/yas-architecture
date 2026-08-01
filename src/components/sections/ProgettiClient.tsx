@@ -454,9 +454,13 @@ function ProjectCard({ project: p, size }: { project: Project; size: "large" | "
       <p className="text-[17.5px] leading-[1.5] text-[--foreground] mb-[4px] truncate">
         {p.title}{p.location ? `, ${p.location}` : ""}
       </p>
-      <span className="inline-flex items-center border-2 border-[--foreground] rounded-[100px] px-[14px] py-[4px] text-[12px] text-[--foreground] leading-[1.4]">
-        {p.typology ?? "Residenziale"}
-      </span>
+      <div className="flex flex-wrap gap-[6px]">
+        {(p.typology && p.typology.length > 0 ? p.typology : ["Residenziale"]).map((t) => (
+          <span key={t} className="inline-flex items-center border-2 border-[--foreground] rounded-[100px] px-[14px] py-[4px] text-[12px] text-[--foreground] leading-[1.4]">
+            {t}
+          </span>
+        ))}
+      </div>
     </Link>
   );
 }
