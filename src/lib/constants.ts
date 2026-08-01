@@ -51,3 +51,6 @@ export const ROUTES = {
   CONTATTI: "/contatti",
   ADMIN: "/admin",
 } as const;
+
+// Section intro text (used in EventiClient, ProgettiClient, TeamClient)
+export const FALLBACK_INTRO = `I benefici derivanti dall'utilizzo di una griglia sono evidenti: chiarezza, efficienza, economia, continuità. Prima di ogni altra cosa, una griglia introduce ordine sistematico a una struttura visiva, facilitando la distinzione delle diverse categorie informative e indirizzando lo spostamento dell'occhio del lettore tra di esse.`;

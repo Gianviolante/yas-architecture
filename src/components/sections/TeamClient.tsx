@@ -6,6 +6,7 @@ import Link from "next/link";
 import { PortableText } from "@portabletext/react";
 import imageUrlBuilder from "@sanity/image-url";
 import { sanityClient } from "@/lib/sanity/client";
+import { FALLBACK_INTRO } from "@/lib/constants";
 import type { TeamMember, SanityImage } from "@/lib/sanity/types";
 
 const builder = imageUrlBuilder(sanityClient);
@@ -18,8 +19,6 @@ interface Props {
 }
 
 type Tab = "studio" | "designers";
-
-const FALLBACK_INTRO = `I benefici derivanti dall'utilizzo di una griglia sono evidenti: chiarezza, efficienza, economia, continuità. Prima di ogni altra cosa, una griglia introduce ordine sistematico a una struttura visiva, facilitando la distinzione delle diverse categorie informative e indirizzando lo spostamento dell'occhio del lettore tra di esse.`;
 
 export default function TeamClient({ teamMembers }: Props) {
   const [activeTab, setActiveTab] = useState<Tab>("designers");

@@ -6,6 +6,7 @@ import Image from "next/image";
 import { motion } from "framer-motion";
 import { PortableText } from "@portabletext/react";
 import type { Project, Typology, ProjectStatus, ProgettiIntro } from "@/lib/sanity/types";
+import { FALLBACK_INTRO } from "@/lib/constants";
 import ProjectsSlider from "@/components/sections/ProjectsSlider";
 
 const AREA_FILTERS: { label: string; value: Typology | "all" }[] = [
@@ -24,8 +25,6 @@ const STATO_FILTERS: { label: string; value: ProjectStatus }[] = [
   { label: "Progetti",   value: "Progetti" },
   { label: "Realizzato", value: "Realizzato" },
 ];
-
-const DEFAULT_INTRO = `I benefici derivanti dall'utilizzo di una griglia sono evidenti: chiarezza, efficienza, economia, continuità. Prima di ogni altra cosa, una griglia introduce ordine sistematico a una struttura visiva, facilitando la distinzione delle diverse categorie informative e indirizzando lo spostamento dell'occhio del lettore tra di esse.`;
 
 interface Props {
   projects: Project[];
@@ -121,7 +120,7 @@ export default function ProgettiClient({ projects, progettiIntro, initialTypolog
           {progettiIntro?.text ? (
             <PortableText value={progettiIntro.text as any} />
           ) : (
-            <p>{DEFAULT_INTRO}</p>
+            <p>{FALLBACK_INTRO}</p>
           )}
         </div>
       </div>

@@ -4,12 +4,11 @@ import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import type { Event, EventType } from "@/lib/sanity/types";
+import { FALLBACK_INTRO } from "@/lib/constants";
 
 interface Props {
   events: Event[];
 }
-
-const FALLBACK_INTRO = `I benefici derivanti dall'utilizzo di una griglia sono evidenti: chiarezza, efficienza, economia, continuità. Prima di ogni altra cosa, una griglia introduce ordine sistematico a una struttura visiva, facilitando la distinzione delle diverse categorie informative e indirizzando lo spostamento dell'occhio del lettore tra di esse.`;
 
 const PLACEHOLDER_EVENTS = [
   { title: "Spazio Libero" },
