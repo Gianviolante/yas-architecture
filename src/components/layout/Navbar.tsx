@@ -228,9 +228,6 @@ export default function Navbar() {
                   {label}
                 </Link>
               ))}
-              <p className="px-5 pb-4 pt-[6px] text-[12px] text-primary/60 italic">
-                Filtra ricerca
-              </p>
             </motion.div>
           </div>
 

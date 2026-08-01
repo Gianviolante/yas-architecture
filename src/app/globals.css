@@ -106,6 +106,16 @@ body {
 
   /* Token-based border */
   .border-primary { border-color: var(--border); }
+
+  /* Responsive line-height for hero title */
+  .hero-title-line-height {
+    line-height: 0.8;
+  }
+  @media (min-width: 768px) {
+    .hero-title-line-height {
+      line-height: 0.5 !important;
+    }
+  }
 }
 
 

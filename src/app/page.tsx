@@ -45,84 +45,99 @@ export default async function HomePage() {
         <div className="pt-[100px] md:pt-[120px]">
 
           {/* ── 1. HERO — mobile ─────────────────────────────────────── */}
-          <section className="md:hidden relative h-[360px] overflow-hidden">
-            {/* labels top */}
-            <div className="absolute text-[12px] leading-[1.2]" style={{ top: "8px", left: "16px", color: "#000000" }}>
-              {home?.heroSubtitleLeft ? (
-                <PortableText value={home.heroSubtitleLeft as Parameters<typeof PortableText>[0]["value"]} components={ptBlock} />
-              ) : (
-                <p>Studio architettura e design</p>
-              )}
-            </div>
-            <div className="absolute text-[12px] leading-[1.2] text-right whitespace-nowrap" style={{ top: "8px", right: "15px", color: "#000000" }}>
-              <p>{home?.heroSubtitleRight}</p>
-            </div>
-
-            {/* big title */}
-            <AnimatedTitle
-              text={home?.heroTitleMain || "yas-arc"}
-              className="absolute font-bold text-black select-none"
-              style={{ fontSize: "clamp(85px, 42vw, 160px)", lineHeight: "0.8", top: "28px", left: "12px", width: "100%", paddingRight: "16px" }}
-            />
-
-            {/* address bottom-left */}
-            <div className="absolute text-[12px] leading-[1.2] text-black" style={{ top: "299px", left: "16px" }}>
-              {home?.heroAddress ? (
-                <PortableText value={home.heroAddress as Parameters<typeof PortableText>[0]["value"]} components={ptBlock} />
-              ) : (
-                <>
-                  <p>Piazza Marco Antonio Cavalerio, 21</p>
-                  <p>72100 Brindisi, Italia</p>
-                  <p>studio@yas-arc.com</p>
-                </>
-              )}
-            </div>
-
-            {/* links bottom-right */}
-            <div className="absolute text-[12px] leading-[1.2] text-black text-right" style={{ top: "301px", right: "15px" }}>
-              <ArrowLink href="/progetti?tipologia=Interior Design">Interior design→</ArrowLink>
-              <ArrowLink href="/progetti?tipologia=Architettura">Architecture →</ArrowLink>
-              <ArrowLink href="/progetti">Tutti i progetti→</ArrowLink>
-            </div>
+          <section className="md:hidden page-px py-[16px] overflow-hidden">
+            <table className="w-full border-collapse">
+              <tbody>
+                <tr style={{ height: "auto" }}>
+                  <td className="text-[12px] leading-[1.2] text-black pb-[24px]">
+                    {home?.heroSubtitleLeft ? (
+                      <PortableText value={home.heroSubtitleLeft as Parameters<typeof PortableText>[0]["value"]} components={ptBlock} />
+                    ) : (
+                      <p>Studio architettura e design</p>
+                    )}
+                  </td>
+                  <td className="text-[12px] leading-[1.2] text-black text-right pb-[24px]">
+                    <p>{home?.heroSubtitleRight}</p>
+                  </td>
+                </tr>
+                <tr>
+                  <td colSpan={2} className="pb-[56px]">
+                    <AnimatedTitle
+                      text={home?.heroTitleMain || "yas-arc."}
+                      className="font-bold text-black select-none tracking-wide md:tracking-normal hero-title-line-height"
+                      style={{ fontSize: "clamp(85px, 42vw, 160px)", marginTop: "-8px" }}
+                    />
+                  </td>
+                </tr>
+                <tr>
+                  <td className="text-[12px] leading-[1.2] text-black">
+                    {home?.heroAddress ? (
+                      <PortableText value={home.heroAddress as Parameters<typeof PortableText>[0]["value"]} components={ptBlock} />
+                    ) : (
+                      <>
+                        <p className="leading-[1.4]">Piazza Marco Antonio Cavalerio, 21</p>
+                        <p className="leading-[1.4]">72100 Brindisi, Italia</p>
+                        <p className="leading-[1.4]">studio@yas-arc.com</p>
+                      </>
+                    )}
+                  </td>
+                  <td className="text-[12px] leading-[1.2] text-black text-right">
+                    <ArrowLink href="/progetti?tipologia=Interior Design">Interior design→</ArrowLink>
+                    <ArrowLink href="/progetti?tipologia=Architettura">Architecture →</ArrowLink>
+                    <ArrowLink href="/progetti">Tutti i progetti→</ArrowLink>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
           </section>
 
           {/* ── 1. HERO — tablet + desktop ───────────────────────────── */}
-          <section className="hidden md:grid grid-cols-3 grid-rows-[auto_auto_minmax(80px,auto)] gap-y-[8px] lg:gap-y-[4px] gap-x-[32px] md:gap-x-[48px] lg:gap-x-[64px] overflow-hidden page-px md:py-[24px] lg:pt-[8px] lg:pb-[32px]">
-            {/* Row 1 - Top-left: Subtitle (Studio architettura e design) */}
-            <div className="col-start-1 row-start-1 text-[12px] md:text-[16px] leading-[0.8] text-black flex items-end">
-              {home?.heroSubtitleLeft ? (
-                <PortableText value={home.heroSubtitleLeft as Parameters<typeof PortableText>[0]["value"]} components={ptBlock} />
-              ) : (
-                <p>Studio architettura e design</p>
-              )}
-            </div>
-
-            {/* Row 1 - Top-center: Subtitle (Inspired by Apulian tradition) */}
-            <div className="col-start-2 row-start-1 text-[12px] md:text-[16px] leading-[0.8] text-left flex items-end">
-              <p>{home?.heroSubtitleRight}</p>
-            </div>
-
-            {/* Row 2 - Title (left aligned) */}
-            <div className="col-start-1 row-start-2 flex items-start">
-              <AnimatedTitle
-                text={home?.heroTitleMain || "yas-arc"}
-                className="font-bold text-black leading-none whitespace-nowrap select-none"
-                style={{ fontSize: "clamp(8rem,19.8vw,285px)" }}
-              />
-            </div>
-
-            {/* Row 3 - Bottom-left: Address */}
-            <div className="col-start-1 row-start-3 text-[12px] md:text-[16px] leading-[1.2] text-black flex items-end">
-              {home?.heroAddress ? (
-                <PortableText value={home.heroAddress as Parameters<typeof PortableText>[0]["value"]} components={ptBlock} />
-              ) : (
-                <div>
-                  <p>Piazza Marco Antonio Cavalerio, 21</p>
-                  <p>72100 Brindisi, Italia</p>
-                  <p>studio@yas-arc.com</p>
-                </div>
-              )}
-            </div>
+          <section className="hidden md:block page-px md:py-[24px] lg:pt-[8px] lg:pb-[32px] overflow-hidden">
+            <table className="w-full border-collapse">
+              <tbody>
+                <tr>
+                  <td className="text-[12px] md:text-[16px] leading-[0.8] text-black pb-[24px]">
+                    {home?.heroSubtitleLeft ? (
+                      <PortableText value={home.heroSubtitleLeft as Parameters<typeof PortableText>[0]["value"]} components={ptBlock} />
+                    ) : (
+                      <p>Studio architettura e design</p>
+                    )}
+                  </td>
+                  <td colSpan={2} className="text-[12px] md:text-[16px] leading-[0.8] text-black text-right pb-[24px]">
+                    <p>{home?.heroSubtitleRight}</p>
+                  </td>
+                </tr>
+                <tr>
+                  <td colSpan={3} className="pb-[56px] md:pb-[150px]">
+                    <AnimatedTitle
+                      text={home?.heroTitleMain || "yas-arc."}
+                      className="font-bold text-black select-none hero-title-line-height"
+                      style={{ fontSize: "clamp(8rem,19.8vw,285px)", marginTop: "-8px" }}
+                    />
+                  </td>
+                </tr>
+                <tr>
+                  <td className="text-[12px] md:text-[16px] leading-[1.2] text-black">
+                    {home?.heroAddress ? (
+                      <PortableText value={home.heroAddress as Parameters<typeof PortableText>[0]["value"]} components={ptBlock} />
+                    ) : (
+                      <div>
+                        <p className="leading-[1.4]">Piazza Marco Antonio Cavalerio, 21</p>
+                        <p className="leading-[1.4]">72100 Brindisi, Italia</p>
+                        <p className="leading-[1.4]">studio@yas-arc.com</p>
+                      </div>
+                    )}
+                  </td>
+                  <td colSpan={2} className="text-[12px] md:text-[16px] leading-[1.2] text-black text-right">
+                    <div>
+                      <ArrowLink href="/progetti?tipologia=Interior Design">Interior design→</ArrowLink>
+                      <ArrowLink href="/progetti?tipologia=Architettura">Architecture →</ArrowLink>
+                      <ArrowLink href="/progetti">Tutti i progetti→</ArrowLink>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
           </section>
 
           {/* ── 2. LINKS ─────────────────────────────────────────────── */}
@@ -152,14 +167,16 @@ export default async function HomePage() {
           </section>
 
           {/* ── 3. ARCHITECTURE — mobile ───────────────────────────────────── */}
-          <section className="md:hidden relative h-[208px] overflow-hidden mt-[40px]">
-            <h2
+          <section className="md:hidden relative h-[360px] overflow-hidden mt-[40px]">
+            {/* big title */}
+            <AnimatedTitle
+              text="Architecture"
               className="absolute font-bold text-black select-none"
-              style={{ fontSize: "clamp(60px, 30vw, 85px)", lineHeight: "0.8", top: 0, left: "16px", width: "100%", paddingRight: "16px" }}
-            >
-              Architecture
-            </h2>
-            <div className="absolute text-[12px] leading-[1.2] text-black text-right" style={{ top: "162px", right: "15px" }}>
+              style={{ fontSize: "clamp(85px, 42vw, 160px)", lineHeight: "0.8", top: "28px", left: "12px", width: "100%", paddingRight: "16px" }}
+            />
+
+            {/* links bottom-right */}
+            <div className="absolute text-[12px] leading-[1.2] text-black text-right" style={{ top: "301px", right: "15px" }}>
               <ArrowLink href="/progetti?tipologia=Interior Design">Interior design→</ArrowLink>
               <ArrowLink href="/progetti?tipologia=Architettura">Architecture →</ArrowLink>
               <ArrowLink href="/progetti">Tutti i progetti→</ArrowLink>
@@ -173,7 +190,7 @@ export default async function HomePage() {
               <AnimatedTitle
                 text="Architecture"
                 className="font-bold text-black leading-none whitespace-nowrap select-none"
-                style={{ fontSize: "clamp(8rem,19.8vw,160px)" }}
+                style={{ fontSize: "clamp(8rem,19.8vw,285px)" }}
               />
             </div>
 
