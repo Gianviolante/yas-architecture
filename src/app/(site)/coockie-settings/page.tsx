@@ -54,7 +54,7 @@ export default function CoockieSettingsPage() {
         </h1>
 
         <div className="max-w-[798px]">
-          <div className="text-[16px] md:text-[17.5px] leading-[1.6] text-black space-y-6 mb-8">
+          <div className="text-base md:text-[17.5px] leading-[1.6] text-black space-y-6 mb-8">
             <p>
               Personalizza le tue preferenze sui cookie. Puoi modificare le tue scelte in qualsiasi momento.
             </p>
@@ -63,37 +63,37 @@ export default function CoockieSettingsPage() {
           {/* Cookie Settings */}
           <div className="space-y-4 mb-8">
             {/* Essential Cookies */}
-            <div className="border-2 border-black rounded-[8px] p-6">
+            <div className="border-2 border-black rounded p-6">
               <div className="flex items-start justify-between">
                 <div>
-                  <h3 className="text-[18px] font-semibold text-black mb-2">
+                  <h3 className="text-lg font-semibold text-black mb-2">
                     Cookie Essenziali
                   </h3>
-                  <p className="text-[14px] text-black/70">
+                  <p className="text-sm text-black/70">
                     Necessari per il funzionamento del sito web. Include sessioni e sicurezza.
                   </p>
-                  <p className="text-[12px] text-black/50 mt-2">
+                  <p className="text-xs text-black/50 mt-2">
                     Durata: Sessione
                   </p>
                 </div>
-                <div className="text-[12px] font-semibold text-black/60 ml-4 shrink-0">
+                <div className="text-xs font-semibold text-black/60 ml-4 shrink-0">
                   Sempre attivi
                 </div>
               </div>
             </div>
 
             {/* Analytics Cookies */}
-            <div className="border-2 border-black rounded-[8px] p-6">
+            <div className="border-2 border-black rounded p-6">
               <div className="flex items-start justify-between">
                 <div className="flex-1">
-                  <h3 className="text-[18px] font-semibold text-black mb-2">
+                  <h3 className="text-lg font-semibold text-black mb-2">
                     Cookie Analytics
                   </h3>
-                  <p className="text-[14px] text-black/70">
+                  <p className="text-sm text-black/70">
                     <strong>Provider:</strong> Google Analytics<br />
                     Ci aiutano a capire come usi il nostro sito e migliorare la tua esperienza.
                   </p>
-                  <p className="text-[12px] text-black/50 mt-2">
+                  <p className="text-xs text-black/50 mt-2">
                     Durata: 2 anni
                   </p>
                 </div>
@@ -109,16 +109,16 @@ export default function CoockieSettingsPage() {
             </div>
 
             {/* Marketing Cookies */}
-            <div className="border-2 border-black rounded-[8px] p-6">
+            <div className="border-2 border-black rounded p-6">
               <div className="flex items-start justify-between">
                 <div className="flex-1">
-                  <h3 className="text-[18px] font-semibold text-black mb-2">
+                  <h3 className="text-lg font-semibold text-black mb-2">
                     Cookie Marketing
                   </h3>
-                  <p className="text-[14px] text-black/70">
+                  <p className="text-sm text-black/70">
                     Utilizzati per tracciare il tuo comportamento e personalizzare annunci e contenuti.
                   </p>
-                  <p className="text-[12px] text-black/50 mt-2">
+                  <p className="text-xs text-black/50 mt-2">
                     Durata: 30 giorni - 2 anni
                   </p>
                 </div>
@@ -138,13 +138,13 @@ export default function CoockieSettingsPage() {
           <div className="flex gap-2 flex-col md:flex-row">
             <button
               onClick={handleSave}
-              className="text-[16px] leading-[22px] px-[24px] py-[10px] bg-black text-white rounded-[100px] hover:opacity-80 transition-opacity"
+              className="text-base leading-[22px] px-[24px] py-[10px] bg-black text-white rounded-full hover:opacity-80 transition-opacity"
             >
               Salva preferenze
             </button>
             <button
               onClick={handleReset}
-              className="text-[16px] leading-[22px] px-[24px] py-[10px] border-2 border-black text-black rounded-[100px] hover:opacity-60 transition-opacity"
+              className="text-base leading-[22px] px-[24px] py-[10px] border-2 border-black text-black rounded-full hover:opacity-60 transition-opacity"
             >
               Ripristina default
             </button>
@@ -152,7 +152,7 @@ export default function CoockieSettingsPage() {
 
           {/* Info */}
           <div className="mt-12 pt-8 border-t-2 border-black/20">
-            <p className="text-[12px] text-black/60">
+            <p className="text-xs text-black/60">
               Per domande sulle nostre politiche cookie, contattaci a{" "}
               <a href="mailto:studio@yas-arc.com" className="underline hover:opacity-60">
                 studio@yas-arc.com

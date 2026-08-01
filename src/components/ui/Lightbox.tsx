@@ -192,7 +192,7 @@ export default function Lightbox({ items, initialIndex, onClose }: Props) {
         </svg>
       </button>
 
-      <div className="flex-1 flex items-center justify-center px-0 md:px-[80px] py-[60px] min-h-0">
+      <div className="flex-1 flex items-center justify-center px-0 md:px-20 py-[60px] min-h-0">
         <div
           ref={wrapperRef}
           className="relative w-full h-full max-w-[960px] overflow-hidden select-none"
@@ -221,7 +221,7 @@ export default function Lightbox({ items, initialIndex, onClose }: Props) {
         </div>
       </div>
 
-      <div className="relative h-[56px] shrink-0 flex items-center justify-center px-[20px]">
+      <div className="relative h-[56px] shrink-0 flex items-center justify-center px-5">
         <button
           ref={prevRef}
           onClick={tryPrev}
@@ -234,7 +234,7 @@ export default function Lightbox({ items, initialIndex, onClose }: Props) {
           <ArrowLeft />
         </button>
 
-        <p className="text-[16px] leading-[1.5] text-primary">
+        <p className="text-base leading-6 text-primary">
           {idx + 1} / {items.length}
         </p>
 

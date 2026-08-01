@@ -80,7 +80,7 @@ export default async function ProgettoPageV2({ params }: { params: Promise<{ slu
               </h1>
               <Link
                 href="/progetti"
-                className="text-[12px] leading-[1.3] text-primary hover:opacity-60 transition-opacity whitespace-nowrap md:mt-[12px]"
+                className="text-xs leading-[1.3] text-primary hover:opacity-60 transition-opacity whitespace-nowrap md:mt-[12px]"
               >
                 Torna a progetti →
               </Link>
@@ -92,50 +92,50 @@ export default async function ProgettoPageV2({ params }: { params: Promise<{ slu
             <div className="space-y-[8px] md:space-y-[12px]">
               {project.typology && (
                 <div className="flex flex-col md:flex-row md:gap-[40px] lg:gap-[60px]">
-                  <p className="text-[12px] leading-[1.3] text-primary font-semibold md:w-[140px] md:flex-shrink-0">Area</p>
-                  <p className="text-[12px] leading-[1.3] text-primary">{project.typology}</p>
+                  <p className="text-xs leading-[1.3] text-primary font-semibold md:w-[140px] md:flex-shrink-0">Area</p>
+                  <p className="text-xs leading-[1.3] text-primary">{project.typology}</p>
                 </div>
               )}
               {project.year && (
                 <div className="flex flex-col md:flex-row md:gap-[40px] lg:gap-[60px]">
-                  <p className="text-[12px] leading-[1.3] text-primary font-semibold md:w-[140px] md:flex-shrink-0">Timeline</p>
-                  <p className="text-[12px] leading-[1.3] text-primary">{project.year}</p>
+                  <p className="text-xs leading-[1.3] text-primary font-semibold md:w-[140px] md:flex-shrink-0">Timeline</p>
+                  <p className="text-xs leading-[1.3] text-primary">{project.year}</p>
                 </div>
               )}
               {project.location && (
                 <div className="flex flex-col md:flex-row md:gap-[40px] lg:gap-[60px]">
-                  <p className="text-[12px] leading-[1.3] text-primary font-semibold md:w-[140px] md:flex-shrink-0">Location</p>
-                  <p className="text-[12px] leading-[1.3] text-primary">{project.location}</p>
+                  <p className="text-xs leading-[1.3] text-primary font-semibold md:w-[140px] md:flex-shrink-0">Location</p>
+                  <p className="text-xs leading-[1.3] text-primary">{project.location}</p>
                 </div>
               )}
               {project.area && (
                 <div className="flex flex-col md:flex-row md:gap-[40px] lg:gap-[60px]">
-                  <p className="text-[12px] leading-[1.3] text-primary font-semibold md:w-[140px] md:flex-shrink-0">Superficie</p>
-                  <p className="text-[12px] leading-[1.3] text-primary">{project.area} mq</p>
+                  <p className="text-xs leading-[1.3] text-primary font-semibold md:w-[140px] md:flex-shrink-0">Superficie</p>
+                  <p className="text-xs leading-[1.3] text-primary">{project.area} mq</p>
                 </div>
               )}
               {project.concept && (
                 <div className="flex flex-col md:flex-row md:gap-[40px] lg:gap-[60px]">
-                  <p className="text-[12px] leading-[1.3] text-primary font-semibold md:w-[140px] md:flex-shrink-0">Concept</p>
-                  <p className="text-[12px] leading-[1.3] text-primary">{project.concept}</p>
+                  <p className="text-xs leading-[1.3] text-primary font-semibold md:w-[140px] md:flex-shrink-0">Concept</p>
+                  <p className="text-xs leading-[1.3] text-primary">{project.concept}</p>
                 </div>
               )}
               {project.projectTeam && (
                 <div className="flex flex-col md:flex-row md:gap-[40px] lg:gap-[60px]">
-                  <p className="text-[12px] leading-[1.3] text-primary font-semibold md:w-[140px] md:flex-shrink-0">Progetto</p>
-                  <p className="text-[12px] leading-[1.3] text-primary">{project.projectTeam}</p>
+                  <p className="text-xs leading-[1.3] text-primary font-semibold md:w-[140px] md:flex-shrink-0">Progetto</p>
+                  <p className="text-xs leading-[1.3] text-primary">{project.projectTeam}</p>
                 </div>
               )}
               {project.rendering && (
                 <div className="flex flex-col md:flex-row md:gap-[40px] lg:gap-[60px]">
-                  <p className="text-[12px] leading-[1.3] text-primary font-semibold md:w-[140px] md:flex-shrink-0">Rendering</p>
-                  <p className="text-[12px] leading-[1.3] text-primary">{project.rendering}</p>
+                  <p className="text-xs leading-[1.3] text-primary font-semibold md:w-[140px] md:flex-shrink-0">Rendering</p>
+                  <p className="text-xs leading-[1.3] text-primary">{project.rendering}</p>
                 </div>
               )}
               {project.photographer && (
                 <div className="flex flex-col md:flex-row md:gap-[40px] lg:gap-[60px]">
-                  <p className="text-[12px] leading-[1.3] text-primary font-semibold md:w-[140px] md:flex-shrink-0">Fotografo</p>
-                  <p className="text-[12px] leading-[1.3] text-primary">{project.photographer}</p>
+                  <p className="text-xs leading-[1.3] text-primary font-semibold md:w-[140px] md:flex-shrink-0">Fotografo</p>
+                  <p className="text-xs leading-[1.3] text-primary">{project.photographer}</p>
                 </div>
               )}
             </div>
@@ -158,14 +158,14 @@ export default async function ProgettoPageV2({ params }: { params: Promise<{ slu
           {/* Condividi (Share) Section */}
           <div className="page-px md:p-0 pb-[40px] md:pb-0 md:pt-[24px] lg:pt-[40px] pt-[24px] md:mt-[40px] lg:mt-[60px]">
             <div className="flex items-center gap-[12px]">
-              <p className="text-[12px] font-semibold leading-[1.3] text-primary">Condividi</p>
+              <p className="text-xs font-semibold leading-[1.3] text-primary">Condividi</p>
               <div className="flex gap-[12px]">
                 <a
                   href={`https://www.facebook.com/sharer/sharer.php?u=${typeof window !== 'undefined' ? window.location.href : ''}`}
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label="Condividi su Facebook"
-                  className="text-[16px] font-bold text-primary hover:opacity-60 transition-opacity"
+                  className="text-base font-bold text-primary hover:opacity-60 transition-opacity"
                 >
                   f
                 </a>
@@ -174,7 +174,7 @@ export default async function ProgettoPageV2({ params }: { params: Promise<{ slu
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label="Condividi su LinkedIn"
-                  className="text-[16px] font-bold text-primary hover:opacity-60 transition-opacity"
+                  className="text-base font-bold text-primary hover:opacity-60 transition-opacity"
                 >
                   in
                 </a>
@@ -189,7 +189,7 @@ export default async function ProgettoPageV2({ params }: { params: Promise<{ slu
       <div className="md:hidden page-px py-[16px] border-t border-[#e5e5e5]">
         <Link
           href="/progetti"
-          className="text-[12px] leading-[1.3] text-primary hover:opacity-60 transition-opacity"
+          className="text-xs leading-[1.3] text-primary hover:opacity-60 transition-opacity"
         >
           Torna a progetti →
         </Link>
@@ -214,7 +214,7 @@ export default async function ProgettoPageV2({ params }: { params: Promise<{ slu
       <div className="page-px pb-12 pt-4 md:pt-0 md:flex md:justify-center">
         <Link
           href="/progetti"
-          className="flex items-center justify-center w-full md:w-auto border-2 border-[#000] rounded-[100px] px-[24px] py-[10px] text-[16px] text-[#000] leading-[22px] hover:bg-black hover:text-white transition-colors duration-200"
+          className="flex items-center justify-center w-full md:w-auto border-2 border-[#000] rounded-full px-[24px] py-[10px] text-base text-[#000] leading-[22px] hover:bg-black hover:text-white transition-colors duration-200"
         >
           Vai a tutti i progetti
         </Link>

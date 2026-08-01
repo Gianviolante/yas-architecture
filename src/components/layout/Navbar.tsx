@@ -111,7 +111,7 @@ export default function Navbar() {
                 <Link
                   href={href}
                   className={cn(
-                    "text-[14px] leading-normal transition-colors duration-200 block py-1",
+                    "text-sm leading-normal transition-colors duration-200 block py-1",
                     isDisabled(href)
                       ? "text-[--text-secondary] cursor-default pointer-events-none"
                       : isActive(href)
@@ -155,7 +155,7 @@ export default function Navbar() {
             <Link
               href="/contatti"
               className={cn(
-                "text-[11.82px] leading-normal px-[17.727px] py-[7.386px] rounded-[100px] transition-colors duration-200 whitespace-nowrap",
+                "text-[11.82px] leading-normal px-[17.727px] py-[7.386px] rounded-full transition-colors duration-200 whitespace-nowrap",
                 pathname === "/contatti"
                   ? "bg-[--border] text-white"
                   : "bg-[#E5E7EB] text-[--foreground] hover:bg-[--border]"
@@ -171,7 +171,7 @@ export default function Navbar() {
             <Link
               href="/contatti"
               className={cn(
-                "text-[11.82px] leading-normal px-[13px] py-[6px] rounded-[100px] transition-colors duration-200 whitespace-nowrap",
+                "text-[11.82px] leading-normal px-[13px] py-[6px] rounded-full transition-colors duration-200 whitespace-nowrap",
                 pathname === "/contatti"
                   ? "bg-[--border] text-white"
                   : "bg-[#E5E7EB] text-[--foreground] hover:bg-[--border]"

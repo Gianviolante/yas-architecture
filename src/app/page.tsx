@@ -49,14 +49,14 @@ export default async function HomePage() {
             <table className="w-full border-collapse">
               <tbody>
                 <tr style={{ height: "auto" }}>
-                  <td className="text-[12px] leading-[1.2] text-black pb-[24px]">
+                  <td className="text-xs leading-[1.2] text-black pb-[24px]">
                     {home?.heroSubtitleLeft ? (
                       <PortableText value={home.heroSubtitleLeft as Parameters<typeof PortableText>[0]["value"]} components={ptBlock} />
                     ) : (
                       <p>Studio architettura e design</p>
                     )}
                   </td>
-                  <td className="text-[12px] leading-[1.2] text-black text-right pb-[24px]">
+                  <td className="text-xs leading-[1.2] text-black text-right pb-[24px]">
                     <p>{home?.heroSubtitleRight}</p>
                   </td>
                 </tr>
@@ -70,7 +70,7 @@ export default async function HomePage() {
                   </td>
                 </tr>
                 <tr>
-                  <td className="text-[12px] leading-[1.2] text-black">
+                  <td className="text-xs leading-[1.2] text-black">
                     {home?.heroAddress ? (
                       <PortableText value={home.heroAddress as Parameters<typeof PortableText>[0]["value"]} components={ptBlock} />
                     ) : (
@@ -81,7 +81,7 @@ export default async function HomePage() {
                       </>
                     )}
                   </td>
-                  <td className="text-[12px] leading-[1.2] text-black text-right">
+                  <td className="text-xs leading-[1.2] text-black text-right">
                     <ArrowLink href="/progetti?tipologia=Interior Design">Interior design→</ArrowLink>
                     <ArrowLink href="/progetti?tipologia=Architettura">Architecture →</ArrowLink>
                     <ArrowLink href="/progetti">Tutti i progetti→</ArrowLink>
@@ -96,14 +96,14 @@ export default async function HomePage() {
             <table className="w-full border-collapse">
               <tbody>
                 <tr>
-                  <td className="text-[12px] md:text-[16px] leading-[0.8] text-black pb-[24px]">
+                  <td className="text-xs md:text-base leading-[0.8] text-black pb-[24px]">
                     {home?.heroSubtitleLeft ? (
                       <PortableText value={home.heroSubtitleLeft as Parameters<typeof PortableText>[0]["value"]} components={ptBlock} />
                     ) : (
                       <p>Studio architettura e design</p>
                     )}
                   </td>
-                  <td colSpan={2} className="text-[12px] md:text-[16px] leading-[0.8] text-black text-right pb-[24px]">
+                  <td colSpan={2} className="text-xs md:text-base leading-[0.8] text-black text-right pb-[24px]">
                     <p>{home?.heroSubtitleRight}</p>
                   </td>
                 </tr>
@@ -117,7 +117,7 @@ export default async function HomePage() {
                   </td>
                 </tr>
                 <tr>
-                  <td className="text-[12px] md:text-[16px] leading-[1.2] text-black">
+                  <td className="text-xs md:text-base leading-[1.2] text-black">
                     {home?.heroAddress ? (
                       <PortableText value={home.heroAddress as Parameters<typeof PortableText>[0]["value"]} components={ptBlock} />
                     ) : (
@@ -128,7 +128,7 @@ export default async function HomePage() {
                       </div>
                     )}
                   </td>
-                  <td colSpan={2} className="text-[12px] md:text-[16px] leading-[1.2] text-black text-right">
+                  <td colSpan={2} className="text-xs md:text-base leading-[1.2] text-black text-right">
                     <div>
                       <ArrowLink href="/progetti?tipologia=Interior Design">Interior design→</ArrowLink>
                       <ArrowLink href="/progetti?tipologia=Architettura">Architecture →</ArrowLink>
@@ -153,7 +153,7 @@ export default async function HomePage() {
                     style={{ flexGrow, flexShrink: 1, flexBasis: 0 }}
                     className="flex flex-col group"
                   >
-                    <p className="text-[12px] leading-[1.5] text-black shrink-0">{label}</p>
+                    <p className="text-xs leading-[1.5] text-black shrink-0">{label}</p>
                     <div
                       className="relative flex-1 overflow-hidden bg-[#d9d9d9] md:min-h-0"
                       style={{ minHeight: `${height}px` }}
@@ -176,7 +176,7 @@ export default async function HomePage() {
             />
 
             {/* links bottom-right */}
-            <div className="absolute text-[12px] leading-[1.2] text-black text-right" style={{ top: "301px", right: "15px" }}>
+            <div className="absolute text-xs leading-[1.2] text-black text-right" style={{ top: "301px", right: "15px" }}>
               <ArrowLink href="/progetti?tipologia=Interior Design">Interior design→</ArrowLink>
               <ArrowLink href="/progetti?tipologia=Architettura">Architecture →</ArrowLink>
               <ArrowLink href="/progetti">Tutti i progetti→</ArrowLink>
@@ -195,7 +195,7 @@ export default async function HomePage() {
             </div>
 
             {/* Row 1 - Bottom-right: Project links */}
-            <div className="col-start-2 row-start-1 text-[12px] leading-[1.2] text-black flex flex-col justify-start self-start text-right" style={{ paddingTop: "24px" }}>
+            <div className="col-start-2 row-start-1 text-xs leading-[1.2] text-black flex flex-col justify-start self-start text-right" style={{ paddingTop: "24px" }}>
               <div>
                 <ArrowLink href="/progetti?tipologia=Interior Design">Interior design→</ArrowLink>
                 <ArrowLink href="/progetti?tipologia=Architettura">Architecture →</ArrowLink>
@@ -206,13 +206,13 @@ export default async function HomePage() {
 
           {/* ── 4. DESCRIPTION + slider ──────────────────────────────── */}
           <section className="page-px pt-[40px]">
-            <div className="text-[16px] md:text-[24px] leading-normal text-black mb-6 md:mb-14">
+            <div className="text-base md:text-2xl leading-normal text-black mb-6 md:mb-14">
               {home?.introDescription
                 ? <PortableText value={home.introDescription as Parameters<typeof PortableText>[0]["value"]} components={ptBlock} />
                 : <p>{FALLBACK_INTRO}</p>}
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8 md:mb-12">
-              <div className="text-[16px] md:text-[17.5px] leading-[1.5] text-black">
+              <div className="text-base md:text-[17.5px] leading-[1.5] text-black">
                 {home?.bodyLeft
                   ? <PortableText value={home.bodyLeft as Parameters<typeof PortableText>[0]["value"]} components={ptBlock} />
                   : <p>{FALLBACK_BODY_LEFT}</p>}
@@ -235,8 +235,8 @@ export default async function HomePage() {
 
           {/* ── 6. STUDIO BLOCK ──────────────────────────────────────── */}
           <section className="page-px py-10">
-            <p className="text-[16px] leading-normal text-black text-center mb-6">Lo studio</p>
-            <div className="text-[24px] leading-normal text-black mb-6 md:mb-10">
+            <p className="text-base leading-normal text-black text-center mb-6">Lo studio</p>
+            <div className="text-2xl leading-normal text-black mb-6 md:mb-10">
               {home?.studioDescription
                 ? <PortableText value={home.studioDescription as Parameters<typeof PortableText>[0]["value"]} components={ptBlock} />
                 : <p>{FALLBACK_INTRO}</p>}
@@ -253,7 +253,7 @@ export default async function HomePage() {
             <div className="md:flex md:justify-center">
               <Link
                 href="/studio"
-                className="flex items-center justify-center border-2 border-[#000] rounded-[100px] px-[24px] py-[10px] text-[16px] text-[#000] leading-[22px] hover:bg-black hover:text-white transition-colors duration-200 w-full md:w-auto"
+                className="flex items-center justify-center border-2 border-[#000] rounded-full px-[24px] py-[10px] text-base text-[#000] leading-[22px] hover:bg-black hover:text-white transition-colors duration-200 w-full md:w-auto"
               >
                 Vedi lo studio
               </Link>

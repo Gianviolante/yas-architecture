@@ -99,13 +99,13 @@ export default function ProgettiClient({ projects, progettiIntro, initialTypolog
 
   // Desktop chip (compact)
   const chipDt = (active: boolean) =>
-    `inline-flex items-center border-2 rounded-[100px] px-[16px] py-[7px] h-[40px] text-[12px] leading-[1.4] whitespace-nowrap transition-colors duration-200 cursor-pointer ${
+    `inline-flex items-center border-2 rounded-full px-[16px] py-[7px] h-[40px] text-xs leading-[1.4] whitespace-nowrap transition-colors duration-200 cursor-pointer ${
       active ? "bg-black border-black text-white" : "border-[--foreground] text-[--foreground] hover:bg-black hover:border-black hover:text-white"
     }`;
 
   // Mobile chip (larger, 46px height)
   const chipMb = (active: boolean) =>
-    `inline-flex items-center border-2 rounded-[100px] px-[24px] py-[10px] h-[46px] text-[16px] leading-[22px] whitespace-nowrap transition-colors duration-200 cursor-pointer shrink-0 ${
+    `inline-flex items-center border-2 rounded-full px-[24px] py-[10px] h-[46px] text-base leading-[22px] whitespace-nowrap transition-colors duration-200 cursor-pointer shrink-0 ${
       active ? "bg-black border-black text-white" : "border-[--foreground] text-[--foreground]"
     }`;
 
@@ -117,7 +117,7 @@ export default function ProgettiClient({ projects, progettiIntro, initialTypolog
           troppo lunghe da leggere sui monitor ultra-wide. Griglia/index
           restano piena larghezza — le immagini ne beneficiano, il testo no. */}
       <div className="page-px pt-8 pb-5 md:pt-9 md:pb-7">
-        <div className="text-[16px] md:text-[24px] leading-normal text-black">
+        <div className="text-base md:text-2xl leading-normal text-black">
           {progettiIntro?.text ? (
             <PortableText value={progettiIntro.text as any} />
           ) : (
@@ -142,7 +142,7 @@ export default function ProgettiClient({ projects, progettiIntro, initialTypolog
             aria-label={filtersOpen ? "Chiudi filtri" : "Apri filtri"}
             aria-expanded={filtersOpen}
           >
-            <span className="text-[16px] leading-normal text-[--foreground]">Filtra</span>
+            <span className="text-base leading-normal text-[--foreground]">Filtra</span>
             <div className={`transition-transform duration-500 ${filtersOpen ? "rotate-180" : "rotate-0"}`}>
               {filtersOpen ? (
                 <svg width="16" height="16" viewBox="0 0 12 2" fill="none">
@@ -160,7 +160,7 @@ export default function ProgettiClient({ projects, progettiIntro, initialTypolog
           {filtersOpen && (
             <div className="border-t border-black pt-3 animate-in fade-in duration-300">
               {/* Area */}
-              <p className="text-[12px] leading-[1.5] text-[--foreground] px-[15px]">Area</p>
+              <p className="text-xs leading-[1.5] text-[--foreground] px-[15px]">Area</p>
               <div className="overflow-x-auto">
                 <div className="flex gap-2 px-[15px] py-3">
                   <button
@@ -188,7 +188,7 @@ export default function ProgettiClient({ projects, progettiIntro, initialTypolog
               </div>
 
               {/* Categoria */}
-              <p className="text-[12px] leading-[1.5] text-[--foreground] px-[15px]">Categoria</p>
+              <p className="text-xs leading-[1.5] text-[--foreground] px-[15px]">Categoria</p>
               <div className="overflow-x-auto">
                 <div className="flex gap-2 px-[15px] py-3">
                   {CAT_FILTERS.map(({ label, value }) => (
@@ -207,7 +207,7 @@ export default function ProgettiClient({ projects, progettiIntro, initialTypolog
               </div>
 
               {/* Stato */}
-              <p className="text-[12px] leading-[1.5] text-[--foreground] px-[15px]">Stato</p>
+              <p className="text-xs leading-[1.5] text-[--foreground] px-[15px]">Stato</p>
               <div className="overflow-x-auto">
                 <div className="flex gap-[8px] px-[15px] py-[11px]">
                   {STATO_FILTERS.map(({ label, value }) => (
@@ -227,14 +227,14 @@ export default function ProgettiClient({ projects, progettiIntro, initialTypolog
 
               {/* Active filters summary */}
               <div className="flex items-center justify-between px-[15px] min-h-[22px] pb-2">
-                <p className="text-[12px] leading-[22px]">
+                <p className="text-xs leading-[22px]">
                   <span className="text-black">Filtra per: </span>
                   {hasFilters && <span className="text-black">{activeLabel}</span>}
                 </p>
                 {hasFilters && (
                   <button
                     onClick={reset}
-                    className="flex items-center gap-1 text-[12px] leading-[22px] text-[--foreground]"
+                    className="flex items-center gap-1 text-xs leading-[22px] text-[--foreground]"
                     aria-label="Ripristina tutti i filtri"
                     cursor-type="nav"
                   >
@@ -250,7 +250,7 @@ export default function ProgettiClient({ projects, progettiIntro, initialTypolog
         {/* ── Tablet filter (Area full row, Categoria|Stato 2-col) ────── */}
         <div className="hidden md:block lg:hidden page-px pt-4 pb-3">
           {/* Row 1: Area */}
-          <p className="text-[12px] leading-[22px] text-[--foreground] mb-1">Area</p>
+          <p className="text-xs leading-[22px] text-[--foreground] mb-1">Area</p>
           <div className="flex flex-wrap gap-2 mb-3">
             <button onClick={() => setTypologyFilters(new Set())} className={chipDt(typologyFilters.size === 0)} cursor-type="nav">
               Tutti i progetti
@@ -263,8 +263,8 @@ export default function ProgettiClient({ projects, progettiIntro, initialTypolog
           </div>
           {/* Row 2: Categoria | Stato side-by-side */}
           <div className="grid grid-cols-2 gap-4 mb-1">
-            <p className="text-[12px] leading-[22px] text-[--foreground]">Categoria</p>
-            <p className="text-[12px] leading-[22px] text-[--foreground]">Stato</p>
+            <p className="text-xs leading-[22px] text-[--foreground]">Categoria</p>
+            <p className="text-xs leading-[22px] text-[--foreground]">Stato</p>
           </div>
           <div className="grid grid-cols-2 gap-4">
             <div className="flex flex-wrap gap-2">
@@ -283,12 +283,12 @@ export default function ProgettiClient({ projects, progettiIntro, initialTypolog
             </div>
           </div>
           <div className="flex items-center justify-between mt-3 min-h-[22px]">
-            <p className="text-[12px] leading-[22px] text-black">
+            <p className="text-xs leading-[22px] text-black">
               <span>Filtra per: </span>
               {hasFilters && <span className="text-black">{activeLabel}</span>}
             </p>
             {hasFilters && (
-              <button onClick={reset} className="flex items-center gap-1 text-[12px] leading-[22px] text-[--foreground] hover:opacity-50 transition-opacity" cursor-type="nav">
+              <button onClick={reset} className="flex items-center gap-1 text-xs leading-[22px] text-[--foreground] hover:opacity-50 transition-opacity" cursor-type="nav">
                 Reset
                 <Image src="/assets/icon-reset.svg" alt="" width={10} height={8} />
               </button>
@@ -299,9 +299,9 @@ export default function ProgettiClient({ projects, progettiIntro, initialTypolog
         {/* ── Desktop filter (3-col grid) ────────────────────────────── */}
         <div className="hidden lg:block page-px pt-4 pb-3">
           <div className="grid grid-cols-3 gap-2 mb-1">
-            <p className="text-[12px] leading-[22px] text-[--foreground]">Area</p>
-            <p className="text-[12px] leading-[22px] text-[--foreground]">Categoria</p>
-            <p className="text-[12px] leading-[22px] text-[--foreground]">Stato</p>
+            <p className="text-xs leading-[22px] text-[--foreground]">Area</p>
+            <p className="text-xs leading-[22px] text-[--foreground]">Categoria</p>
+            <p className="text-xs leading-[22px] text-[--foreground]">Stato</p>
           </div>
           <div className="grid grid-cols-3 gap-2">
             <div className="flex flex-wrap gap-2">
@@ -330,12 +330,12 @@ export default function ProgettiClient({ projects, progettiIntro, initialTypolog
             </div>
           </div>
           <div className="flex items-center justify-between mt-3 min-h-[22px]">
-            <p className="text-[12px] leading-[22px] text-black">
+            <p className="text-xs leading-[22px] text-black">
               <span>Filtra per: </span>
               {hasFilters && <span className="text-black">{activeLabel}</span>}
             </p>
             {hasFilters && (
-              <button onClick={reset} className="flex items-center gap-1 text-[12px] leading-[22px] text-[--foreground] hover:opacity-50 transition-opacity" cursor-type="nav">
+              <button onClick={reset} className="flex items-center gap-1 text-xs leading-[22px] text-[--foreground] hover:opacity-50 transition-opacity" cursor-type="nav">
                 Reset
                 <Image src="/assets/icon-reset.svg" alt="" width={10} height={8} />
               </button>
@@ -349,21 +349,21 @@ export default function ProgettiClient({ projects, progettiIntro, initialTypolog
 
         {/* View toggle */}
         <div className="page-px flex items-baseline justify-between py-2 mb-5">
-          <p className={`hidden md:block text-[24px] font-bold leading-normal text-black ${view === "grid" ? "invisible" : ""}`}>
+          <p className={`hidden md:block text-2xl font-bold leading-normal text-black ${view === "grid" ? "invisible" : ""}`}>
             Yas-arch progetti index
           </p>
           <button
             onClick={() => setView(v => v === "grid" ? "index" : "grid")}
             aria-label={`Cambia a vista ${view === "grid" ? "indice" : "griglia"}`}
             aria-pressed={view === "grid"}
-            className="ml-auto text-[16px] md:text-[17.5px] leading-[1.5] text-[--foreground] hover:opacity-60 transition-opacity"
+            className="ml-auto text-base md:text-[17.5px] leading-[1.5] text-[--foreground] hover:opacity-60 transition-opacity"
           >
             {view === "grid" ? "Visualizza come index" : "Visualizza come griglia"}
           </button>
         </div>
 
         {filtered.length === 0 ? (
-          <p className="page-px text-[12px] text-[--foreground]/40 py-16 text-center">Nessun progetto trovato.</p>
+          <p className="page-px text-xs text-[--foreground]/40 py-16 text-center">Nessun progetto trovato.</p>
         ) : view === "grid" ? (
           <div className="page-px">
             <GridView largeRows={largeRows} small={small} />
@@ -386,7 +386,7 @@ export default function ProgettiClient({ projects, progettiIntro, initialTypolog
       <div className="page-px pb-16 flex justify-center md:justify-end">
         <Link
           href="/contatti"
-          className="flex items-center justify-center w-full md:w-auto border-2 border-[--foreground] rounded-[100px] px-[24px] py-[10px] text-[16px] text-[--foreground] leading-[22px] hover:bg-black hover:text-white transition-colors duration-200"
+          className="flex items-center justify-center w-full md:w-auto border-2 border-[--foreground] rounded-full px-[24px] py-[10px] text-base text-[--foreground] leading-[22px] hover:bg-black hover:text-white transition-colors duration-200"
         >
           Contattaci per un progetto
         </Link>
@@ -522,17 +522,17 @@ function IndexView({
               {/* Left: location, title, status */}
               <div className="flex-1 min-w-0">
                 {p.location && (
-                  <p className="text-[12px] text-[--foreground] leading-[1.5]">{p.location}</p>
+                  <p className="text-xs text-[--foreground] leading-[1.5]">{p.location}</p>
                 )}
-                <p className="text-[24px] text-[--foreground] leading-[1.3] mt-[0] truncate">{p.title}</p>
-                <p className="text-[12px] text-[--foreground] leading-[1.5]">{p.status}</p>
+                <p className="text-2xl text-[--foreground] leading-[1.3] mt-[0] truncate">{p.title}</p>
+                <p className="text-xs text-[--foreground] leading-[1.5]">{p.status}</p>
               </div>
               {/* Right: year top, typology chip bottom */}
               <div className="flex flex-col justify-between items-end shrink-0 pt-[0]">
                 {p.year && (
-                  <p className="text-[24px] text-[--foreground] leading-[1.3]">{p.year}</p>
+                  <p className="text-2xl text-[--foreground] leading-[1.3]">{p.year}</p>
                 )}
-                <span className="inline-flex items-center border border-[--foreground] rounded-[100px] px-[10px] py-[3px] text-[9.44px] text-[--foreground] leading-[1.4] whitespace-nowrap">
+                <span className="inline-flex items-center border border-[--foreground] rounded-full px-[10px] py-[3px] text-[9.44px] text-[--foreground] leading-[1.4] whitespace-nowrap">
                   {p.typology}
                 </span>
               </div>
@@ -552,7 +552,7 @@ function IndexView({
           <thead>
             <tr className="border-b border-black">
               {cols.map(({ label, cls }) => (
-                <th key={label} className={`text-left text-[12px] leading-[1.5] text-[--foreground] font-normal pb-[12px] ${cls}`}>
+                <th key={label} className={`text-left text-xs leading-[1.5] text-[--foreground] font-normal pb-[12px] ${cls}`}>
                   {label}
                 </th>
               ))}
@@ -563,16 +563,16 @@ function IndexView({
               <tr key={p._id} onMouseEnter={() => onHover(p._id)} onMouseLeave={() => onHover(null)} className="border-b border-black">
                 <td className="py-[20px] pr-6">
                   <Link href={`/progetti/${p.slug.current}`} className="block">
-                    <p className="text-[17.5px] md:text-[24px] lg:text-[17.5px] leading-[1.5] text-[--foreground]">{p.title}</p>
-                    {p.location && <p className="text-[12px] leading-[1.5] text-[--foreground]/60">{p.location}</p>}
+                    <p className="text-[17.5px] md:text-2xl lg:text-[17.5px] leading-[1.5] text-[--foreground]">{p.title}</p>
+                    {p.location && <p className="text-xs leading-[1.5] text-[--foreground]/60">{p.location}</p>}
                   </Link>
                 </td>
-                <td className="py-[20px] pr-6 text-[14px] md:text-[16px] leading-[1.5] text-[--foreground]">{p.location ?? "—"}</td>
-                <td className="py-[20px] pr-6 text-[14px] md:text-[16px] leading-[1.5] text-[--foreground]">{p.status ?? "—"}</td>
-                <td className="py-[20px] pr-6 text-[14px] md:text-[16px] leading-[1.5] text-[--foreground]">{p.year ?? "—"}</td>
-                <td className="py-[20px] pr-6 text-[14px] md:text-[16px] leading-[1.5] text-[--foreground]">{p.area ?? "—"}</td>
+                <td className="py-[20px] pr-6 text-sm md:text-base leading-[1.5] text-[--foreground]">{p.location ?? "—"}</td>
+                <td className="py-[20px] pr-6 text-sm md:text-base leading-[1.5] text-[--foreground]">{p.status ?? "—"}</td>
+                <td className="py-[20px] pr-6 text-sm md:text-base leading-[1.5] text-[--foreground]">{p.year ?? "—"}</td>
+                <td className="py-[20px] pr-6 text-sm md:text-base leading-[1.5] text-[--foreground]">{p.area ?? "—"}</td>
                 <td className="py-[20px]">
-                  <span className="inline-flex items-center border border-[--foreground] rounded-[100px] px-[10px] py-[3px] text-[11px] text-[--foreground] leading-[1.4] whitespace-nowrap">
+                  <span className="inline-flex items-center border border-[--foreground] rounded-full px-[10px] py-[3px] text-[11px] text-[--foreground] leading-[1.4] whitespace-nowrap">
                     {p.typology}
                   </span>
                 </td>

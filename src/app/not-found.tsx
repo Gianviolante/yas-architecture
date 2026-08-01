@@ -28,7 +28,7 @@ export default function NotFound() {
           <p className="text-[28px] md:text-[36px] leading-[1.2] text-black font-medium">
             Pagina non trovata
           </p>
-          <p className="text-[16px] md:text-[18px] leading-[1.6] text-black">
+          <p className="text-base md:text-lg leading-[1.6] text-black">
             La pagina che stai cercando non esiste o è stata spostata.
           </p>
         </div>
@@ -36,7 +36,7 @@ export default function NotFound() {
         {/* Back to Home */}
         <Link
           href="/"
-          className="inline-flex items-center gap-2 text-[16px] leading-[1.2] text-black hover:opacity-60 transition-opacity"
+          className="inline-flex items-center gap-2 text-base leading-[1.2] text-black hover:opacity-60 transition-opacity"
         >
           Torna alla home
         </Link>

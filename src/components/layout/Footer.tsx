@@ -7,7 +7,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import Button from "@/components/ui/Button";
 import { getCsrfToken } from "@/lib/utils/csrf";
 
-const txt = "text-[16px] md:text-[12px] leading-[1.2] text-black font-normal";
+const txt = "text-base md:text-xs leading-[1.2] text-black font-normal";
 
 export default function Footer() {
   const [form, setForm] = useState({ nome: "", cognome: "", email: "", messaggio: "", paese: "", privacy: "", telefono: "" });
@@ -130,7 +130,7 @@ export default function Footer() {
                 <p>Contatti</p>
                 <a href="mailto:studio@yas-arc.com" className="block hover:underline">studio@yas-arc.com</a>
               </div>
-              <div className="hidden md:hidden lg:block xl:hidden">
+              <div className="hidden lg:block xl:hidden">
                 <p>&nbsp;</p>
                 <Link href="/studio" className="block hover:underline">Studio</Link>
                 <Link href="/team" className="block hover:underline">Team</Link>
@@ -199,8 +199,8 @@ export default function Footer() {
                     <path d="M16.5 5L8.5 15L3.5 10" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
                   </svg>
                   <div>
-                    <p className="text-[14px] font-medium leading-[1.2]">Richiesta inviata</p>
-                    <p className="text-[12px] text-white/70 leading-[1.2]">Ti risponderemo presto</p>
+                    <p className="text-sm font-medium leading-[1.2]">Richiesta inviata</p>
+                    <p className="text-xs text-white/70 leading-[1.2]">Ti risponderemo presto</p>
                   </div>
                 </div>
               </motion.div>
@@ -218,8 +218,8 @@ export default function Footer() {
                     <path d="M10 4v6m0 4v.01" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
                   </svg>
                   <div>
-                    <p className="text-[14px] font-medium leading-[1.2]">Errore invio</p>
-                    <p className="text-[12px] text-white/70 leading-[1.2]">Controlla i dati e riprova</p>
+                    <p className="text-sm font-medium leading-[1.2]">Errore invio</p>
+                    <p className="text-xs text-white/70 leading-[1.2]">Controlla i dati e riprova</p>
                   </div>
                 </div>
               </motion.div>
@@ -319,7 +319,7 @@ export default function Footer() {
                   <button
                     type="submit"
                     disabled={isLoading}
-                    className="text-[16px] leading-[22px] text-[--foreground] px-[24px] py-[10px] rounded-[100px] bg-[var(--surface-muted)] hover:bg-[--border] transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
+                    className="text-base leading-[22px] text-[--foreground] px-[24px] py-[10px] rounded-full bg-[var(--surface-muted)] hover:bg-[--border] transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
                   >
                     {isLoading ? "Invio in corso..." : "Invia"}
                   </button>

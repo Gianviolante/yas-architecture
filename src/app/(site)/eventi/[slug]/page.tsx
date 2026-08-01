@@ -55,7 +55,7 @@ export default async function EventoPage({ params }: { params: Promise<{ slug: s
       {/* ── Intro description ──────────────────────────────────────── */}
       <div className="page-px pt-[32px] pb-[8px]">
         {event.description ? (
-          <div className="text-[24px] leading-normal text-primary">
+          <div className="text-2xl leading-normal text-primary">
             <PortableText
               value={event.description as Parameters<typeof PortableText>[0]["value"]}
               components={{
@@ -66,7 +66,7 @@ export default async function EventoPage({ params }: { params: Promise<{ slug: s
             />
           </div>
         ) : (
-          <p className="text-[24px] leading-normal text-[#d9d9d9]">
+          <p className="text-2xl leading-normal text-[#d9d9d9]">
             Descrizione introduttiva non disponibile.
           </p>
         )}
@@ -77,7 +77,7 @@ export default async function EventoPage({ params }: { params: Promise<{ slug: s
 
         {/* Left: meta info */}
         <div className="w-full lg:w-[577px] lg:shrink-0">
-          <div className="text-[12px] leading-[1.5] text-primary space-y-[4px]">
+          <div className="text-xs leading-[1.5] text-primary space-y-[4px]">
             {event.typology && (
               <p>
                 <span className="text-[#9d9d9d]">Tipologia: </span>
@@ -165,7 +165,7 @@ export default async function EventoPage({ params }: { params: Promise<{ slug: s
       <div className="page-px pb-[60px]">
         <Link
           href="/eventi"
-          className="inline-flex items-center gap-[8px] border-2 border-[#000] rounded-[100px] px-[24px] py-[10px] text-[16px] text-[#000] leading-[22px] hover:bg-black hover:text-white transition-colors duration-200"
+          className="inline-flex items-center gap-[8px] border-2 border-[#000] rounded-full px-[24px] py-[10px] text-base text-[#000] leading-[22px] hover:bg-black hover:text-white transition-colors duration-200"
         >
           ← News ed Eventi
         </Link>

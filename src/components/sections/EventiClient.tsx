@@ -43,12 +43,12 @@ export default function EventiClient({ events }: Props) {
 
       {/* ── Section label ───────────────────────────────────────────── */}
       <div className="pt-[37px]">
-        <p className="text-[16px] leading-normal text-black text-center mb-[26px]">
+        <p className="text-base leading-normal text-black text-center mb-[26px]">
           Eventi
         </p>
 
         {/* Intro text */}
-        <div className="page-px mb-[32px] text-[24px] leading-normal text-black">
+        <div className="page-px mb-[32px] text-2xl leading-normal text-black">
           <p>{FALLBACK_INTRO}</p>
         </div>
       </div>
@@ -58,7 +58,7 @@ export default function EventiClient({ events }: Props) {
         <div className="page-px h-full flex flex-col justify-start">
 
           {/* Row 1 — Area label */}
-          <p className="text-[12px] leading-[1.5] text-primary pt-[8px]">Area</p>
+          <p className="text-xs leading-[1.5] text-primary pt-[8px]">Area</p>
 
           {/* Row 2 — Filter chips */}
           <div className="flex gap-[8px] mt-[8px]">
@@ -76,7 +76,7 @@ export default function EventiClient({ events }: Props) {
 
           {/* Row 3 — Active filter status + reset */}
           <div className="flex items-center justify-between mt-[16px]">
-            <p className="text-[12px] leading-[1.5] text-primary">
+            <p className="text-xs leading-[1.5] text-primary">
               {filterLabel ? (
                 <>
                   <span>Filtra per: </span>
@@ -89,7 +89,7 @@ export default function EventiClient({ events }: Props) {
             {activeFilter && (
               <button
                 onClick={() => setActiveFilter(null)}
-                className="flex items-center gap-[4px] text-[12px] leading-[1.5] text-primary hover:opacity-60 transition-opacity"
+                className="flex items-center gap-[4px] text-xs leading-[1.5] text-primary hover:opacity-60 transition-opacity"
               >
                 <span>↺</span>
                 <span>Reset</span>
@@ -115,7 +115,7 @@ export default function EventiClient({ events }: Props) {
         <div className="flex justify-end mt-[80px]">
           <Link
             href="/contatti"
-            className="inline-flex items-center border-2 border-[#000] rounded-[100px] px-[24px] py-[10px] text-[16px] text-[#000] leading-[22px] hover:bg-black hover:text-white transition-colors duration-200"
+            className="inline-flex items-center border-2 border-[#000] rounded-full px-[24px] py-[10px] text-base text-[#000] leading-[22px] hover:bg-black hover:text-white transition-colors duration-200"
           >
             Contattaci per informazioni
           </Link>

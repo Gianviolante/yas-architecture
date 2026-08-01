@@ -22,7 +22,7 @@ const INTRO_FALLBACK = `I benefici derivanti dall'utilizzo di una griglia sono e
 const BODY_FALLBACK = `It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use…`;
 
 function SectionLabel({ children }: { children: React.ReactNode }) {
-  return <p className="text-[16px] leading-normal text-black text-center mb-[26px]">{children}</p>;
+  return <p className="text-base leading-normal text-black text-center mb-[26px]">{children}</p>;
 }
 
 function Divider() {
@@ -53,12 +53,12 @@ export default async function StudioPage() {
 
       {/* ── Tab bar ────────────────────────────────────────────────── */}
       <div className="sticky top-[60px] md:top-[80px] z-40 bg-white shadow-[0px_6px_8px_0px_rgba(0,0,0,0.1)] h-[75px] flex items-center justify-center gap-[8px]">
-        <span className="inline-flex items-center bg-black border-2 border-black rounded-[100px] px-[24px] py-[10px] text-[16px] text-white leading-[22px]">
+        <span className="inline-flex items-center bg-black border-2 border-black rounded-full px-[24px] py-[10px] text-base text-white leading-[22px]">
           Lo studio
         </span>
         <Link
           href="/team"
-          className="inline-flex items-center border-2 border-black rounded-[100px] px-[24px] py-[10px] text-[16px] text-[#333] leading-[22px] hover:bg-black hover:border-black hover:text-white transition-colors duration-200"
+          className="inline-flex items-center border-2 border-black rounded-full px-[24px] py-[10px] text-base text-[#333] leading-[22px] hover:bg-black hover:border-black hover:text-white transition-colors duration-200"
         >
           Designer
         </Link>
@@ -71,7 +71,7 @@ export default async function StudioPage() {
         <SectionLabel>Lo studio</SectionLabel>
 
         {/* Intro text */}
-        <div className="page-px mb-[24px] md:mb-[32px] text-[24px] leading-normal text-black">
+        <div className="page-px mb-[24px] md:mb-[32px] text-2xl leading-normal text-black">
           {studio?.description
             ? <PortableText value={studio.description as Parameters<typeof PortableText>[0]["value"]} components={ptComponents} />
             : <p>{INTRO_FALLBACK}</p>}
@@ -96,7 +96,7 @@ export default async function StudioPage() {
         <SectionLabel>Lo spazio</SectionLabel>
 
         {/* Intro */}
-        <div className="page-px mb-[24px] md:mb-[40px] text-[24px] leading-normal text-black">
+        <div className="page-px mb-[24px] md:mb-[40px] text-2xl leading-normal text-black">
           {studio?.spaziDescription
             ? <PortableText value={studio.spaziDescription as Parameters<typeof PortableText>[0]["value"]} components={ptComponents} />
             : <p>{INTRO_FALLBACK}</p>}
@@ -124,7 +124,7 @@ export default async function StudioPage() {
         <SectionLabel>Il team</SectionLabel>
 
         {/* Intro */}
-        <div className="page-px mb-[24px] md:mb-[40px] text-[24px] leading-normal text-black">
+        <div className="page-px mb-[24px] md:mb-[40px] text-2xl leading-normal text-black">
           {studio?.teamDescription
             ? <PortableText value={studio.teamDescription as Parameters<typeof PortableText>[0]["value"]} components={ptComponents} />
             : <p>{INTRO_FALLBACK}</p>}
@@ -144,7 +144,7 @@ export default async function StudioPage() {
         <div className="flex justify-center px-[15px] md:px-0">
           <Link
             href="/team"
-            className="flex items-center justify-center w-full md:w-auto border-2 border-black rounded-[100px] px-[24px] py-[10px] text-[16px] text-[#333] leading-[22px] hover:bg-black hover:text-white transition-colors duration-200"
+            className="flex items-center justify-center w-full md:w-auto border-2 border-black rounded-full px-[24px] py-[10px] text-base text-[#333] leading-[22px] hover:bg-black hover:text-white transition-colors duration-200"
           >
             Conosci il team
           </Link>
@@ -160,7 +160,7 @@ export default async function StudioPage() {
         <SectionLabel>Progetti</SectionLabel>
 
         {/* Description */}
-        <div className="page-px mb-[24px] md:mb-[40px] text-[24px] leading-normal text-black">
+        <div className="page-px mb-[24px] md:mb-[40px] text-2xl leading-normal text-black">
           {studio?.progettiDescription
             ? <PortableText value={studio.progettiDescription as Parameters<typeof PortableText>[0]["value"]} components={ptComponents} />
             : <p>{BODY_FALLBACK}</p>}
@@ -180,7 +180,7 @@ export default async function StudioPage() {
                   <p className="text-[17.5px] leading-[1.5] text-primary mb-[6px]">
                     {p.title}{p.location ? `, ${p.location}` : ""}
                   </p>
-                  <span className="inline-flex items-center border-2 border-black rounded-[100px] px-[14px] py-[4px] text-[12px] text-[#333] leading-[1.4]">
+                  <span className="inline-flex items-center border-2 border-black rounded-full px-[14px] py-[4px] text-xs text-[#333] leading-[1.4]">
                     {p.typology}
                   </span>
                 </Link>
@@ -195,7 +195,7 @@ export default async function StudioPage() {
         <div className="flex justify-center px-[15px] md:px-0 mt-[16px]">
           <Link
             href="/progetti"
-            className="flex items-center justify-center w-full md:w-auto border-2 border-black rounded-[100px] px-[24px] py-[10px] text-[16px] text-[#333] leading-[22px] hover:bg-black hover:text-white transition-colors duration-200"
+            className="flex items-center justify-center w-full md:w-auto border-2 border-black rounded-full px-[24px] py-[10px] text-base text-[#333] leading-[22px] hover:bg-black hover:text-white transition-colors duration-200"
           >
             Vai a tutti i progetti
           </Link>

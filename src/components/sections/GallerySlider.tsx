@@ -426,7 +426,7 @@ export default function GallerySlider({ items, projectTitle, compact = false, in
       {/* Caption below gallery */}
       {!compact && (
         <div className="px-[32px] mt-[16px]">
-          <p className="text-[12px] leading-[1.2] text-primary">
+          <p className="text-xs leading-[1.2] text-primary">
             {activeCaption}
           </p>
         </div>

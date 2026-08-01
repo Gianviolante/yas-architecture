@@ -10,16 +10,16 @@ export default function CoockieSolutionPage() {
           Cookie Policy
         </h1>
 
-        <div className="max-w-[798px] text-[16px] md:text-[17.5px] leading-[1.6] text-black space-y-6">
+        <div className="max-w-[798px] text-base md:text-[17.5px] leading-[1.6] text-black space-y-6">
           <section>
-            <h2 className="text-[24px] font-semibold text-black mb-3">Cosa sono i Cookie?</h2>
+            <h2 className="text-2xl font-semibold text-black mb-3">Cosa sono i Cookie?</h2>
             <p>
               I cookie sono piccoli file di testo memorizzati sul tuo dispositivo quando visiti il nostro sito web. Ci aiutano a migliorare la tua esperienza di navigazione.
             </p>
           </section>
 
           <section>
-            <h2 className="text-[24px] font-semibold text-black mb-3">Tipi di Cookie che Utilizziamo</h2>
+            <h2 className="text-2xl font-semibold text-black mb-3">Tipi di Cookie che Utilizziamo</h2>
             <ul className="list-disc pl-6 mt-2 space-y-2">
               <li><strong>Cookie Essenziali:</strong> Necessari per il funzionamento del sito (sicurezza, sessioni)</li>
               <li><strong>Cookie Analitici:</strong> Ci aiutano a capire come usi il nostro sito (Google Analytics)</li>
@@ -29,7 +29,7 @@ export default function CoockieSolutionPage() {
           </section>
 
           <section>
-            <h2 className="text-[24px] font-semibold text-black mb-3">Come Gestire i Cookie</h2>
+            <h2 className="text-2xl font-semibold text-black mb-3">Come Gestire i Cookie</h2>
             <p>Puoi controllare i cookie nelle seguenti modalità:</p>
             <ul className="list-disc pl-6 mt-2 space-y-2">
               <li>Tramite il nostro banner di consenso al primo accesso</li>
@@ -39,7 +39,7 @@ export default function CoockieSolutionPage() {
           </section>
 
           <section>
-            <h2 className="text-[24px] font-semibold text-black mb-3">Cookie di Terze Parti</h2>
+            <h2 className="text-2xl font-semibold text-black mb-3">Cookie di Terze Parti</h2>
             <p>
               Il nostro sito utilizza servizi di terze parti come Google Analytics. Ti consigliamo di consultare le loro politiche sulla privacy:
             </p>
@@ -53,14 +53,14 @@ export default function CoockieSolutionPage() {
           </section>
 
           <section>
-            <h2 className="text-[24px] font-semibold text-black mb-3">Modifiche a Questa Policy</h2>
+            <h2 className="text-2xl font-semibold text-black mb-3">Modifiche a Questa Policy</h2>
             <p>
               Potremmo aggiornare questa Cookie Policy periodicamente. Ti consigliamo di controllarla regolarmente per rimanere informato su come utilizziamo i cookie.
             </p>
           </section>
 
           <section>
-            <h2 className="text-[24px] font-semibold text-black mb-3">Contatti</h2>
+            <h2 className="text-2xl font-semibold text-black mb-3">Contatti</h2>
             <p>
               Per domande sui cookie o sulla nostra Cookie Policy, contattaci a{" "}
               <a href="mailto:studio@yas-arc.com" className="underline hover:opacity-60">

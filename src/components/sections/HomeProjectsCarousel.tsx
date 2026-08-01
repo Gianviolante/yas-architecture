@@ -87,8 +87,8 @@ export default function HomeProjectsCarousel({ projects, progettiDescription }: 
       <div className="w-full h-[48px] bg-white shadow-[0px_6px_8px_0px_rgba(0,0,0,0.1)]" />
 
       <div className="px-[15px] md:px-[32px] pt-8 pb-16">
-        <p className="text-[16px] leading-normal text-black text-center mb-6">Progetti</p>
-        <div className="text-[16px] md:text-[24px] font-medium leading-[1.2] text-primary mb-10">
+        <p className="text-base leading-normal text-black text-center mb-6">Progetti</p>
+        <div className="text-base md:text-2xl font-medium leading-[1.2] text-primary mb-10">
           {progettiDescription
             ? <PortableText value={progettiDescription as Parameters<typeof PortableText>[0]["value"]} components={ptBlock} />
             : <p>{FALLBACK_PROGETTI_DESCRIPTION}</p>}
@@ -168,7 +168,7 @@ export default function HomeProjectsCarousel({ projects, progettiDescription }: 
                         <p className="text-[17.5px] leading-[1.5] text-primary mb-2 truncate group-hover:opacity-70 transition-opacity">
                           {p.title}{p.location ? `, ${p.location}` : ""}
                         </p>
-                        <span className="inline-flex items-center border-2 border-[#000] rounded-[100px] px-[10px] py-[3px] text-[11px] text-[#000] leading-[1.4] whitespace-nowrap">
+                        <span className="inline-flex items-center border-2 border-[#000] rounded-full px-[10px] py-[3px] text-[11px] text-[#000] leading-[1.4] whitespace-nowrap">
                           {p.typology ?? "Residenziale"}
                         </span>
                       </Link>
@@ -180,7 +180,7 @@ export default function HomeProjectsCarousel({ projects, progettiDescription }: 
                         <Image src={p.img} alt="" fill className="object-cover" priority={idx < 3} />
                       </div>
                       <p className="text-[17.5px] leading-[1.5] text-primary mb-2 truncate">{p.label}</p>
-                      <span className="inline-flex items-center border-2 border-[#000] rounded-[100px] px-[10px] py-[3px] text-[11px] text-[#000] leading-[1.4] whitespace-nowrap">
+                      <span className="inline-flex items-center border-2 border-[#000] rounded-full px-[10px] py-[3px] text-[11px] text-[#000] leading-[1.4] whitespace-nowrap">
                         {p.typology}
                       </span>
                     </div>

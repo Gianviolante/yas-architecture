@@ -141,7 +141,7 @@ export default function ContattiClient() {
       {/* ── Hero section ───────────────────────────────────────────── */}
       <div className="page-px pt-[40px] md:pt-[50px] space-y-[40px] md:space-y-[60px]">
         <div>
-          <p className="text-[16px] leading-[1.2] text-black mb-2">Get in touch</p>
+          <p className="text-base leading-[1.2] text-black mb-2">Get in touch</p>
           <a
             href="mailto:studio@yas-arc.com"
             className="text-[28px] md:text-[36px] leading-[1.2] text-black hover:opacity-60 transition-opacity break-all"
@@ -151,7 +151,7 @@ export default function ContattiClient() {
         </div>
 
         <div>
-          <p className="text-[16px] leading-[1.2] text-black mb-2">Have a new project</p>
+          <p className="text-base leading-[1.2] text-black mb-2">Have a new project</p>
           <a
             href="#form"
             className="text-[28px] md:text-[36px] leading-[1.2] text-black underline decoration-solid underline-offset-4 hover:opacity-60 transition-opacity"
@@ -167,7 +167,7 @@ export default function ContattiClient() {
               href={href}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-[24px] leading-[1.2] text-black hover:opacity-50 transition-opacity"
+              className="text-2xl leading-[1.2] text-black hover:opacity-50 transition-opacity"
             >
               {label}
             </a>
@@ -181,7 +181,7 @@ export default function ContattiClient() {
       {/* ── Form section ───────────────────────────────────────────── */}
       <div id="form" className="page-px pt-[24px] md:pt-[32px] pb-20">
         <div className="flex items-baseline justify-between mb-[24px] md:mb-[32px]">
-          <p className="text-[16px] leading-[1.2] text-black">Richiedi informazioni</p>
+          <p className="text-base leading-[1.2] text-black">Richiedi informazioni</p>
           <p className="text-[11px] leading-[1.2] text-black/40">* campi obbligatori</p>
         </div>
 
@@ -191,13 +191,13 @@ export default function ContattiClient() {
           {/* Left — contact info */}
           <div className="space-y-[24px] md:space-y-8">
             <div>
-              <p className="text-[12px] leading-normal text-black mb-1">Office</p>
-              <p className="text-[16px] leading-[1.2] text-black">Piazza Marco Antonio Cavalerio, 21</p>
-              <p className="text-[16px] leading-[1.2] text-black">72100 Brindisi (BR) Italia</p>
+              <p className="text-xs leading-normal text-black mb-1">Office</p>
+              <p className="text-base leading-[1.2] text-black">Piazza Marco Antonio Cavalerio, 21</p>
+              <p className="text-base leading-[1.2] text-black">72100 Brindisi (BR) Italia</p>
             </div>
             <div>
-              <p className="text-[12px] leading-normal text-black mb-1">Contact</p>
-              <a href="mailto:studio@yas-arc.com" className="text-[16px] leading-[1.2] text-black hover:opacity-60 transition-opacity">
+              <p className="text-xs leading-normal text-black mb-1">Contact</p>
+              <a href="mailto:studio@yas-arc.com" className="text-base leading-[1.2] text-black hover:opacity-60 transition-opacity">
                 studio@yas-arc.com
               </a>
             </div>
@@ -220,8 +220,8 @@ export default function ContattiClient() {
                       <path d="M16.5 5L8.5 15L3.5 10" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
                     </svg>
                     <div>
-                      <p className="text-[14px] font-medium leading-[1.2]">Richiesta inviata</p>
-                      <p className="text-[12px] text-white/70 leading-[1.2]">Ti risponderemo presto</p>
+                      <p className="text-sm font-medium leading-[1.2]">Richiesta inviata</p>
+                      <p className="text-xs text-white/70 leading-[1.2]">Ti risponderemo presto</p>
                     </div>
                   </div>
                 </motion.div>
@@ -234,10 +234,10 @@ export default function ContattiClient() {
               {/* Row 1: Nome | Cognome */}
               <div className="grid grid-cols-1 md:grid-cols-[2fr_3fr] border-t border-black">
                 <div className="py-3 md:py-6 px-1 md:border-r border-black flex items-center">
-                  <input type="text" placeholder="Nome" value={form.nome} onChange={set("nome")} autoComplete="given-name" className="w-full bg-transparent text-[16px] md:text-[12px] leading-[1.2] text-black outline-none placeholder:text-black" />
+                  <input type="text" placeholder="Nome" value={form.nome} onChange={set("nome")} autoComplete="given-name" className="w-full bg-transparent text-base md:text-xs leading-[1.2] text-black outline-none placeholder:text-black" />
                 </div>
                 <div className="py-3 md:py-6 px-1 border-t md:border-t-0 border-black flex items-center">
-                  <input type="text" placeholder="Cognome" value={form.cognome} onChange={set("cognome")} autoComplete="family-name" className="w-full bg-transparent text-[16px] md:text-[12px] leading-[1.2] text-black outline-none placeholder:text-black" />
+                  <input type="text" placeholder="Cognome" value={form.cognome} onChange={set("cognome")} autoComplete="family-name" className="w-full bg-transparent text-base md:text-xs leading-[1.2] text-black outline-none placeholder:text-black" />
                 </div>
               </div>
 
@@ -252,7 +252,7 @@ export default function ContattiClient() {
                     onFocus={() => form.citta && setShowCittaDropdown(true)}
                     autoComplete="address-level2"
                     required
-                    className="w-full bg-transparent text-[16px] md:text-[12px] leading-[1.2] text-black outline-none placeholder:text-black"
+                    className="w-full bg-transparent text-base md:text-xs leading-[1.2] text-black outline-none placeholder:text-black"
                   />
                   {showCittaDropdown && cittaOptions.length > 0 && (
                     <div className="absolute top-full left-0 right-0 bg-white border border-black border-t-0 z-10 max-h-[150px] overflow-y-auto">
@@ -264,7 +264,7 @@ export default function ContattiClient() {
                             setShowCittaDropdown(false);
                             setCittaOptions([]);
                           }}
-                          className="px-2 py-2 text-[16px] md:text-[12px] leading-[1.2] text-black cursor-pointer hover:bg-gray-100 border-b border-gray-200 last:border-b-0"
+                          className="px-2 py-2 text-base md:text-xs leading-[1.2] text-black cursor-pointer hover:bg-gray-100 border-b border-gray-200 last:border-b-0"
                         >
                           {option}
                         </div>
@@ -276,7 +276,7 @@ export default function ContattiClient() {
                   <select
                     value={form.paese}
                     onChange={set("paese")}
-                    className="w-full bg-transparent text-[16px] md:text-[12px] leading-[1.2] text-black outline-none"
+                    className="w-full bg-transparent text-base md:text-xs leading-[1.2] text-black outline-none"
                   >
                     <option value="">Paese</option>
                     {PAESI.map((paese) => (
@@ -291,14 +291,14 @@ export default function ContattiClient() {
               {/* Row 3: Telefono (full width) */}
               <div className="border-t border-black">
                 <div className="py-3 md:py-6 px-1 flex items-center">
-                  <input type="tel" placeholder="Telefono" value={form.telefono} onChange={set("telefono")} autoComplete="tel" className="w-full bg-transparent text-[16px] md:text-[12px] leading-[1.2] text-black outline-none placeholder:text-black" />
+                  <input type="tel" placeholder="Telefono" value={form.telefono} onChange={set("telefono")} autoComplete="tel" className="w-full bg-transparent text-base md:text-xs leading-[1.2] text-black outline-none placeholder:text-black" />
                 </div>
               </div>
 
               {/* Row 4: E-mail (full width) */}
               <div className="border-t border-b border-black">
                 <div className="py-3 md:py-6 px-1 flex items-center">
-                  <input type="email" placeholder="e-mail *" value={form.email} onChange={set("email")} autoComplete="email" required className="w-full bg-transparent text-[16px] md:text-[12px] leading-[1.2] text-black outline-none placeholder:text-black" />
+                  <input type="email" placeholder="e-mail *" value={form.email} onChange={set("email")} autoComplete="email" required className="w-full bg-transparent text-base md:text-xs leading-[1.2] text-black outline-none placeholder:text-black" />
                 </div>
               </div>
 
@@ -311,14 +311,14 @@ export default function ContattiClient() {
                     value={form.messaggio}
                     onChange={set("messaggio")}
                     rows={4}
-                    className="w-full bg-transparent text-[16px] md:text-[12px] leading-[1.2] text-black outline-none placeholder:text-black resize-none"
+                    className="w-full bg-transparent text-base md:text-xs leading-[1.2] text-black outline-none placeholder:text-black resize-none"
                   />
                 </label>
               </div>
 
               {/* Privacy + submit */}
               <div className="mt-6 space-y-4">
-                <p className="text-[12px] leading-[1.2] text-black max-w-xl">
+                <p className="text-xs leading-[1.2] text-black max-w-xl">
                   Cliccando su &ldquo;Invia&rdquo; dichiaro di aver letto e accettato l&apos;informativa{" "}
                   <Link href="/privacy-policy" className="underline hover:opacity-60 transition-opacity">
                     Privacy
@@ -328,23 +328,23 @@ export default function ContattiClient() {
                   <label className="flex items-center gap-[11px] cursor-pointer">
                     <input type="radio" name="privacy" value="acconsento"
                       onChange={set("privacy")} required className="size-[13px] accent-black" />
-                    <span className="text-[12px] leading-[1.2] text-black">Acconsento</span>
+                    <span className="text-xs leading-[1.2] text-black">Acconsento</span>
                   </label>
                   <label className="flex items-center gap-[11px] cursor-pointer">
                     <input type="radio" name="privacy" value="non-acconsento"
                       onChange={set("privacy")} className="size-[13px] accent-black" />
-                    <span className="text-[12px] leading-[1.2] text-black">Non acconsento</span>
+                    <span className="text-xs leading-[1.2] text-black">Non acconsento</span>
                   </label>
                 </div>
 
                 {privacyBlocked && (
-                  <p className="text-[12px] text-black/50">
+                  <p className="text-xs text-black/50">
                     Per inviare il modulo è necessario acconsentire al trattamento dei dati.
                   </p>
                 )}
 
                 {status === "error" && (
-                  <p className="text-[12px] text-red-600">
+                  <p className="text-xs text-red-600">
                     Errore nell&apos;invio. Riprova o scrivi a studio@yas-arc.com
                   </p>
                 )}
@@ -353,7 +353,7 @@ export default function ContattiClient() {
                   <button
                     type="submit"
                     disabled={status === "sending" || privacyBlocked}
-                    className="w-full md:w-auto text-[16px] leading-[22px] text-[--foreground] px-[24px] py-[10px] rounded-[100px] bg-[#E5E7EB] hover:bg-[--border] transition-colors duration-200 disabled:opacity-40 disabled:cursor-not-allowed"
+                    className="w-full md:w-auto text-base leading-[22px] text-[--foreground] px-[24px] py-[10px] rounded-full bg-[#E5E7EB] hover:bg-[--border] transition-colors duration-200 disabled:opacity-40 disabled:cursor-not-allowed"
                   >
                     {status === "sending" ? "Invio…" : "Invia richiesta"}
                   </button>
@@ -389,7 +389,7 @@ function Field({
         onChange={onChange}
         required={required}
         autoComplete={autoComplete}
-        className="w-full bg-transparent text-[16px] md:text-[12px] leading-[1.2] text-black outline-none placeholder:text-black"
+        className="w-full bg-transparent text-base md:text-xs leading-[1.2] text-black outline-none placeholder:text-black"
       />
     </label>
   );

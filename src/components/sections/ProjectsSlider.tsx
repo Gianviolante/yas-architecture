@@ -61,7 +61,7 @@ export default function ProjectsSlider({ projects, title = "Vedi altri progetti"
 
   return (
     <div className="relative pb-[48px]">
-      <p className="px-[15px] md:px-[32px] text-[12px] md:text-[24px] leading-normal text-black mb-[16px] md:mb-[21px]">
+      <p className="px-[15px] md:px-[32px] text-xs md:text-2xl leading-normal text-black mb-[16px] md:mb-[21px]">
         {title}
       </p>
 

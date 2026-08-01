@@ -48,7 +48,7 @@ export default function GallerySection({ items, projectTitle, allGalleryItems, o
 
       <button
         onClick={() => setCompact((v) => !v)}
-        className="hidden md:block page-px text-[12px] leading-[1.2] text-primary mb-[16px] hover:opacity-60 transition-opacity"
+        className="hidden md:block page-px text-xs leading-[1.2] text-primary mb-[16px] hover:opacity-60 transition-opacity"
       >
         {compact ? "Visualizza come slider" : "Visualizza come miniature"}
       </button>

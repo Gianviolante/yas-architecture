@@ -40,14 +40,14 @@ export default function TeamClient({ teamMembers }: Props) {
       <div className="sticky top-[60px] md:top-[80px] z-40 bg-white shadow-[0px_6px_8px_0px_rgba(0,0,0,0.1)] h-[75px] flex items-center justify-center gap-[8px]">
         <Link
           href="/studio"
-          className="inline-flex items-center border-2 border-[#000] rounded-[100px] px-[24px] py-[10px] text-[16px] leading-[22px] text-[#000] hover:bg-black hover:border-black hover:text-white transition-colors duration-200"
+          className="inline-flex items-center border-2 border-[#000] rounded-full px-[24px] py-[10px] text-base leading-[22px] text-[#000] hover:bg-black hover:border-black hover:text-white transition-colors duration-200"
           cursor-type="nav"
         >
           Lo studio
         </Link>
         <button
           onClick={() => setActiveTab("designers")}
-          className={`inline-flex items-center border-2 rounded-[100px] px-[24px] py-[10px] text-[16px] leading-[22px] transition-colors duration-200 ${
+          className={`inline-flex items-center border-2 rounded-full px-[24px] py-[10px] text-base leading-[22px] transition-colors duration-200 ${
             activeTab === "designers"
               ? "bg-black border-black text-white"
               : "border-[#000] text-[#000] hover:bg-black hover:border-black hover:text-white"
@@ -62,8 +62,8 @@ export default function TeamClient({ teamMembers }: Props) {
           Il team
       ══════════════════════════════════════════════════════════════ */}
       <div className="pt-[60px] md:pt-[48px] pb-[40px]">
-        <p className="text-[16px] leading-normal text-black text-center mb-[26px]">Il team</p>
-        <div className="page-px mb-[32px] text-[18px] md:text-[24px] leading-normal text-black">
+        <p className="text-base leading-normal text-black text-center mb-[26px]">Il team</p>
+        <div className="page-px mb-[32px] text-lg md:text-2xl leading-normal text-black">
           <p>{FALLBACK_INTRO}</p>
         </div>
 
@@ -116,7 +116,7 @@ function MemberCard({
             {member?.name ?? "Nome Cognome"}
           </p>
           <div
-            className="inline-flex items-center border-2 border-[#000] rounded-[100px] px-[24px] overflow-hidden text-[12px] text-[#000] leading-[22px]"
+            className="inline-flex items-center border-2 border-[#000] rounded-full px-[24px] overflow-hidden text-xs text-[#000] leading-[22px]"
             style={{ height: "27px" }}
           >
             {member?.role ?? "Principal Architect"}

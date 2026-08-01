@@ -22,7 +22,7 @@ export default function Button({
   target,
   rel,
 }: ButtonProps) {
-  const baseStyles = "flex items-center justify-center rounded-[100px] transition-colors duration-200 whitespace-nowrap font-normal";
+  const baseStyles = "flex items-center justify-center rounded-full transition-colors duration-200 whitespace-nowrap font-normal";
 
   const variantStyles = {
     outlined: "border-2 border-[--foreground] text-[--foreground] hover:bg-[#000] hover:text-white",
@@ -30,9 +30,9 @@ export default function Button({
   };
 
   const sizeStyles = {
-    sm: "text-[12px] leading-[22px] px-[20px] py-[10px]",
-    md: "text-[16px] leading-[22px] px-[24px] py-[10px]",
-    lg: "text-[18px] leading-[24px] px-[32px] py-[12px]",
+    sm: "text-xs leading-[1.375] px-5 py-2.5",
+    md: "text-base leading-[1.375] px-6 py-2.5",
+    lg: "text-lg leading-6 px-8 py-3",
   };
 
   const classes = cn(baseStyles, variantStyles[variant], sizeStyles[size], className);
