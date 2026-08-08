@@ -166,45 +166,7 @@ export default async function HomePage() {
             </div>
           </section>
 
-          {/* ── 3. ARCHITECTURE — mobile ───────────────────────────────────── */}
-          <section className="md:hidden relative h-[360px] overflow-hidden mt-[40px]">
-            {/* big title */}
-            <AnimatedTitle
-              text="Architecture"
-              className="absolute font-bold text-black select-none"
-              style={{ fontSize: "clamp(85px, 42vw, 160px)", lineHeight: "0.8", top: "28px", left: "12px", width: "100%", paddingRight: "16px" }}
-            />
-
-            {/* links bottom-right */}
-            <div className="absolute text-xs leading-[1.2] text-black text-right" style={{ top: "301px", right: "15px" }}>
-              <ArrowLink href="/progetti?tipologia=Interior Design">Interior design→</ArrowLink>
-              <ArrowLink href="/progetti?tipologia=Architettura">Architecture →</ArrowLink>
-              <ArrowLink href="/progetti">Tutti i progetti→</ArrowLink>
-            </div>
-          </section>
-
-          {/* ── 3. ARCHITECTURE — tablet + desktop ─────────────────────────── */}
-          <section className="hidden md:grid grid-cols-2 gap-[153px] page-px py-[32px] overflow-hidden mt-[24px] lg:mt-[32px] items-baseline">
-            {/* Row 1 - Title (Architecture) left */}
-            <div className="col-start-1 row-start-1">
-              <AnimatedTitle
-                text="Architecture"
-                className="font-bold text-black leading-none whitespace-nowrap select-none"
-                style={{ fontSize: "clamp(8rem,19.8vw,285px)" }}
-              />
-            </div>
-
-            {/* Row 1 - Bottom-right: Project links */}
-            <div className="col-start-2 row-start-1 text-xs leading-[1.2] text-black flex flex-col justify-start self-start text-right" style={{ paddingTop: "24px" }}>
-              <div>
-                <ArrowLink href="/progetti?tipologia=Interior Design">Interior design→</ArrowLink>
-                <ArrowLink href="/progetti?tipologia=Architettura">Architecture →</ArrowLink>
-                <ArrowLink href="/progetti">Tutti i progetti→</ArrowLink>
-              </div>
-            </div>
-          </section>
-
-          {/* ── 4. DESCRIPTION + slider ──────────────────────────────── */}
+          {/* ── 3. DESCRIPTION + slider ──────────────────────────────── */}
           <section className="page-px pt-[40px]">
             <div className="text-base md:text-2xl leading-normal text-black mb-6 md:mb-14">
               {home?.introDescription
