@@ -12,13 +12,13 @@ export const metadata: Metadata = {
   openGraph: {
     title: "YAS Architecture | Progetti e Design",
     description: "Scopri i progetti di architettura e design dello studio YAS",
-    url: "https://yas-architecture.vercel.app",
+    url: "https://www.yas-arc.com",
     siteName: "YAS Architecture",
     locale: "it_IT",
     type: "website",
     images: [
       {
-        url: "https://yas-architecture.vercel.app/og-image.jpg",
+        url: "https://www.yas-arc.com/og-image.jpg",
         width: 1200,
         height: 630,
         alt: "YAS Architecture — Studio di architettura a Brindisi",
@@ -32,12 +32,12 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "YAS Architecture",
     description: "Studio di architettura a Brindisi — Progetti residenziali, commerciali, interior design",
-    images: ["https://yas-architecture.vercel.app/og-image.jpg"],
+    images: ["https://www.yas-arc.com/og-image.jpg"],
   },
 
   // Canonical URL (prevent duplicate content)
   alternates: {
-    canonical: "https://yas-architecture.vercel.app",
+    canonical: "https://www.yas-arc.com",
   },
 
   // Mobile optimization
@@ -56,9 +56,9 @@ export default function RootLayout({
   const structuredData = {
     "@context": "https://schema.org",
     "@type": "LocalBusiness",
-    "@id": "https://yas-architecture.vercel.app",
+    "@id": "https://www.yas-arc.com",
     name: "YAS Architecture Associati",
-    image: "https://yas-architecture.vercel.app/og-image.jpg",
+    image: "https://www.yas-arc.com/og-image.jpg",
     description: "Studio di architettura e design a Brindisi",
     address: {
       "@type": "PostalAddress",
@@ -68,7 +68,7 @@ export default function RootLayout({
       addressCountry: "IT",
     },
     email: "studio@yas-arc.com",
-    url: "https://yas-architecture.vercel.app",
+    url: "https://www.yas-arc.com",
     sameAs: [
       "https://www.facebook.com/p/Y-A-S-architecture-100063041749591",
       "https://www.instagram.com/yas_architecture_/",
