@@ -1,5 +1,6 @@
 export const metadata = {
   title: "Privacy Policy — YAS Architecture",
+  alternates: { canonical: "https://www.yas-arc.com/privacy-policy" },
 };
 
 export default function PrivacyPolicyPage() {

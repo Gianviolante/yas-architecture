@@ -5,7 +5,10 @@ import type { Event } from "@/lib/sanity/types";
 import EventiClient from "@/components/sections/EventiClient";
 
 export const revalidate = 60;
-export const metadata = { title: "Eventi — YAS Architecture" };
+export const metadata = {
+  title: "Eventi — YAS Architecture",
+  alternates: { canonical: "https://www.yas-arc.com/eventi" },
+};
 
 // Pagina nascosta su richiesta cliente (2026-07-14) — rimuovere questo notFound() per riattivarla.
 export default async function EventiPage() {

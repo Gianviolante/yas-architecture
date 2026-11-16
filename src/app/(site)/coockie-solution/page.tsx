@@ -1,5 +1,6 @@
 export const metadata = {
   title: "Cookie Policy — YAS Architecture",
+  alternates: { canonical: "https://www.yas-arc.com/coockie-solution" },
 };
 
 export default function CoockieSolutionPage() {

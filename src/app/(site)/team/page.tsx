@@ -7,6 +7,7 @@ export const revalidate = 60;
 
 export const metadata = {
   title: "Team — YAS Architecture",
+  alternates: { canonical: "https://www.yas-arc.com/team" },
 };
 
 export default async function TeamPage() {

@@ -8,7 +8,10 @@ import { studioQuery, allProjectsQuery } from "@/lib/sanity/queries";
 import type { Studio, SanityImage, Project } from "@/lib/sanity/types";
 
 export const revalidate = 60;
-export const metadata = { title: "Studio — YAS Architecture" };
+export const metadata = {
+  title: "Studio — YAS Architecture",
+  alternates: { canonical: "https://www.yas-arc.com/studio" },
+};
 
 const builder = imageUrlBuilder(sanityClient);
 function urlFor(source: SanityImage) { return builder.image(source); }

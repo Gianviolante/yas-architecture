@@ -7,6 +7,7 @@ export const revalidate = 60;
 
 export const metadata = {
   title: "Progetti — YAS Architecture",
+  alternates: { canonical: "https://www.yas-arc.com/progetti" },
 };
 
 export default async function ProgettiPage({

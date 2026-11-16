@@ -16,6 +16,7 @@ export const revalidate = 60;
 export const metadata = {
   title: "YAS Architecture",
   description: "Studio di architettura e design — Brindisi, Italia",
+  alternates: { canonical: "https://www.yas-arc.com" },
 };
 
 const DEFAULT_NAV_LINKS = [

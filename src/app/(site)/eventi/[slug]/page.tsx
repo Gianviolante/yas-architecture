@@ -11,7 +11,10 @@ export const revalidate = 60;
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
   const event: Event | null = await sanityClient.fetch(eventBySlugQuery, { slug });
-  return { title: event ? `${event.title} — YAS Architecture` : "Evento" };
+  return {
+    title: event ? `${event.title} — YAS Architecture` : "Evento",
+    alternates: { canonical: `https://www.yas-arc.com/eventi/${slug}` },
+  };
 }
 
 // Pagina nascosta su richiesta cliente (2026-07-14) — rimettere a `false` per riattivarla.

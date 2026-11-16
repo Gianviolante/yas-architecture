@@ -35,11 +35,6 @@ export const metadata: Metadata = {
     images: ["https://www.yas-arc.com/og-image.jpg"],
   },
 
-  // Canonical URL (prevent duplicate content)
-  alternates: {
-    canonical: "https://www.yas-arc.com",
-  },
-
   // Mobile optimization
   viewport: {
     width: "device-width",

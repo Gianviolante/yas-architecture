@@ -19,7 +19,10 @@ function urlFor(source: SanityImage) {
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
   const project: Project | null = await sanityClient.fetch(projectBySlugQuery, { slug });
-  return { title: project ? `${project.title} — YAS Architecture` : "Progetto" };
+  return {
+    title: project ? `${project.title} — YAS Architecture` : "Progetto",
+    alternates: { canonical: `https://www.yas-arc.com/progetti/${slug}` },
+  };
 }
 
 export default async function ProgettoPage({ params }: { params: Promise<{ slug: string }> }) {
